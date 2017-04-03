@@ -1,5 +1,4 @@
-package cbstudios.coffeebreak.model.toDoDataModule.categoryList;//
-
+package cbstudios.coffeebreak.model.tododatamodule.categorylist;//
 import java.util.GregorianCalendar;
 
 //  @ Project : CoffeeBreak
