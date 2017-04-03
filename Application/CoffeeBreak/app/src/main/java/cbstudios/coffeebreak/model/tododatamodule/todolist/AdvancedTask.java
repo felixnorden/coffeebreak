@@ -8,15 +8,21 @@ package cbstudios.coffeebreak.model.tododatamodule.todolist;//
 import cbstudios.coffeebreak.model.Priority;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedList;
 import java.util.List;
 
 public class AdvancedTask implements IAdvancedTask {
     protected ITask task;
-    private List<ILabelCategory> labels;
-    private Calendar time;
+    private final List<ILabelCategory> labels;
+    private Calendar date;
     private String note;
     private Priority priority;
+
+    public AdvancedTask(){
+        labels = new ArrayList<>();
+    }
 
     public ITask getTask() {
         return task;
@@ -26,20 +32,37 @@ public class AdvancedTask implements IAdvancedTask {
         this.task = task;
     }
 
+    public String getName() {
+        return task.getName();
+    }
+
+    public void setName(String name) {
+        task.setName(name);
+    }
+
     public List<ILabelCategory> getLabels() {
         return labels;
     }
 
-    public void setLabels(List<ILabelCategory> labels) {
-        this.labels = labels;
+    public void addLabel(ILabelCategory label){
+        labels.add(label);
     }
 
-    public Calendar getTime() {
-        return time;
+    public void removeLabel(ILabelCategory label){
+        if(labels.contains(label)){
+            labels.remove(label);
+        }
+    }
+    public Calendar getDate() {
+        return date;
     }
 
-    public void setTime(Calendar time) {
-        this.time = time;
+    public void setDate(Calendar date) {
+        this.date = date;
+    }
+
+    public boolean hasNote() {
+        return !note.isEmpty();
     }
 
     public String getNote() {
@@ -48,6 +71,10 @@ public class AdvancedTask implements IAdvancedTask {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public boolean hasPriority() {
+        return false;
     }
 
     public Priority getPriority() {
@@ -63,10 +90,10 @@ public class AdvancedTask implements IAdvancedTask {
     }
 
     public void toggleChecked(){
-
+        task.setChecked(!task.isChecked());
     }
 
     public void setChecked(boolean value){
-
+        task.setChecked(value);
     }
 }
