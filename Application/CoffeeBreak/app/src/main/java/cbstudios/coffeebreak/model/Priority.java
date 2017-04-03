@@ -1,4 +1,4 @@
-package geometri;
+package cbstudios.coffeebreak.model;
 
 import java.awt.*;
 
