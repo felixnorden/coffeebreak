@@ -5,12 +5,13 @@ package cbstudios.coffeebreak.model.tododatamodule.todolist;//
 //  @ cbstudios.coffeebreak.model.toDoDataModule.categoryList.Date : 03/04/2017
 //  @ Author :
 
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.*;
+import cbstudios.coffeebreak.model.Priority;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 
 import java.util.Calendar;
 
 public class AdvancedTask implements IAdvancedTask {
-    private ITask task;
+    protected ITask task;
     private List<ILabelCategory> labels;
     private Calendar time;
     private String note;
@@ -32,11 +33,11 @@ public class AdvancedTask implements IAdvancedTask {
         this.labels = labels;
     }
 
-    public cbstudios.coffeebreak.model.toDoDataModule.categoryList.Date getTime() {
+    public Calendar getTime() {
         return time;
     }
 
-    public void setTime(cbstudios.coffeebreak.model.toDoDataModule.categoryList.Date time) {
+    public void setTime(Calendar time) {
         this.time = time;
     }
 

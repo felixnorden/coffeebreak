@@ -8,7 +8,7 @@ package cbstudios.coffeebreak.model.tododatamodule.todolist;
 //
 public interface IAdvancedTask {
 
-    public void isChecked();
+    public boolean isChecked();
 
     public void toggleChecked();
 
