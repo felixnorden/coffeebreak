@@ -9,5 +9,5 @@ import java.util.List;
 //
 public interface IListTask {
     public List<ITask> getSubTasks();
-    public void addSubTask(ITask);
+    public void addSubTask(ITask subtask);
 }

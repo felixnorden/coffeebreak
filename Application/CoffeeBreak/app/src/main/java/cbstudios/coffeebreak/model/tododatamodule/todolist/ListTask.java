@@ -26,7 +26,8 @@ public class ListTask extends AdvancedTask implements IListTask {
         return subTasks;
     }
 
-    public void addSubTask() {
+    public void addSubTask(ITask subtask) {
 
     }
+
 }

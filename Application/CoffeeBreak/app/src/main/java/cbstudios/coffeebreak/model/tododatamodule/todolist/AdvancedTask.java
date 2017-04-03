@@ -9,6 +9,7 @@ import cbstudios.coffeebreak.model.Priority;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class AdvancedTask implements IAdvancedTask {
     protected ITask task;
@@ -61,7 +62,9 @@ public class AdvancedTask implements IAdvancedTask {
         return task.isChecked();
     }
 
-    public void toggleChecked();
+    public void toggleChecked(){
+
+    }
 
     public void setChecked(boolean value){
 
