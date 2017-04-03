@@ -8,19 +8,27 @@ package cbstudios.coffeebreak.model.toDoDataModule.categoryList;//
 //  @ Author : 
 //
 //
-
-
 import cbstudios.coffeebreak.model.toDoDataModule.toDoList.TimeCategory;
+
+import java.util.List;
 
 public class CategoryList implements ICategoryList {
 	private ICategoryFactory categoryFactory;
-	private List<LabelCategory> labelCategories;
-	private List<TimeCategory> timeCategories;
-	public void getters();
-	public void setters();
-	public void addLabelCategory(Object String);
-	public void removeLabelCategory(Object ILabelCategory);
-	public void removeLabelCategory(Object String);
-	public List<ITimeCategory> getTimeCategories();
-	public void initTimeCategories();
+	private List<ILabelCategory> labelCategories;
+	private List<ITimeCategory> timeCategories;
+	public void addLabelCategory(String name){
+	    ILabelCategory
+    }
+	public void removeLabelCategory(ILabelCategory label){
+
+    }
+	public void removeLabelCategory(String name){
+
+    }
+	public List<ITimeCategory> getTimeCategories(){
+		return timeCategories;
+	}
+	public void initTimeCategories(){
+
+    }
 }
