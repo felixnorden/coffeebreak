@@ -10,7 +10,5 @@ package cbstudios.coffeebreak.model.toDoDataModule.categoryList;//
 //
 
 
-
-
 public interface ILabelCategory {
 }

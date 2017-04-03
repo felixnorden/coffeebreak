@@ -10,14 +10,18 @@ package cbstudios.coffeebreak.model.toDoDataModule.categoryList;//
 //
 
 
-
-
 public interface ICategoryList {
-	public void getters();
-	public void setters();
-	public void addLabelCategory(Object String);
-	public void removeLabelCategory(Object ILabelCategory);
-	public void removeLabelCategory(Object String);
-	public List<ITimeCategory> getTimeCategories();
-	public void initTimeCategories();
+    public void getters();
+
+    public void setters();
+
+    public void addLabelCategory(Object String);
+
+    public void removeLabelCategory(Object ILabelCategory);
+
+    public void removeLabelCategory(Object String);
+
+    public List<ITimeCategory> getTimeCategories();
+
+    public void initTimeCategories();
 }

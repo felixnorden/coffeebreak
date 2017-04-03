@@ -10,11 +10,12 @@ package cbstudios.coffeebreak.model.toDoDataModule.categoryList;//
 //
 
 
-
-
 public class CategoryFactory implements ICategoryFactory {
-	public ILabelCategory createLabelCategory();
-	public ILabelCategory createLabelCategory(Object String);
-	public ITimeCategory createMultipleDayCategory();
-	public ITimeCategory createSingleDayCategory();
+    public ILabelCategory createLabelCategory();
+
+    public ILabelCategory createLabelCategory(Object String);
+
+    public ITimeCategory createMultipleDayCategory();
+
+    public ITimeCategory createSingleDayCategory();
 }

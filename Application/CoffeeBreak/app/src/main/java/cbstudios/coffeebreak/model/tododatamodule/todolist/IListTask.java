@@ -10,9 +10,8 @@ package cbstudios.coffeebreak.model.toDoDataModule.toDoList;//
 //
 
 
-
-
 public interface IListTask {
-	public void getters();
-	public void setters();
+    public void getters();
+
+    public void setters();
 }

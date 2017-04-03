@@ -10,15 +10,20 @@ package cbstudios.coffeebreak.model.toDoDataModule.toDoList;//
 //
 
 
-
-
 public class ListTask extends AdvancedTask implements IListTask {
-	private List<ITask> subTasks;
-	public void setters();
-	public void getters();
-	public void isChecked();
-	public void toggleChecked();
-	public void setChecked(Object boolean);
-	public void getters();
-	public void setters();
+    private List<ITask> subTasks;
+
+    public void setters();
+
+    public void getters();
+
+    public void isChecked();
+
+    public void toggleChecked();
+
+    public void setChecked(Object boolean);
+
+    public void getters();
+
+    public void setters();
 }

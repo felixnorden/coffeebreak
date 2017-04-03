@@ -13,9 +13,10 @@ package cbstudios.coffeebreak.model.toDoDataModule;//
 import cbstudios.coffeebreak.model.toDoDataModule.categoryList.ICategoryList;
 
 public class TODODataModule {
-	private ICategoryList categoryList;
-	private ToDoList toDoList;
-	private void initComponents() {
-	
-	}
+    private ICategoryList categoryList;
+    private ToDoList toDoList;
+
+    private void initComponents() {
+
+    }
 }

@@ -10,9 +10,7 @@ package cbstudios.coffeebreak.model.toDoDataModule.categoryList;//
 //
 
 
-
-
 public class LabelCategory implements ILabelCategory {
-	private String name;
-	private Color color;
+    private String name;
+    private Color color;
 }

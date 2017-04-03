@@ -6,9 +6,13 @@ package cbstudios.coffeebreak.model.toDoDataModule.categoryList;//
 //  @ Author :
 
 import java.util.Calendar;
+
 public interface ICategoryFactory {
-	public ILabelCategory createLabelCategory();
-	public ILabelCategory createLabelCategory(String name);
-	public ITimeCategory createMultipleDayCategory(Calendar date);
-	public ITimeCategory createSingleDayCategory(Calendar date);
+    public ILabelCategory createLabelCategory();
+
+    public ILabelCategory createLabelCategory(String name);
+
+    public ITimeCategory createMultipleDayCategory(Calendar date);
+
+    public ITimeCategory createSingleDayCategory(Calendar date);
 }

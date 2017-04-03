@@ -11,9 +11,12 @@ package cbstudios.coffeebreak.model.toDoDataModule.categoryList;//
 
 
 public class SingleDayTimeCategory implements ITimeCategory {
-	private String name;
-	private Date time;
-	public void getters();
-	public void setters();
-	public boolean isInIntervall(Object Date);
+    private String name;
+    private Date time;
+
+    public void getters();
+
+    public void setters();
+
+    public boolean isInIntervall(Object Date);
 }

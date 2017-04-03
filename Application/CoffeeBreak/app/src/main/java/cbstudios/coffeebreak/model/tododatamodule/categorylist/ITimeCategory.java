@@ -1,4 +1,5 @@
 package cbstudios.coffeebreak.model.toDoDataModule.categoryList;//
+
 import java.util.GregorianCalendar;
 
 //  @ Project : CoffeeBreak
@@ -8,7 +9,9 @@ import java.util.GregorianCalendar;
 //
 //
 public interface ITimeCategory {
-	public void getters();
-	public void setters();
-	public boolean isInIntervall(GregorianCalendar date);
+    public void getters();
+
+    public void setters();
+
+    public boolean isInIntervall(GregorianCalendar date);
 }

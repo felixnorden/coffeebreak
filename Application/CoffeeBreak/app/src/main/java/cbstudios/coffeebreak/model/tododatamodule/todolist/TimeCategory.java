@@ -14,8 +14,11 @@ import cbstudios.coffeebreak.model.toDoDataModule.categoryList.Date;
 import cbstudios.coffeebreak.model.toDoDataModule.categoryList.ITimeCategory;
 
 public class TimeCategory implements ITimeCategory {
-	private Date time;
-	public void getters();
-	public void setters();
-	public boolean isInIntervall(Object Date);
+    private Date time;
+
+    public void getters();
+
+    public void setters();
+
+    public boolean isInIntervall(Object Date);
 }

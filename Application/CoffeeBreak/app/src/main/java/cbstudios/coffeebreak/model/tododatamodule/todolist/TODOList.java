@@ -11,9 +11,10 @@ package cbstudios.coffeebreak.model.toDoDataModule.toDoList;//
 
 
 public class TODOList {
-	private ITaskFactory taskFactory;
-	private List<IAdvancedTask> tasks;
-	private void initComponents() {
-	
-	}
+    private ITaskFactory taskFactory;
+    private List<IAdvancedTask> tasks;
+
+    private void initComponents() {
+
+    }
 }
