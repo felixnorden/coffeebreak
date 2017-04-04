@@ -10,7 +10,7 @@ public interface ITaskFactory {
 
     /**
      * Creates an empty task
-     * @return 
+     * @return
      */
     public ITask createTask();
 

@@ -9,6 +9,8 @@ import java.util.List;
 //
 public interface IListTask {
     public List<ITask> getSubtasks();
-    public void addSubtask(ITask subtask);
-    public void removeSubtask(ITask subtask);
+    public void add(ITask subtask);
+    public void remove(ITask subtask);
+
+    //TODO add implementation for getting a specific task in the list
 }

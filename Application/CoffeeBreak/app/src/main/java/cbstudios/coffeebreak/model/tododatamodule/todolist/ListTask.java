@@ -23,11 +23,11 @@ public class ListTask extends AdvancedTask implements IListTask {
         return subtasks;
     }
 
-    public void addSubtask(ITask subtask) {
+    public void add(ITask subtask) {
         subtasks.add(subtask);
     }
 
-    public void removeSubtask(ITask subtask) {
+    public void remove(ITask subtask) {
         if(subtasks.contains(subtask))
             subtasks.remove(subtask);
     }
