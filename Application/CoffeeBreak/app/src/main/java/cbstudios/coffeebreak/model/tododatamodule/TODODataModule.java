@@ -14,18 +14,18 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.TODOList;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.ToDoList;
 
 public class ToDoDataModule {
     private ICategoryList categoryList;
-    private TODOList todoList;
+    private ToDoList todoList;
 
     /**
      *
      */
     public ToDoDataModule() {
         categoryList = new CategoryList();
-        todoList = new TODOList();
+        todoList = new ToDoList();
     }
 
     /**
