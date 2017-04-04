@@ -36,24 +36,24 @@ public class CategoryFactory implements ICategoryFactory {
     }
 
     /**
-     *
+     * @param name the name of the MultipleDayTimeCategory
      * @param date the last date for the MultipleDayTimeCategory. All tasks from now until that date will
      *             be placed in this MultipleDayTimeCategory.
      * @return a new MultipleDayTimeCategory
      */
     @Override
-    public ITimeCategory createMultipleDayCategory(Calendar date) {
-        return new MultipleDayTimeCategory("banan", date);
+    public ITimeCategory createMultipleDayCategory(String name, Calendar date) {
+        return new MultipleDayTimeCategory(name, date);
     }
 
     /**
-     *
+     * @param name the name of the SingleDayTimeCategory
      * @param date the only date the SingeDayTimeCategory will hold tasks for.
      * @return
      */
     @Override
-    public ITimeCategory createSingleDayCategory(Calendar date) {
-        return new SingleDayTimeCategory("apple", date);
+    public ITimeCategory createSingleDayCategory(String name, Calendar date) {
+        return new SingleDayTimeCategory(name , date);
     }
 
 }

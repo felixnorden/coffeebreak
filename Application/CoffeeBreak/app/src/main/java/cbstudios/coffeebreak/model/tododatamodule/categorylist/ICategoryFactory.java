@@ -11,7 +11,7 @@ public interface ICategoryFactory {
 
     public ILabelCategory createLabelCategory(String name);
 
-    public ITimeCategory createMultipleDayCategory(Calendar date);
+    public ITimeCategory createMultipleDayCategory(String name, Calendar date);
 
-    public ITimeCategory createSingleDayCategory(Calendar date);
+    public ITimeCategory createSingleDayCategory(String name, Calendar date);
 }
