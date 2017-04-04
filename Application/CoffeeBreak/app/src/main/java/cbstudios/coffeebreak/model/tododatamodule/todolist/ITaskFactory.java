@@ -7,9 +7,16 @@ package cbstudios.coffeebreak.model.tododatamodule.todolist;//
 //  @ Author : 
 //
 public interface ITaskFactory {
+
     public ITask createTask();
+
+    public ITask createTask(String name);
 
     public IAdvancedTask createAdvancedTask();
 
+    public IAdvancedTask createAdvancedTask(String name);
+
     public IListTask createListTask();
+
+    public IListTask createListTask(String name);
 }

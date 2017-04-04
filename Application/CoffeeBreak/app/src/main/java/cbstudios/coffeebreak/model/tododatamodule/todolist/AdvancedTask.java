@@ -25,6 +25,11 @@ public class AdvancedTask implements IAdvancedTask {
         task = new Task();
     }
 
+    public AdvancedTask(String name){
+        labels = new ArrayList<>();
+        task = new Task(name);
+    }
+
     public ITask getTask() {
         return task;
     }

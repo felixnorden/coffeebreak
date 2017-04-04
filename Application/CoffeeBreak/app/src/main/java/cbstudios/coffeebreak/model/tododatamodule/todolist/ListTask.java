@@ -14,6 +14,11 @@ public class ListTask extends AdvancedTask implements IListTask {
     public ListTask(){
         subtasks = new ArrayList<>();
     }
+
+    public ListTask(String name){
+        super(name);
+        subtasks = new ArrayList<>();
+    }
     public List<ITask> getSubtasks() {
         return subtasks;
     }

@@ -16,6 +16,11 @@ public class Task implements ITask {
     public Task(){
         checked = false;
     }
+
+    public Task(String name){
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
