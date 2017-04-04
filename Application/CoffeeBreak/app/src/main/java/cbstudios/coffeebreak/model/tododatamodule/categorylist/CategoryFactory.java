@@ -10,12 +10,26 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;//
 //
 
 
+import java.util.Calendar;
+
 public class CategoryFactory implements ICategoryFactory {
-    public ILabelCategory createLabelCategory();
+    public ILabelCategory createLabelCategory(){
+      return null;
+    }
 
-    public ILabelCategory createLabelCategory(Object String);
+    @Override
+    public ILabelCategory createLabelCategory(String name) {
+        return null;
+    }
 
-    public ITimeCategory createMultipleDayCategory();
+    @Override
+    public ITimeCategory createMultipleDayCategory(Calendar date) {
+        return null;
+    }
 
-    public ITimeCategory createSingleDayCategory();
+    @Override
+    public ITimeCategory createSingleDayCategory(Calendar date) {
+        return null;
+    }
+
 }

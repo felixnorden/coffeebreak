@@ -9,5 +9,14 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 //
 
 
+import android.graphics.Color;
+
 public interface ILabelCategory {
+    public String getName();
+
+    public void setName(String name);
+
+    public Color getColor();
+
+    public void setColor(Color color);
 }

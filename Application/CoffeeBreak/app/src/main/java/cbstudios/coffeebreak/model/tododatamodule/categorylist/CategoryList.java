@@ -16,8 +16,8 @@ public class CategoryList implements ICategoryList {
     private List<ITimeCategory> timeCategories;
 
     public void addLabelCategory(String name) {
-        ILabelCategory
     }
+
 
     public void removeLabelCategory(ILabelCategory label) {
 

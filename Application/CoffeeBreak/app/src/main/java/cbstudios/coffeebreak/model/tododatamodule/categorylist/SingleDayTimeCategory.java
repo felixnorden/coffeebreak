@@ -9,13 +9,30 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 //
 
 
+import java.util.GregorianCalendar;
+
 public class SingleDayTimeCategory implements ITimeCategory {
     private String name;
-    private Date time;
+    private GregorianCalendar time;
 
-    public void getters();
+    public String getName() {
+        return name;
+    }
 
-    public void setters();
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public boolean isInIntervall(Object Date);
+    public GregorianCalendar getTime() {
+        return time;
+    }
+
+    public void setTime(GregorianCalendar time) {
+        this.time = time;
+    }
+
+    @Override
+    public boolean isInIntervall(GregorianCalendar date) {
+        return false;
+    }
 }

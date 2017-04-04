@@ -8,9 +8,7 @@ import java.util.GregorianCalendar;
 //
 //
 public interface ITimeCategory {
-    public void getters();
-
-    public void setters();
+   //getters & setters()
 
     public boolean isInIntervall(GregorianCalendar date);
 }

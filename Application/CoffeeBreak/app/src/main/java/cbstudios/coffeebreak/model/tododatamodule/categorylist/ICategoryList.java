@@ -9,16 +9,15 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 //
 
 
+import java.util.List;
+
 public interface ICategoryList {
-    public void getters();
 
-    public void setters();
+    public void addLabelCategory(String name);
 
-    public void addLabelCategory(Object String);
+    public void removeLabelCategory(ILabelCategory labelCategory);
 
-    public void removeLabelCategory(Object ILabelCategory);
-
-    public void removeLabelCategory(Object String);
+    public void removeLabelCategory(String name);
 
     public List<ITimeCategory> getTimeCategories();
 
