@@ -9,28 +9,33 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 //
 
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class MultipleDayTimeCategory implements ITimeCategory {
 
     private String name;
-    private GregorianCalendar time;
+    private Calendar time;
 
+    public MultipleDayTimeCategory(String name, Calendar time ){
+        this.name = name;
+        this.time = time;
+    }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public GregorianCalendar getTime() {
+    public Calendar getTime() {
         return time;
     }
 
-    public void setTime(GregorianCalendar time) {
+    public void setTime(Calendar time) {
         this.time = time;
     }
 
-
-    public boolean isInIntervall(GregorianCalendar taskTime){
-        return false;
+    @Override
+    public boolean isInIntervall(Calendar date){
+        return date.before(time);
     }
 }

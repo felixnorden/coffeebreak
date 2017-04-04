@@ -9,11 +9,17 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 //
 
 
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class SingleDayTimeCategory implements ITimeCategory {
     private String name;
-    private GregorianCalendar time;
+    private Calendar time;
+
+    public SingleDayTimeCategory(String name, Calendar time ){
+        this.name = name;
+        this.time = time;
+    }
 
     public String getName() {
         return name;
@@ -23,16 +29,17 @@ public class SingleDayTimeCategory implements ITimeCategory {
         this.name = name;
     }
 
-    public GregorianCalendar getTime() {
+    public Calendar getTime() {
         return time;
     }
 
-    public void setTime(GregorianCalendar time) {
+    public void setTime(Calendar time) {
         this.time = time;
     }
 
     @Override
-    public boolean isInIntervall(GregorianCalendar date) {
-        return false;
+    public boolean isInIntervall(Calendar date) {
+        return (((date.get(Calendar.MONTH) ==time.get(Calendar.MONTH))&&
+                date.get(Calendar.DAY_OF_WEEK_IN_MONTH) == time.get(Calendar.DAY_OF_WEEK_IN_MONTH)));
     }
 }
