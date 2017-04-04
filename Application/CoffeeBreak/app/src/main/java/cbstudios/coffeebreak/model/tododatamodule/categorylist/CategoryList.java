@@ -15,6 +15,10 @@ public class CategoryList implements ICategoryList {
     private List<ILabelCategory> labelCategories;
     private List<ITimeCategory> timeCategories;
 
+    /**
+     * 
+     * @param name
+     */
     public void addLabelCategory(String name) {
         labelCategories.add(categoryFactory.createLabelCategory(name));
     }
@@ -36,8 +40,13 @@ public class CategoryList implements ICategoryList {
         return timeCategories;
     }
 
+    // TODO
     public void initTimeCategories() {
 
+    }
+
+    public List<ILabelCategory> getLabelCategories() {
+        return labelCategories;
     }
 }
 

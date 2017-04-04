@@ -12,24 +12,48 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;//
 
 import java.util.Calendar;
 
+/**
+ * A factory class that is responsible for creating all categories.
+ */
+
 public class CategoryFactory implements ICategoryFactory {
+    /**
+     *
+     * @return a new LabelCategory with no name.
+     */
     public ILabelCategory createLabelCategory(){
-      return null;
+      return new LabelCategory();
     }
 
+    /**
+     *
+     * @param name the name of the LabelCategory
+     * @return a new LabelCategory with a name.
+     */
     @Override
     public ILabelCategory createLabelCategory(String name) {
-        return null;
+        return new LabelCategory(name);
     }
 
+    /**
+     *
+     * @param date the last date for the MultipleDayTimeCategory. All tasks from now until that date will
+     *             be placed in this MultipleDayTimeCategory.
+     * @return a new MultipleDayTimeCategory
+     */
     @Override
     public ITimeCategory createMultipleDayCategory(Calendar date) {
-        return null;
+        return new MultipleDayTimeCategory("banan", date);
     }
 
+    /**
+     *
+     * @param date the only date the SingeDayTimeCategory will hold tasks for.
+     * @return
+     */
     @Override
     public ITimeCategory createSingleDayCategory(Calendar date) {
-        return null;
+        return new SingleDayTimeCategory("apple", date);
     }
 
 }

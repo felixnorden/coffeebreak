@@ -16,6 +16,16 @@ public class LabelCategory implements ILabelCategory {
     private String name;
     private Color color;
 
+    LabelCategory() {
+        name = null;
+        color = null;
+    }
+
+    LabelCategory(String name) {
+        this.name = name;
+        color = null;
+    }
+
     public String getName() {
         return name;
     }
