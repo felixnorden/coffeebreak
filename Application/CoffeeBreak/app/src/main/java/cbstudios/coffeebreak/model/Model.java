@@ -1,26 +1,26 @@
 package cbstudios.coffeebreak.model;
 
-import cbstudios.coffeebreak.model.tododatamodule.TODODataModule;
+import cbstudios.coffeebreak.model.tododatamodule.ToDoDataModule;
 
 public class Model {
 
-    private TODODataModule todoDataModule;
+    private ToDoDataModule toDoDataModule;
 
     public Model() {
-        todoDataModule = new TODODataModule();
+        toDoDataModule = new ToDoDataModule();
     }
 
     /**
      * Initializes the model with saved data.
      */
     public void initialize() {
-        todoDataModule.initialize();
+        toDoDataModule.initialize();
     }
 
     /**
      * @return Returns the ToDoDataModule.
      */
-    public TODODataModule getToDoDataModule() {
-        return this.todoDataModule;
+    public ToDoDataModule getToDoDataModule() {
+        return this.toDoDataModule;
     }
 }
