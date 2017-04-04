@@ -11,7 +11,12 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
+/**
+ * A class whose main usage is checking if a date of a task is
+ * occuring before or during the date of the instance.
+ *
+ * Will be used for the instances "Today" and "Next seven days"
+ */
 public class MultipleDayTimeCategory implements ITimeCategory {
 
     private String name;
@@ -34,6 +39,11 @@ public class MultipleDayTimeCategory implements ITimeCategory {
         this.time = time;
     }
 
+    /**
+     * Checks if a tasks date is before or during the date of the instance
+     * @param date the date of the task
+     * @return True if the tasks date is within the interval
+     */
     @Override
     public boolean isInIntervall(Calendar date){
         return (date.get(Calendar.YEAR) == time.get(Calendar.YEAR) &&
