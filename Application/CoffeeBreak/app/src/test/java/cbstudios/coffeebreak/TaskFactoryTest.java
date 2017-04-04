@@ -1,5 +1,6 @@
 package cbstudios.coffeebreak;
 
+
 import cbstudios.coffeebreak.model.tododatamodule.todolist.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -7,15 +8,12 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+
 /**
  * Created by Lenovo on 2017-04-04.
  */
 public class TaskFactoryTest {
     ITaskFactory factory;
-    @BeforeClass
-    public static void initFactory(){
-
-    }
     @Test
     public void TestFactoryBuild_default() throws Exception {
         factory = TaskFactory.getInstance();
