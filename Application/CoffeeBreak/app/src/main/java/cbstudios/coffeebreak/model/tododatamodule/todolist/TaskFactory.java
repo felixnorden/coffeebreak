@@ -7,7 +7,15 @@ package cbstudios.coffeebreak.model.tododatamodule.todolist;
 //
 //
 public class TaskFactory implements ITaskFactory {
-    public void createTask() {
+    public ITask createTask() {
+        return new Task();
+    }
 
+    public IAdvancedTask createAdvancedTask() {
+        return new AdvancedTask();
+    }
+
+    public IListTask createListTask() {
+        return new ListTask();
     }
 }

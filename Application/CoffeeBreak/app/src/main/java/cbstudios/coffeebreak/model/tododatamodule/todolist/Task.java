@@ -13,6 +13,9 @@ public class Task implements ITask {
     private String name;
     private boolean checked;
 
+    public Task(){
+        checked = false;
+    }
     public String getName() {
         return name;
     }
@@ -26,7 +29,7 @@ public class Task implements ITask {
     }
 
     public void toggleChecked() {
-
+        setChecked(!isChecked());
     }
 
     public void setChecked(boolean value) {
