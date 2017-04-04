@@ -16,10 +16,6 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.Task;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-/**
- * Created by Zack on 2017-04-04.
- */
-
 public class ToDoDataModuleTest {
     private ToDoDataModule toDoDataModule;
 
