@@ -39,7 +39,7 @@ public class SingleDayTimeCategory implements ITimeCategory {
 
     @Override
     public boolean isInIntervall(Calendar date) {
-        return (((date.get(Calendar.MONTH) ==time.get(Calendar.MONTH))&&
-                (date.get(Calendar.DAY_OF_MONTH) ==time.get(Calendar.DAY_OF_MONTH))));
+        return (((date.get(Calendar.YEAR) ==time.get(Calendar.YEAR))&&
+                (date.get(Calendar.DAY_OF_YEAR) ==time.get(Calendar.DAY_OF_YEAR))));
     }
 }

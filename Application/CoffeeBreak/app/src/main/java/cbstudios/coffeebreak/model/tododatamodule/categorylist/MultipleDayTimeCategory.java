@@ -36,6 +36,8 @@ public class MultipleDayTimeCategory implements ITimeCategory {
 
     @Override
     public boolean isInIntervall(Calendar date){
-        return date.before(time);
+        return (date.get(Calendar.YEAR) == time.get(Calendar.YEAR) &&
+                date.get(Calendar.DAY_OF_YEAR) == time.get(Calendar.DAY_OF_YEAR) ||
+                date.before(time));
     }
 }
