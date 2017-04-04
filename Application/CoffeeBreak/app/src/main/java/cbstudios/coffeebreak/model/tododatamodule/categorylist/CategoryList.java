@@ -16,15 +16,20 @@ public class CategoryList implements ICategoryList {
     private List<ITimeCategory> timeCategories;
 
     public void addLabelCategory(String name) {
+        labelCategories.add(categoryFactory.createLabelCategory(name));
     }
 
 
     public void removeLabelCategory(ILabelCategory label) {
-
+        labelCategories.remove(label);
     }
 
     public void removeLabelCategory(String name) {
-
+        for(ILabelCategory label : labelCategories){
+            if(label.getName() == name){
+                labelCategories.remove(label);
+            }
+        }
     }
 
     public List<ITimeCategory> getTimeCategories() {
@@ -35,3 +40,4 @@ public class CategoryList implements ICategoryList {
 
     }
 }
+
