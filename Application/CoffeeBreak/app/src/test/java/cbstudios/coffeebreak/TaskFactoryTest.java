@@ -13,11 +13,12 @@ import static org.junit.Assert.*;
 public class TaskFactoryTest {
     ITaskFactory factory;
     @BeforeClass
-    public void initFactory(){
-        factory = TaskFactory.getInstance();
+    public static void initFactory(){
+
     }
     @Test
     public void TestFactoryBuild_default() throws Exception {
+        factory = TaskFactory.getInstance();
         ITask sampleTask = factory.createTask();
         IAdvancedTask advancedTask = factory.createAdvancedTask();
         IListTask listTask = factory.createListTask();
