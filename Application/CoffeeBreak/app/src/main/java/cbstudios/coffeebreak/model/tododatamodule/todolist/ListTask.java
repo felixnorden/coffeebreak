@@ -32,4 +32,21 @@ public class ListTask extends AdvancedTask implements IListTask {
             subtasks.remove(subtask);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        ListTask listTask = (ListTask) o;
+
+        return subtasks.equals(listTask.subtasks);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + subtasks.hashCode();
+        return result;
+    }
 }

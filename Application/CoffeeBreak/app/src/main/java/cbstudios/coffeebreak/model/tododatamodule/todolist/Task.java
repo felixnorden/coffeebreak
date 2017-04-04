@@ -40,4 +40,22 @@ public class Task implements ITask {
     public void setChecked(boolean value) {
         checked = value;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Task task = (Task) o;
+
+        if (checked != task.checked) return false;
+        return name != null ? name.equals(task.name) : task.name == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name != null ? name.hashCode() : 0;
+        result = 31 * result + (checked ? 1 : 0);
+        return result;
+    }
 }

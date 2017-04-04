@@ -102,4 +102,28 @@ public class AdvancedTask implements IAdvancedTask {
     public void setChecked(boolean value){
         task.setChecked(value);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AdvancedTask that = (AdvancedTask) o;
+
+        if (!task.equals(that.task)) return false;
+        if (!labels.equals(that.labels)) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        if (note != null ? !note.equals(that.note) : that.note != null) return false;
+        return priority == that.priority;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = task.hashCode();
+        result = 31 * result + labels.hashCode();
+        result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (note != null ? note.hashCode() : 0);
+        result = 31 * result + (priority != null ? priority.hashCode() : 0);
+        return result;
+    }
 }

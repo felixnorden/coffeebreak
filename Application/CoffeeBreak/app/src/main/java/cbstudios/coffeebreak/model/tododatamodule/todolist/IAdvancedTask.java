@@ -50,4 +50,8 @@ public interface IAdvancedTask {
     public void toggleChecked();
 
     public void setChecked(boolean value);
+
+    public boolean equals(Object o);
+
+    public int hashCode();
 }

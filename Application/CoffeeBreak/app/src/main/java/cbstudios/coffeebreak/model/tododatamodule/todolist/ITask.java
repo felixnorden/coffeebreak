@@ -17,4 +17,8 @@ public interface ITask {
     public void toggleChecked();
 
     public void setChecked(boolean checked);
+
+    public boolean equals(Object o);
+
+    public int hashCode();
 }
