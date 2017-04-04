@@ -8,6 +8,7 @@ import java.util.List;
 //  @ Author : 
 //
 public interface IListTask {
-    public List<ITask> getSubTasks();
-    public void addSubTask(ITask subtask);
+    public List<ITask> getSubtasks();
+    public void addSubtask(ITask subtask);
+    public void removeSubtask(ITask subtask);
 }
