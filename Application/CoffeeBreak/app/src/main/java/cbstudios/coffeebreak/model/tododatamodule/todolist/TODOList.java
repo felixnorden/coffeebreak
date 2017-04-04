@@ -36,6 +36,7 @@ public class TODOList {
     public boolean isListTask(IAdvancedTask advancedTask){
         return advancedTask instanceof IListTask;
     }
+
     private void initComponents() {
         taskFactory = TaskFactory.getInstance();
         tasks = new ArrayList<>();

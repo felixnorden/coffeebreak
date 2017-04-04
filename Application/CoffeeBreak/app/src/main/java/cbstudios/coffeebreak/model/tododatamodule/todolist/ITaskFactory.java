@@ -8,6 +8,10 @@ package cbstudios.coffeebreak.model.tododatamodule.todolist;//
 //
 public interface ITaskFactory {
 
+    /**
+     * Creates an empty task
+     * @return 
+     */
     public ITask createTask();
 
     public ITask createTask(String name);
