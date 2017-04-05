@@ -16,7 +16,7 @@ public interface ILabelCategory {
 
     public void setName(String name);
 
-    public Color getColor();
+    public int getColor();
 
-    public void setColor(Color color);
+    public void setColor(int color);
 }

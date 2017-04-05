@@ -14,11 +14,10 @@ import android.graphics.Color;
 public class LabelCategory implements ILabelCategory {
 
     private String name;
-    private Color color;
+    private int color;
 
     LabelCategory() {
         this.name = "";
-        this.color = null;
     }
 
     LabelCategory(String name, int color) {
@@ -34,11 +33,11 @@ public class LabelCategory implements ILabelCategory {
         this.name = name;
     }
 
-    public Color getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(int color) {
         this.color = color;
     }
 
