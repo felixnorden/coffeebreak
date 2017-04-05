@@ -23,6 +23,7 @@ public class CategoryList implements ICategoryList {
     private List<ILabelCategory> labelCategories;
     private List<ITimeCategory> timeCategories;
 
+
     public void addLabelCategory() {
         labelCategories.add(categoryFactory.createLabelCategory());
     }
