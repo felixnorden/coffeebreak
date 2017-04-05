@@ -19,6 +19,10 @@ import java.util.Calendar;
  */
 
 public class CategoryFactory implements ICategoryFactory {
+
+    private static final ICategoryFactory categoryFactory = new CategoryFactory();
+
+    public static ICategoryFactory getInstance(){return categoryFactory;}
     /**
      *
      * @return a new LabelCategory with no name.
@@ -57,5 +61,7 @@ public class CategoryFactory implements ICategoryFactory {
     public ITimeCategory createSingleDayCategory(String name, Calendar date) {
         return new SingleDayTimeCategory(name , date);
     }
+
+    private CategoryFactory(){}
 
 }

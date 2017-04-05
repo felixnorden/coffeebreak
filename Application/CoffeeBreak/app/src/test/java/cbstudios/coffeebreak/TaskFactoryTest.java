@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
  * Created by Lenovo on 2017-04-04.
  */
 public class TaskFactoryTest {
-    ITaskFactory factory;
+    private ITaskFactory factory;
     @Test
     public void TestFactoryBuild_default() throws Exception {
         factory = TaskFactory.getInstance();

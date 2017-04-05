@@ -21,7 +21,7 @@ public class SingleDayTimeCategory implements ITimeCategory {
     private String name;
     private Calendar time;
 
-    public SingleDayTimeCategory(String name, Calendar time ){
+     SingleDayTimeCategory(String name, Calendar time ){
         this.name = name;
         this.time = time;
     }
@@ -51,5 +51,28 @@ public class SingleDayTimeCategory implements ITimeCategory {
     public boolean isInIntervall(Calendar date) {
         return (((date.get(Calendar.YEAR) ==time.get(Calendar.YEAR))&&
                 (date.get(Calendar.DAY_OF_YEAR) ==time.get(Calendar.DAY_OF_YEAR))));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SingleDayTimeCategory that = (SingleDayTimeCategory) o;
+
+        if (name != null ? !name.equals(that.getName()): that.name != null ) return false;
+        if (time != null ? !time.equals(that.time) : that.time != null) return false;
+
+        return true;
+
+     }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (time != null ? time.hashCode() : 0);
+
+        return result;
     }
 }

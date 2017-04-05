@@ -19,6 +19,7 @@ public class Task implements ITask {
 
     public Task(String name){
         this.name = name;
+        checked = false;
     }
 
     public String getName() {

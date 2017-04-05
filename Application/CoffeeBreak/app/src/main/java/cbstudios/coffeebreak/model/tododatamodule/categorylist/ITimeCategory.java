@@ -15,4 +15,6 @@ public interface ITimeCategory {
     public boolean isInIntervall(Calendar date);
     public Calendar getTime();
     public void setTime(Calendar time);
+    public boolean equals(Object o);
+    public int hashCode();
 }

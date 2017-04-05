@@ -4,8 +4,10 @@ package cbstudios.coffeebreak;
         import org.junit.Test;
         import java.util.GregorianCalendar;
         import cbstudios.coffeebreak.model.Model;
+        import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
+        import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
         import cbstudios.coffeebreak.model.tododatamodule.categorylist.MultipleDayTimeCategory;
-        import cbstudios.coffeebreak.model.tododatamodule.categorylist.SingleDayTimeCategory;
+        import cbstudios.coffeebreak.model.tododatamodule.categorylist.MultipleDayTimeCategory;
         import static org.junit.Assert.assertFalse;
         import static org.junit.Assert.assertTrue;
 
@@ -14,10 +16,10 @@ package cbstudios.coffeebreak;
  */
 
 public class MultipleDayTimeCategoryTest {
-    MultipleDayTimeCategory multipleDayTimeCategory;
+    ITimeCategory multipleDayTimeCategory;
     @Before
     public void beforeTest(){
-        multipleDayTimeCategory = new MultipleDayTimeCategory("mock", new GregorianCalendar(2016,4,5));
+        multipleDayTimeCategory = CategoryFactory.getInstance().createMultipleDayCategory("mock", new GregorianCalendar(2016,4,5));
     }
 
     @Test
@@ -33,5 +35,19 @@ public class MultipleDayTimeCategoryTest {
         assertTrue(multipleDayTimeCategory.isInIntervall(new GregorianCalendar(16,2,2)));
     }
 
+    @Test
+    public void testEquals(){
+        ITimeCategory mockTrue = CategoryFactory.getInstance().createMultipleDayCategory("mock", new GregorianCalendar(2016,4,5));
+        ITimeCategory mockFalseDay = CategoryFactory.getInstance().createMultipleDayCategory("mock", new GregorianCalendar(2016,4,5,2,2));
+        ITimeCategory mockFalseNameNull = CategoryFactory.getInstance().createMultipleDayCategory(null, new GregorianCalendar(2016,4,5));
+        ITimeCategory mockFalseName = CategoryFactory.getInstance().createMultipleDayCategory("mock2", new GregorianCalendar(2016,4,5));
+        ITimeCategory mockFalseDayNull = CategoryFactory.getInstance().createMultipleDayCategory("mock", null);
+        ITimeCategory mockFalseNull = CategoryFactory.getInstance().createMultipleDayCategory(null, null);
+        assertTrue(multipleDayTimeCategory.equals(mockTrue));
+        assertFalse(multipleDayTimeCategory.equals(mockFalseDay));
+        assertFalse(multipleDayTimeCategory.equals(mockFalseDayNull));
+        assertFalse(multipleDayTimeCategory.equals(mockFalseName));
+        assertFalse(multipleDayTimeCategory.equals(mockFalseNameNull));
+        assertFalse(multipleDayTimeCategory.equals(mockFalseNull));
+    }
 }
-
