@@ -19,12 +19,12 @@ import java.util.List;
  */
 
 public class CategoryList implements ICategoryList {
-    private ICategoryFactory categoryFactory;
+
     private List<ILabelCategory> labelCategories;
     private List<ITimeCategory> timeCategories;
 
     public void addLabelCategory() {
-        labelCategories.add(categoryFactory.createLabelCategory());
+        labelCategories.add(CategoryFactory.getInstance().createLabelCategory());
     }
 
     /**
@@ -32,7 +32,7 @@ public class CategoryList implements ICategoryList {
      * @param name the name of the labelCategory
      */
     public void addLabelCategory(String name, int color) {
-        labelCategories.add(categoryFactory.createLabelCategory(name, color));
+        labelCategories.add(CategoryFactory.getInstance().createLabelCategory(name, color));
     }
 
 
@@ -75,22 +75,22 @@ public class CategoryList implements ICategoryList {
      */
     public void initTimeCategories() {
         Calendar currentDate = Calendar.getInstance();
-        timeCategories.add(categoryFactory.createSingleDayCategory("Today", currentDate));
+        timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("Today", currentDate));
         currentDate.add(Calendar.DAY_OF_YEAR, 1);
-        timeCategories.add(categoryFactory.createSingleDayCategory("Tomorrow", currentDate));
+        timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("Tomorrow", currentDate));
         currentDate.add(Calendar.DAY_OF_YEAR, 6);
-        timeCategories.add(categoryFactory.createMultipleDayCategory("Next 7 days", currentDate));
+        timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("Next 7 days", currentDate));
         currentDate.add(Calendar.DAY_OF_YEAR, 23);
-        timeCategories.add(categoryFactory.createMultipleDayCategory("Next 30 days", currentDate));
+        timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("Next 30 days", currentDate));
     }
 
     /**
      * Creates all the labelCategories
      */
     public void initLabelCategories() {
-        labelCategories.add(categoryFactory.createLabelCategory("Work", Color.BLUE));
-        labelCategories.add(categoryFactory.createLabelCategory("Home", Color.GREEN));
-        labelCategories.add(categoryFactory.createLabelCategory("Meetings", Color.BLACK));
+        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Work", Color.BLUE));
+        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Home", Color.GREEN));
+        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Meetings", Color.BLACK));
 
     }
     /**
