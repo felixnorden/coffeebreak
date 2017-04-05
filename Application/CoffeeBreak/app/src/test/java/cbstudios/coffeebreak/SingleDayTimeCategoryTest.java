@@ -46,5 +46,4 @@ public class SingleDayTimeCategoryTest {
         assertFalse(singleDayTimeCategory.equals(mockFalseNameNull));
         assertFalse(singleDayTimeCategory.equals(mockFalseNull));
     }
-
 }

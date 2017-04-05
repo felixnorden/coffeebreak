@@ -48,5 +48,4 @@ public class MultipleDayTimeCategoryTest {
         assertFalse(multipleDayTimeCategory.equals(mockFalseNameNull));
         assertFalse(multipleDayTimeCategory.equals(mockFalseNull));
     }
-
 }
