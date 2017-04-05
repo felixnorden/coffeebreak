@@ -100,5 +100,28 @@ public class CategoryList implements ICategoryList {
     public List<ILabelCategory> getLabelCategories() {
         return labelCategories;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CategoryList that = (CategoryList) o;
+
+        if (labelCategories != null ? !labelCategories.equals(that.getLabelCategories()): that.getLabelCategories() != null ) return false;
+        if (timeCategories != null ? !timeCategories.equals(that.getTimeCategories()): that.getTimeCategories() != null ) return false;
+
+        return true;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + (labelCategories != null ? labelCategories.hashCode() : 0);
+        result = 31 * result + (timeCategories != null ? timeCategories.hashCode() : 0);
+
+        return result;
+    }
 }
 

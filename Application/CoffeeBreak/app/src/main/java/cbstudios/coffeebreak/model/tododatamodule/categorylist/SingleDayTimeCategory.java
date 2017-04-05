@@ -21,7 +21,7 @@ public class SingleDayTimeCategory implements ITimeCategory {
     private String name;
     private Calendar time;
 
-    public SingleDayTimeCategory(String name, Calendar time ){
+     SingleDayTimeCategory(String name, Calendar time ){
         this.name = name;
         this.time = time;
     }

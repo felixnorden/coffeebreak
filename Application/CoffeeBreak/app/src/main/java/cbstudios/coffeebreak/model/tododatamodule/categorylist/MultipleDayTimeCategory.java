@@ -22,7 +22,7 @@ public class MultipleDayTimeCategory implements ITimeCategory {
     private String name;
     private Calendar time;
 
-    public MultipleDayTimeCategory(String name, Calendar time ){
+     MultipleDayTimeCategory(String name, Calendar time ){
         this.name = name;
         this.time = time;
     }
