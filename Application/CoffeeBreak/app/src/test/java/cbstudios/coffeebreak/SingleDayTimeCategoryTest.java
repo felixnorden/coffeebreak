@@ -31,4 +31,20 @@ public class SingleDayTimeCategoryTest {
         assertTrue(singleDayTimeCategory.isInIntervall(new GregorianCalendar(2016,2,2)));
     }
 
+    @Test
+    public void testEquals(){
+        SingleDayTimeCategory mockTrue = new SingleDayTimeCategory("mock", new GregorianCalendar(2016,4,5));
+        SingleDayTimeCategory mockFalseDay = new SingleDayTimeCategory("mock", new GregorianCalendar(2016,4,5,2,2));
+        SingleDayTimeCategory mockFalseNameNull = new SingleDayTimeCategory(null, new GregorianCalendar(2016,4,5));
+        SingleDayTimeCategory mockFalseName = new SingleDayTimeCategory("mock2", new GregorianCalendar(2016,4,5));
+        SingleDayTimeCategory mockFalseDayNull = new SingleDayTimeCategory("mock", null);
+        SingleDayTimeCategory mockFalseNull = new SingleDayTimeCategory(null, null);
+        assertTrue(singleDayTimeCategory.equals(mockTrue));
+        assertFalse(singleDayTimeCategory.equals(mockFalseDay));
+        assertFalse(singleDayTimeCategory.equals(mockFalseDayNull));
+        assertFalse(singleDayTimeCategory.equals(mockFalseName));
+        assertFalse(singleDayTimeCategory.equals(mockFalseNameNull));
+        assertFalse(singleDayTimeCategory.equals(mockFalseNull));
+    }
+
 }
