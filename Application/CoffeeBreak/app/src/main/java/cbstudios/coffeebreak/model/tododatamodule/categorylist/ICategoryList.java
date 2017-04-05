@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface ICategoryList {
 
-    public void addLabelCategory(String name);
+    public void addLabelCategory(String name, int color);
 
     public void removeLabelCategory(ILabelCategory labelCategory);
 

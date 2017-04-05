@@ -10,6 +10,8 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;//
 //
 
 
+import android.graphics.Color;
+
 import java.util.Calendar;
 
 /**
@@ -31,8 +33,8 @@ public class CategoryFactory implements ICategoryFactory {
      * @return a new LabelCategory with a name.
      */
     @Override
-    public ILabelCategory createLabelCategory(String name) {
-        return new LabelCategory(name);
+    public ILabelCategory createLabelCategory(String name, int color) {
+        return new LabelCategory(name, color);
     }
 
     /**

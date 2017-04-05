@@ -8,6 +8,8 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;
 //
 //
 
+import android.graphics.Color;
+
 import java.util.List;
 
 /**
@@ -27,8 +29,8 @@ public class CategoryList implements ICategoryList {
      * Adds a new labelCategory to the labelCategory list.
      * @param name the name of the labelCategory
      */
-    public void addLabelCategory(String name) {
-        labelCategories.add(categoryFactory.createLabelCategory(name));
+    public void addLabelCategory(String name, int color) {
+        labelCategories.add(categoryFactory.createLabelCategory(name, color));
     }
 
 
@@ -61,6 +63,11 @@ public class CategoryList implements ICategoryList {
         return timeCategories;
     }
 
+    public void initAllCategories() {
+        initLabelCategories();
+        initTimeCategories();
+    }
+
     /**
      * Creates all the timeCategories.
      */
@@ -71,6 +78,15 @@ public class CategoryList implements ICategoryList {
         timeCategories.add(categoryFactory.createMultipleDayCategory("Next 30 days", null));
     }
 
+    /**
+     * Creates all the labelCategories
+     */
+    public void initLabelCategories() {
+        labelCategories.add(categoryFactory.createLabelCategory("Work", Color.BLUE));
+        labelCategories.add(categoryFactory.createLabelCategory("Home", Color.GREEN));
+        labelCategories.add(categoryFactory.createLabelCategory("Meetings", Color.BLACK));
+
+    }
     /**
      *
      * @return the labelCategories list.

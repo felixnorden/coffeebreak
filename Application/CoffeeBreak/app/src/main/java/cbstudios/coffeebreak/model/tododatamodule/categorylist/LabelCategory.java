@@ -17,12 +17,13 @@ public class LabelCategory implements ILabelCategory {
     private Color color;
 
     LabelCategory() {
+        this.name = "";
         this.color = null;
     }
 
-    LabelCategory(String name) {
+    LabelCategory(String name, int color) {
         this.name = name;
-        this.color = null;
+        this.color = color;
     }
 
     public String getName() {

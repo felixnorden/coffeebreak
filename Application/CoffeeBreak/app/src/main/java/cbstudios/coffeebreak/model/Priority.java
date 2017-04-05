@@ -7,9 +7,9 @@ import android.graphics.Color;
 Colors are represented by integers in Android. Full list of colors below.
  */
 public enum Priority {
-    ONE(-65536),
-    TWO(-16711936),
-    THREE(-256);
+    ONE(Color.RED),
+    TWO(Color.BLUE),
+    THREE(Color.YELLOW);
 
     private int color;
 
