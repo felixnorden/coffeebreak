@@ -123,4 +123,12 @@ public class ToDoDataModule {
     public void removeTask(IAdvancedTask task) {
         todoList.remove(task);
     }
+
+    /**
+     * @param index Index of the task in ToDoList
+     * @return The task at place index in ToDoList
+     */
+    public IAdvancedTask getTask(int index){
+        return todoList.getTasks().get(index);
+    }
 }
