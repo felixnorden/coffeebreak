@@ -59,7 +59,7 @@ public class LabelCategory implements ILabelCategory {
     @Override
     public int hashCode() {
         int result = 13;
-        result = 31 * result + name.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + color;
 
         return result;
