@@ -10,6 +10,8 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;
 
 import android.graphics.Color;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -72,10 +74,14 @@ public class CategoryList implements ICategoryList {
      * Creates all the timeCategories.
      */
     public void initTimeCategories() {
-        timeCategories.add(categoryFactory.createSingleDayCategory("Today", null));
-        timeCategories.add(categoryFactory.createSingleDayCategory("Tomorrow", null));
-        timeCategories.add(categoryFactory.createMultipleDayCategory("Next 7 days", null));
-        timeCategories.add(categoryFactory.createMultipleDayCategory("Next 30 days", null));
+        Calendar currentDate = Calendar.getInstance();
+        timeCategories.add(categoryFactory.createSingleDayCategory("Today", currentDate));
+        currentDate.add(Calendar.DAY_OF_YEAR, 1);
+        timeCategories.add(categoryFactory.createSingleDayCategory("Tomorrow", currentDate));
+        currentDate.add(Calendar.DAY_OF_YEAR, 6);
+        timeCategories.add(categoryFactory.createMultipleDayCategory("Next 7 days", currentDate));
+        currentDate.add(Calendar.DAY_OF_YEAR, 23);
+        timeCategories.add(categoryFactory.createMultipleDayCategory("Next 30 days", currentDate));
     }
 
     /**
