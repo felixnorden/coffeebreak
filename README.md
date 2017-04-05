@@ -1,2 +1,2 @@
 # coffeebreak
-![Alt text](http://mittkok.expressen.se/wp-content/uploads/2015/02/kaffe.jpg)
+![Alt text](http://i.imgur.com/BPyU7hB.jpg "Copyright Landsfadern")
