@@ -12,6 +12,11 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+/**
+ * The main usage of this class is to check if a task is due on/before
+ * the date given to the instance.
+ * Used primarily for the "Tomorrow" instance
+ */
 public class SingleDayTimeCategory implements ITimeCategory {
     private String name;
     private Calendar time;
@@ -37,9 +42,14 @@ public class SingleDayTimeCategory implements ITimeCategory {
         this.time = time;
     }
 
+    /**
+     * Checks if the tasks day, year and month is the same as the date of the category
+     * @param date the tasks date
+     * @return True if the dates occur on the same day.
+     */
     @Override
     public boolean isInIntervall(Calendar date) {
-        return (((date.get(Calendar.MONTH) ==time.get(Calendar.MONTH))&&
-                date.get(Calendar.DAY_OF_WEEK_IN_MONTH) == time.get(Calendar.DAY_OF_WEEK_IN_MONTH)));
+        return (((date.get(Calendar.YEAR) ==time.get(Calendar.YEAR))&&
+                (date.get(Calendar.DAY_OF_YEAR) ==time.get(Calendar.DAY_OF_YEAR))));
     }
 }
