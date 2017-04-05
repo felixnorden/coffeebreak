@@ -48,7 +48,7 @@ public class LabelCategory implements ILabelCategory {
 
         LabelCategory that = (LabelCategory) o;
 
-        if (name != null ? name != that.getName(): that.name != null ) return false;
+        if (name != null ? !name.equals(that.getName()): that.name != null ) return false;
         return color == that.color;
 
 
