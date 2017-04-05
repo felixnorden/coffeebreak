@@ -10,6 +10,7 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;
 
 import android.graphics.Color;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -20,8 +21,13 @@ import java.util.List;
 
 public class CategoryList implements ICategoryList {
 
-    private List<ILabelCategory> labelCategories;
-    private List<ITimeCategory> timeCategories;
+    public List<ILabelCategory> labelCategories;
+    public List<ITimeCategory> timeCategories;
+
+    public CategoryList() {
+        labelCategories = new ArrayList<>();
+        timeCategories = new ArrayList<>();
+    }
 
 
     public void addLabelCategory() {
