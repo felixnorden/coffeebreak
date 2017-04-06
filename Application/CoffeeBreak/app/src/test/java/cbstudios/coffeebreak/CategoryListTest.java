@@ -125,6 +125,19 @@ public class CategoryListTest {
         mockHashOrg = categoryList.hashCode();
         assertFalse(mockHashOrg == mockHashFalse);
 
-        
+        ILabelCategory labelOrg = new LabelCategory("Work", Color.BLACK);
+        ILabelCategory mockLabel = new LabelCategory("Work", Color.BLACK);
+        mockHashOrg = labelOrg.hashCode();
+        mockHashTrue = mockLabel.hashCode();
+        assertTrue(mockHashOrg == mockHashTrue);
+
+
+        mockLabel = new LabelCategory("False", Color.BLACK);
+        mockHashFalse = mockLabel.hashCode();
+        assertFalse(mockHashOrg == mockHashFalse);
+
+        mockLabel = new LabelCategory("Work", Color.BLUE);
+        mockHashFalse = mockLabel.hashCode();
+        assertFalse(mockHashOrg == mockHashFalse);
     }
 }

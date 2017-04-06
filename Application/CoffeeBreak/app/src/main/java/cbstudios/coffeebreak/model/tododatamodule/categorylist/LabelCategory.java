@@ -16,11 +16,11 @@ public class LabelCategory implements ILabelCategory {
     private String name;
     private int color;
 
-    LabelCategory() {
+    public LabelCategory() {
         this.name = "";
     }
 
-    LabelCategory(String name, int color) {
+    public LabelCategory(String name, int color) {
         this.name = name;
         this.color = color;
     }
