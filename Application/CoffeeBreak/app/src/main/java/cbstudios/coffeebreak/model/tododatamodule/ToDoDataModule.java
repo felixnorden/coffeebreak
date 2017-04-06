@@ -7,6 +7,7 @@ package cbstudios.coffeebreak.model.tododatamodule;
 //  @ Author : 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryList;
@@ -78,15 +79,13 @@ public class ToDoDataModule {
     /**
      * POOP SOLUTION, CHANGE ASAP
      */
-    public void update(){
-        int index = 0;
-        for(int i = 0; i < getTasks().size(); i++){
-            if (getTask(i).isChecked()){
-                index = i;
-            }
-            removeTask(getTask(index));
-
+    public void removeChecked(){
+        List<IAdvancedTask> toBeRemoved = new ArrayList<>();
+        for(IAdvancedTask advancedTask: getTasks()){
+            if (advancedTask.isChecked())
+                    toBeRemoved.add(advancedTask);
         }
+        getTasks().removeAll(toBeRemoved);
     }
 
     /**

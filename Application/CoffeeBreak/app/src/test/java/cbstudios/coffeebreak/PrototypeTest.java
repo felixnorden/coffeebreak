@@ -49,10 +49,7 @@ public class PrototypeTest {
 
         //Test if checked tasks is removed when we change view
         task.setChecked(true);
-        model.getToDoDataModule().update();
+        model.getToDoDataModule().removeChecked();
         assertTrue(model.getToDoDataModule().getTasks().isEmpty());
-
-
-
     }
 }
