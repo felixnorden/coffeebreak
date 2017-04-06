@@ -103,4 +103,28 @@ public class CategoryListTest {
         mockFalseThreeCategories.timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("MockToday", currentDate));
         assertFalse(mockFalseThreeCategories.timeCategories.equals(categoryList.timeCategories));
     }
+    @Test
+    public void hashcodeTest () {
+        Calendar currentDate = Calendar.getInstance();
+
+
+        int mockHashOrg = categoryList.hashCode();
+        CategoryList mock = new CategoryList();
+        mock.addLabelCategory("Work", Color.BLACK);
+        int mockHashTrue = mock.hashCode();
+        assertTrue(mockHashOrg == mockHashTrue);
+
+        categoryList.timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("Today", currentDate));
+        mock.timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("Today", currentDate));
+        mockHashOrg = categoryList.hashCode();
+        mockHashTrue = mock.hashCode();
+        assertTrue(mockHashOrg == mockHashTrue);
+
+        categoryList.addLabelCategory();
+        int mockHashFalse = mock.hashCode();
+        mockHashOrg = categoryList.hashCode();
+        assertFalse(mockHashOrg == mockHashFalse);
+
+        
+    }
 }
