@@ -77,7 +77,7 @@ public class ToDoDataModule {
     }
 
     /**
-     * POOP SOLUTION, CHANGE ASAP
+     * Removes all the checked Tasks from the TodoList
      */
     public void removeChecked(){
         List<IAdvancedTask> toBeRemoved = new ArrayList<>();

@@ -50,10 +50,6 @@ public class LabelCategory implements ILabelCategory {
 
         if (name != null ? !name.equals(that.getName()): that.name != null ) return false;
         return color == that.color;
-
-
-
-
     }
 
     @Override

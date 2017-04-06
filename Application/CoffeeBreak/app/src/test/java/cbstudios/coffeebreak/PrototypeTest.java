@@ -52,4 +52,6 @@ public class PrototypeTest {
         model.getToDoDataModule().removeChecked();
         assertTrue(model.getToDoDataModule().getTasks().isEmpty());
     }
+
+    
 }
