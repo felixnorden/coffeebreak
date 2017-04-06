@@ -11,6 +11,7 @@ public enum Priority {
     //TWO("#FFA500"), //Orange
     THREE(Color.YELLOW),
     NONE(Color.TRANSPARENT);
+
     private int color;
 
     public int getColor() {
