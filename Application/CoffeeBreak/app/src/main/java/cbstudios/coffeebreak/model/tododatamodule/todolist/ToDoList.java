@@ -31,13 +31,19 @@ public class ToDoList {
     }
 
     /**
-     * Removes the specified task from ToDoList's list of tasks.
+     * Removes the specified task from ToDoList's list of tasks,
+     * with regard to reference.
      * @param task  the task that will be removed
      */
     public void remove(IAdvancedTask task){
-        if(tasks.contains(task)){
-            tasks.remove(task);
+        int index = 0;
+        for(int i = 0; i < tasks.size(); i++){
+            if(tasks.get(i) == task){
+                index = i;
+                break;
+            }
         }
+        tasks.remove(index);
     }
 
     /**

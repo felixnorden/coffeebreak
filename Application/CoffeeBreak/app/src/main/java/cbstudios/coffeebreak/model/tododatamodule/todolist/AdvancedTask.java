@@ -30,14 +30,6 @@ public class AdvancedTask implements IAdvancedTask {
         task = new Task(name);
     }
 
-    public ITask getTask() {
-        return task;
-    }
-
-    public void setTask(ITask task) {
-        this.task = task;
-    }
-
     public String getName() {
         return task.getName();
     }

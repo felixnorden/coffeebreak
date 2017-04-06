@@ -14,8 +14,5 @@ public interface IListTask {
 
     public void remove(ITask subtask);
 
-    public boolean equals(Object o);
-
-    public int hashCode();
     //TODO add implementation for getting a specific task in the list
 }

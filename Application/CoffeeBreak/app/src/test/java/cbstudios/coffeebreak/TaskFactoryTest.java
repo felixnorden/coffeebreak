@@ -27,7 +27,7 @@ public class TaskFactoryTest {
         assertEquals(sampleTask.isChecked(), true);
 
         //Testing advanced task with base task
-        advancedTask.setTask(sampleTask);
+        advancedTask.setName(sampleTask.getName());
         assertEquals(advancedTask.getName(), "sample");
 
         //Testing list task with base task
