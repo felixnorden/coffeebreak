@@ -37,6 +37,10 @@ public class ToDoDataModule {
         initToDoList();
     }
 
+    public List<ILabelCategory> getLabelCategories(){
+     return categoryList.getLabelCategories();
+    }
+
     /**
      * Creates a new category with the given name
      *
@@ -61,7 +65,7 @@ public class ToDoDataModule {
     private void initCategories() {
         // TODO: 2017-04-04
         //SKALL BYTAS UT MOT initCategories NÄR DEN IMPLEMENTERATS!!!
-        categoryList.initTimeCategories();
+        categoryList.initAllCategories();
     }
 
     /**
@@ -69,6 +73,20 @@ public class ToDoDataModule {
      */
     private void initToDoList() {
         //// TODO: 2017-04-04
+    }
+
+    /**
+     * POOP SOLUTION, CHANGE ASAP
+     */
+    public void update(){
+        int index = 0;
+        for(int i = 0; i < getTasks().size(); i++){
+            if (getTask(i).isChecked()){
+                index = i;
+            }
+            removeTask(getTask(index));
+
+        }
     }
 
     /**

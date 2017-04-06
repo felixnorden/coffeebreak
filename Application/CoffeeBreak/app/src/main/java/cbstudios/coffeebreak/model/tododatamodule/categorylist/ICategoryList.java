@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface ICategoryList {
 
+    public List<ILabelCategory> getLabelCategories();
+
     public void addLabelCategory(String name, int color);
 
     public void removeLabelCategory(ILabelCategory labelCategory);
@@ -22,4 +24,6 @@ public interface ICategoryList {
     public List<ITimeCategory> getTimeCategories();
 
     public void initTimeCategories();
+
+    public void initAllCategories();
 }
