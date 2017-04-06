@@ -65,6 +65,7 @@ public class CategoryListTest {
     }
     @Test
     public void testTimeEquals(){
+        Calendar currentDate2 = Calendar.getInstance();
         Calendar currentDate = Calendar.getInstance();
         assertTrue(categoryList.timeCategories.isEmpty());
         categoryList.timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("Today", currentDate));
@@ -76,11 +77,11 @@ public class CategoryListTest {
         assertTrue(mockTrue.timeCategories.equals(categoryList.timeCategories));
 
         CategoryList mockFalseDay = new CategoryList();
-        //currentDate.add(Calendar.DAY_OF_YEAR, 1);
+        currentDate2.add(Calendar.DAY_OF_YEAR, 1);
 
-        mockFalseDay.timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("Today", currentDate));
-        mockFalseDay.timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("MockToday", currentDate));
-        //TODO assertFalse(mockFalseDay.timeCategories.equals(categoryList.timeCategories));
+        mockFalseDay.timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("Today", currentDate2));
+        mockFalseDay.timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("MockToday", currentDate2));
+        assertFalse(mockFalseDay.timeCategories.equals(categoryList.timeCategories));
 
         CategoryList mockFalseName = new CategoryList();
         mockFalseName.timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("NOTToday", currentDate));
