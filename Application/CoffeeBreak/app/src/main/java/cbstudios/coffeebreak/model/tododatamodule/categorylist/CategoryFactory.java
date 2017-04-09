@@ -22,6 +22,10 @@ public class CategoryFactory implements ICategoryFactory {
 
     private static final ICategoryFactory categoryFactory = new CategoryFactory();
 
+    /**
+     *
+     * @return the static categoryFactory
+     */
     public static ICategoryFactory getInstance(){return categoryFactory;}
     /**
      *
@@ -55,13 +59,16 @@ public class CategoryFactory implements ICategoryFactory {
     /**
      * @param name the name of the SingleDayTimeCategory
      * @param date the only date the SingeDayTimeCategory will hold tasks for.
-     * @return
+     * @return a new SingleDayTimeCategory
      */
     @Override
     public ITimeCategory createSingleDayCategory(String name, Calendar date) {
         return new SingleDayTimeCategory(name , date);
     }
 
+    /**
+     * Not sure
+     */
     private CategoryFactory(){}
 
 }

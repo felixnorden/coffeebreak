@@ -23,14 +23,24 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.LabelCategory;
  * Created by johan on 4/5/2017.
  */
 
+/**
+ * Test class for the CategoryList class
+ */
 public class CategoryListTest {
     CategoryList categoryList = new CategoryList();
 
+    /**
+     * Add a first label before the test
+     */
     @Before
     public void beforeTest () {
         categoryList.addLabelCategory("Work", Color.BLACK);
     }
 
+    /**
+     * Test the add method, remove method, getName method, getLabelCategories method,
+     * initTimeCategories method, initLabelCategories method
+     */
     @Test
     public void testAddAndRemoveLabelCategories () {
         assertFalse(categoryList.labelCategories.isEmpty());
@@ -63,6 +73,10 @@ public class CategoryListTest {
         assertFalse(categoryList.equals(mockFalseNameNull));
         assertFalse(categoryList.equals(mockFalseColor));
     }
+
+    /**
+     * Test the equals method
+     */
     @Test
     public void testTimeEquals(){
         Calendar currentDate2 = Calendar.getInstance();
@@ -103,6 +117,10 @@ public class CategoryListTest {
         mockFalseThreeCategories.timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("MockToday", currentDate));
         assertFalse(mockFalseThreeCategories.timeCategories.equals(categoryList.timeCategories));
     }
+
+    /**
+     * test the hashcode method
+     */
     @Test
     public void hashcodeTest () {
         Calendar currentDate = Calendar.getInstance();
@@ -125,6 +143,19 @@ public class CategoryListTest {
         mockHashOrg = categoryList.hashCode();
         assertFalse(mockHashOrg == mockHashFalse);
 
-        
+        ILabelCategory labelOrg = new LabelCategory("Work", Color.BLACK);
+        ILabelCategory mockLabel = new LabelCategory("Work", Color.BLACK);
+        mockHashOrg = labelOrg.hashCode();
+        mockHashTrue = mockLabel.hashCode();
+        assertTrue(mockHashOrg == mockHashTrue);
+
+
+        mockLabel = new LabelCategory("False", Color.BLACK);
+        mockHashFalse = mockLabel.hashCode();
+        assertFalse(mockHashOrg == mockHashFalse);
+
+        mockLabel = new LabelCategory("Work", Color.BLUE);
+        mockHashFalse = mockLabel.hashCode();
+        assertFalse(mockHashOrg == mockHashFalse);
     }
 }

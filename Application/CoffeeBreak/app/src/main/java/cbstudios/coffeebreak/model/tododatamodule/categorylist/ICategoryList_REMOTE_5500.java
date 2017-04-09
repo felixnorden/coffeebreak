@@ -26,7 +26,6 @@ public interface ICategoryList {
      * @param name of the Label Category
      * @param color of the Label Category
      */
-
     public void addLabelCategory(String name, int color);
 
     /**
@@ -67,5 +66,6 @@ public interface ICategoryList {
      * @return the list with all Label Categories
      */
     public List<ILabelCategory> getLabelCategories();
-    
+
+
 }
