@@ -24,12 +24,17 @@ public class CategoryList implements ICategoryList {
     public List<ILabelCategory> labelCategories;
     public List<ITimeCategory> timeCategories;
 
+    /**
+     * The constructor that will create two lists.
+     */
     public CategoryList() {
         labelCategories = new ArrayList<>();
         timeCategories = new ArrayList<>();
     }
 
-
+    /**
+     * Add a new Label Category without a name
+     */
     public void addLabelCategory() {
         labelCategories.add(CategoryFactory.getInstance().createLabelCategory());
     }
@@ -72,6 +77,9 @@ public class CategoryList implements ICategoryList {
         return timeCategories;
     }
 
+    /**
+     * Initialize all the categories by calling on initTimeCategories and initLabelCategories
+     */
     public void initAllCategories() {
         initLabelCategories();
         initTimeCategories();
@@ -108,6 +116,11 @@ public class CategoryList implements ICategoryList {
         return labelCategories;
     }
 
+    /**
+     * An equals method for the class
+     * @param o is the object that the method will compare to
+     * @return True if equal, false if not equal
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -122,6 +135,10 @@ public class CategoryList implements ICategoryList {
 
     }
 
+    /**
+     *
+     * @return an int that is unique from different objects
+     */
     @Override
     public int hashCode() {
         int result = 17;

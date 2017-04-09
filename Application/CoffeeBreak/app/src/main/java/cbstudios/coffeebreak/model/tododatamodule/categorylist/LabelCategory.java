@@ -11,36 +11,69 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 
 import android.graphics.Color;
 
+/**
+ * A class that is responsibly for creating and changing the LabelCategories
+ */
 public class LabelCategory implements ILabelCategory {
+
 
     private String name;
     private int color;
 
+    /**
+     * Creating a labelCategory with no name
+     */
     public LabelCategory() {
         this.name = "";
     }
 
+    /**
+     * Creating a labelCateogory with a name and a color
+     * @param name of the labelCategory
+     * @param color of the labelCategory
+     */
     public LabelCategory(String name, int color) {
         this.name = name;
         this.color = color;
     }
 
+    /**
+     *
+     * @return the name of the labelCategory
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets a new name for a labelCategory
+     * @param name is the new name of the labelCategory
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     *
+     * @return the color of the labelCategory
+     */
     public int getColor() {
         return color;
     }
 
+    /**
+     * sets a new color for the labelCategory
+     * @param color is the new color for the labelCategory
+     */
     public void setColor(int color) {
         this.color = color;
     }
 
+    /**
+     * An equals method for the class
+     * @param o is the object that the method will compare to
+     * @return True if equal, false if not equal
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -50,12 +83,12 @@ public class LabelCategory implements ILabelCategory {
 
         if (name != null ? !name.equals(that.getName()): that.name != null ) return false;
         return color == that.color;
-
-
-
-
     }
 
+    /**
+     *
+     * @return an int that is unique from different objects
+     */
     @Override
     public int hashCode() {
         int result = 13;
