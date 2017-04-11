@@ -15,6 +15,7 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.ITaskFactory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ToDoList;
 
 public class ToDoDataModule {
@@ -104,6 +105,13 @@ public class ToDoDataModule {
      */
     public void removeLabelCategory(ILabelCategory labelCategory) {
         categoryList.removeLabelCategory(labelCategory);
+    }
+
+    /**
+     * Creates a new task
+     */
+    public void createTask() {
+        todoList.createTask();
     }
 
     /**

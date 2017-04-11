@@ -73,4 +73,11 @@ public class ToDoList {
     private void loadSavedData(){
 
     }
+
+    /**
+     * Creates a new Advanced Task and adds it to the List
+     */
+    public void createTask(){
+        add(taskFactory.createAdvancedTask());
+    }
 }
