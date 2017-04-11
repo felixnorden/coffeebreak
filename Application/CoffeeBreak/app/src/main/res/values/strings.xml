@@ -19,5 +19,6 @@
     <string name="title_messages">Messages</string>
     <string name="title_friends">Friends</string>
     <string name="title_home">Home</string>
+    <string name="action_sort">Sort</string>
 </resources>
 
