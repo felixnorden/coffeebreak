@@ -27,7 +27,8 @@ public class MainActivity extends AppCompatActivity {
         ListView taskList = (ListView) findViewById(R.id.taskList);
         taskList.setAdapter(taskAdapter);
 
-        //TODO Set up on click functionality;
+        //TODO Set up on click functionality
+        //TODO Bind FAB for creation
 
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="cbstudios.coffeebreak.activity.MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -15,12 +15,13 @@
         android:orientation="vertical"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:clipToPadding="false">
 
         <include
             android:id="@+id/toolbar"
             layout="@layout/toolbar" />
-    </LinearLayout>
+    </RelativeLayout>
 
     <ListView
         android:id="@+id/taskList"
@@ -30,8 +31,10 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
-
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:paddingBottom="8dp"
+        android:paddingTop="8dp"
+        android:elevation="2dp">
     </ListView>
 
     <android.support.design.widget.FloatingActionButton
@@ -42,9 +45,8 @@
         android:layout_margin="@dimen/fab_margin"
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
         android:src="@drawable/ic_add_white_24dp"
-        app:elevation="8dp"
+        app:elevation="6dp"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />

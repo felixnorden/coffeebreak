@@ -3,6 +3,7 @@ package cbstudios.coffeebreak.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.graphics.Paint;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -40,12 +42,12 @@ public class TaskAdapter extends ArrayAdapter<IAdvancedTask> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View rowItem = inflater.inflate(R.layout.advanced_task_layout, parent, false);
 
-        IAdvancedTask task = getItem(position);
+        final IAdvancedTask task = getItem(position);
 
         // Fetch references to layout items
         View vPriority = (View) rowItem.findViewById(R.id.viewPriority);
-        CheckBox cbCheckBox = (CheckBox) rowItem.findViewById(R.id.checkBox);
-        EditText etTaskName = (EditText) rowItem.findViewById(R.id.editTextField);
+        final CheckBox cbCheckBox = (CheckBox) rowItem.findViewById(R.id.checkBox);
+        final EditText etTaskName = (EditText) rowItem.findViewById(R.id.editTextField);
         ImageButton ibMore = (ImageButton) rowItem.findViewById(R.id.imageButtonMore);
         ImageView ivCategory = (ImageView) rowItem.findViewById(R.id.imageViewCategory);
 
@@ -54,8 +56,8 @@ public class TaskAdapter extends ArrayAdapter<IAdvancedTask> {
 
         if(task.getName() != null){
             etTaskName.setText(task.getName());
-            etTaskName.setInputType(none);
-            etTaskName.setFocusable(false);
+
+            disableTaskName(etTaskName);
             vPriority.setBackgroundColor(task.getPriority().getColor());
         }
         else{
@@ -73,6 +75,28 @@ public class TaskAdapter extends ArrayAdapter<IAdvancedTask> {
             ivCategory.setColorFilter(task.getLabels().get(0).getColor());
         }
 
+        // Listen for checked off by user
+        cbCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                task.setChecked(isChecked);
+                etTaskName.setEnabled(!isChecked);
+                if(isChecked){
+                    etTaskName.setPaintFlags(etTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+                else
+                    etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            }
+        });
         return rowItem;
+    }
+
+    private void disableTaskName(EditText taskName) {
+        taskName.setKeyListener(null);
+        taskName.setBackground(null);
+    }
+
+    private void textStrikeThrough(EditText taskName){
+
     }
 }
