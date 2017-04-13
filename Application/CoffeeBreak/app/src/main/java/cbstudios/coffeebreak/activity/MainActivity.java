@@ -5,15 +5,30 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
+
+import java.util.List;
 
 import cbstudios.coffeebreak.R;
+import cbstudios.coffeebreak.adapter.TaskAdapter;
+import cbstudios.coffeebreak.model.Model;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 public class MainActivity extends AppCompatActivity {
     private Toolbar mToolbar;
+    private final Model model = new Model();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
+        TaskAdapter taskAdapter = new TaskAdapter(this, tasks);
+        ListView taskList = (ListView) findViewById(R.id.taskList);
+        taskList.setAdapter(taskAdapter);
+
+        //TODO Set up on click functionality;
+
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
