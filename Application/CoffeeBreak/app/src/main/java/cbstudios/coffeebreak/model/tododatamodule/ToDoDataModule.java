@@ -7,13 +7,18 @@ package cbstudios.coffeebreak.model.tododatamodule;
 //  @ Author : 
 
 
+import android.graphics.Color;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import cbstudios.coffeebreak.model.Priority;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.LabelCategory;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITaskFactory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ToDoList;
@@ -130,6 +135,16 @@ public class ToDoDataModule {
         return todoList.getTasks();
     }
 
+    public List<IAdvancedTask> getTasksDummy() {
+        List<IAdvancedTask> tasks = new ArrayList<>();
+        tasks.add(new AdvancedTask("Hello, World"));
+        tasks.add(new AdvancedTask("Second task"));
+        tasks.get(0).setPriority(Priority.ONE);
+        tasks.get(1).setPriority(Priority.TWO);
+        tasks.get(1).addLabel(new LabelCategory("Work", Color.BLUE));
+
+        return tasks;
+    }
     /**
      * Returns true or false whether the given task is a IListTask
      *

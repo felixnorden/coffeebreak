@@ -22,5 +22,6 @@
     <string name="action_sort">Sort</string>
     <string name="task_information">Detailed information</string>
     <string name="create_task_hint">Add task name</string>
+    <string name="description_category">Category Color</string>
 </resources>
 

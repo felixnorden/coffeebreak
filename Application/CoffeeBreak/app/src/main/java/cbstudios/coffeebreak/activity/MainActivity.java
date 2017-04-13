@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
+        List<IAdvancedTask> tasks = model.getToDoDataModule().getTasksDummy();
         TaskAdapter taskAdapter = new TaskAdapter(this, tasks);
         ListView taskList = (ListView) findViewById(R.id.taskList);
         taskList.setAdapter(taskAdapter);

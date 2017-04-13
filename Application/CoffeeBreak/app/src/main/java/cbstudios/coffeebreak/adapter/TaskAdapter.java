@@ -1,6 +1,7 @@
 package cbstudios.coffeebreak.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -54,6 +55,7 @@ public class TaskAdapter extends ArrayAdapter<IAdvancedTask> {
         if(task.getName() != null){
             etTaskName.setText(task.getName());
             etTaskName.setInputType(none);
+            etTaskName.setFocusable(false);
             vPriority.setBackgroundColor(task.getPriority().getColor());
         }
         else{
