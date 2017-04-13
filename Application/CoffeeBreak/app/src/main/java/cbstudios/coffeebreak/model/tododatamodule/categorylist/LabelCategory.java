@@ -11,6 +11,8 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 
 import android.graphics.Color;
 
+import java.util.Random;
+
 /**
  * A class that is responsibly for creating and changing the LabelCategories
  */
@@ -25,16 +27,26 @@ public class LabelCategory implements ILabelCategory {
      */
     public LabelCategory() {
         this.name = "";
+        this.color = getRandomColor();
     }
 
     /**
      * Creating a labelCateogory with a name and a color
      * @param name of the labelCategory
-     * @param color of the labelCategory
      */
-    public LabelCategory(String name, int color) {
+    public LabelCategory(String name) {
         this.name = name;
-        this.color = color;
+        this.color = getRandomColor();
+    }
+
+    /**
+     *
+     * @return a random Color
+     */
+    public int getRandomColor(){
+        Random rnd = new Random();
+        return (Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
+        //return Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     }
 
     /**

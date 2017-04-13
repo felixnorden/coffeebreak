@@ -41,8 +41,8 @@ public class CategoryFactory implements ICategoryFactory {
      * @return a new LabelCategory with a name.
      */
     @Override
-    public ILabelCategory createLabelCategory(String name, int color) {
-        return new LabelCategory(name, color);
+    public ILabelCategory createLabelCategory(String name) {
+        return new LabelCategory(name);
     }
 
     /**

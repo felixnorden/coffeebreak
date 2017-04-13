@@ -53,8 +53,8 @@ public class ToDoDataModule {
      *
      * @param name The name of the category to be created
      */
-    public void addLabelCategory(String name, int color) {
-        categoryList.addLabelCategory(name, color);
+    public void addLabelCategory(String name) {
+        categoryList.addLabelCategory(name);
     }
 
     /**

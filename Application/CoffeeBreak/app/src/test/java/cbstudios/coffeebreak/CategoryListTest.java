@@ -34,7 +34,7 @@ public class CategoryListTest {
      */
     @Before
     public void beforeTest () {
-        categoryList.addLabelCategory("Work", Color.BLACK);
+        categoryList.addLabelCategory("Work");
     }
 
     /**
@@ -60,18 +60,16 @@ public class CategoryListTest {
     @Test
     public void testLabelEquals(){
         CategoryList mockTrue = new CategoryList();
-        mockTrue.addLabelCategory("Work", Color.BLACK);
+        mockTrue.addLabelCategory("Work");
         CategoryList mockFalseName = new CategoryList();
-        mockFalseName.addLabelCategory("Meetings", Color.BLACK);
+        mockFalseName.addLabelCategory("Meetings");
         CategoryList mockFalseNameNull = new CategoryList();
-        mockFalseNameNull.addLabelCategory(null, Color.BLACK);
+        mockFalseNameNull.addLabelCategory(null);
         CategoryList mockFalseColor = new CategoryList();
-        mockFalseColor.addLabelCategory("Work", Color.BLUE);
         assertTrue(categoryList.equals(mockTrue));
         assertTrue(mockTrue.equals(categoryList));
         assertFalse(categoryList.equals(mockFalseName));
         assertFalse(categoryList.equals(mockFalseNameNull));
-        assertFalse(categoryList.equals(mockFalseColor));
     }
 
     /**
@@ -128,7 +126,7 @@ public class CategoryListTest {
 
         int mockHashOrg = categoryList.hashCode();
         CategoryList mock = new CategoryList();
-        mock.addLabelCategory("Work", Color.BLACK);
+        mock.addLabelCategory("Work");
         int mockHashTrue = mock.hashCode();
         assertTrue(mockHashOrg == mockHashTrue);
 
@@ -143,19 +141,26 @@ public class CategoryListTest {
         mockHashOrg = categoryList.hashCode();
         assertFalse(mockHashOrg == mockHashFalse);
 
-        ILabelCategory labelOrg = new LabelCategory("Work", Color.BLACK);
-        ILabelCategory mockLabel = new LabelCategory("Work", Color.BLACK);
+        ILabelCategory labelOrg = new LabelCategory("Work");
+        ILabelCategory mockLabel = new LabelCategory("Work");
         mockHashOrg = labelOrg.hashCode();
         mockHashTrue = mockLabel.hashCode();
         assertTrue(mockHashOrg == mockHashTrue);
 
 
-        mockLabel = new LabelCategory("False", Color.BLACK);
+        mockLabel = new LabelCategory("False");
         mockHashFalse = mockLabel.hashCode();
         assertFalse(mockHashOrg == mockHashFalse);
+    }
 
-        mockLabel = new LabelCategory("Work", Color.BLUE);
-        mockHashFalse = mockLabel.hashCode();
-        assertFalse(mockHashOrg == mockHashFalse);
+    @Test
+    public void testColor(){
+        ILabelCategory labelOrg = new LabelCategory("Work");
+        ILabelCategory mockLabel = new LabelCategory("Work");
+        labelOrg.setColor(Color.BLUE);
+        int color = labelOrg.getColor();
+        mockLabel.setColor(color);
+        assertTrue(labelOrg.equals(mockLabel));
+
     }
 }

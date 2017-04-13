@@ -22,10 +22,9 @@ public interface ICategoryFactory {
     /**
      *
      * @param name of the new labelCategory
-     * @param color of the new labelCategory
-     * @return a new labelCategory with a name and color
+     * @return a new labelCategory with a name
      */
-    public ILabelCategory createLabelCategory(String name, int color);
+    public ILabelCategory createLabelCategory(String name);
 
     /**
      *

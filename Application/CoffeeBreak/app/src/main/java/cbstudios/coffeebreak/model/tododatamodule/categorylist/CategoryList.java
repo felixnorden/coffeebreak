@@ -43,8 +43,8 @@ public class CategoryList implements ICategoryList {
      * Adds a new labelCategory to the labelCategory list.
      * @param name the name of the labelCategory
      */
-    public void addLabelCategory(String name, int color) {
-        labelCategories.add(CategoryFactory.getInstance().createLabelCategory(name, color));
+    public void addLabelCategory(String name) {
+        labelCategories.add(CategoryFactory.getInstance().createLabelCategory(name));
     }
 
 
@@ -103,9 +103,9 @@ public class CategoryList implements ICategoryList {
      * Creates all the labelCategories
      */
     public void initLabelCategories() {
-        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Work", Color.BLUE));
-        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Home", Color.GREEN));
-        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Meetings", Color.BLACK));
+        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Work"));
+        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Home"));
+        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Meetings"));
 
     }
     /**

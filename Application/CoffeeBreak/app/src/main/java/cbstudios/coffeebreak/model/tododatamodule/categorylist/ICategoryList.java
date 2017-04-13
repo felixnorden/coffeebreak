@@ -24,9 +24,8 @@ public interface ICategoryList {
     /**
      * Add a new Label category
      * @param name of the Label Category
-     * @param color of the Label Category
      */
-    public void addLabelCategory(String name, int color);
+    public void addLabelCategory(String name);
 
     /**
      * Remove an existing Label Category with labelCategory object
