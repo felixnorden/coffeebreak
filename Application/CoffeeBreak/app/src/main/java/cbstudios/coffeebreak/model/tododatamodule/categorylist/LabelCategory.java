@@ -20,7 +20,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 /**
  * A class that is responsibly for creating and changing the LabelCategories
  */
-class LabelCategory implements ILabelCategory {
+public class LabelCategory implements ILabelCategory {
 
 
     private String name;

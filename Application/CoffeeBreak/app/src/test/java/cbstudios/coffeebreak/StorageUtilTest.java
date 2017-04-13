@@ -33,8 +33,8 @@ public class StorageUtilTest {
         threeMonthCal.add(Calendar.MONTH, 2);
 
         List<ILabelCategory> labelCategories = new ArrayList<>();
-        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Label", Color.BLUE));
-        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Label2", Color.RED));
+        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Label"));
+        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Label2"));
 
         List<ITask> subTasks = new ArrayList<>();
         ITask subTask1 = new Task("Subtask1");
@@ -57,7 +57,7 @@ public class StorageUtilTest {
         at2.addLabel(labelCategories.get(1));
         at2.setChecked(false);
         at2.setNote("");
-        at2.setPriority(Priority.TWO);
+        at2.setPriority(Priority.THREE);
 
         ListTask lt1 = new ListTask("ListTask1");
         lt1.setDate(threeMonthCal);
@@ -97,7 +97,7 @@ public class StorageUtilTest {
         assertTrue(loaded2.getNote().equals(""));
         assertTrue(!loaded2.isChecked());
         assertTrue(loaded2.hasPriority());
-        assertTrue(loaded2.getPriority().equals(Priority.TWO));
+        assertTrue(loaded2.getPriority().equals(Priority.THREE));
         assertTrue(loaded2.getDate().compareTo(nextMonthCal) == 0);
         assertTrue(loaded2.getLabels().equals(labelCategories));
 

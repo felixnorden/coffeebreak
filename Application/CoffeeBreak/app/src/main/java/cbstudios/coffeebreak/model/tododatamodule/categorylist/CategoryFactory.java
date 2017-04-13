@@ -15,7 +15,7 @@ import java.util.Calendar;
  * A factory class that is responsible for creating all categories.
  */
 
-class CategoryFactory implements ICategoryFactory {
+public class CategoryFactory implements ICategoryFactory {
 
     private static final ICategoryFactory categoryFactory = new CategoryFactory();
 
