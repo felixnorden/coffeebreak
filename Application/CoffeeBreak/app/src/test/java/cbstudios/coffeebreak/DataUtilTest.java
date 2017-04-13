@@ -1,5 +1,7 @@
 package cbstudios.coffeebreak;
 
+import android.graphics.Color;
+
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class DataUtilTest {
 
         IAdvancedTask at1 = new AdvancedTask("AdvancedTask1");
         List<ILabelCategory> labelCategories1 = new ArrayList<>();
-        labelCategories1.add(new CategoryFactory().createLabelCategory("Label"));
+        labelCategories1.add(CategoryFactory.getInstance().createLabelCategory("Label", Color.BLUE));
 
         at1.setDate(currentCal);
         at1.addLabel(labelCategories1.get(0));
@@ -38,7 +40,7 @@ public class DataUtilTest {
 
         IAdvancedTask at2 = new AdvancedTask("AdvancedTask2");
         List<ILabelCategory> labelCategories2 = new ArrayList<>();
-        labelCategories2.add(new CategoryFactory().createLabelCategory("Label2"));
+        labelCategories2.add(CategoryFactory.getInstance().createLabelCategory("Label2", Color.RED));
 
         at2.setDate(tomorrovCal);
         at2.addLabel(labelCategories2.get(0));
