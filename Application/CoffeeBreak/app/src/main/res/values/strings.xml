@@ -23,5 +23,7 @@
     <string name="task_information">Detailed information</string>
     <string name="create_task_hint">Add task name</string>
     <string name="description_category">Category Color</string>
+    <string name="list_task">List Task</string>
+    <string name="advanced_task">Advanced Task</string>
 </resources>
 
