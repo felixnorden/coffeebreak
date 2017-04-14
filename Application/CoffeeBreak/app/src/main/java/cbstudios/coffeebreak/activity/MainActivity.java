@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     Animation TxtSlideIn, TxtSlideOut;
 
     private final Model model = new Model();
-    private final List<IAdvancedTask> tasks = model.getToDoDataModule().getTasksDummy();
+    private final List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
 
 
     @Override
@@ -51,26 +51,32 @@ public class MainActivity extends AppCompatActivity {
         txtAdvBtn = (TextView) findViewById(R.id.advanced_text);
         txtListBtn = (TextView) findViewById(R.id.list_text);
 
-        // Generate animations
-        setAnimations();
-
-
-        fabAddBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startFabAnimation();
-            }
-        });
 
         // Set up RecyclerView for tasks and render each item.
-        TasksAdapter taskAdapter = new TasksAdapter(this, tasks);
+        final TasksAdapter taskAdapter = new TasksAdapter(this, tasks);
         RecyclerView taskList = (RecyclerView) findViewById(R.id.taskList);
         taskList.setAdapter(taskAdapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
 
         //TODO Set up on click functionality
         //TODO Bind FAB for creation
-
+        // Generate animations and bind listeners
+        setAnimations();
+        fabAddBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFabAnimation();
+            }
+        });
+        fabAdvBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addAdvTask();
+                startFabAnimation();
+                // Notify adapter to update, with alias to data list.
+                taskAdapter.notifyItemInserted(taskAdapter.getItemCount());
+            }
+        });
 
         // Load in and set up Toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -144,4 +150,7 @@ public class MainActivity extends AppCompatActivity {
         TxtSlideOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_out_right);
     }
 
+    private void addAdvTask() {
+        model.getToDoDataModule().createTask();
+    }
 }

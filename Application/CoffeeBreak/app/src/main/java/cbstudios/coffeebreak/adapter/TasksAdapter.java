@@ -3,9 +3,11 @@ package cbstudios.coffeebreak.adapter;
 import android.content.Context;
 import android.graphics.Paint;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -75,7 +77,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
      * {@inheritDoc}
      */
     @Override
-    public void onBindViewHolder(TasksAdapter.ViewHolder viewHolder, int position){
+    public void onBindViewHolder(TasksAdapter.ViewHolder viewHolder, final int position){
         final IAdvancedTask task = mTasks.get(position);
 
         final View vPriority = viewHolder.vPriority;
@@ -88,7 +90,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             ivCategory.setColorFilter(task.getLabels().get(0).getColor());
 
         // Set up task layout based on whether the task has data or not.
-        setUpTask(viewHolder, task);
+        setUpTask(viewHolder, task, position);
 
         // Listen for checked off by user
         cbCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -102,6 +104,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
                     etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             }
         });
+
     }
 
     /**
@@ -115,14 +118,16 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
     private void disableTaskName(EditText taskName) {
         taskName.setKeyListener(null);
         taskName.setBackground(null);
+        taskName.setFocusable(false);
     }
 
-    private void setUpTask(ViewHolder taskHolder, IAdvancedTask task){
+    private void setUpTask(final ViewHolder taskHolder, final IAdvancedTask task, final int position){
         if(task.getName() != null){
             taskHolder.etTaskName.setText(task.getName());
 
             disableTaskName(taskHolder.etTaskName);
-            taskHolder.vPriority.setBackgroundColor(task.getPriority().getColor());
+            if(task.getPriority() != null)
+                taskHolder.vPriority.setBackgroundColor(task.getPriority().getColor());
         }
         else{
             // Task creation, hide all unset elements except for text field
@@ -130,9 +135,24 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             taskHolder.ivCategory.setVisibility(View.INVISIBLE);
             taskHolder.ibMore.setVisibility(View.INVISIBLE);
             taskHolder.vPriority.setVisibility(View.INVISIBLE);
+            taskHolder.etTaskName.setText(null);
 
-            // Request input from user
-            taskHolder.etTaskName.requestFocus();
+            // Listen for focus to show Keyboard
+            //TODO FIX LISTENER TO SHOW KEYBOARD WHEN ITEM IS ADDED
+            //TODO Fix so that empty task is removed
+
+            taskHolder.etTaskName.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if(keyCode == KeyEvent.KEYCODE_ENTER){
+                        task.setName(taskHolder.etTaskName.getText().toString());
+                        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(taskHolder.etTaskName.getWindowToken(), 0);
+                        TasksAdapter.super.notifyItemChanged(position);
+                    }
+                    return false;
+                }
+            });
         }
     }
 }

@@ -14,6 +14,7 @@ public class Task implements ITask {
     private boolean checked;
 
     public Task(){
+        name = null;
         checked = false;
     }
 
