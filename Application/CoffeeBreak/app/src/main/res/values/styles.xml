@@ -4,15 +4,12 @@
     <style name="CoffeeBreakTheme" parent="CoffeeBreakTheme.Base">
     </style>
         <!-- Customize your theme here. -->
-    <style name="CoffeeBreakTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="CoffeeBreakTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorPrimaryLight">@color/colorPrimaryLight</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorAccentDark">@color/colorAccentDark</item>
-        <item name="colorAccentLight">@color/colorAccentLight</item>
     </style>
 
 </resources>
