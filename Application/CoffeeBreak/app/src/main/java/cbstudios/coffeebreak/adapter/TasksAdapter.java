@@ -137,15 +137,19 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             taskHolder.vPriority.setVisibility(View.INVISIBLE);
             taskHolder.etTaskName.setText(null);
 
-            // Listen for focus to show Keyboard
-            //TODO FIX LISTENER TO SHOW KEYBOARD WHEN ITEM IS ADDED
-            //TODO Fix so that empty task is removed
+            // Listen for enter key to hide Keyboard
 
             taskHolder.etTaskName.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
                     if(keyCode == KeyEvent.KEYCODE_ENTER){
-                        task.setName(taskHolder.etTaskName.getText().toString());
+                        String input = taskHolder.etTaskName.getText().toString();
+                        if(input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)){
+                            mTasks.remove(task);
+                            TasksAdapter.super.notifyItemRemoved(position);
+                            return false;
+                        }
+                        task.setName(input);
                         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(taskHolder.etTaskName.getWindowToken(), 0);
                         TasksAdapter.super.notifyItemChanged(position);
@@ -153,6 +157,8 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
                     return false;
                 }
             });
+
+            taskHolder.etTaskName.requestFocus();
         }
     }
 }

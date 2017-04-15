@@ -1,5 +1,6 @@
 package cbstudios.coffeebreak.activity;
 
+import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -54,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up RecyclerView for tasks and render each item.
         final TasksAdapter taskAdapter = new TasksAdapter(this, tasks);
-        RecyclerView taskList = (RecyclerView) findViewById(R.id.taskList);
+        final RecyclerView taskList = (RecyclerView) findViewById(R.id.taskList);
         taskList.setAdapter(taskAdapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -73,8 +75,11 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 addAdvTask();
                 startFabAnimation();
+
                 // Notify adapter to update, with alias to data list.
                 taskAdapter.notifyItemInserted(taskAdapter.getItemCount());
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                imm.showSoftInput(taskList, InputMethodManager.SHOW_IMPLICIT);
             }
         });
 
