@@ -138,12 +138,14 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             taskHolder.etTaskName.setText(null);
 
             // Listen for enter key to hide Keyboard
-
             taskHolder.etTaskName.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
                     if(keyCode == KeyEvent.KEYCODE_ENTER){
                         String input = taskHolder.etTaskName.getText().toString();
+
+                        // Check if input is empty, if so, remove task from database
+                        // and update adapter of removal
                         if(input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)){
                             mTasks.remove(task);
                             TasksAdapter.super.notifyItemRemoved(position);
@@ -158,6 +160,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
                 }
             });
 
+            // Request focus for keyboard input
             taskHolder.etTaskName.requestFocus();
         }
     }

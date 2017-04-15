@@ -135,16 +135,6 @@ public class ToDoDataModule {
         return todoList.getTasks();
     }
 
-    public List<IAdvancedTask> getTasksDummy() {
-        List<IAdvancedTask> tasks = new ArrayList<>();
-        tasks.add(new AdvancedTask("Hello, World"));
-        tasks.add(new AdvancedTask("Second task"));
-        tasks.get(0).setPriority(Priority.ONE);
-        tasks.get(1).setPriority(Priority.TWO);
-        tasks.get(1).addLabel(new LabelCategory("Work", Color.BLUE));
-
-        return tasks;
-    }
     /**
      * Returns true or false whether the given task is a IListTask
      *
