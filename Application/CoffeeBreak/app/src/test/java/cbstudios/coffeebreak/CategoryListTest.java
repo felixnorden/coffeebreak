@@ -1,23 +1,17 @@
 package cbstudios.coffeebreak;
 
-import android.graphics.Color;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Calendar;
-import java.util.List;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertThat;
 
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryList;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.LabelCategory;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by johan on 4/5/2017.
@@ -151,16 +145,5 @@ public class CategoryListTest {
         mockLabel = new LabelCategory("False");
         mockHashFalse = mockLabel.hashCode();
         assertFalse(mockHashOrg == mockHashFalse);
-    }
-
-    @Test
-    public void testColor(){
-        ILabelCategory labelOrg = new LabelCategory("Work");
-        ILabelCategory mockLabel = new LabelCategory("Work");
-        labelOrg.setColor(Color.BLUE);
-        int color = labelOrg.getColor();
-        mockLabel.setColor(color);
-        assertTrue(labelOrg.equals(mockLabel));
-
     }
 }
