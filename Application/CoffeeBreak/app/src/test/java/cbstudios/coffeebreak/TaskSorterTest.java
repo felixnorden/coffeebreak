@@ -4,6 +4,7 @@ import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Timer;
 
@@ -15,6 +16,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Felix on 2017-04-18.
@@ -38,6 +40,11 @@ public class TaskSorterTest {
             tasks.add(task);
         }
 
+        //TODO mockito implementation.
+        tasks.get(0).getCreationCalendar().set(2016,7,5);
+        tasks.get(1).getCreationCalendar().set(2016,5,10);
+        tasks.get(3).getCreationCalendar().set(2017,2,15);
+        tasks.get(4).getCreationCalendar().set(2022,3,16);
     //Set priorities for a few tasks
         /*tasks.get(0).setPriority(Priority.ONE);
         tasks.get(2).setPriority(Priority.TWO);
@@ -61,26 +68,14 @@ public class TaskSorterTest {
 
     @Test
     public void testChronologicallySort() {
-        swap(listCopy);
-        for (int i = 0; i < tasks.size() - 1; i++) {
-            System.out.println(listCopy.get(i).getCreationCalendar().toString());
-        }
+        //swap(listCopy);
         sorter.sortChronologically(listCopy);
+        assertEquals(listCopy.get(0), tasks.get(1));
+        assertEquals(listCopy.get(1), tasks.get(0));
+        assertEquals(listCopy.get(2), tasks.get(3));
+        assertEquals(listCopy.get(3), tasks.get(2));
+        assertEquals(listCopy.get(4), tasks.get(4));
     }
 
-    private void swap(List<IAdvancedTask> list) {
-        IAdvancedTask t1, t2, t3, t4;
-        t1 = list.get(0);
-        t2 = list.get(2);
-        t3 = list.get(3);
-        t4 = list.get(4);
-
-        list.remove(t1);
-        list.remove(t3);
-        list.remove(t4);
-        list.add(t4);
-        list.add(t2);
-        list.add(t3);
-    }
 
 }
