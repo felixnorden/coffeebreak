@@ -37,19 +37,7 @@ public class DataUtil {
 
     private DataUtil() {
     }
-
-    public static void main(String[] args) {
-        List<IAdvancedTask> tasks = new ArrayList<>();
-        saveTasksToFile(null, tasks);
-
-
-        IAdvancedTask task = new AdvancedTask("Hello");
-        task.setDate(Calendar.getInstance());
-        tasks.add(task);
-        System.out.println(DATE_FORMAT.format(task.getDate().getTime()));
-    }
-
-
+    
     public static void saveTasksToFile(Context context, List<IAdvancedTask> tasks) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
