@@ -2,45 +2,54 @@ package cbstudios.coffeebreak.model;
 
 import android.content.Context;
 
-import android.util.JsonWriter;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.stream.JsonWriter;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 import java.sql.Timestamp;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
+
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 
 import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
 
 public class DataUtil {
-
     private static final String TASK_DATA_FILENAME = "tasks.json";
     private static final Format DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
 
     private DataUtil() {
     }
-    
+
+    public static void main(String[] args) {
+        List<IAdvancedTask> tasks = new ArrayList<>();
+        saveTasksToFile(null, tasks);
+
+
+        IAdvancedTask task = new AdvancedTask("Hello");
+        task.setDate(Calendar.getInstance());
+        tasks.add(task);
+        System.out.println(DATE_FORMAT.format(task.getDate().getTime()));
+    }
+
+
+    /*
+    Date to String to Date
+    http://stackoverflow.com/questions/27950581/how-can-i-store-a-date-as-a-string
+    http://stackoverflow.com/questions/9115897/how-do-i-convert-a-java-sql-date-object-into-a-gregoriancalendar
+     */
+
     public static void saveTasksToFile(Context context, List<IAdvancedTask> tasks) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -63,7 +72,7 @@ public class DataUtil {
                 if (task instanceof ListTask) {
                     listTaskArray.add(listTaskToJsonObject((ListTask) task));
                 } else if (task instanceof AdvancedTask) {
-                    advancedTaskArray.add(advancedTaskToJsonObject(task));
+                    advancedTaskArray.add(advancedTaskToJsonObject((AdvancedTask) task));
                 }
             }
 
@@ -85,42 +94,20 @@ public class DataUtil {
     }
 
     public static List<IAdvancedTask> loadTasks() {
-        List<IAdvancedTask> loadedTasks = new ArrayList<>();
-        return loadedTasks;
+        return null;
     }
 
-    private static JsonObject listTaskToJsonObject(ListTask task) {
-        JsonObject listTaskObject = advancedTaskToJsonObject(task);
-        JsonArray subTaskArray = new JsonArray();
-
-        for(ITask subTask : task.getSubtasks()){
-            JsonObject subTaskObject = new JsonObject();
-            subTaskObject.addProperty("Name", subTask.getName());
-            subTaskObject.addProperty("IsChecked", subTask.isChecked());
-            subTaskArray.add(subTaskObject);
-        }
-
-        listTaskObject.add("Subtasks", subTaskArray);
-
-        return listTaskObject;
-    }
-
-    private static JsonObject advancedTaskToJsonObject(IAdvancedTask task){
+    private static JsonObject advancedTaskToJsonObject(AdvancedTask task) {
         JsonObject taskObject = new JsonObject();
         JsonArray labelArray = new JsonArray();
 
         taskObject.addProperty("Name", task.getName());
         taskObject.addProperty("Note", task.getNote());
         taskObject.addProperty("IsChecked", task.isChecked());
-        taskObject.addProperty("Priority", task.getPriority().toString());
-        /*
-        Gets the calendar from the task -> extracts date from calendar -> extracts long from date
-        -> wraps long in timestamp -> gets new long from timestamp -> adds long to json data.
-        See:
-        http://stackoverflow.com/questions/27950581/how-can-i-store-a-date-as-a-string
-        http://stackoverflow.com/questions/9115897/how-do-i-convert-a-java-sql-date-object-into-a-gregoriancalendar
-        */
+        //Gets the calender from the task -> extracts date from calender -> extracts long from date
+        //-> wraps long in timestamp -> gets new long from timestamp -> adds long to json data.
         taskObject.addProperty("TimeStamp", new Timestamp(task.getDate().getTime().getTime()).getTime());
+        taskObject.addProperty("Priority", task.getPriority().toString());
 
         for (ILabelCategory label : task.getLabels()) {
             labelArray.add(label.getName());
@@ -129,5 +116,9 @@ public class DataUtil {
         taskObject.add("Labels", labelArray);
 
         return taskObject;
+    }
+
+    private static JsonObject listTaskToJsonObject(ListTask task) {
+        return null;
     }
 }
