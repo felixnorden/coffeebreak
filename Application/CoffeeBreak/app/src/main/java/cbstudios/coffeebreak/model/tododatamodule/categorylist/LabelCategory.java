@@ -110,4 +110,5 @@ public class LabelCategory implements ILabelCategory {
         return result;
     }
 
+    //Testa saker
 }
