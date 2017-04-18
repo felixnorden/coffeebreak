@@ -1,5 +1,7 @@
 package cbstudios.coffeebreak.model.tododatamodule.todolist;
 
+import java.util.Calendar;
+
 //
 //  @ Project : Untitled
 //  @ File Name : ITask.java
@@ -17,6 +19,8 @@ public interface ITask {
     public void toggleChecked();
 
     public void setChecked(boolean checked);
+
+    public Calendar getCreationCalendar();
 
     public boolean equals(Object o);
 
