@@ -77,6 +77,11 @@ class Task implements ITask {
         return creationCalendar;
     }
 
+    @Override
+    public void setCreationCalendar(Calendar calendar) {
+        creationCalendar = calendar;
+    }
+
     /**
      * Compares equality of the inserted Object o with
      * regards of Task name, checked value and creation time.

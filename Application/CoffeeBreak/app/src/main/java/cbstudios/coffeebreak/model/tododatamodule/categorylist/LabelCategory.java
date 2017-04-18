@@ -49,7 +49,8 @@ class LabelCategory implements ILabelCategory {
      */
     public int getRandomColor(){
         Random rnd = new Random();
-        return (Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
+        return Color.BLUE;
+        //return (Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
         //return Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     }
 

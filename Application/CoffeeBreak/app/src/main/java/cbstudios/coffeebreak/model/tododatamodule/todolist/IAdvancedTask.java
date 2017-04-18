@@ -102,4 +102,10 @@ public interface IAdvancedTask {
      *  @return         creation date and time for the task
      */
     public Calendar getCreationCalendar();
+
+    /**
+     *
+     * @param calendar
+     */
+    public void setCreationCalendar(Calendar calendar);
 }
