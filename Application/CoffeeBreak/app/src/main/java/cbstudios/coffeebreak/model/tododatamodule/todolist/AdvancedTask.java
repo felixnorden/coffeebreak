@@ -26,7 +26,7 @@ public class AdvancedTask implements IAdvancedTask {
     public AdvancedTask(){
         labels = new ArrayList<>();
         task = new Task();
-        //priority = Priority.NONE;
+        priority = Priority.NONE;
     }
 
     /**
@@ -37,7 +37,7 @@ public class AdvancedTask implements IAdvancedTask {
     public AdvancedTask(String name){
         labels = new ArrayList<>();
         task = new Task(name);
-        //priority = Priority.NONE;
+        priority = Priority.NONE;
     }
 
 
