@@ -2,6 +2,8 @@ package cbstudios.coffeebreak.activity;
 
 import android.content.Context;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,13 +23,19 @@ import android.widget.TextView;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
+import cbstudios.coffeebreak.adapter.LabelCategoryAdapter;
 import cbstudios.coffeebreak.adapter.TaskAdapter;
 import cbstudios.coffeebreak.adapter.TasksAdapter;
 import cbstudios.coffeebreak.model.Model;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 public class MainActivity extends AppCompatActivity {
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
     private Toolbar mToolbar;
+    private ActionBarDrawerToggle actionBarDrawerToggle;
     private FloatingActionButton fabAddBtn, fabAdvBtn, fabListBtn;
     private TextView txtAdvBtn, txtListBtn;
     //private LinearLayout fabAdvGroup, fabListGroup;
@@ -38,12 +47,14 @@ public class MainActivity extends AppCompatActivity {
 
     private final Model model = new Model();
     private final List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
+    private final List<ILabelCategory> labelCategories = model.getToDoDataModule().getLabelCategories();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         // Set up Buttons for adding tasks
         fabAddBtn = (FloatingActionButton) findViewById(R.id.fab_add_task);
@@ -52,6 +63,16 @@ public class MainActivity extends AppCompatActivity {
 
         txtAdvBtn = (TextView) findViewById(R.id.advanced_text);
         txtListBtn = (TextView) findViewById(R.id.list_text);
+
+        //TODO
+        // Set up navDrawer
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories);
+        mDrawerList.setAdapter(labelCategoryAdapter);
+
+
+
 
 
         // Set up RecyclerView for tasks and render each item.
