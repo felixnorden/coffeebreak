@@ -1,6 +1,5 @@
 package cbstudios.coffeebreak.model;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -8,22 +7,55 @@ import java.util.List;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 /**
- * Created by Felix on 2017-04-18.
+ * @author Felix
+ * @version 1.0
+ * <p>Responsibility: Handle sorting of tasks in a given list, depending of the wanted sorting order.</br>
+ * Uses: Comparison by implementing the Comparator library, and sorts using the Collections library</br>
+ * Used by: ToDoDatamodule which is in return used by controllers outside the Model.
+ * </p>
  */
 
 public class TaskSorter{
+
+    private static TaskSorter INSTANCE = new TaskSorter();
+
+    /**
+     * Fetches the singleton instance of the TaskSorter
+     * @return      the instance of the TaskSorter singleton
+     */
+    public static TaskSorter getInstance(){
+        return INSTANCE;
+    }
+    /**
+     * Sorts the given list in a alphabetical order based on the tasks'
+     * names. The order given is from A-Z
+     * @param list  the list of tasks to be sorted
+     */
     public void sortAlphabetically(List<IAdvancedTask> list){
         Collections.sort(list, new AlphabeticalComparator());
     }
 
+    /**
+     * Sorts the given list in a chronological order based on the time
+     * that the tasks were created. The order is from older to newer.
+     * Subsequent order is based on alphabetical order from A-Z.
+     * @param list  the list of tasks to be sorted
+     */
     public void sortChronologically(List<IAdvancedTask> list){
         Collections.sort(list, new ChronologicalComparator());
     }
 
+    /**
+     * Sorts the given list in a priority based order. The resulting
+     * order is from highest to no priority of the list's tasks.
+     * Subsequent order is based on alphabetical order from A-Z.
+     * @param list  the list of tasks to be sorted
+     */
     public void sortPriorities(List<IAdvancedTask> list){
         Collections.sort(list, new PriorityComparator());
     }
 
+    private TaskSorter(){}
     private class AlphabeticalComparator implements Comparator<IAdvancedTask>{
         @Override
         public int compare(IAdvancedTask t1, IAdvancedTask t2) {
