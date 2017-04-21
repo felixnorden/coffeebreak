@@ -24,11 +24,14 @@ import java.util.List;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.adapter.LabelCategoryAdapter;
+import cbstudios.coffeebreak.adapter.MergeAdapter;
 import cbstudios.coffeebreak.adapter.TaskAdapter;
 import cbstudios.coffeebreak.adapter.TasksAdapter;
+import cbstudios.coffeebreak.adapter.TimeCategoryAdapter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private final Model model = new Model();
     private final List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
     private final List<ILabelCategory> labelCategories = model.getToDoDataModule().getLabelCategories();
+    private final List<ITimeCategory> timeCategories = model.getToDoDataModule().getTimeCategories();
 
 
     @Override
@@ -69,7 +73,11 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories);
-        mDrawerList.setAdapter(labelCategoryAdapter);
+        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories);
+        final MergeAdapter mergeAdapter = new MergeAdapter();
+        mergeAdapter.addAdapter(timeCategoryAdapter);
+        mergeAdapter.addAdapter(labelCategoryAdapter);
+        mDrawerList.setAdapter(mergeAdapter);
 
 
 

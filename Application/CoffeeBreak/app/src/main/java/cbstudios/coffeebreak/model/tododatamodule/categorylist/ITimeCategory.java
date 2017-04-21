@@ -14,6 +14,8 @@ import java.util.GregorianCalendar;
  */
 public interface ITimeCategory {
 
+    public String getName();
+
     /**
      * Sets a new name to a timeCategory
      * @param name is the new name to a timeCategory

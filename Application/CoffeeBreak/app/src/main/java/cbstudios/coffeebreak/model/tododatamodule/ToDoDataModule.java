@@ -46,10 +46,8 @@ public class ToDoDataModule {
     }
 
     public List<ILabelCategory> getLabelCategories(){
-        addLabelCategory("mockUno");
-        addLabelCategory("mockDos");
-        addLabelCategory("mockTres");
-        //TODO tempFix
+        //TODO
+        initCategories();
         return categoryList.getLabelCategories();
     }
 
