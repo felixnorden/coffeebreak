@@ -1,26 +1,53 @@
 package cbstudios.coffeebreak.model.tododatamodule.todolist;//
 
-//
-//  @ Project : Untitled
-//  @ File Name : ITaskFactory.java
-//  @ Date : 03/04/2017
-//  @ Author : 
-//
+/**
+ * @author Felix
+ * @version 1.0
+ * <p>Responsibility: Abstraction of the TaskFactory class. <\br>
+ * Classes used: Task, AdvancedTask, ListTask <\br>
+ * Interfaces used: ITask, IAdvancedTask, IListTask <\br>
+ * Used by: ToDoDataModule and controllers outside Model when a form of task will be created.
+ * When application is initialized at every start to load in saved tasks from previous run
+ * </p>
+ */
 public interface ITaskFactory {
 
     /**
      * Creates an empty task
-     * @return
+     * @return      a task of type ITask
      */
     public ITask createTask();
 
+    /**
+     * Creates a task with the given name
+     * @param name  the name for the task
+     * @return      a task of type ITask
+     */
     public ITask createTask(String name);
 
+    /**
+     * Creates an empty advanced task
+     * @return      a task of type IAdvancedTask
+     */
     public IAdvancedTask createAdvancedTask();
 
+    /**
+     * Creates an advanced task with the given name
+     * @param name  the name for the advanced task
+     * @return      a task of type IAdvancedTask
+     */
     public IAdvancedTask createAdvancedTask(String name);
 
+    /**
+     * Creates an empty list task
+     * @return      a task of type IListTask
+     */
     public IListTask createListTask();
 
+    /**
+     * Creates a list task with the given name
+     * @param name  the name for the list task
+     * @return      a task of type IListTask
+     */
     public IListTask createListTask(String name);
 }

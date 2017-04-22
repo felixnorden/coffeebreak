@@ -2,9 +2,9 @@ package cbstudios.coffeebreak;
 
 import org.junit.*;
 
-/*
- *
- * Created by Felix on 2017-04-05.
+/**
+ * @author Felix
+ * @version 1.0
  *
  * Tests for task classes' hashcode and equals methods.
  */
@@ -56,6 +56,8 @@ public class TaskEqualsAndHashcodeTest {
 
     @Test
     public void testTaskEquals(){
+        assertFalse(task.equals(task3));
+        task = task3;
         assertTrue(task.equals(task3));
         assertFalse(task2.equals(task));
     }

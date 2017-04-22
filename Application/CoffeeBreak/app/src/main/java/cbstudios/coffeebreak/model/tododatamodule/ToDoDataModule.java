@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cbstudios.coffeebreak.model.Priority;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
@@ -45,7 +46,9 @@ public class ToDoDataModule {
     }
 
     public List<ILabelCategory> getLabelCategories(){
-     return categoryList.getLabelCategories();
+        //TODO
+        initCategories();
+        return categoryList.getLabelCategories();
     }
 
     /**
