@@ -30,7 +30,7 @@ import static org.junit.Assert.assertEquals;
 public class TaskSorterTest {
     private static ITaskFactory factory = TaskFactory.getInstance();
     private static final List<IAdvancedTask> tasks = new ArrayList<>();
-    private static final TaskSorter sorter = new TaskSorter();
+    private static final TaskSorter sorter = TaskSorter.getInstance();
     private static List<IAdvancedTask> listCopy;
 
     @BeforeClass

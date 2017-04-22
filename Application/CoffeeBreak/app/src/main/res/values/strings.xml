@@ -25,5 +25,6 @@
     <string name="description_category">Category Color</string>
     <string name="list_task">List Task</string>
     <string name="advanced_task">Advanced Task</string>
+    <string name="navigation">Navigation</string>
 </resources>
 

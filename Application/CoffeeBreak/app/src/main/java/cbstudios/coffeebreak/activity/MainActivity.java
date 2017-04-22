@@ -40,6 +40,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import static java.lang.System.out;
 
 public class MainActivity extends AppCompatActivity {
+    private ActionBarDrawerToggle mActionBarDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private Toolbar mToolbar;
@@ -88,9 +89,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
         // Set up RecyclerView for tasks and render each item.
         final TasksAdapter taskAdapter = new TasksAdapter(this, tasks);
         final RecyclerView taskList = (RecyclerView) findViewById(R.id.taskList);
@@ -125,6 +123,12 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("Hello Mom");
+
+        // Set up drawer button in toolbar
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+        mActionBarDrawerToggle.syncState();
+        mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
     }
 
 
@@ -183,15 +187,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
-
-
     private void setAnimations() {
-
-
-
-
         FabOpen = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
         FabClose = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         FabRClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_clockwise);
@@ -208,8 +204,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
-            //TODO setClickAnimation
-
 
 
         }

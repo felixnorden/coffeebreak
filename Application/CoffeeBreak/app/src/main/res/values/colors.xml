@@ -6,8 +6,8 @@
     <color name="colorAccent">#dd2b25</color>
     <color name="colorAccentDark">#a30000</color>
     <color name="colorAccentLight">#ff644f</color>
-    <color name="textPrimaryColor">#000000</color>
-    <color name="textAccentColor">#ffffff</color>
+    <color name="textPrimaryColor">#3E2723</color>
+    <color name="textAccentColor">#46342b</color>
     <color name="windowBackground">#b1b1b1</color>
     <color name="navigationBarColor">#d6ba93</color>
 </resources>

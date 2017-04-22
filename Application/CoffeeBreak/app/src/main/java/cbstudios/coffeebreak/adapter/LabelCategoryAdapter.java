@@ -37,8 +37,6 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         final ILabelCategory labelCategory = getItem(position);
         final TextView etNameView = (TextView) rowItem.findViewById(R.id.nameView);
 
-        rowItem.setBackgroundColor(labelCategory.getColor());
-
         if(labelCategory.getName() != null) {
 
             etNameView.setText(labelCategory.getName());
