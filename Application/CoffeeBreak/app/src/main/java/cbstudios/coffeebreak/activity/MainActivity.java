@@ -1,7 +1,9 @@
 package cbstudios.coffeebreak.activity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -34,11 +37,12 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
+import static java.lang.System.out;
+
 public class MainActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private Toolbar mToolbar;
-    private ActionBarDrawerToggle actionBarDrawerToggle;
     private FloatingActionButton fabAddBtn, fabAdvBtn, fabListBtn;
     private TextView txtAdvBtn, txtListBtn;
     //private LinearLayout fabAdvGroup, fabListGroup;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     Animation FabOpen, FabClose, FabRClockwise, FabRAnticlockwise;
     Animation TxtSlideIn, TxtSlideOut;
+
 
     private final Model model = new Model();
     private final List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
@@ -78,6 +83,9 @@ public class MainActivity extends AppCompatActivity {
         mergeAdapter.addAdapter(timeCategoryAdapter);
         mergeAdapter.addAdapter(labelCategoryAdapter);
         mDrawerList.setAdapter(mergeAdapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
 
 
 
@@ -175,7 +183,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+
+
+
+
     private void setAnimations() {
+
+
+
+
         FabOpen = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
         FabClose = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
         FabRClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_clockwise);
@@ -187,4 +203,33 @@ public class MainActivity extends AppCompatActivity {
     private void addAdvTask() {
         model.getToDoDataModule().createTask();
     }
-}
+
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            selectItem(position);
+            //TODO setClickAnimation
+
+
+
+        }
+    }
+
+    /** Swaps fragments in the main content view */
+    private void selectItem(int position) {
+
+
+
+        // Highlight the selected item, update the title, and close the drawer
+        mDrawerList.setItemChecked(position, true);
+        //TODO setTitle
+
+        mDrawerLayout.closeDrawer(mDrawerList);
+
+    }
+
+    @Override
+    public void setTitle(CharSequence title) {
+
+    }
+    }

@@ -140,7 +140,7 @@ public class MergeAdapter extends BaseAdapter implements SectionIndexer {
     }
 
     /**
-     * Are all items in this ListAdapter enabled? If yes it means all items are
+     * If true it means all items are
      * selectable and clickable.
      */
     @Override
