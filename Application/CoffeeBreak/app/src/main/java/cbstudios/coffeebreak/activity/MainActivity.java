@@ -89,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
         mergeAdapter.addAdapter(labelCategoryAdapter);
         mDrawerList.setAdapter(mergeAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
 
 
