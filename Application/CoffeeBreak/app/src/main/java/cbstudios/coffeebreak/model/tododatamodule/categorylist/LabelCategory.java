@@ -66,8 +66,10 @@ public class LabelCategory implements ILabelCategory {
     public List<IAdvancedTask> getValidTasks(List<IAdvancedTask> tasks) {
         List<IAdvancedTask> validTasks = new ArrayList<>();
         for(IAdvancedTask task: tasks){
-            if (task.getLabels().contains(this)){
-                validTasks.add(task);
+            for(ILabelCategory labelCategory: task.getLabels()){
+                if(labelCategory.getName().equals(this.getName())) {
+                    validTasks.add(task);
+                }
             }
         }
         return validTasks;

@@ -38,7 +38,7 @@ public class SingleDayTimeCategory implements ITimeCategory {
     public List<IAdvancedTask> getValidTasks(List<IAdvancedTask> tasks) {
         List<IAdvancedTask> validTasks = new ArrayList<>();
         for(IAdvancedTask task: tasks){
-            if (task.getDate() == null || isInIntervall(task.getDate())){
+            if (task.getName() == null || task.getDate() == null || isInIntervall(task.getDate())){
                 validTasks.add(task);
             }
         }

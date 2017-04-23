@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 /**
@@ -163,6 +164,10 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             // Request focus for keyboard input
             taskHolder.etTaskName.requestFocus();
         }
+    }
+    public void updateTasks(ICategory currentCategory, List<IAdvancedTask> newTasks ){
+        mTasks = currentCategory.getValidTasks(newTasks);
+        notifyDataSetChanged();
     }
 }
 

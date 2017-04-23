@@ -59,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     private List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
     private List<ILabelCategory> labelCategories = model.getToDoDataModule().getLabelCategories();
     private List<ITimeCategory> timeCategories = model.getToDoDataModule().getTimeCategories();
+    private RecyclerView taskList;
+    private ICategory currentCategory= null;
 
 
 
@@ -93,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Set up RecyclerView for tasks and render each item.
         final TasksAdapter taskAdapter = new TasksAdapter(this, tasks);
-        final RecyclerView taskList = (RecyclerView) findViewById(R.id.taskList);
+        taskList = (RecyclerView) findViewById(R.id.taskList);
         taskList.setAdapter(taskAdapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
 
@@ -200,6 +202,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void addAdvTask() {
         model.getToDoDataModule().createTask();
+        if(currentCategory != null) {
+            ((TasksAdapter) taskList.getAdapter()).updateTasks(currentCategory, model.getToDoDataModule().getTasks());
+        }
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -220,10 +225,9 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setItemChecked(position, true);
         ICategory category = (ICategory) mDrawerList.getAdapter().getItem(position);
         setTitle(category.getName());
-        tasks = category.getValidTasks(model.getToDoDataModule().getTasks());
-        final RecyclerView taskList = (RecyclerView) findViewById(R.id.taskList);
-        taskList.setAdapter(new TasksAdapter(this, tasks));
-        taskList.setLayoutManager(new LinearLayoutManager(this));
+        currentCategory = category;
+        ((TasksAdapter)taskList.getAdapter()).updateTasks(category,model.getToDoDataModule().getTasks());
+
 
 
 
