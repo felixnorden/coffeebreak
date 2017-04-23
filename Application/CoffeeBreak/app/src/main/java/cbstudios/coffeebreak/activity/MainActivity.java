@@ -32,6 +32,7 @@ import cbstudios.coffeebreak.adapter.TaskAdapter;
 import cbstudios.coffeebreak.adapter.TasksAdapter;
 import cbstudios.coffeebreak.adapter.TimeCategoryAdapter;
 import cbstudios.coffeebreak.model.Model;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
@@ -55,9 +56,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     private final Model model = new Model();
-    private final List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
-    private final List<ILabelCategory> labelCategories = model.getToDoDataModule().getLabelCategories();
-    private final List<ITimeCategory> timeCategories = model.getToDoDataModule().getTimeCategories();
+    private List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
+    private List<ILabelCategory> labelCategories = model.getToDoDataModule().getLabelCategories();
+    private List<ITimeCategory> timeCategories = model.getToDoDataModule().getTimeCategories();
+
 
 
     @Override
@@ -216,14 +218,22 @@ public class MainActivity extends AppCompatActivity {
 
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
-        //TODO setTitle
+        ICategory category = (ICategory) mDrawerList.getAdapter().getItem(position);
+        setTitle(category.getName());
+        tasks = category.getValidTasks(model.getToDoDataModule().getTasks());
+        final RecyclerView taskList = (RecyclerView) findViewById(R.id.taskList);
+        taskList.setAdapter(new TasksAdapter(this, tasks));
+        taskList.setLayoutManager(new LinearLayoutManager(this));
+
+
 
         mDrawerLayout.closeDrawer(mDrawerList);
+
 
     }
 
     @Override
     public void setTitle(CharSequence title) {
-
+        getSupportActionBar().setTitle(title);
     }
     }

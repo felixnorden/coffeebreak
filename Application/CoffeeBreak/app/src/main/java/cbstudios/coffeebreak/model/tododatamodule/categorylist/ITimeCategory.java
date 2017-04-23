@@ -12,7 +12,7 @@ import java.util.GregorianCalendar;
 /**
  * A interface for the two timeCategories
  */
-public interface ITimeCategory {
+public interface ITimeCategory extends ICategory{
 
     public String getName();
 

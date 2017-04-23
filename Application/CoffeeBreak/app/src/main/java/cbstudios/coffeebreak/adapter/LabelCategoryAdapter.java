@@ -45,4 +45,5 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
 
         return rowItem;
     }
+
 }

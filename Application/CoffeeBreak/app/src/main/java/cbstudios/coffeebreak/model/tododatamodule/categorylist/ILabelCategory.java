@@ -14,7 +14,7 @@ import android.graphics.Color;
 /**
  * An interface for the labelCategory
  */
-public interface ILabelCategory {
+public interface ILabelCategory extends ICategory{
 
     /**
      *

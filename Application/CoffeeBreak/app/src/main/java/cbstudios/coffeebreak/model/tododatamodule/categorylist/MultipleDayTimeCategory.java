@@ -9,8 +9,13 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 //
 
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
+
+import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
+
 /**
  * A class whose main usage is checking if a date of a task is
  * occuring before or during the date of the instance.
@@ -29,6 +34,17 @@ public class MultipleDayTimeCategory implements ITimeCategory {
 
     public String getName(){
         return name;
+    }
+
+    @Override
+    public List<IAdvancedTask> getValidTasks(List<IAdvancedTask> tasks) {
+        List<IAdvancedTask> validTasks = new ArrayList<>();
+        for(IAdvancedTask task: tasks){
+            if (task.getDate() == null || isInIntervall(task.getDate())){
+                validTasks.add(task);
+            }
+        }
+        return validTasks;
     }
 
     public void setName(String name) {

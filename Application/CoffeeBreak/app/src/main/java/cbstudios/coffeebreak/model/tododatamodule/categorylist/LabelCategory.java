@@ -11,7 +11,11 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 
 import android.graphics.Color;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+
+import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 /**
  * A class that is responsibly for creating and changing the LabelCategories
@@ -55,6 +59,18 @@ public class LabelCategory implements ILabelCategory {
      */
     public String getName() {
         return name;
+    }
+
+
+    @Override
+    public List<IAdvancedTask> getValidTasks(List<IAdvancedTask> tasks) {
+        List<IAdvancedTask> validTasks = new ArrayList<>();
+        for(IAdvancedTask task: tasks){
+            if (task.getLabels().contains(this)){
+                validTasks.add(task);
+            }
+        }
+        return validTasks;
     }
 
     /**
