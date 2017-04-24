@@ -51,7 +51,7 @@ public class ToDoList {
      * @return      the list of tasks in ToDoList
      */
     public List<IAdvancedTask> getTasks(){
-        return tasks;
+        return new ArrayList<>(tasks);
     }
 
     /**

@@ -15,9 +15,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
+import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
@@ -45,12 +47,15 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         }
     }
 
-    private List<IAdvancedTask> mTasks;
+    private List<IAdvancedTask> mTasks = new ArrayList<>();
     private Context mContext;
+    private Model model;
 
-    public TasksAdapter(Context context, List<IAdvancedTask> tasks){
+    public TasksAdapter(Context context, List<IAdvancedTask> tasks, Model model){
         mContext = context;
-        mTasks = tasks;
+        mTasks.addAll(tasks);
+        this.model = model;
+
     }
 
     /**
@@ -143,12 +148,13 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             taskHolder.etTaskName.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    if(keyCode == KeyEvent.KEYCODE_ENTER){
+                    if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN){
                         String input = taskHolder.etTaskName.getText().toString();
 
                         // Check if input is empty, if so, remove task from database
                         // and update adapter of removal
                         if(input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)){
+                            model.getToDoDataModule().removeTask(task);
                             mTasks.remove(task);
                             TasksAdapter.super.notifyItemRemoved(position);
                             return false;

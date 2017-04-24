@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Set up RecyclerView for tasks and render each item.
-        final TasksAdapter taskAdapter = new TasksAdapter(this, tasks);
+        final TasksAdapter taskAdapter = new TasksAdapter(this, tasks, model);
         taskList = (RecyclerView) findViewById(R.id.taskList);
         taskList.setAdapter(taskAdapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 startFabAnimation();
 
                 // Notify adapter to update, with alias to data list.
-                taskList.getAdapter().notifyItemInserted(taskList.getAdapter().getItemCount());
+                //taskList.getAdapter().notifyItemInserted(taskList.getAdapter().getItemCount());
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(taskList, InputMethodManager.SHOW_IMPLICIT);
             }
@@ -201,8 +201,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void addAdvTask() {
         model.getToDoDataModule().createTask();
-        if(currentCategory != null) {
-            taskList.setAdapter(new TasksAdapter(this, currentCategory.getValidTasks(model.getToDoDataModule().getTasks())));
+        if(currentCategory == null){
+            taskList.setAdapter(new TasksAdapter(this, model.getToDoDataModule().getTasks(), model));
+        }
+        else{
+            taskList.setAdapter(new TasksAdapter(this, currentCategory.getValidTasks(model.getToDoDataModule().getTasks()), model));
         }
     }
 
@@ -226,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
         setTitle(category.getName());
         currentCategory = category;
 
-        taskList.setAdapter(new TasksAdapter(this, currentCategory.getValidTasks(model.getToDoDataModule().getTasks())));
+        taskList.setAdapter(new TasksAdapter(this, currentCategory.getValidTasks(model.getToDoDataModule().getTasks()), model));
 
 
 
