@@ -21,7 +21,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
  *
  * Will be used for the instances "Today" and "Next seven days"
  */
-class MultipleDayTimeCategory implements ITimeCategory {
+public class MultipleDayTimeCategory implements ITimeCategory {
 
     private String name;
     private Calendar time;

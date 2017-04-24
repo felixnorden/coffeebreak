@@ -2,11 +2,12 @@ package cbstudios.coffeebreak;
 
 import org.junit.Before;
 import org.junit.Test;
+
 import java.util.GregorianCalendar;
-import cbstudios.coffeebreak.model.Model;
+
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.SingleDayTimeCategory;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 

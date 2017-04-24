@@ -5,13 +5,13 @@ import java.util.Calendar;
 /**
  * @author Felix
  * @version 1.0
- * <p>Responsibility: Represent instances of tasks of the type Task. Holds the name, checked value
- * and time of creation attributes.</br>
- * Used by: Classes AdvancedTask and ListTask for holding the Task attributes through the abstraction interface ITask.
- * Contained in ListTask's list of subtasks using the abstraction interface ITask.
- * </p>
+ *          <p>Responsibility: Represent instances of tasks of the type Task. Holds the name, checked value
+ *          and time of creation attributes.</br>
+ *          Used by: Classes AdvancedTask and ListTask for holding the Task attributes through the abstraction interface ITask.
+ *          Contained in ListTask's list of subtasks using the abstraction interface ITask.
+ *          </p>
  */
-class Task implements ITask {
+public class Task implements ITask {
     private String name;
     private boolean checked;
     private Calendar creationCalendar;
@@ -19,7 +19,7 @@ class Task implements ITask {
     /**
      * Constructor for an empty Task.
      */
-    public Task(){
+    public Task() {
         name = null;
         checked = false;
         creationCalendar = Calendar.getInstance();
@@ -27,9 +27,10 @@ class Task implements ITask {
 
     /**
      * Constructor for a task with the given name
-     * @param name  the name for the created task
+     *
+     * @param name the name for the created task
      */
-    public Task(String name){
+    public Task(String name) {
         this.name = name;
         checked = false;
         creationCalendar = Calendar.getInstance();
@@ -73,15 +74,21 @@ class Task implements ITask {
     /**
      * {@inheritDoc}
      */
-    public Calendar getCreationCalendar(){
+    public Calendar getCreationCalendar() {
         return creationCalendar;
+    }
+
+    @Override
+    public void setCreationCalendar(Calendar calendar) {
+        creationCalendar = calendar;
     }
 
     /**
      * Compares equality of the inserted Object o with
      * regards of Task name, checked value and creation time.
-     * @param o     Object to be compared
-     * @return      True if the compared object is the same
+     *
+     * @param o Object to be compared
+     * @return True if the compared object is the same
      */
     @Override
     public boolean equals(Object o) {
@@ -91,13 +98,14 @@ class Task implements ITask {
         Task task = (Task) o;
 
         if (checked != task.checked) return false;
-        if(creationCalendar != task.creationCalendar) return false;
+        if (!creationCalendar.equals(task.creationCalendar)) return false;
         return name != null ? name.equals(task.name) : task.name == null;
     }
 
     /**
      * Hash code generation based on the task's name, creation time and checked value
-     * @return      the generated Hash Code for the task
+     *
+     * @return the generated Hash Code for the task
      */
     @Override
     public int hashCode() {

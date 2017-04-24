@@ -20,7 +20,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
  * the date given to the instance.
  * Used primarily for the "Tomorrow" instance
  */
-class SingleDayTimeCategory implements ITimeCategory {
+public class SingleDayTimeCategory implements ITimeCategory {
     private String name;
     private Calendar time;
 

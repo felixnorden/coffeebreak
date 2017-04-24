@@ -1,19 +1,15 @@
 package cbstudios.coffeebreak;
 
         import org.junit.Before;
-        import org.junit.Test;
-        import java.util.GregorianCalendar;
-        import cbstudios.coffeebreak.model.Model;
-        import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
-        import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
-        import cbstudios.coffeebreak.model.tododatamodule.categorylist.MultipleDayTimeCategory;
-        import cbstudios.coffeebreak.model.tododatamodule.categorylist.MultipleDayTimeCategory;
-        import static org.junit.Assert.assertFalse;
-        import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
-/**
- * Created by elias on 04/04/2017.
- */
+import java.util.GregorianCalendar;
+
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class MultipleDayTimeCategoryTest {
     ITimeCategory multipleDayTimeCategory;

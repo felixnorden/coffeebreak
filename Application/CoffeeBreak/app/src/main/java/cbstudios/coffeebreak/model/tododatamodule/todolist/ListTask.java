@@ -8,17 +8,18 @@ package cbstudios.coffeebreak.model.tododatamodule.todolist;
 import java.util.ArrayList;
 import java.util.List;
 
-class ListTask extends AdvancedTask implements IListTask {
+public class ListTask extends AdvancedTask implements IListTask {
     private final List<ITask> subtasks;
 
-    public ListTask(){
+    public ListTask() {
         subtasks = new ArrayList<>();
     }
 
-    public ListTask(String name){
+    public ListTask(String name) {
         super(name);
         subtasks = new ArrayList<>();
     }
+
     public List<ITask> getSubtasks() {
         return subtasks;
     }
@@ -29,8 +30,8 @@ class ListTask extends AdvancedTask implements IListTask {
 
     public void remove(ITask subtask) {
         int index = 0;
-        for(int i = 0; i < subtasks.size(); i++){
-            if(subtasks.get(i) == task){
+        for (int i = 0; i < subtasks.size(); i++) {
+            if (subtasks.get(i) == task) {
                 index = i;
                 break;
             }

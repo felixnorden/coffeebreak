@@ -6,19 +6,20 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 /**
  * @author Felix
  * @version 1.0
- *<p>Responsibility: Represent instances of tasks of type Advanced Task, which are contained in
- * the list of displayed tasks.</br>
- * Uses: Task class for delegating the name, checked value and creation time attributes.
- * Priority enum attribute for defining the specific priority.
- * Implements the IAdvancedTask interface</br>
- * Used by: TaskFactory class for creation of AdvancedTasks.
- * Different controllers and subsequent classes through the IAdvancedTask interface.
- *</p>
+ *          <p>Responsibility: Represent instances of tasks of type Advanced Task, which are contained in
+ *          the list of displayed tasks.</br>
+ *          Uses: Task class for delegating the name, checked value and creation time attributes.
+ *          Priority enum attribute for defining the specific priority.
+ *          Implements the IAdvancedTask interface</br>
+ *          Used by: TaskFactory class for creation of AdvancedTasks.
+ *          Different controllers and subsequent classes through the IAdvancedTask interface.
+ *          </p>
  */
-class AdvancedTask implements IAdvancedTask {
+public class AdvancedTask implements IAdvancedTask {
     protected ITask task;
     private final List<ILabelCategory> labels;
     private Calendar date;
@@ -28,7 +29,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * Constructs a new Advanced Task with empty attributes
      */
-    public AdvancedTask(){
+    public AdvancedTask() {
         labels = new ArrayList<>();
         task = new Task();
         priority = Priority.NONE;
@@ -37,9 +38,10 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * Constructs a new Advanced Task with
      * the name of the inserted String
-     * @param name  The name for the task
+     *
+     * @param name The name for the task
      */
-    public AdvancedTask(String name){
+    public AdvancedTask(String name) {
         labels = new ArrayList<>();
         task = new Task(name);
         priority = Priority.NONE;
@@ -70,15 +72,15 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
-    public void addLabel(ILabelCategory label){
+    public void addLabel(ILabelCategory label) {
         labels.add(label);
     }
 
     /**
      * {@inheritDoc}
      */
-    public void removeLabel(ILabelCategory label){
-        if(labels.contains(label)){
+    public void removeLabel(ILabelCategory label) {
+        if (labels.contains(label)) {
             labels.remove(label);
         }
     }
@@ -121,13 +123,6 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
-    public boolean hasPriority() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public Priority getPriority() {
         return priority;
     }
@@ -142,21 +137,21 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
-    public boolean isChecked(){
+    public boolean isChecked() {
         return task.isChecked();
     }
 
     /**
      * {@inheritDoc}
      */
-    public void toggleChecked(){
+    public void toggleChecked() {
         task.setChecked(!task.isChecked());
     }
 
     /**
      * {@inheritDoc}
      */
-    public void setChecked(boolean value){
+    public void setChecked(boolean value) {
         task.setChecked(value);
     }
 
@@ -169,11 +164,17 @@ class AdvancedTask implements IAdvancedTask {
         return task.getCreationCalendar();
     }
 
+    @Override
+    public void setCreationCalendar(Calendar calendar) {
+        task.setCreationCalendar(calendar);
+    }
+
     /**
      * Compares equality of the inserted Object o with
      * regards of Task name, Labels, Date and Note.
-     * @param o     Object to be compared
-     * @return      True if all fields are equal.
+     *
+     * @param o Object to be compared
+     * @return True if all fields are equal.
      */
     @Override
     public boolean equals(Object o) {
@@ -181,6 +182,7 @@ class AdvancedTask implements IAdvancedTask {
         if (o == null || getClass() != o.getClass()) return false;
 
         AdvancedTask that = (AdvancedTask) o;
+
 
         if (!task.equals(that.task)) return false;
         if (!labels.equals(that.labels)) return false;
@@ -192,7 +194,8 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * Creates a Hash Code based on the Task's Hash Code,
      * the Hash Code of the Labels, Note and Priority fields.
-     * @return      Hash Code for this object.
+     *
+     * @return Hash Code for this object.
      */
     @Override
     public int hashCode() {

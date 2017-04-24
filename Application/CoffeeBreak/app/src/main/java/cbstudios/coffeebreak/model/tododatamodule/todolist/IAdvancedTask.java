@@ -67,11 +67,6 @@ public interface IAdvancedTask {
     public void setNote(String note);
 
     /**
-     * @return          True if the task has a priority defined
-     */
-    public boolean hasPriority();
-
-    /**
      * @return          the priority of the task
      */
     public Priority getPriority();
@@ -102,4 +97,10 @@ public interface IAdvancedTask {
      *  @return         creation date and time for the task
      */
     public Calendar getCreationCalendar();
+
+    /**
+     *
+     * @param calendar
+     */
+    public void setCreationCalendar(Calendar calendar);
 }
