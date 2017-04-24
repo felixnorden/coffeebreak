@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                 startFabAnimation();
 
                 // Notify adapter to update, with alias to data list.
-                taskAdapter.notifyItemInserted(taskAdapter.getItemCount());
+                taskList.getAdapter().notifyItemInserted(taskList.getAdapter().getItemCount());
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 imm.showSoftInput(taskList, InputMethodManager.SHOW_IMPLICIT);
             }
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
     private void addAdvTask() {
         model.getToDoDataModule().createTask();
         if(currentCategory != null) {
-            ((TasksAdapter) taskList.getAdapter()).updateTasks(currentCategory, model.getToDoDataModule().getTasks());
+            taskList.setAdapter(new TasksAdapter(this, currentCategory.getValidTasks(model.getToDoDataModule().getTasks())));
         }
     }
 
@@ -225,7 +225,8 @@ public class MainActivity extends AppCompatActivity {
         ICategory category = (ICategory) mDrawerList.getAdapter().getItem(position);
         setTitle(category.getName());
         currentCategory = category;
-        ((TasksAdapter)taskList.getAdapter()).updateTasks(category,model.getToDoDataModule().getTasks());
+       
+        taskList.setAdapter(new TasksAdapter(this, currentCategory.getValidTasks(model.getToDoDataModule().getTasks())));
 
 
 
