@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,6 +31,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.Task;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
 /**
  * A utility class used to save and load data between application executions.
@@ -38,8 +40,6 @@ public class StorageUtil {
     private static final TaskSorter sorter = TaskSorter.getInstance();
     private static final String TASK_DATA_FILENAME = "tasks.json";
     private static final String CATEGORIES_DATA_FILENAME = "categories.json";
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.ENGLISH);
-    private static final SimpleDateFormat CREATED_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 
     private StorageUtil() {
     }
@@ -47,9 +47,9 @@ public class StorageUtil {
     public static void main(String[] args) {
         List<ILabelCategory> categories = new ArrayList<>();
         ICategoryFactory factory = CategoryFactory.getInstance();
-        categories.add(factory.createLabelCategory("1"));
-        categories.add(factory.createLabelCategory("5"));
-        categories.add(factory.createLabelCategory("ASDASD"));
+        categories.add(factory.createLabelCategory("cat1"));
+        categories.add(factory.createLabelCategory("cat2"));
+        categories.add(factory.createLabelCategory("cat3"));
 
         List<IAdvancedTask> saveTasks = new ArrayList<>();
 
@@ -99,22 +99,36 @@ public class StorageUtil {
         saveTasks.add(at2);
         sorter.sortChronologically(saveTasks);
 
+        System.out.println();
 
         save(null, saveTasks, categories);
 
         List<IAdvancedTask> loaded = loadTasks();
 
-        for (IAdvancedTask task : saveTasks) {
-            System.out.println(task.getName());
-            System.out.println(task.getCreationCalendar().getTimeInMillis());
+        for (IAdvancedTask save : saveTasks) {
+            for (IAdvancedTask load : loaded) {
+                System.out.println(save.getName() + "  vs  " + load.getName() + " - Result: " + save.equals(load));
+                /*System.out.println("Calendar : " + save.getCreationCalendar().equals(load.getCreationCalendar()));
+                System.out.println("Prio: " + save.getPriority().equals(load.getPriority()));
+                System.out.println("Name: " + save.getName().equals(load.getName()));
+                System.out.println("Date : " + save.getDate().equals(load.getDate()));
+                System.out.println("Created: " + save.getCreationCalendar().equals(load.getCreationCalendar()));
+                System.out.println("Labels: " + save.getLabels().equals(load.getLabels()));
+                System.out.println("Note: " + save.getNote().equals(load.getNote()));
+                System.out.println("Equals : " + save.equals(load));
+                System.out.println("Subtasks:");
+                if(save instanceof ListTask && load instanceof ListTask){
+                    for(ITask saveS : ((ListTask) save).getSubtasks()){
+                        System.out.println(saveS.getName());
+                    }
+                    for(ITask loadS : ((ListTask) load).getSubtasks()){
+                        System.out.println(loadS.getName());
+                    }
+                }*/
+                System.out.println();
+                System.out.println();
+            }
         }
-
-        for (IAdvancedTask task : loaded) {
-            System.out.println(task.getName());
-            System.out.println(task.getCreationCalendar().getTimeInMillis());
-        }
-
-        System.out.println(saveTasks.equals(loaded));
     }
 
     public static void save(Context context, List<IAdvancedTask> tasks,
@@ -236,7 +250,7 @@ public class StorageUtil {
             }
 
             for (int i = 0; i < listTasks.size(); i++) {
-                loadedTasks.add(jsonoObjectToListTask(listTasks.get(i).getAsJsonObject()));
+                loadedTasks.add(jsonObjectToListTask(listTasks.get(i).getAsJsonObject()));
             }
 
         } catch (FileNotFoundException e) {
@@ -256,53 +270,50 @@ public class StorageUtil {
      * @param object The JsonObject to be converted.
      * @return The task created.
      */
-    private static ListTask jsonoObjectToListTask(JsonObject object) {
+    private static ListTask jsonObjectToListTask(JsonObject object) {
         ListTask task = new ListTask();
         // TODO: 2017-04-22 This is code duplication (see jsonObjectToAdvancedTask below). Could probably be solved in a prettier way.
-        try {
-            task.setName(object.get("Name").getAsString());
-            task.setNote(object.get("Note").getAsString());
-            task.setChecked(object.get("IsChecked").getAsBoolean());
-            task.setPriority(Priority.valueOf(object.get("Priority").getAsString()));
+        task.setName(object.get("Name").getAsString());
+        task.setNote(object.get("Note").getAsString());
+        task.setChecked(object.get("IsChecked").getAsBoolean());
+        task.setPriority(Priority.valueOf(object.get("Priority").getAsString()));
 
-            if (object.has("Date")) {
-                Calendar cal = Calendar.getInstance();
+        if (object.has("Date")) {
+                /*Calendar cal = Calendar.getInstance();
                 Date date = DATE_FORMAT.parse(object.get("Date").getAsString());
                 cal.setTime(date);
-                task.setDate(cal);
-            }
-
+                task.setDate(cal);*/
             Calendar cal = Calendar.getInstance();
-            Date date = DATE_FORMAT.parse(object.get("Created").getAsString());
-            cal.setTime(date);
-            task.setCreationCalendar(cal);
-
-            JsonArray labels = object.getAsJsonArray("Labels");
-
-            for (int i = 0; i < labels.size(); i++) {
-                // TODO: 2017-04-22 Incorrect implementation. References will go ham if done this way.
-                ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(labels.get(i).getAsString());
-                task.addLabel(category);
-            }
-
-            JsonArray subTasks = object.getAsJsonArray("Subtasks");
-
-            for (int i = 0; i < subTasks.size(); i++) {
-                Task subTask = new Task();
-                JsonObject subTaskObject = subTasks.get(i).getAsJsonObject();
-                subTask.setName(subTaskObject.get("Name").getAsString());
-                subTask.setChecked(subTaskObject.get("IsChecked").getAsBoolean());
-
-                Calendar subTaskCal = Calendar.getInstance();
-                Date subTaskDate = DATE_FORMAT.parse(subTaskObject.get("Created").getAsString());
-                subTaskCal.setTime(subTaskDate);
-                subTask.setCreationCalendar(subTaskCal);
-            }
-
-        } catch (ParseException e) {
-            // TODO: 2017-04-22 Real error handling
-            System.err.println("Error parsing task from file");
+            cal.setTimeInMillis(Long.valueOf(object.get("Date").getAsString()));
+            task.setDate(cal);
         }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(Long.valueOf(object.get("Created").getAsString()));
+        task.setCreationCalendar(cal);
+
+        JsonArray labels = object.getAsJsonArray("Labels");
+
+        for (int i = 0; i < labels.size(); i++) {
+            ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(labels.get(i).getAsString());
+            task.addLabel(category);
+        }
+
+        JsonArray subTasks = object.getAsJsonArray("Subtasks");
+
+        for (int i = 0; i < subTasks.size(); i++) {
+            ITask subTask = TaskFactory.getInstance().createTask();
+            JsonObject subTaskObject = subTasks.get(i).getAsJsonObject();
+            subTask.setName(subTaskObject.get("Name").getAsString());
+            subTask.setChecked(subTaskObject.get("IsChecked").getAsBoolean());
+
+            Calendar subTaskCal = Calendar.getInstance();
+            subTaskCal.setTimeInMillis(Long.valueOf(subTaskObject.get("Created").getAsString()));
+            subTask.setCreationCalendar(subTaskCal);
+
+            task.add(subTask);
+        }
+
         return task;
     }
 
@@ -316,36 +327,30 @@ public class StorageUtil {
      */
     private static AdvancedTask jsonObjectToAdvancedTask(JsonObject object) {
         AdvancedTask task = new AdvancedTask();
-        try {
-            task.setName(object.get("Name").getAsString());
-            task.setNote(object.get("Note").getAsString());
-            task.setChecked(object.get("IsChecked").getAsBoolean());
-            task.setPriority(Priority.valueOf(object.get("Priority").getAsString()));
 
-            if (object.has("Date")) {
-                Calendar cal = Calendar.getInstance();
-                Date date = DATE_FORMAT.parse(object.get("Date").getAsString());
-                cal.setTime(date);
-                task.setDate(cal);
-            }
+        task.setName(object.get("Name").getAsString());
+        task.setNote(object.get("Note").getAsString());
+        task.setChecked(object.get("IsChecked").getAsBoolean());
+        task.setPriority(Priority.valueOf(object.get("Priority").getAsString()));
 
+        if (object.has("Date")) {
             Calendar cal = Calendar.getInstance();
-            Date date = DATE_FORMAT.parse(object.get("Created").getAsString());
-            cal.setTime(date);
-            task.setCreationCalendar(cal);
-
-            JsonArray labels = object.getAsJsonArray("Labels");
-
-            for (int i = 0; i < labels.size(); i++) {
-                // TODO: 2017-04-22 Incorret implementation. References will go ham if done this way.
-                ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(labels.get(i).getAsString());
-                task.addLabel(category);
-            }
-
-        } catch (ParseException e) {
-            // TODO: 2017-04-22 Real error handling
-            System.err.println("Error parsing task from file");
+            cal.setTimeInMillis(Long.valueOf(object.get("Date").getAsString()));
+            task.setDate(cal);
         }
+
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(Long.valueOf(object.get("Created").getAsString()));
+        task.setCreationCalendar(cal);
+
+        JsonArray labels = object.getAsJsonArray("Labels");
+
+        for (int i = 0; i < labels.size(); i++) {
+            // TODO: 2017-04-22 Incorret implementation. References will go ham if done this way.
+            ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(labels.get(i).getAsString());
+            task.addLabel(category);
+        }
+
         return task;
     }
 
@@ -363,7 +368,7 @@ public class StorageUtil {
             JsonObject subTaskObject = new JsonObject();
             subTaskObject.addProperty("Name", subTask.getName());
             subTaskObject.addProperty("IsChecked", subTask.isChecked());
-            subTaskObject.addProperty("Created", CREATED_DATE_FORMAT.format(subTask.getCreationCalendar().getTime()));
+            subTaskObject.addProperty("Created", subTask.getCreationCalendar().getTimeInMillis());
             subTaskArray.add(subTaskObject);
         }
 
@@ -387,10 +392,9 @@ public class StorageUtil {
         taskObject.addProperty("IsChecked", advancedTask.isChecked());
         taskObject.addProperty("Priority", advancedTask.getPriority().toString());
         if (advancedTask.getDate() != null) {
-            taskObject.addProperty("Date", DATE_FORMAT.format(advancedTask.getDate().getTime()));
+            taskObject.addProperty("Date", advancedTask.getDate().getTimeInMillis());
         }
-        taskObject.addProperty("Created",
-                CREATED_DATE_FORMAT.format(advancedTask.getCreationCalendar().getTime()));
+        taskObject.addProperty("Created", advancedTask.getCreationCalendar().getTimeInMillis());
 
         for (ILabelCategory label : advancedTask.getLabels()) {
             labelArray.add(label.getName());

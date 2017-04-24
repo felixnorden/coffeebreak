@@ -6,17 +6,18 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
 /**
  * @author Felix
  * @version 1.0
- * <p>Responsibility: Represent instances of tasks of type Advanced Task, which are contained in
- * the list of displayed tasks.</br>
- * Uses: Task class for delegating the name, checked value and creation time attributes.
- * Priority enum attribute for defining the specific priority.
- * Implements the IAdvancedTask interface</br>
- * Used by: TaskFactory class for creation of AdvancedTasks.
- * Different controllers and subsequent classes through the IAdvancedTask interface.
- * </p>
+ *          <p>Responsibility: Represent instances of tasks of type Advanced Task, which are contained in
+ *          the list of displayed tasks.</br>
+ *          Uses: Task class for delegating the name, checked value and creation time attributes.
+ *          Priority enum attribute for defining the specific priority.
+ *          Implements the IAdvancedTask interface</br>
+ *          Used by: TaskFactory class for creation of AdvancedTasks.
+ *          Different controllers and subsequent classes through the IAdvancedTask interface.
+ *          </p>
  */
 public class AdvancedTask implements IAdvancedTask {
     protected ITask task;
@@ -37,7 +38,8 @@ public class AdvancedTask implements IAdvancedTask {
     /**
      * Constructs a new Advanced Task with
      * the name of the inserted String
-     * @param name  The name for the task
+     *
+     * @param name The name for the task
      */
     public AdvancedTask(String name) {
         labels = new ArrayList<>();
@@ -177,7 +179,8 @@ public class AdvancedTask implements IAdvancedTask {
     /**
      * Compares equality of the inserted Object o with
      * regards of Task name, Labels, Date and Note.
-     * @param o     Object to be compared
+     *
+     * @param o Object to be compared
      * @return True if all fields are equal.
      */
     @Override
@@ -186,6 +189,7 @@ public class AdvancedTask implements IAdvancedTask {
         if (o == null || getClass() != o.getClass()) return false;
 
         AdvancedTask that = (AdvancedTask) o;
+
 
         if (!task.equals(that.task)) return false;
         if (!labels.equals(that.labels)) return false;
@@ -197,6 +201,7 @@ public class AdvancedTask implements IAdvancedTask {
     /**
      * Creates a Hash Code based on the Task's Hash Code,
      * the Hash Code of the Labels, Note and Priority fields.
+     *
      * @return Hash Code for this object.
      */
     @Override
