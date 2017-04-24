@@ -11,7 +11,7 @@ package cbstudios.coffeebreak.model.tododatamodule.todolist;
  * When application is initialized at every start to load in saved tasks from previous run
  * </p>
  */
-class TaskFactory implements ITaskFactory {
+public class TaskFactory implements ITaskFactory {
     private static final ITaskFactory taskFactory = new TaskFactory();
 
     /**

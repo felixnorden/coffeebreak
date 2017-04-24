@@ -42,5 +42,5 @@ public interface ITask {
      * @return      time of creation for this task
      */
     public Calendar getCreationCalendar();
-    
+
 }
