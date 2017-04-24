@@ -19,7 +19,7 @@ import java.util.List;
  * A class that holds both Lists of Categories
  */
 
-class CategoryList implements ICategoryList {
+public class CategoryList implements ICategoryList {
 
     public List<ILabelCategory> labelCategories;
     public List<ITimeCategory> timeCategories;
