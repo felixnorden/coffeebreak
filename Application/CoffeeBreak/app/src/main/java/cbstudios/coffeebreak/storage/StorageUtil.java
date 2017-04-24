@@ -44,99 +44,6 @@ public class StorageUtil {
     private StorageUtil() {
     }
 
-    public static void main(String[] args) {
-        List<ILabelCategory> categories = new ArrayList<>();
-        ICategoryFactory factory = CategoryFactory.getInstance();
-        categories.add(factory.createLabelCategory("cat1"));
-        categories.add(factory.createLabelCategory("cat2"));
-        categories.add(factory.createLabelCategory("cat3"));
-
-        List<IAdvancedTask> saveTasks = new ArrayList<>();
-
-        Calendar currentCal = Calendar.getInstance();
-        Calendar nextMonthCal = Calendar.getInstance();
-        Calendar twoMonthCal = Calendar.getInstance();
-        nextMonthCal.add(Calendar.DAY_OF_MONTH, 30);
-        twoMonthCal.add(Calendar.MONTH, 2);
-
-        List<ITask> subTasks = new ArrayList<>();
-        ITask subTask1 = new Task("Subtask1");
-        ITask subTask2 = new Task("Subtask2");
-        subTask1.setChecked(false);
-        subTask2.setChecked(true);
-        subTasks.add(subTask1);
-        subTasks.add(subTask2);
-
-        AdvancedTask at1 = new AdvancedTask("AdvancedTask1");
-        at1.setDate(nextMonthCal);
-        at1.setCreationCalendar(nextMonthCal);
-        at1.addLabel(categories.get(0));
-        at1.setChecked(true);
-        at1.setNote("Exempel");
-        at1.setPriority(Priority.THREE);
-
-        ListTask lt1 = new ListTask("ListTask1");
-        lt1.setDate(twoMonthCal);
-        lt1.setCreationCalendar(twoMonthCal);
-        lt1.addLabel(categories.get(1));
-        lt1.setChecked(true);
-        lt1.setNote("Lorem ipsum");
-        lt1.setPriority(Priority.ONE);
-        lt1.add(subTask1);
-        lt1.add(subTask2);
-
-        AdvancedTask at2 = new AdvancedTask("AdvancedTask2");
-        at2.setDate(currentCal);
-        at2.setCreationCalendar(currentCal);
-        at2.addLabel(categories.get(0));
-        at2.addLabel(categories.get(1));
-        at2.setChecked(false);
-        at2.setNote("");
-        at2.setPriority(Priority.THREE);
-
-        saveTasks.add(at1);
-        saveTasks.add(lt1);
-        saveTasks.add(at2);
-        sorter.sortChronologically(saveTasks);
-
-        System.out.println();
-
-        save(null, saveTasks, categories);
-
-        List<IAdvancedTask> loaded = loadTasks();
-
-        for (IAdvancedTask save : saveTasks) {
-            for (IAdvancedTask load : loaded) {
-                System.out.println(save.getName() + "  vs  " + load.getName() + " - Result: " + save.equals(load));
-                /*System.out.println("Calendar : " + save.getCreationCalendar().equals(load.getCreationCalendar()));
-                System.out.println("Prio: " + save.getPriority().equals(load.getPriority()));
-                System.out.println("Name: " + save.getName().equals(load.getName()));
-                System.out.println("Date : " + save.getDate().equals(load.getDate()));
-                System.out.println("Created: " + save.getCreationCalendar().equals(load.getCreationCalendar()));
-                System.out.println("Labels: " + save.getLabels().equals(load.getLabels()));
-                System.out.println("Note: " + save.getNote().equals(load.getNote()));
-                System.out.println("Equals : " + save.equals(load));
-                System.out.println("Subtasks:");
-                if(save instanceof ListTask && load instanceof ListTask){
-                    for(ITask saveS : ((ListTask) save).getSubtasks()){
-                        System.out.println(saveS.getName());
-                    }
-                    for(ITask loadS : ((ListTask) load).getSubtasks()){
-                        System.out.println(loadS.getName());
-                    }
-                }*/
-                System.out.println();
-                System.out.println();
-            }
-        }
-    }
-
-    public static void save(Context context, List<IAdvancedTask> tasks,
-                            List<ILabelCategory> categories) {
-        saveTasks(context, tasks);
-        saveCategories(context, categories);
-    }
-
     public static void saveTasks(Context context, List<IAdvancedTask> tasks) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -224,14 +131,13 @@ public class StorageUtil {
     }
 
     /**
-     * Loads tasks from save, adds them to a list, sorts that list and then returns them.
+     * Loads tasks from save, adds them to a list and returns that list.
+     * Always returns a chronologically sorted list of tasks sorted using {@link TaskSorter}.
      *
      * @return {@link List} containing the tasks saved from last run.
      */
-    public static List<IAdvancedTask> loadTasks() {
+    public static List<IAdvancedTask> loadTasks(Context context) {
         List<IAdvancedTask> loadedTasks = new ArrayList<>();
-        // TODO: 2017-04-21 Remove after testing
-        Gson gson = new Gson();
         // TODO: 2017-04-21 Remove and replace with Android equivalent
         File file = new File(System.getProperty("user.home") + "\\Desktop\\" + TASK_DATA_FILENAME);
 
@@ -260,6 +166,36 @@ public class StorageUtil {
         }
         sorter.sortChronologically(loadedTasks);
         return loadedTasks;
+    }
+
+    /**
+     * Loads categories from save, adds them to a list and returns that list.
+     *
+     * @return {@link List} containing categories saved from last run.
+     */
+    public static List<ILabelCategory> loadCategories(Context context) {
+        List<ILabelCategory> loadedCategories = new ArrayList<>();
+        File file = new File(System.getProperty("user.home") + "\\Desktop\\" + CATEGORIES_DATA_FILENAME);
+
+        try {
+            //Read string from file and parse it to JsonObject
+            FileReader reader = new FileReader(file);
+            JsonParser parser = new JsonParser();
+            JsonArray mainArray = parser.parse(reader).getAsJsonArray();
+
+            for (int i = 0; i < mainArray.size(); i++) {
+                JsonObject categoryObject = mainArray.get(i).getAsJsonObject();
+                ILabelCategory category = CategoryFactory.getInstance().createLabelCategory();
+                category.setName(categoryObject.get("Name").getAsString());
+                category.setColor(categoryObject.get("Color").getAsInt());
+                loadedCategories.add(category);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalStateException e) {
+            System.err.println("Tasks file doesnt seem to be proper Json - format. Cannot load");
+        }
+        return loadedCategories;
     }
 
     /**

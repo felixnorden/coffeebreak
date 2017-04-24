@@ -123,13 +123,6 @@ public class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
-    public boolean hasPriority() {
-        return false;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public Priority getPriority() {
         return priority;
     }

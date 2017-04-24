@@ -63,7 +63,7 @@ public class SaveAndLoadTest {
         orgList.add(mockTask2);
 
         StorageUtil.saveTasks(null, orgList);
-        loadedList = StorageUtil.loadTasks();
+        loadedList = StorageUtil.loadTasks(null);
         assertTrue(loadedList.size() == orgList.size());
 
         IAdvancedTask loadedMockTask1 = loadedList.get(0);
@@ -72,7 +72,7 @@ public class SaveAndLoadTest {
         assertTrue(loadedMockTask1.getDate().equals(mockTask1.getDate()));
         assertTrue(loadedMockTask1.getNote().equals(mockTask1.getNote()));
         assertTrue(loadedMockTask1.getPriority().equals(mockTask1.getPriority()));
-        assertTrue(loadedMockTask1.isChecked());
+        assertFalse(loadedMockTask1.isChecked());
 
         IAdvancedTask loadedMockTask2 = loadedList.get(1);
         assertTrue(loadedMockTask2.getName().equals(mockTask2.getName()));

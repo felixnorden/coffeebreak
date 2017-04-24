@@ -67,11 +67,6 @@ public interface IAdvancedTask {
     public void setNote(String note);
 
     /**
-     * @return          True if the task has a priority defined
-     */
-    public boolean hasPriority();
-
-    /**
      * @return          the priority of the task
      */
     public Priority getPriority();

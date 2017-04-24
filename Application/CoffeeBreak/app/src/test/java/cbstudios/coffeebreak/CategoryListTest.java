@@ -7,6 +7,8 @@ import java.util.Calendar;
 
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryList;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.LabelCategory;
 
@@ -135,14 +137,14 @@ public class CategoryListTest {
         mockHashOrg = categoryList.hashCode();
         assertFalse(mockHashOrg == mockHashFalse);
 
-        ILabelCategory labelOrg = new LabelCategory("Work");
-        ILabelCategory mockLabel = new LabelCategory("Work");
+        ILabelCategory labelOrg = CategoryFactory.getInstance().createLabelCategory("Work");
+        ILabelCategory mockLabel = CategoryFactory.getInstance().createLabelCategory("Work");
         mockHashOrg = labelOrg.hashCode();
         mockHashTrue = mockLabel.hashCode();
         assertTrue(mockHashOrg == mockHashTrue);
 
 
-        mockLabel = new LabelCategory("False");
+        mockLabel = CategoryFactory.getInstance().createLabelCategory("False");
         mockHashFalse = mockLabel.hashCode();
         assertFalse(mockHashOrg == mockHashFalse);
     }

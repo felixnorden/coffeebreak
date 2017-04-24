@@ -18,6 +18,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.Task;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class StorageUtilTest {
@@ -72,43 +73,27 @@ public class StorageUtilTest {
         saveTasks.add(at2);
         saveTasks.add(lt1);
 
-
         //Because of JVM (no emulator) testing, no context is available (context = null) .
         StorageUtil.saveTasks(null, saveTasks);
-        List<IAdvancedTask> loadedTasks = StorageUtil.loadTasks();
+        List<IAdvancedTask> loadedTasks = StorageUtil.loadTasks(null);
 
-        assertTrue(loadedTasks.size() == 3);
+        assertTrue(saveTasks.equals(loadedTasks));
+    }
 
-        IAdvancedTask loaded1 = loadedTasks.get(0);
-        IAdvancedTask loaded2 = loadedTasks.get(1);
-        ListTask loaded3 = (ListTask) loadedTasks.get(2);
 
-        assertTrue(loaded1.getName().equals("AdvancedTask1"));
-        assertTrue(loaded1.hasNote());
-        assertTrue(loaded1.getNote().equals("Exempel"));
-        assertTrue(loaded1.isChecked());
-        assertTrue(loaded1.hasPriority());
-        assertTrue(loaded1.getPriority().equals(Priority.THREE));
-        assertTrue(loaded1.getDate().compareTo(currentCal) == 0);
-        assertTrue(loaded1.getLabels().get(0).equals(labelCategories.get(0)));
+    @Test
+    public void testCategorySaveAndLoad(){
+        List<ILabelCategory> save = new ArrayList<>();
+        ILabelCategory c1 = CategoryFactory.getInstance().createLabelCategory("Name1");
+        ILabelCategory c2 = CategoryFactory.getInstance().createLabelCategory("Name2");
+        ILabelCategory c3 = CategoryFactory.getInstance().createLabelCategory("Name3");
+        c1.setColor(Color.RED);
+        c2.setColor(Color.BLACK);
+        c3.setColor(Color.CYAN);
+        StorageUtil.saveCategories(null, save);
 
-        assertTrue(loaded2.getName().equals("AdvancedTask2"));
-        assertTrue(!loaded2.hasNote());
-        assertTrue(loaded2.getNote().equals(""));
-        assertTrue(!loaded2.isChecked());
-        assertTrue(loaded2.hasPriority());
-        assertTrue(loaded2.getPriority().equals(Priority.THREE));
-        assertTrue(loaded2.getDate().compareTo(nextMonthCal) == 0);
-        assertTrue(loaded2.getLabels().equals(labelCategories));
+        List<ILabelCategory> load = StorageUtil.loadCategories(null);
 
-        assertTrue(loaded3.getName().equals("ListTask1"));
-        assertTrue(loaded3.hasNote());
-        assertTrue(loaded3.getNote().equals("Lorem ipsum"));
-        assertTrue(loaded3.isChecked());
-        assertTrue(loaded3.hasPriority());
-        assertTrue(loaded3.getPriority().equals(Priority.ONE));
-        assertTrue(loaded3.getDate().compareTo(threeMonthCal) == 0);
-        assertTrue(loaded3.getLabels().get(0).equals(labelCategories.get(1)));
-        assertTrue(loaded3.getSubtasks().equals(subTasks));
+        assertTrue(load.equals(save));
     }
 }

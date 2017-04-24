@@ -8,7 +8,7 @@ Colors are represented by integers in Android. Full list of colors below.
  */
 public enum Priority {
     ONE(Color.RED),
-    //TWO("#FFA500"), //Orange
+    TWO(Color.BLACK), //Orange
     THREE(Color.YELLOW),
     NONE(Color.TRANSPARENT);
 
