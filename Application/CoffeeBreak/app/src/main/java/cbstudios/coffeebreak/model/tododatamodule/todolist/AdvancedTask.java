@@ -1,4 +1,11 @@
-package cbstudios.coffeebreak.model.tododatamodule.todolist;//
+package cbstudios.coffeebreak.model.tododatamodule.todolist;
+
+import cbstudios.coffeebreak.model.Priority;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 /**
  * @author Felix
  * @version 1.0
@@ -11,15 +18,7 @@ package cbstudios.coffeebreak.model.tododatamodule.todolist;//
  * Different controllers and subsequent classes through the IAdvancedTask interface.
  *</p>
  */
-
-import cbstudios.coffeebreak.model.Priority;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-public class AdvancedTask implements IAdvancedTask {
+class AdvancedTask implements IAdvancedTask {
     protected ITask task;
     private final List<ILabelCategory> labels;
     private Calendar date;

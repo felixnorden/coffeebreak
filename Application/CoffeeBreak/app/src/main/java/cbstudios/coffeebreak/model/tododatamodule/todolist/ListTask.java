@@ -8,7 +8,7 @@ package cbstudios.coffeebreak.model.tododatamodule.todolist;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListTask extends AdvancedTask implements IListTask {
+class ListTask extends AdvancedTask implements IListTask {
     private final List<ITask> subtasks;
 
     public ListTask(){

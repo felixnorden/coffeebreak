@@ -9,16 +9,13 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;//
 //
 //
 
-
-import android.graphics.Color;
-
 import java.util.Calendar;
 
 /**
  * A factory class that is responsible for creating all categories.
  */
 
-public class CategoryFactory implements ICategoryFactory {
+class CategoryFactory implements ICategoryFactory {
 
     private static final ICategoryFactory categoryFactory = new CategoryFactory();
 

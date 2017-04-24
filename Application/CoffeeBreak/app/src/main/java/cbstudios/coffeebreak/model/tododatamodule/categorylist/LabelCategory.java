@@ -20,7 +20,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 /**
  * A class that is responsibly for creating and changing the LabelCategories
  */
-public class LabelCategory implements ILabelCategory {
+class LabelCategory implements ILabelCategory {
 
 
     private String name;
@@ -29,7 +29,7 @@ public class LabelCategory implements ILabelCategory {
     /**
      * Creating a labelCategory with no name
      */
-    public LabelCategory() {
+    LabelCategory() {
         this.name = "";
         this.color = getRandomColor();
     }
@@ -38,7 +38,7 @@ public class LabelCategory implements ILabelCategory {
      * Creating a labelCateogory with a name and a color
      * @param name of the labelCategory
      */
-    public LabelCategory(String name) {
+    LabelCategory(String name) {
         this.name = name;
         this.color = getRandomColor();
     }

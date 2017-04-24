@@ -11,7 +11,6 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
@@ -21,7 +20,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
  * the date given to the instance.
  * Used primarily for the "Tomorrow" instance
  */
-public class SingleDayTimeCategory implements ITimeCategory {
+class SingleDayTimeCategory implements ITimeCategory {
     private String name;
     private Calendar time;
 

@@ -7,21 +7,15 @@ package cbstudios.coffeebreak.model.tododatamodule;
 //  @ Author : 
 
 
-import android.graphics.Color;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cbstudios.coffeebreak.model.Priority;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.LabelCategory;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.ITaskFactory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ToDoList;
 
 public class ToDoDataModule {

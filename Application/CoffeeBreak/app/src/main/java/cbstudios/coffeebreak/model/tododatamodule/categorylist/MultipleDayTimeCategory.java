@@ -11,7 +11,6 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
@@ -22,7 +21,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
  *
  * Will be used for the instances "Today" and "Next seven days"
  */
-public class MultipleDayTimeCategory implements ITimeCategory {
+class MultipleDayTimeCategory implements ITimeCategory {
 
     private String name;
     private Calendar time;
