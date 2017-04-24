@@ -225,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         ICategory category = (ICategory) mDrawerList.getAdapter().getItem(position);
         setTitle(category.getName());
         currentCategory = category;
-       
+
         taskList.setAdapter(new TasksAdapter(this, currentCategory.getValidTasks(model.getToDoDataModule().getTasks())));
 
 
