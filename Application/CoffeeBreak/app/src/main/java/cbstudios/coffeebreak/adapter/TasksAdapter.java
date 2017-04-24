@@ -2,6 +2,7 @@ package cbstudios.coffeebreak.adapter;
 
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -88,7 +89,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         final ImageButton ibMore = viewHolder.ibMore;
 
         if(task.getLabels().size() == 1)
-            ivCategory.setColorFilter(task.getLabels().get(0).getColor());
+            ivCategory.setColorFilter(task.getLabels().get(0).getColor(), PorterDuff.Mode.MULTIPLY);
 
         // Set up task layout based on whether the task has data or not.
         setUpTask(viewHolder, task, position);
@@ -164,10 +165,6 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             // Request focus for keyboard input
             taskHolder.etTaskName.requestFocus();
         }
-    }
-    public void updateTasks(ICategory currentCategory, List<IAdvancedTask> newTasks ){
-        mTasks = currentCategory.getValidTasks(newTasks);
-        notifyDataSetChanged();
     }
 }
 
