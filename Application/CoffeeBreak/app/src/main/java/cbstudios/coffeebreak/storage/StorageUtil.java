@@ -39,6 +39,12 @@ public class StorageUtil {
     private StorageUtil() {
     }
 
+    /**
+     * Saves the given list of tasks to the filesystem for later use.
+     * @param context The Android-context where the file should be saved. Decides <i>where</i> the
+     *                file should be saved on the android filesystem.
+     * @param tasks The {@link List} of tasks to be saved.
+     */
     public static void saveTasks(Context context, List<IAdvancedTask> tasks) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
@@ -70,7 +76,7 @@ public class StorageUtil {
     }
 
     /**
-     * Save the given categories to filesystem.
+     * Save the given categories to the filesystem.
      *
      * @param context    The Android-context where the file should be saved. Decides <i>where</i> the
      *                   file should be saved on the android filesystem.
