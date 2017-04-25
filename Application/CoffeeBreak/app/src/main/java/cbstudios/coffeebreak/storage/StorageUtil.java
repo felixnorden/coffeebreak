@@ -1,6 +1,7 @@
 package cbstudios.coffeebreak.storage;
 
 import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
@@ -9,28 +10,22 @@ import com.google.gson.JsonParser;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Locale;
 
 import cbstudios.coffeebreak.model.Priority;
 import cbstudios.coffeebreak.model.TaskSorter;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.Task;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
 /**
@@ -47,20 +42,11 @@ public class StorageUtil {
     public static void saveTasks(Context context, List<IAdvancedTask> tasks) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
-        // TODO: 2017-04-21 Fix for android filesystem
-        /*
-        File path = context.getFilesDir();
-        File file = new File(path, TASK_DATA_FILENAME);
-        */
-        File file = new File(System.getProperty("user.home") + "\\Desktop\\" + TASK_DATA_FILENAME);
-
         try {
-            file.createNewFile();
             JsonObject tasksMainObject = new JsonObject();
 
             JsonArray advancedTaskArray = new JsonArray();
             JsonArray listTaskArray = new JsonArray();
-
 
             for (IAdvancedTask task : tasks) {
                 //Required to check if instance of ListTask first because ListTask extends AdvancedTask
@@ -74,16 +60,10 @@ public class StorageUtil {
             tasksMainObject.add("AdvancedTasks", advancedTaskArray);
             tasksMainObject.add("ListTasks", listTaskArray);
 
-            // TODO: 2017-04-21 Fix for android filesystem.
-            /*
-            OutputStreamWriter writer = new OutputStreamWriter(context.openFileOutput(TASK_DATA_FILENAME, Context.MODE_PRIVATE));
-            writer.write(gson.toJson(tasksMainObject));
-            writer.close();
-            */
-
-            FileWriter writer = new FileWriter(file);
-            writer.write(gson.toJson(tasksMainObject));
-            writer.close();
+            //Save data to file
+            FileOutputStream output = context.openFileOutput(TASK_DATA_FILENAME, Context.MODE_PRIVATE);
+            output.write(gson.toJson(tasksMainObject).getBytes());
+            output.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -98,31 +78,14 @@ public class StorageUtil {
      */
     public static void saveCategories(Context context, List<ILabelCategory> categories) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        /*
-        File path = context.getFilesDir();
-        File file = new File(path, TASK_DATA_FILENAME);
-        */
-        File file = new File(System.getProperty("user.home") + "\\Desktop\\" + CATEGORIES_DATA_FILENAME);
-
         try {
-            file.createNewFile();
-
             JsonArray categoriesMainArray = new JsonArray();
 
-
             for (ILabelCategory category : categories) {
-                categoriesMainArray.add(categoryToJsonObject(category));
+                categoriesMainArray.add(labelCategoryToJsonObject(category));
             }
 
-            // TODO: 2017-04-18 Fix for android filesystem
-            /*
-            OutputStreamWriter writer = new OutputStreamWriter(context.openFileOutput(TASK_DATA_FILENAME, Context.MODE_PRIVATE));
-            writer.write(gson.toJson(tasksMainObject));
-            writer.close();
-            */
-
-            FileWriter writer = new FileWriter(file);
+            OutputStreamWriter writer = new OutputStreamWriter(context.openFileOutput(CATEGORIES_DATA_FILENAME, Context.MODE_PRIVATE));
             writer.write(gson.toJson(categoriesMainArray));
             writer.close();
         } catch (IOException e) {
@@ -138,8 +101,7 @@ public class StorageUtil {
      */
     public static List<IAdvancedTask> loadTasks(Context context) {
         List<IAdvancedTask> loadedTasks = new ArrayList<>();
-        // TODO: 2017-04-21 Remove and replace with Android equivalent
-        File file = new File(System.getProperty("user.home") + "\\Desktop\\" + TASK_DATA_FILENAME);
+        File file = new File(context.getFilesDir(), TASK_DATA_FILENAME);
 
         try {
             //Read string from file and parse it to JsonObject
@@ -175,7 +137,7 @@ public class StorageUtil {
      */
     public static List<ILabelCategory> loadCategories(Context context) {
         List<ILabelCategory> loadedCategories = new ArrayList<>();
-        File file = new File(System.getProperty("user.home") + "\\Desktop\\" + CATEGORIES_DATA_FILENAME);
+        File file = new File(context.getFilesDir(), CATEGORIES_DATA_FILENAME);
 
         try {
             //Read string from file and parse it to JsonObject
@@ -193,7 +155,7 @@ public class StorageUtil {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IllegalStateException e) {
-            System.err.println("Tasks file doesnt seem to be proper Json - format. Cannot load");
+            System.err.println("Tasks file doesn't seem to be proper Json - format. Can't load");
         }
         return loadedCategories;
     }
@@ -208,17 +170,12 @@ public class StorageUtil {
      */
     private static ListTask jsonObjectToListTask(JsonObject object) {
         ListTask task = new ListTask();
-        // TODO: 2017-04-22 This is code duplication (see jsonObjectToAdvancedTask below). Could probably be solved in a prettier way.
         task.setName(object.get("Name").getAsString());
         task.setNote(object.get("Note").getAsString());
         task.setChecked(object.get("IsChecked").getAsBoolean());
         task.setPriority(Priority.valueOf(object.get("Priority").getAsString()));
 
         if (object.has("Date")) {
-                /*Calendar cal = Calendar.getInstance();
-                Date date = DATE_FORMAT.parse(object.get("Date").getAsString());
-                cal.setTime(date);
-                task.setDate(cal);*/
             Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(Long.valueOf(object.get("Date").getAsString()));
             task.setDate(cal);
@@ -263,7 +220,6 @@ public class StorageUtil {
      */
     private static AdvancedTask jsonObjectToAdvancedTask(JsonObject object) {
         AdvancedTask task = new AdvancedTask();
-
         task.setName(object.get("Name").getAsString());
         task.setNote(object.get("Note").getAsString());
         task.setChecked(object.get("IsChecked").getAsBoolean());
@@ -282,7 +238,6 @@ public class StorageUtil {
         JsonArray labels = object.getAsJsonArray("Labels");
 
         for (int i = 0; i < labels.size(); i++) {
-            // TODO: 2017-04-22 Incorret implementation. References will go ham if done this way.
             ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(labels.get(i).getAsString());
             task.addLabel(category);
         }
@@ -347,7 +302,7 @@ public class StorageUtil {
      * @param category The category that is to be converted into a JsonObject.
      * @return The JsonObject generated from the category.
      */
-    private static JsonObject categoryToJsonObject(ILabelCategory category) {
+    private static JsonObject labelCategoryToJsonObject(ILabelCategory category) {
         JsonObject object = new JsonObject();
         object.addProperty("Name", category.getName());
         object.addProperty("Color", category.getColor());

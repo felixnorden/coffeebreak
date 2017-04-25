@@ -1,8 +1,13 @@
 package cbstudios.coffeebreak;
 
+import android.content.Context;
 import android.graphics.Color;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.internal.configuration.MockAnnotationProcessor;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -18,11 +23,11 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.Task;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class StorageUtilTest {
-
+    @Mock
+    Context cont;
     @Test
     public void testTaskSaveAndLoad() {
         List<IAdvancedTask> saveTasks = new ArrayList<>();
@@ -37,13 +42,10 @@ public class StorageUtilTest {
         labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Label"));
         labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Label2"));
 
-        List<ITask> subTasks = new ArrayList<>();
         ITask subTask1 = new Task("Subtask1");
         ITask subTask2 = new Task("Subtask2");
         subTask1.setChecked(false);
         subTask2.setChecked(true);
-        subTasks.add(subTask1);
-        subTasks.add(subTask2);
 
         AdvancedTask at1 = new AdvancedTask("AdvancedTask1");
         at1.setDate(currentCal);
@@ -73,16 +75,14 @@ public class StorageUtilTest {
         saveTasks.add(at2);
         saveTasks.add(lt1);
 
-        //Because of JVM (no emulator) testing, no context is available (context = null) .
-        StorageUtil.saveTasks(null, saveTasks);
-        List<IAdvancedTask> loadedTasks = StorageUtil.loadTasks(null);
+        StorageUtil.saveTasks(cont, saveTasks);
+        List<IAdvancedTask> loadedTasks = StorageUtil.loadTasks(cont);
 
         assertTrue(saveTasks.equals(loadedTasks));
     }
 
-
     @Test
-    public void testCategorySaveAndLoad(){
+    public void testCategorySaveAndLoad() {
         List<ILabelCategory> save = new ArrayList<>();
         ILabelCategory c1 = CategoryFactory.getInstance().createLabelCategory("Name1");
         ILabelCategory c2 = CategoryFactory.getInstance().createLabelCategory("Name2");
