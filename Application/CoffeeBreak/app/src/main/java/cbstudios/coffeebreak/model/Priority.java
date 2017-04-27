@@ -1,33 +1,28 @@
 package cbstudios.coffeebreak.model;
 
-import android.graphics.Color;
-
-
-/*
-Colors are represented by integers in Android. Full list of colors below.
+/**
+ * @author Felix
+ * @version 1.1
+ * Color representation for priorities in argb values.
  */
 public enum Priority {
-    ONE(Color.RED),
-    TWO(Color.BLACK), //Orange
-    THREE(Color.YELLOW),
-    NONE(Color.TRANSPARENT);
+    ONE("#FF0000"),
+    TWO("#FFA00F"),
+    THREE("#FFFA00"),
+    NONE("#FFFFFFFF");
 
-    private int color;
+    private String color;
 
-    public int getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(int color) {
+    public void setColor(String color) {
         this.color = color;
     }
 
-    Priority(int color) {
+    Priority(String color) {
         this.color = color;
-    }
-
-    Priority(String hexColor) {
-        this.color = Color.parseColor(hexColor);
     }
 }
 

@@ -1,9 +1,7 @@
-package cbstudios.coffeebreak.activity;
+package cbstudios.coffeebreak.view.activity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -18,27 +16,21 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
-import cbstudios.coffeebreak.adapter.LabelCategoryAdapter;
-import cbstudios.coffeebreak.adapter.MergeAdapter;
-import cbstudios.coffeebreak.adapter.TaskAdapter;
-import cbstudios.coffeebreak.adapter.TasksAdapter;
-import cbstudios.coffeebreak.adapter.TimeCategoryAdapter;
+import cbstudios.coffeebreak.view.adapter.LabelCategoryAdapter;
+import cbstudios.coffeebreak.view.adapter.MergeAdapter;
+import cbstudios.coffeebreak.view.adapter.TasksAdapter;
+import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
-
-import static java.lang.System.out;
 
 public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mActionBarDrawerToggle;

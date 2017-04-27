@@ -1,6 +1,7 @@
-package cbstudios.coffeebreak.adapter;
+package cbstudios.coffeebreak.view.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +21,6 @@ import java.util.List;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.model.Model;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 /**
@@ -133,8 +133,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
             taskHolder.etTaskName.setText(task.getName());
 
             disableTaskName(taskHolder.etTaskName);
-            if(task.getPriority() != null)
-                taskHolder.vPriority.setBackgroundColor(task.getPriority().getColor());
+            taskHolder.vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
         }
         else{
             // Task creation, hide all unset elements except for text field

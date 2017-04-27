@@ -37,13 +37,16 @@ public class ToDoList {
      */
     public void remove(IAdvancedTask task){
         int index = 0;
+        boolean found = false;
         for(int i = 0; i < tasks.size(); i++){
-            if(tasks.get(i) == task){
+            if(task == tasks.get(i)){
                 index = i;
+                found = true;
                 break;
             }
         }
-        tasks.remove(index);
+        if(found)
+            tasks.remove(index);
     }
 
     /**

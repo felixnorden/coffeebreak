@@ -1,8 +1,6 @@
-package cbstudios.coffeebreak.adapter;
+package cbstudios.coffeebreak.view.adapter;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 
 /**
