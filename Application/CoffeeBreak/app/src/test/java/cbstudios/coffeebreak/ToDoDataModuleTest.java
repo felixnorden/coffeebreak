@@ -7,11 +7,9 @@ import java.util.List;
 
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.ToDoDataModule;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.LabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.Task;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

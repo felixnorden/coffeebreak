@@ -9,6 +9,6 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
  */
 
 public interface ICategory {
-    public String getName();
-    public List<IAdvancedTask> getValidTasks(List<IAdvancedTask> tasks);
+    String getName();
+    List<IAdvancedTask> getValidTasks(List<IAdvancedTask> tasks);
 }

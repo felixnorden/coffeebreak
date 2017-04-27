@@ -15,37 +15,37 @@ public interface ITask {
     /**
      * @return the name of the task
      */
-    public String getName();
+    String getName();
 
     /**
      * @param name the name to set for the task
      */
-    public void setName(String name);
+    void setName(String name);
 
     /**
      * @return True if task is checked
      */
-    public boolean isChecked();
+    boolean isChecked();
 
     /**
      * Inverts the boolean value for the checked attribute.
      * False if previously True, and vice versa.
      */
-    public void toggleChecked();
+    void toggleChecked();
 
     /**
      * @param checked boolean value of checked attribute
      */
-    public void setChecked(boolean checked);
+    void setChecked(boolean checked);
 
     /**
      * @return time of creation for this task
      */
-    public Calendar getCreationCalendar();
+    Calendar getCreationCalendar();
 
     /**
      * Sets the creation date for a task. Needed for initialisation of tasks from save.
      * @param calendar The date the task was created.
      */
-    public void setCreationCalendar(Calendar calendar);
+    void setCreationCalendar(Calendar calendar);
 }

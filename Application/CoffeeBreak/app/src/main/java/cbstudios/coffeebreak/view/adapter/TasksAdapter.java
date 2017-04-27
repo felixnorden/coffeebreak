@@ -94,7 +94,7 @@ public class TasksAdapter extends RecyclerView.Adapter<TasksAdapter.ViewHolder> 
         final ImageButton ibMore = viewHolder.ibMore;
 
         if(task.getLabels().size() == 1)
-            ivCategory.setColorFilter(task.getLabels().get(0).getColor(), PorterDuff.Mode.MULTIPLY);
+            ivCategory.setColorFilter(Color.parseColor(task.getLabels().get(0).getColor()), PorterDuff.Mode.MULTIPLY);
 
         // Set up task layout based on whether the task has data or not.
         setUpTask(viewHolder, task, position);

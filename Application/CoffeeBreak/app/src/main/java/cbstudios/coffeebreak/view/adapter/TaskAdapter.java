@@ -22,7 +22,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
  * Created by Felix on 2017-04-13.
  */
 
-public class TaskAdapter extends ArrayAdapter<IAdvancedTask> {
+class TaskAdapter extends ArrayAdapter<IAdvancedTask> {
     private final Context context;
     private final List<IAdvancedTask> tasks;
 
@@ -67,7 +67,7 @@ public class TaskAdapter extends ArrayAdapter<IAdvancedTask> {
         }
 
         if(task.getLabels().size() == 1){
-            ivCategory.setColorFilter(task.getLabels().get(0).getColor());
+            ivCategory.setColorFilter(Color.parseColor(task.getLabels().get(0).getColor()));
         }
 
         // Listen for checked off by user

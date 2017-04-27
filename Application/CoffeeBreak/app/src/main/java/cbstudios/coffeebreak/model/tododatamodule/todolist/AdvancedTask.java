@@ -1,11 +1,11 @@
 package cbstudios.coffeebreak.model.tododatamodule.todolist;
 
-import cbstudios.coffeebreak.model.Priority;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import cbstudios.coffeebreak.model.Priority;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 
 /**
  * @author Felix
@@ -20,7 +20,7 @@ import java.util.List;
  *          </p>
  */
 public class AdvancedTask implements IAdvancedTask {
-    protected ITask task;
+    protected final ITask task;
     private final List<ILabelCategory> labels;
     private Calendar date;
     private String note;
@@ -186,9 +186,7 @@ public class AdvancedTask implements IAdvancedTask {
 
         if (!task.equals(that.task)) return false;
         if (!labels.equals(that.labels)) return false;
-        if (date != null ? !date.equals(that.date) : that.date != null) return false;
-        if (note != null ? !note.equals(that.note) : that.note != null) return false;
-        return priority == that.priority;
+        return date != null ? date.equals(that.date) : that.date == null && (note != null ? note.equals(that.note) : that.note == null && priority == that.priority);
     }
 
     /**

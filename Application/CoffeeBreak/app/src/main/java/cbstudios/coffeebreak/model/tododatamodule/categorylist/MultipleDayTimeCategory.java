@@ -21,7 +21,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
  *
  * Will be used for the instances "Today" and "Next seven days"
  */
-public class MultipleDayTimeCategory implements ITimeCategory {
+class MultipleDayTimeCategory implements ITimeCategory {
 
     private String name;
     private Calendar time;
@@ -81,8 +81,6 @@ public class MultipleDayTimeCategory implements ITimeCategory {
         if (time != null ? !time.equals(that.time) : that.time != null) return false;
 
         return true;
-
-
     }
 
     @Override

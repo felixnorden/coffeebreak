@@ -26,5 +26,7 @@
     <string name="list_task">List Task</string>
     <string name="advanced_task">Advanced Task</string>
     <string name="navigation">Navigation</string>
+    <string name="action_save">Save</string>
+    <string name="action_abort">Cancel</string>
 </resources>
 

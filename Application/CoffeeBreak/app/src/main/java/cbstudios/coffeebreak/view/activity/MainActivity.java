@@ -1,11 +1,11 @@
 package cbstudios.coffeebreak.view.activity;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,15 +22,15 @@ import android.widget.TextView;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
-import cbstudios.coffeebreak.view.adapter.LabelCategoryAdapter;
-import cbstudios.coffeebreak.view.adapter.MergeAdapter;
-import cbstudios.coffeebreak.view.adapter.TasksAdapter;
-import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
+import cbstudios.coffeebreak.view.adapter.LabelCategoryAdapter;
+import cbstudios.coffeebreak.view.adapter.MergeAdapter;
+import cbstudios.coffeebreak.view.adapter.TasksAdapter;
+import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
 
 public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -43,8 +43,12 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isFabOpen = false;
 
-    Animation FabOpen, FabClose, FabRClockwise, FabRAnticlockwise;
-    Animation TxtSlideIn, TxtSlideOut;
+    private Animation FabOpen;
+    private Animation FabClose;
+    private Animation FabRClockwise;
+    private Animation FabRAnticlockwise;
+    private Animation TxtSlideIn;
+    private Animation TxtSlideOut;
 
 
     private final Model model = new Model();

@@ -8,12 +8,10 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;
 //
 //
 
-import android.graphics.Color;
-
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * A class that holds both Lists of Categories
@@ -21,8 +19,8 @@ import java.util.List;
 
 public class CategoryList implements ICategoryList {
 
-    public List<ILabelCategory> labelCategories;
-    public List<ITimeCategory> timeCategories;
+    public final List<ILabelCategory> labelCategories;
+    public final List<ITimeCategory> timeCategories;
 
     /**
      * The constructor that will create two lists.
@@ -63,7 +61,7 @@ public class CategoryList implements ICategoryList {
      */
     public void removeLabelCategory(String name) {
         for(ILabelCategory label : labelCategories){
-            if(label.getName() == name){
+            if(Objects.equals(label.getName(), name)){
                 labelCategories.remove(label);
             }
         }
@@ -132,7 +130,6 @@ public class CategoryList implements ICategoryList {
         if (timeCategories != null ? !timeCategories.equals(that.getTimeCategories()): that.getTimeCategories() != null ) return false;
 
         return true;
-
     }
 
     /**

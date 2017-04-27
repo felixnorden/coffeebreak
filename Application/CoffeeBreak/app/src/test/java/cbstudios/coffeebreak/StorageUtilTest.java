@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 import cbstudios.coffeebreak.storage.StorageUtil;
 import cbstudios.coffeebreak.model.Priority;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
@@ -21,13 +22,13 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.Task;
 
 import static org.junit.Assert.assertTrue;
 
 public class StorageUtilTest {
     @Mock
     Context cont;
+
     @Test
     public void testTaskSaveAndLoad() {
         List<IAdvancedTask> saveTasks = new ArrayList<>();
@@ -42,8 +43,8 @@ public class StorageUtilTest {
         labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Label"));
         labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Label2"));
 
-        ITask subTask1 = new Task("Subtask1");
-        ITask subTask2 = new Task("Subtask2");
+        ITask subTask1 = TaskFactory.getInstance().createTask("Subtask1");
+        ITask subTask2 = TaskFactory.getInstance().createTask("Subtask2");
         subTask1.setChecked(false);
         subTask2.setChecked(true);
 
@@ -87,9 +88,6 @@ public class StorageUtilTest {
         ILabelCategory c1 = CategoryFactory.getInstance().createLabelCategory("Name1");
         ILabelCategory c2 = CategoryFactory.getInstance().createLabelCategory("Name2");
         ILabelCategory c3 = CategoryFactory.getInstance().createLabelCategory("Name3");
-        c1.setColor(Color.RED);
-        c2.setColor(Color.BLACK);
-        c3.setColor(Color.CYAN);
         StorageUtil.saveCategories(null, save);
 
         List<ILabelCategory> load = StorageUtil.loadCategories(null);

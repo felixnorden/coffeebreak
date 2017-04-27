@@ -32,7 +32,7 @@ public class TaskFactoryTest {
 
         //Testing list task with base task
         listTask.add(sampleTask);
-        listTask.add(new Task("sample2"));
+        listTask.add(factory.createTask("sample2"));
         listTask.remove(sampleTask);
         assertEquals(listTask.getSubtasks().size(), 1);
         assertEquals(listTask.getSubtasks().get(0).getName(), "sample2");

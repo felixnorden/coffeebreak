@@ -16,38 +16,38 @@ public interface ITaskFactory {
      * Creates an empty task
      * @return      a task of type ITask
      */
-    public ITask createTask();
+    ITask createTask();
 
     /**
      * Creates a task with the given name
      * @param name  the name for the task
      * @return      a task of type ITask
      */
-    public ITask createTask(String name);
+    ITask createTask(String name);
 
     /**
      * Creates an empty advanced task
      * @return      a task of type IAdvancedTask
      */
-    public IAdvancedTask createAdvancedTask();
+    IAdvancedTask createAdvancedTask();
 
     /**
      * Creates an advanced task with the given name
      * @param name  the name for the advanced task
      * @return      a task of type IAdvancedTask
      */
-    public IAdvancedTask createAdvancedTask(String name);
+    IAdvancedTask createAdvancedTask(String name);
 
     /**
      * Creates an empty list task
      * @return      a task of type IListTask
      */
-    public IListTask createListTask();
+    IListTask createListTask();
 
     /**
      * Creates a list task with the given name
      * @param name  the name for the list task
      * @return      a task of type IListTask
      */
-    public IListTask createListTask(String name);
+    IListTask createListTask(String name);
 }

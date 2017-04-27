@@ -11,7 +11,7 @@ import java.util.Calendar;
  *          Contained in ListTask's list of subtasks using the abstraction interface ITask.
  *          </p>
  */
-public class Task implements ITask {
+class Task implements ITask {
     private String name;
     private boolean checked;
     private Calendar creationCalendar;
@@ -97,9 +97,7 @@ public class Task implements ITask {
 
         Task task = (Task) o;
 
-        if (checked != task.checked) return false;
-        if (!creationCalendar.equals(task.creationCalendar)) return false;
-        return name != null ? name.equals(task.name) : task.name == null;
+        return checked == task.checked && creationCalendar.equals(task.creationCalendar) && (name != null ? name.equals(task.name) : task.name == null);
     }
 
     /**

@@ -10,7 +10,7 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.LabelCategory;
+//import cbstudios.coffeebreak.model.tododatamodule.categorylist.LabelCategory;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -24,6 +24,7 @@ import static org.junit.Assert.assertTrue;
  */
 public class CategoryListTest {
     CategoryList categoryList = new CategoryList();
+    ICategoryFactory factory = CategoryFactory.getInstance();
 
     /**
      * Add a first label before the test

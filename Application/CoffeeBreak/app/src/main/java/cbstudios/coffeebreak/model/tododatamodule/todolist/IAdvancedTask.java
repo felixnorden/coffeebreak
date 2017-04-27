@@ -1,10 +1,10 @@
 package cbstudios.coffeebreak.model.tododatamodule.todolist;
 
-import cbstudios.coffeebreak.model.Priority;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
-
 import java.util.Calendar;
 import java.util.List;
+
+import cbstudios.coffeebreak.model.Priority;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 
 /**
  * @author Felix
@@ -19,88 +19,88 @@ public interface IAdvancedTask {
     /**
      * @return          the name if the task
      */
-    public String getName();
+    String getName();
 
     /**
      * @param name      the name for the task
      */
-    public void setName(String name);
+    void setName(String name);
 
     /**
      * @return          the date for when the task is due
      */
-    public Calendar getDate();
+    Calendar getDate();
 
     /**
      * @param date      the date to set for the task
      */
-    public void setDate(Calendar date);
+    void setDate(Calendar date);
 
     /**
      * @return          the labels which the task is assigned
      */
-    public List<ILabelCategory> getLabels();
+    List<ILabelCategory> getLabels();
 
     /**
      * @param label     the label that will be added to the task
      */
-    public void addLabel(ILabelCategory label);
+    void addLabel(ILabelCategory label);
 
     /**
      * @param label     the label which will be removed from the task
      */
-    public void removeLabel(ILabelCategory label);
+    void removeLabel(ILabelCategory label);
 
     /**
      * @return          True if the task has any note
      */
-    public boolean hasNote();
+    boolean hasNote();
 
     /**
      * @return          the note that the task contained
      */
-    public String getNote();
+    String getNote();
 
     /**
      * @param note      the note that will be set for the task
      */
-    public void setNote(String note);
+    void setNote(String note);
 
     /**
      * @return          the priority of the task
      */
-    public Priority getPriority();
+    Priority getPriority();
 
     /**
      * @param priority  the priority which will be set on the task
      */
-    public void setPriority(Priority priority);
+    void setPriority(Priority priority);
 
     /**
      * @return          True if the task has been checked off
      */
-    public boolean isChecked();
+    boolean isChecked();
 
     /**
      * Inverts the boolean value checked.
      * If checked is true, then false
      * if checked is false, then true
      */
-    public void toggleChecked();
+    void toggleChecked();
 
     /**
      * @param value     the value to set task's checked value
      */
-    public void setChecked(boolean value);
+    void setChecked(boolean value);
 
     /**
      *  @return         creation date and time for the task
      */
-    public Calendar getCreationCalendar();
+    Calendar getCreationCalendar();
 
     /**
      *
-     * @param calendar
+     * @param calendar  creation date to set for the task
      */
-    public void setCreationCalendar(Calendar calendar);
+    void setCreationCalendar(Calendar calendar);
 }

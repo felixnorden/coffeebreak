@@ -155,7 +155,7 @@ public class StorageUtil {
                 JsonObject categoryObject = mainArray.get(i).getAsJsonObject();
                 ILabelCategory category = CategoryFactory.getInstance().createLabelCategory();
                 category.setName(categoryObject.get("Name").getAsString());
-                category.setColor(categoryObject.get("Color").getAsInt());
+                category.setColor(categoryObject.get("Color").getAsString());
                 loadedCategories.add(category);
             }
         } catch (FileNotFoundException e) {
