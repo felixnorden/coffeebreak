@@ -90,6 +90,6 @@ public class ToDoDataModuleTest {
         toDoDataModule.removeTask(at4);
         assertTrue(toDoDataModule.getTasks().size() == 0);
 
-        assertFalse(toDoDataModule.getTasks().get(0) instanceof AdvancedTask);
+        assertTrue(toDoDataModule.getTasks().isEmpty());
     }
 }

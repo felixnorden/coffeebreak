@@ -56,6 +56,7 @@ public class TaskEqualsAndHashcodeTest {
 
     @Test
     public void testTaskEquals(){
+        task.getCreationCalendar().set(2017,02,03);
         assertFalse(task.equals(task3));
         task = task3;
         assertTrue(task.equals(task3));
