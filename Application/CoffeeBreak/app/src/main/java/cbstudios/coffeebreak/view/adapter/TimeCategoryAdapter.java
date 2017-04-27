@@ -1,4 +1,4 @@
-package cbstudios.coffeebreak.adapter;
+package cbstudios.coffeebreak.view.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 
 import static cbstudios.coffeebreak.R.layout.drawer_list_item;

@@ -1,11 +1,8 @@
-package cbstudios.coffeebreak.adapter;
+package cbstudios.coffeebreak.view.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.Paint;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,8 +17,6 @@ import java.util.List;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
-
-import static android.support.constraint.R.id.none;
 
 /**
  * Created by Felix on 2017-04-13.
@@ -58,7 +53,7 @@ public class TaskAdapter extends ArrayAdapter<IAdvancedTask> {
             etTaskName.setText(task.getName());
 
             disableTaskName(etTaskName);
-            vPriority.setBackgroundColor(task.getPriority().getColor());
+            vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
         }
         else{
             // Task creation, hide all unset elements except for text field

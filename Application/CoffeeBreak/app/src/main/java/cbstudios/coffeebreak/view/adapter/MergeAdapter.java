@@ -1,4 +1,4 @@
-package cbstudios.coffeebreak.adapter;
+package cbstudios.coffeebreak.view.adapter;
 
 /**
  * Created by elias on 21/04/2017.
