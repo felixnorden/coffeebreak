@@ -12,7 +12,7 @@ import static junit.framework.Assert.assertTrue;
  * Created by johan on 5/2/2017.
  */
 
-public class UcCreateAndCheckTaskTest {
+public class UCCreateAndCheckTaskTest {
     private Model model = new Model();
 
     @Before
