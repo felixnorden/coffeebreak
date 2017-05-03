@@ -1,11 +1,12 @@
 package cbstudios.coffeebreak;
 
 
-import org.junit.*;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
 
 import cbstudios.coffeebreak.model.Priority;
 import cbstudios.coffeebreak.model.TaskSorter;
@@ -13,9 +14,9 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITaskFactory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertEquals;
 
 
 /**
