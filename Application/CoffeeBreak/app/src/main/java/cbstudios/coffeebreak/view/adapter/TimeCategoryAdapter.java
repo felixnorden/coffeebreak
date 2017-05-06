@@ -46,18 +46,27 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
         if(timeCategory.getName() != null) {
             etNameView.setText(timeCategory.getName());
 
-            List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
-
-            for (int j = 0; j < timeCategories.size(); j++) {
-                if (timeCategory.equals(timeCategories.get(j))) {
-                    if (timeCategory.getTaskCount(tasks) != 0) {
-                        categorySize.setText(Integer.toString(timeCategory.getTaskCount(tasks)));
-                    }
-                }
-            }
+            updateNumberOfTaskInCategory(timeCategory, categorySize);
         }
         return rowItem;
 
+    }
+
+    /**
+     * * Updates the number that represent number of task in the given category
+     * @param timeCategory is the current labelCategory
+     * @param categorySize is ID for a TextView field
+     */
+    private void updateNumberOfTaskInCategory(ITimeCategory timeCategory, TextView categorySize) {
+        List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
+
+        for (int j = 0; j < timeCategories.size(); j++) {
+            if (timeCategory.equals(timeCategories.get(j))) {
+                if (timeCategory.getTaskCount(tasks) != 0) {
+                    categorySize.setText(Integer.toString(timeCategory.getTaskCount(tasks)));
+                }
+            }
+        }
     }
 }
 

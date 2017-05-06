@@ -28,14 +28,14 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
     public Model model;
 
 
-    public LabelCategoryAdapter(Context context, List<ILabelCategory> categories, Model model){
+    public LabelCategoryAdapter(Context context, List<ILabelCategory> categories, Model model) {
         super(context, R.layout.drawer_list_item_label, categories);
         this.context = context;
         this.labelCategories = categories;
         this.model = model;
-}
+    }
 
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View rowItem = inflater.inflate(R.layout.drawer_list_item_label, parent, false);
 
@@ -45,26 +45,32 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         TextView categorySize = (TextView) rowItem.findViewById(R.id.textViewNumber);
 
 
-
-
-        if(labelCategory.getName() != null) {
+        if (labelCategory.getName() != null) {
 
             etNameView.setText(labelCategory.getName());
             ivCategory.setColorFilter(Color.parseColor(labelCategory.getColor()), PorterDuff.Mode.MULTIPLY);
 
-
-            List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
-
-            for (int j = 0; j < labelCategories.size(); j++) {
-                if (labelCategory.equals(labelCategories.get(j))) {
-                    if (labelCategory.getTaskCount(tasks)!= 0) {
-                        categorySize.setText(Integer.toString(labelCategory.getTaskCount(tasks)));
-                    }
-                }
-            }
+            updateNumberOfTaskInCategory(labelCategory, categorySize);
         }
 
         return rowItem;
+    }
+
+    /**
+     * Updates the number that represent number of task in the given category
+     * @param labelCategory is the current labelCategory
+     * @param categorySize is ID for a TextView field
+     */
+    private void updateNumberOfTaskInCategory(ILabelCategory labelCategory, TextView categorySize) {
+        List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
+
+        for (int j = 0; j < labelCategories.size(); j++) {
+            if (labelCategory.equals(labelCategories.get(j))) {
+                if (labelCategory.getTaskCount(tasks) != 0) {
+                    categorySize.setText(Integer.toString(labelCategory.getTaskCount(tasks)));
+                }
+            }
+        }
     }
 
 }
