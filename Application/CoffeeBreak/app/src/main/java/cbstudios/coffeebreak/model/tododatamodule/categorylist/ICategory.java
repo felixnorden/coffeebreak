@@ -11,4 +11,5 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 public interface ICategory {
     String getName();
     List<IAdvancedTask> getValidTasks(List<IAdvancedTask> tasks);
+    int getTaskCount (List<IAdvancedTask> tasks);
 }

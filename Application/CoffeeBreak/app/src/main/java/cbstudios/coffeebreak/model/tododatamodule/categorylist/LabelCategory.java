@@ -66,6 +66,18 @@ class LabelCategory implements ILabelCategory {
         return name;
     }
 
+    @Override
+    public int getTaskCount (List<IAdvancedTask> tasks) {
+        int num = 0;
+        for (IAdvancedTask task : tasks) {
+            for (int i = 0; i < task.getLabels().size(); i++) {
+                if (task.getLabels().get(i).equals(this)) {
+                    num++;
+                }
+            }
+        }
+        return num;
+    }
 
     @Override
     public List<IAdvancedTask> getValidTasks(List<IAdvancedTask> tasks) {

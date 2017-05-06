@@ -12,6 +12,7 @@ import java.util.List;
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 import static cbstudios.coffeebreak.R.layout.drawer_list_item;
 
@@ -43,7 +44,16 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
 
         if(timeCategory.getName() != null) {
             etNameView.setText(timeCategory.getName());
-            categorySize.setText("1");
+
+            List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
+
+            for (int j = 0; j < timeCategories.size(); j++) {
+                if (timeCategory.equals(timeCategories.get(j))) {
+                    if (timeCategory.getTaskCount(tasks) != 0) {
+                        categorySize.setText(Integer.toString(timeCategory.getTaskCount(tasks)));
+                    }
+                }
+            }
         }
         return rowItem;
 

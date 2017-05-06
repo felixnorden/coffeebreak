@@ -9,7 +9,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
@@ -51,38 +50,17 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
 
             etNameView.setText(labelCategory.getName());
             ivCategory.setColorFilter(Color.parseColor(labelCategory.getColor()));
-            List<IAdvancedTask> tasks = new ArrayList<>();
-            tasks = model.getToDoDataModule().getTasks();
-            int workNum = 0;
-            int homeNum = 0;
-            int meetingsNum = 0;
-            for (IAdvancedTask task : tasks){
-                for (int i = 0; i< task.getLabels().size(); i++) {
-                    if (task.getLabels().get(i).getName().equals("Work")) {
-                        workNum++;
-                    }
-                    if (task.getLabels().get(i).getName().equals("Home")) {
-                        homeNum++;
-                    }
-                    if (task.getLabels().get(i).getName().equals("Meetings")) {
-                        meetingsNum++;
+
+
+            List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
+
+            for (int j = 0; j < labelCategories.size(); j++) {
+                if (labelCategory.equals(labelCategories.get(j))) {
+                    if (labelCategory.getTaskCount(tasks)!= 0) {
+                        categorySize.setText(Integer.toString(labelCategory.getTaskCount(tasks)));
                     }
                 }
             }
-            if (labelCategory.getName().equals("Work")) {
-                categorySize.setText(Integer.toString(workNum));
-            } else if (labelCategory.getName().equals("Home")) {
-                categorySize.setText(Integer.toString(homeNum));
-            } else if (labelCategory.getName().equals("Meetings")) {
-                categorySize.setText(Integer.toString(meetingsNum));
-            }
-
-            //categorySize.setText(Integer.toString(labelCategory.getValidTasks(model.getToDoDataModule().getTasks()).size()));
-            //String nnn = Integer.toString(labelCategory.getValidTasks(model.getToDoDataModule().getTasks()).size());
-            //int nn = labelCategory.getValidTasks(model.getToDoDataModule().getTasks()).size();
-            //List<IAdvancedTask> n = new ArrayList<>();
-            //n =  (model.getToDoDataModule().getTasks());
-            //int nn = labelCategory.getValidTasks(n).size();
         }
 
         return rowItem;
