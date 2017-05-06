@@ -2,6 +2,7 @@ package cbstudios.coffeebreak.view.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,7 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         if(labelCategory.getName() != null) {
 
             etNameView.setText(labelCategory.getName());
-            ivCategory.setColorFilter(Color.parseColor(labelCategory.getColor()));
+            ivCategory.setColorFilter(Color.parseColor(labelCategory.getColor()), PorterDuff.Mode.MULTIPLY);
 
 
             List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
