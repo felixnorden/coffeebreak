@@ -78,8 +78,8 @@ public class MainActivity extends AppCompatActivity {
         // Set up navDrawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories);
-        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories);
+        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, model);
+        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories, model);
         final MergeAdapter mergeAdapter = new MergeAdapter();
         mergeAdapter.addAdapter(timeCategoryAdapter);
         mergeAdapter.addAdapter(labelCategoryAdapter);

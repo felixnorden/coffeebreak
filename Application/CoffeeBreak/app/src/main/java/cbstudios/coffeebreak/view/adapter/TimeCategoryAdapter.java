@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
+import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 
 import static cbstudios.coffeebreak.R.layout.drawer_list_item;
@@ -22,11 +23,13 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
 
     private final Context context;
     private final List<ITimeCategory> timeCategories;
+    private Model model;
 
-    public TimeCategoryAdapter(Context context, List<ITimeCategory> categories){
+    public TimeCategoryAdapter(Context context, List<ITimeCategory> categories, Model model){
         super(context, drawer_list_item, categories);
         this.context = context;
         this.timeCategories = categories;
+        this.model = model;
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
@@ -35,10 +38,12 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
 
         final ITimeCategory timeCategory = getItem(position);
         final TextView etNameView = (TextView) rowItem.findViewById(R.id.nameView);
+        TextView categorySize = (TextView) rowItem.findViewById(R.id.textViewNumber);
+
 
         if(timeCategory.getName() != null) {
             etNameView.setText(timeCategory.getName());
-
+            categorySize.setText("1");
         }
         return rowItem;
 
