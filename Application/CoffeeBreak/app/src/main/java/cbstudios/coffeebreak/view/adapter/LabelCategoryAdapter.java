@@ -28,7 +28,7 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
 
 
     public LabelCategoryAdapter(Context context, List<ILabelCategory> categories, Model model){
-        super(context, R.layout.drawer_list_item, categories);
+        super(context, R.layout.drawer_list_item_label, categories);
         this.context = context;
         this.labelCategories = categories;
         this.model = model;
@@ -36,7 +36,7 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
 
     public View getView(int position, View convertView, ViewGroup parent){
         LayoutInflater inflater = LayoutInflater.from(context);
-        View rowItem = inflater.inflate(R.layout.drawer_list_item, parent, false);
+        View rowItem = inflater.inflate(R.layout.drawer_list_item_label, parent, false);
 
         final ILabelCategory labelCategory = getItem(position);
         final TextView etNameView = (TextView) rowItem.findViewById(R.id.nameView);

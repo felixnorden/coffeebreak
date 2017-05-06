@@ -14,7 +14,8 @@ import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
-import static cbstudios.coffeebreak.R.layout.drawer_list_item;
+import static cbstudios.coffeebreak.R.layout.drawer_list_item_label;
+import static cbstudios.coffeebreak.R.layout.drawer_list_item_time;
 
 /**
  * Created by elias on 21/04/2017.
@@ -27,7 +28,7 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
     private Model model;
 
     public TimeCategoryAdapter(Context context, List<ITimeCategory> categories, Model model){
-        super(context, drawer_list_item, categories);
+        super(context, drawer_list_item_label, categories);
         this.context = context;
         this.timeCategories = categories;
         this.model = model;
@@ -35,7 +36,7 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
 
     public View getView(int position, View convertView, ViewGroup parent){
         LayoutInflater inflater = LayoutInflater.from(context);
-        View rowItem = inflater.inflate(drawer_list_item, parent, false);
+        View rowItem = inflater.inflate(drawer_list_item_time, parent, false);
 
         final ITimeCategory timeCategory = getItem(position);
         final TextView etNameView = (TextView) rowItem.findViewById(R.id.nameView);
