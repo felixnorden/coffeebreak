@@ -28,5 +28,4 @@ public interface IAchievement {
      */
     boolean isCompleted(int number);
 
-
 }
