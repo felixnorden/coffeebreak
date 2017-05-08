@@ -102,10 +102,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         // Set up task layout based on whether the task has data or not.
         setUpTask(viewHolder, task, position);
 
-
-
     }
 
+    @Override
+    public void onViewAttachedToWindow(ViewHolder taskHolder){
+        final int position = taskHolder.getAdapterPosition();
+
+    }
     /**
      * {@inheritDoc}
      */
@@ -152,36 +155,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         }
         else{
             // Task creation, hide all unset elements except for text field
+            taskHolder.cbCheckBox.setChecked(false);
             taskHolder.cbCheckBox.setVisibility(View.INVISIBLE);
             taskHolder.ivCategory.setVisibility(View.INVISIBLE);
             taskHolder.ibMore.setVisibility(View.INVISIBLE);
             taskHolder.vPriority.setVisibility(View.INVISIBLE);
             taskHolder.etTaskName.setText(null);
 
-            // Listen for enter key to hide Keyboard
-            taskHolder.etTaskName.setOnKeyListener(new View.OnKeyListener() {
-                @Override
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-                    if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN){
-                        String input = taskHolder.etTaskName.getText().toString();
-
-                        // Check if input is empty, if so, remove task from database
-                        // and update adapter of removal
-                        //TODO FIX SHIEET
-                        if(input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)){
-                            mainPresenter.removeTask(task);
-                            mTasks.remove(task);
-                            TaskAdapter.super.notifyItemRemoved(position);
-                            return false;
-                        }
-                        task.setName(input);
-                        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(taskHolder.etTaskName.getWindowToken(), 0);
-                        TaskAdapter.super.notifyItemChanged(position);
-                    }
-                    return false;
-                }
-            });
+            addKeyboardListener(taskHolder, task);
 
             // Request focus for keyboard input
             taskHolder.etTaskName.requestFocus();
@@ -196,6 +177,34 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
                     taskHolder.etTaskName.setPaintFlags(taskHolder.etTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 else
                     taskHolder.etTaskName.setPaintFlags(taskHolder.etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            }
+        });
+    }
+
+    private void addKeyboardListener(final ViewHolder taskHolder, final IAdvancedTask task){
+        // Listen for enter key to hide Keyboard
+        final int position = taskHolder.getAdapterPosition();
+        taskHolder.etTaskName.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN){
+                    String input = taskHolder.etTaskName.getText().toString();
+
+                    // Check if input is empty, if so, remove task from database
+                    // and update adapter of removal
+                    //TODO FIX SHIEET
+                    if(input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)){
+                        mainPresenter.removeTask(task);
+                        mTasks.remove(task);
+                        TaskAdapter.super.notifyItemRemoved(position);
+                        return false;
+                    }
+                    task.setName(input);
+                    InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(taskHolder.etTaskName.getWindowToken(), 0);
+                    TaskAdapter.super.notifyItemChanged(position);
+                }
+                return false;
             }
         });
     }
