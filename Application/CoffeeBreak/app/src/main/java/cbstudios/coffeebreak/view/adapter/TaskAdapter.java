@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -37,7 +38,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         public EditText etTaskName;
         public ImageView ivCategory;
         public ImageButton ibMore;
-
+        public Drawable etBackgroundDrawable;
         public ViewHolder(View itemView){
             super(itemView);
 
@@ -46,23 +47,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             etTaskName = (EditText) itemView.findViewById(R.id.editTextField);
             ivCategory = (ImageView) itemView.findViewById(R.id.imageViewCategory);
             ibMore = (ImageButton) itemView.findViewById(R.id.imageButtonMore);
+            etBackgroundDrawable = etTaskName.getBackground();
         }
     }
 
-    private List<IAdvancedTask> mTasks = new ArrayList<>();
+    private List<IAdvancedTask> mTasks;
     private Context mContext;
     private IMainPresenter mainPresenter;
 
     public TaskAdapter(Context context, IMainPresenter mainPresenter){
         mContext = context;
         this.mainPresenter = mainPresenter;
-        mTasks.addAll(mainPresenter.getTasks());
-    }
-
-    public TaskAdapter(Context context, IMainPresenter mainPresenter, ICategory category){
-        mContext = context;
-        this.mainPresenter = mainPresenter;
-        mTasks.addAll(category.getValidTasks(mainPresenter.getTasks()));
+        mTasks = mainPresenter.getTasks();
     }
 
     /**
@@ -92,7 +88,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      */
     @Override
     public void onBindViewHolder(TaskAdapter.ViewHolder viewHolder, final int position){
-        final IAdvancedTask task = mTasks.get(position);
+        IAdvancedTask task = mTasks.get(position);
 
         final View vPriority = viewHolder.vPriority;
         final CheckBox cbCheckBox = viewHolder.cbCheckBox;
@@ -106,18 +102,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         // Set up task layout based on whether the task has data or not.
         setUpTask(viewHolder, task, position);
 
-        // Listen for checked off by user
-        cbCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                task.setChecked(isChecked);
-                etTaskName.setEnabled(!isChecked);
-                if(isChecked)
-                    etTaskName.setPaintFlags(etTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                else
-                    etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-            }
-        });
+
 
     }
 
@@ -129,17 +114,40 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         return mTasks.size();
     }
 
+
+    public void updateTasks(ICategory currentCategory){
+        if(currentCategory != null) {
+            this.mTasks = currentCategory.getValidTasks(mainPresenter.getTasks());
+
+        }else{
+            this.mTasks = mainPresenter.getTasks();
+        }
+        notifyDataSetChanged();
+    }
+
+    private void setTaskName(ViewHolder taskHolder, boolean value){
+        if(value){
+            taskHolder.etTaskName.setBackground(taskHolder.etBackgroundDrawable);
+            taskHolder.etTaskName.setFocusable(value);
+        }
+        else
+            disableTaskName(taskHolder.etTaskName);
+    }
     private void disableTaskName(EditText taskName) {
         taskName.setKeyListener(null);
         taskName.setBackground(null);
         taskName.setFocusable(false);
     }
 
-    private void setUpTask(final ViewHolder taskHolder, final IAdvancedTask task, final int position){
+    private void setUpTask(final ViewHolder taskHolder, IAdvancedTask task, final int position){
         if(task.getName() != null){
+            taskHolder.cbCheckBox.setVisibility(View.VISIBLE);
+            taskHolder.ivCategory.setVisibility(View.VISIBLE);
+            taskHolder.ibMore.setVisibility(View.VISIBLE);
+            taskHolder.vPriority.setVisibility(View.VISIBLE);
             taskHolder.etTaskName.setText(task.getName());
 
-            disableTaskName(taskHolder.etTaskName);
+            setTaskName(taskHolder, false);
             taskHolder.vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
         }
         else{
@@ -178,6 +186,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             // Request focus for keyboard input
             taskHolder.etTaskName.requestFocus();
         }
+        // Listen for checked off by user
+        taskHolder.cbCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //task.setChecked(isChecked);
+                taskHolder.etTaskName.setEnabled(!isChecked);
+                if(isChecked)
+                    taskHolder.etTaskName.setPaintFlags(taskHolder.etTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                else
+                    taskHolder.etTaskName.setPaintFlags(taskHolder.etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+            }
+        });
     }
 }
 

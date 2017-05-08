@@ -184,11 +184,9 @@ class MainActivity extends AppCompatActivity  implements IMainView {
 
     private void addAdvTask() {
         mainPresenter.createTask();
-        if (currentCategory == null) {
-            taskList.setAdapter(new TaskAdapter(this, mainPresenter));
-        } else {
-            taskList.setAdapter(new TaskAdapter(this, mainPresenter));
-        }
+            ((TaskAdapter) taskList.getAdapter()).updateTasks(currentCategory);
+
+
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -213,7 +211,7 @@ class MainActivity extends AppCompatActivity  implements IMainView {
 
         // Set adapter
         //TODO UGLY AF
-        taskList.setAdapter(new TaskAdapter(this, mainPresenter, currentCategory));
+        ((TaskAdapter) taskList.getAdapter()).updateTasks(currentCategory);
 
         // Close drawer
         mDrawerLayout.closeDrawer(mDrawerList);
