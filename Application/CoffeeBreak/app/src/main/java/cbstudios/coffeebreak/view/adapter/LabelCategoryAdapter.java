@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
+import cbstudios.coffeebreak.controller.IMainPresenter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
@@ -25,14 +26,14 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
 
     private final Context context;
     private final List labelCategories;
-    public Model model;
+    private IMainPresenter mainPresenter;
 
 
-    public LabelCategoryAdapter(Context context, List<ILabelCategory> categories, Model model) {
+    public LabelCategoryAdapter(Context context, List<ILabelCategory> categories, IMainPresenter mainPresenter) {
         super(context, R.layout.drawer_list_item_label, categories);
         this.context = context;
         this.labelCategories = categories;
-        this.model = model;
+        this.mainPresenter = mainPresenter;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -62,7 +63,7 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
      * @param categorySize is ID for a TextView field
      */
     private void updateNumberOfTaskInCategory(ILabelCategory labelCategory, TextView categorySize) {
-        List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
+        List<IAdvancedTask> tasks = mainPresenter.getTasks();
 
         for (int j = 0; j < labelCategories.size(); j++) {
             if (labelCategory.equals(labelCategories.get(j))) {

@@ -22,6 +22,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
+import cbstudios.coffeebreak.controller.IMainPresenter;
+import cbstudios.coffeebreak.controller.IPresenterFactory;
+import cbstudios.coffeebreak.controller.PresenterFactory;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
@@ -29,10 +32,10 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.view.adapter.LabelCategoryAdapter;
 import cbstudios.coffeebreak.view.adapter.MergeAdapter;
-import cbstudios.coffeebreak.view.adapter.TasksAdapter;
+import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
 
-public class MainActivity extends AppCompatActivity {
+class MainActivity extends AppCompatActivity  implements IMainView{
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -50,13 +53,12 @@ public class MainActivity extends AppCompatActivity {
     private Animation TxtSlideIn;
     private Animation TxtSlideOut;
 
-
-    private final Model model = new Model();
-    private List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
-    private List<ILabelCategory> labelCategories = model.getToDoDataModule().getLabelCategories();
-    private List<ITimeCategory> timeCategories = model.getToDoDataModule().getTimeCategories();
+    private IMainPresenter mainPresenter;
+    private final IPresenterFactory presenterFactory = PresenterFactory.getInstance();
+    private List<ILabelCategory> labelCategories;
+    private List<ITimeCategory> timeCategories;
     private RecyclerView taskList;
-    private ICategory currentCategory= null;
+    private ICategory currentCategory = null;
 
 
 
@@ -78,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
         // Set up navDrawer
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, model);
-        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories, model);
+        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, mainPresenter);
+        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories, mainPresenter);
         final MergeAdapter mergeAdapter = new MergeAdapter();
         mergeAdapter.addAdapter(timeCategoryAdapter);
         mergeAdapter.addAdapter(labelCategoryAdapter);
@@ -89,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // Set up RecyclerView for tasks and render each item.
-        final TasksAdapter taskAdapter = new TasksAdapter(this, tasks, model);
+        final TaskAdapter taskAdapter = new TaskAdapter(this, mainPresenter);
         taskList = (RecyclerView) findViewById(R.id.taskList);
         taskList.setAdapter(taskAdapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
@@ -128,6 +130,10 @@ public class MainActivity extends AppCompatActivity {
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mActionBarDrawerToggle.syncState();
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
+
+        mainPresenter = presenterFactory.createMainPresenter(this, taskAdapter);
+        labelCategories = mainPresenter.getLabelCategories();
+        timeCategories = mainPresenter.getTimeCategories();
     }
 
 
@@ -196,12 +202,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addAdvTask() {
-        model.getToDoDataModule().createTask();
+        mainPresenter.createTask();
         if(currentCategory == null){
-            taskList.setAdapter(new TasksAdapter(this, model.getToDoDataModule().getTasks(), model));
+            taskList.setAdapter(new TaskAdapter(this, mainPresenter));
         }
         else{
-            taskList.setAdapter(new TasksAdapter(this, currentCategory.getValidTasks(model.getToDoDataModule().getTasks()), model));
+            taskList.setAdapter(new TaskAdapter(this, mainPresenter));
         }
     }
 
@@ -217,22 +223,18 @@ public class MainActivity extends AppCompatActivity {
     /** Swaps fragments in the main content view */
     private void selectItem(int position) {
 
-
-
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
         ICategory category = (ICategory) mDrawerList.getAdapter().getItem(position);
         setTitle(category.getName());
         currentCategory = category;
 
-        taskList.setAdapter(new TasksAdapter(this, currentCategory.getValidTasks(model.getToDoDataModule().getTasks()), model));
+        // Set adapter
+        //TODO UGLY AF
+        taskList.setAdapter(new TaskAdapter(this, mainPresenter, currentCategory));
 
-
-
-
+        // Close drawer
         mDrawerLayout.closeDrawer(mDrawerList);
-
-
     }
 
     @Override

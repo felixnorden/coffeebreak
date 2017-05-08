@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
+import cbstudios.coffeebreak.controller.IMainPresenter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
@@ -25,13 +26,13 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
 
     private final Context context;
     private final List<ITimeCategory> timeCategories;
-    private Model model;
+    private IMainPresenter mainPresenter;
 
-    public TimeCategoryAdapter(Context context, List<ITimeCategory> categories, Model model){
+    public TimeCategoryAdapter(Context context, List<ITimeCategory> categories, IMainPresenter mainPresenter){
         super(context, drawer_list_item_label, categories);
         this.context = context;
         this.timeCategories = categories;
-        this.model = model;
+        this.mainPresenter = mainPresenter;
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
@@ -58,7 +59,7 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
      * @param categorySize is ID for a TextView field
      */
     private void updateNumberOfTaskInCategory(ITimeCategory timeCategory, TextView categorySize) {
-        List<IAdvancedTask> tasks = model.getToDoDataModule().getTasks();
+        List<IAdvancedTask> tasks = mainPresenter.getTasks();
 
         for (int j = 0; j < timeCategories.size(); j++) {
             if (timeCategory.equals(timeCategories.get(j))) {

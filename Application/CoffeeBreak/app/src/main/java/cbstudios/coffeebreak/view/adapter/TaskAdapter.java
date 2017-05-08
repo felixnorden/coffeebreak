@@ -3,72 +3,108 @@ package cbstudios.coffeebreak.view.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
+import cbstudios.coffeebreak.controller.IMainPresenter;
+import cbstudios.coffeebreak.model.Model;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 /**
- * Created by Felix on 2017-04-13.
+ * Created by Felix on 2017-04-14.
  */
 
-class TaskAdapter extends ArrayAdapter<IAdvancedTask> {
-    private final Context context;
-    private final List<IAdvancedTask> tasks;
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> implements ITaskAdapter{
 
-    public TaskAdapter(Context context, List<IAdvancedTask> tasks){
-        super(context, R.layout.advanced_task_layout, tasks);
-        this.context = context;
-        this.tasks = tasks;
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        public View vPriority;
+        public CheckBox cbCheckBox;
+        public EditText etTaskName;
+        public ImageView ivCategory;
+        public ImageButton ibMore;
+
+        public ViewHolder(View itemView){
+            super(itemView);
+
+            vPriority = (View) itemView.findViewById(R.id.viewPriority);
+            cbCheckBox = (CheckBox) itemView.findViewById(R.id.checkBox);
+            etTaskName = (EditText) itemView.findViewById(R.id.editTextField);
+            ivCategory = (ImageView) itemView.findViewById(R.id.imageViewCategory);
+            ibMore = (ImageButton) itemView.findViewById(R.id.imageButtonMore);
+        }
     }
 
+    private List<IAdvancedTask> mTasks = new ArrayList<>();
+    private Context mContext;
+    private IMainPresenter mainPresenter;
+
+    public TaskAdapter(Context context, IMainPresenter mainPresenter){
+        mContext = context;
+        this.mainPresenter = mainPresenter;
+        mTasks.addAll(mainPresenter.getTasks());
+    }
+
+    public TaskAdapter(Context context, IMainPresenter mainPresenter, ICategory category){
+        mContext = context;
+        this.mainPresenter = mainPresenter;
+        mTasks.addAll(category.getValidTasks(mainPresenter.getTasks()));
+    }
+
+    /**
+     *
+     * @return Main context for the adapter
+     */
+    public Context getContext(){
+        return mContext;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public TaskAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+        Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View rowItem = inflater.inflate(R.layout.advanced_task_layout, parent, false);
 
-        final IAdvancedTask task = getItem(position);
+        View taskView = inflater.inflate(R.layout.advanced_task_layout, parent, false);
 
-        // Fetch references to layout items
-        View vPriority = (View) rowItem.findViewById(R.id.viewPriority);
-        final CheckBox cbCheckBox = (CheckBox) rowItem.findViewById(R.id.checkBox);
-        final EditText etTaskName = (EditText) rowItem.findViewById(R.id.editTextField);
-        ImageButton ibMore = (ImageButton) rowItem.findViewById(R.id.imageButtonMore);
-        ImageView ivCategory = (ImageView) rowItem.findViewById(R.id.imageViewCategory);
+        ViewHolder viewHolder = new ViewHolder(taskView);
+        return viewHolder;
+    }
 
-        // Set up elements for layout
-        //TODO Check Colors of Priority and Category
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onBindViewHolder(TaskAdapter.ViewHolder viewHolder, final int position){
+        final IAdvancedTask task = mTasks.get(position);
 
-        if(task.getName() != null){
-            etTaskName.setText(task.getName());
+        final View vPriority = viewHolder.vPriority;
+        final CheckBox cbCheckBox = viewHolder.cbCheckBox;
+        final EditText etTaskName = viewHolder.etTaskName;
+        final ImageView ivCategory = viewHolder.ivCategory;
+        final ImageButton ibMore = viewHolder.ibMore;
 
-            disableTaskName(etTaskName);
-            vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
-        }
-        else{
-            // Task creation, hide all unset elements except for text field
-            cbCheckBox.setVisibility(View.INVISIBLE);
-            ivCategory.setVisibility(View.INVISIBLE);
-            ibMore.setVisibility(View.INVISIBLE);
-            vPriority.setVisibility(View.INVISIBLE);
+        if(task.getLabels().size() == 1)
+            ivCategory.setColorFilter(Color.parseColor(task.getLabels().get(0).getColor()), PorterDuff.Mode.MULTIPLY);
 
-            // Request input from user
-            etTaskName.requestFocus();
-        }
-
-        if(task.getLabels().size() == 1){
-            ivCategory.setColorFilter(Color.parseColor(task.getLabels().get(0).getColor()));
-        }
+        // Set up task layout based on whether the task has data or not.
+        setUpTask(viewHolder, task, position);
 
         // Listen for checked off by user
         cbCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -76,22 +112,72 @@ class TaskAdapter extends ArrayAdapter<IAdvancedTask> {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 task.setChecked(isChecked);
                 etTaskName.setEnabled(!isChecked);
-                if(isChecked){
+                if(isChecked)
                     etTaskName.setPaintFlags(etTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                }
                 else
                     etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             }
         });
-        return rowItem;
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getItemCount(){
+        return mTasks.size();
     }
 
     private void disableTaskName(EditText taskName) {
         taskName.setKeyListener(null);
         taskName.setBackground(null);
+        taskName.setFocusable(false);
     }
 
-    private void textStrikeThrough(EditText taskName){
+    private void setUpTask(final ViewHolder taskHolder, final IAdvancedTask task, final int position){
+        if(task.getName() != null){
+            taskHolder.etTaskName.setText(task.getName());
 
+            disableTaskName(taskHolder.etTaskName);
+            taskHolder.vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
+        }
+        else{
+            // Task creation, hide all unset elements except for text field
+            taskHolder.cbCheckBox.setVisibility(View.INVISIBLE);
+            taskHolder.ivCategory.setVisibility(View.INVISIBLE);
+            taskHolder.ibMore.setVisibility(View.INVISIBLE);
+            taskHolder.vPriority.setVisibility(View.INVISIBLE);
+            taskHolder.etTaskName.setText(null);
+
+            // Listen for enter key to hide Keyboard
+            taskHolder.etTaskName.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN){
+                        String input = taskHolder.etTaskName.getText().toString();
+
+                        // Check if input is empty, if so, remove task from database
+                        // and update adapter of removal
+                        //TODO FIX SHIEET
+                        if(input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)){
+                            mainPresenter.removeTask(task);
+                            mTasks.remove(task);
+                            TaskAdapter.super.notifyItemRemoved(position);
+                            return false;
+                        }
+                        task.setName(input);
+                        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(taskHolder.etTaskName.getWindowToken(), 0);
+                        TaskAdapter.super.notifyItemChanged(position);
+                    }
+                    return false;
+                }
+            });
+
+            // Request focus for keyboard input
+            taskHolder.etTaskName.requestFocus();
+        }
     }
 }
+
