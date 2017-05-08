@@ -49,7 +49,6 @@ public class StorageUtil {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         try {
-            //Save data to file
             FileOutputStream output = context.openFileOutput(id, Context.MODE_PRIVATE);
             output.write(gson.toJson(element).getBytes());
             output.close();
@@ -71,11 +70,9 @@ public class StorageUtil {
             //Read string from file and parse it to JsonObject
             FileReader reader = new FileReader(file);
             JsonParser parser = new JsonParser();
-            element = parser.parse(reader).getAsJsonObject();
-        } catch (FileNotFoundException e) {
+            element = parser.parse(reader);
+        } catch (FileNotFoundException | IllegalStateException e) {
             e.printStackTrace();
-        } catch (IllegalStateException e) {
-            System.err.println("Tasks file doesnt seem to be proper Json - format. Cannot load");
         }
         return element;
     }

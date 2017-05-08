@@ -60,6 +60,11 @@ class MainActivity extends AppCompatActivity  implements IMainView {
     private RecyclerView taskList;
     private ICategory currentCategory = null;
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        mainPresenter.onPause();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,6 +192,11 @@ class MainActivity extends AppCompatActivity  implements IMainView {
             ((TaskAdapter) taskList.getAdapter()).updateTasks(currentCategory);
 
 
+    }
+
+    @Override
+    public AppCompatActivity getAppCompatActivity() {
+        return this;
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {

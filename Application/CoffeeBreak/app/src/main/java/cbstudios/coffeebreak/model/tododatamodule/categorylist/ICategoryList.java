@@ -46,21 +46,6 @@ public interface ICategoryList {
     List<ITimeCategory> getTimeCategories();
 
     /**
-     * Initialize all the time categories
-     */
-    void initTimeCategories();
-
-    /**
-     * Initialize all the label categories
-     */
-    void initLabelCategories();
-
-    /**
-     * Initialize all the categories by calling on initTimeCategories and initLabelCategories
-     */
-    void initAllCategories();
-
-    /**
      * Getter for the Label Categories list
      * @return the list with all Label Categories
      */

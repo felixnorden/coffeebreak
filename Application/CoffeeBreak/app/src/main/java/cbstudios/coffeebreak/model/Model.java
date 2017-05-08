@@ -11,13 +11,6 @@ public class Model {
     }
 
     /**
-     * Initializes the model with saved data.
-     */
-    public void initialize() {
-        toDoDataModule.initialize();
-    }
-
-    /**
      * @return Returns the ToDoDataModule.
      */
     public ToDoDataModule getToDoDataModule() {

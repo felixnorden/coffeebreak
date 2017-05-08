@@ -1,37 +1,43 @@
 package cbstudios.coffeebreak.controller;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+
 import java.util.List;
 
 import cbstudios.coffeebreak.model.Model;
+import cbstudios.coffeebreak.model.TaskConverter;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
+import cbstudios.coffeebreak.storage.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IMainView;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 
 /**
- * @author Felix, Elias
+ * @author Felix, Elias, Zack
  * @version 0.1
- *
  */
-class MainPresenter implements IMainPresenter{
+class MainPresenter implements IMainPresenter {
     private Model model;
     private IMainView mainView;
     private ITaskAdapter taskAdapter;
 
 
-    public MainPresenter(IMainView mainView){
+    public MainPresenter(IMainView mainView) {
         this.mainView = mainView;
     }
+
     @Override
     public void onCreate() {
         model = new Model();
+        loadTasks();
     }
 
     @Override
     public void onPause() {
-
+        saveTasks();
     }
 
     @Override
@@ -72,5 +78,24 @@ class MainPresenter implements IMainPresenter{
     @Override
     public List<ITimeCategory> getTimeCategories() {
         return model.getToDoDataModule().getTimeCategories();
+    }
+
+    private void loadTasks() {
+        JsonElement element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Tasks");
+
+        if (element == null || !element.isJsonArray())
+            return;
+
+        JsonArray array = element.getAsJsonArray();
+        List<IAdvancedTask> tasks = TaskConverter.getInstance().toList(array);
+
+        for (IAdvancedTask task : tasks) {
+            model.getToDoDataModule().addTask(task);
+        }
+    }
+
+    private void saveTasks() {
+        JsonArray array = TaskConverter.getInstance().toJsonArray(model.getToDoDataModule().getTasks());
+        StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Tasks", array);
     }
 }

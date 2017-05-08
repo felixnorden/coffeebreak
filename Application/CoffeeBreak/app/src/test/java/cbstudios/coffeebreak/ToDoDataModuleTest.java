@@ -20,7 +20,6 @@ public class ToDoDataModuleTest {
     @Before
     public void beforeTest() {
         toDoDataModule = new Model().getToDoDataModule();
-        toDoDataModule.initialize();
     }
 
     @Test

@@ -19,7 +19,6 @@ public class PrototypeTest {
     @Before
     public void beforeTest(){
         model = new Model();
-        model.initialize();
     }
 
     @Test

@@ -40,7 +40,7 @@ public class TaskConverter {
      * @param tasks The list of tasks to be converted.
      * @return The JsonArray containing the data of the tasks in the list.
      */
-    public JsonArray listToJsonArray(List<IAdvancedTask> tasks) {
+    public JsonArray toJsonArray(List<IAdvancedTask> tasks) {
         JsonArray array = new JsonArray();
 
         for (IAdvancedTask task : tasks) {
@@ -55,12 +55,12 @@ public class TaskConverter {
     }
 
     /**
-     * Converts a task inte a JsonObject
+     * Converts a task into a JsonObject
      *
      * @param task The task to be converted.
      * @return The JsonObject containing the data of the task.
      */
-    public JsonObject taskToJsonObject(IAdvancedTask task) {
+    public JsonObject toJsonObject(IAdvancedTask task) {
         if (task instanceof ListTask) {
             return listTaskToJsonObject((ListTask) task);
         } else {
@@ -74,7 +74,7 @@ public class TaskConverter {
      * @param array The JsonArray to be converted.
      * @return The List of IAdvancedTasks.
      */
-    public List<IAdvancedTask> jsonArrayToList(JsonArray array) {
+    public List<IAdvancedTask> toList(JsonArray array) {
         List<IAdvancedTask> list = new ArrayList<>();
 
         for (int i = 0; i < array.size(); i++) {
@@ -159,9 +159,17 @@ public class TaskConverter {
     private ListTask jsonObjectToListTask(JsonObject object) {
         ListTask task = new ListTask();
         task.setName(object.get("Name").getAsString());
-        task.setNote(object.get("Note").getAsString());
+
         task.setChecked(object.get("IsChecked").getAsBoolean());
-        task.setPriority(Priority.valueOf(object.get("Priority").getAsString()));
+
+
+        if (object.has("Priority")) {
+            task.setPriority(Priority.valueOf(object.get("Priority").getAsString()));
+        }
+
+        if (object.has("Note")) {
+            task.setNote(object.get("Note").getAsString());
+        }
 
         if (object.has("Date")) {
             Calendar cal = Calendar.getInstance();
@@ -209,9 +217,15 @@ public class TaskConverter {
     private AdvancedTask jsonObjectToAdvancedTask(JsonObject object) {
         AdvancedTask task = new AdvancedTask();
         task.setName(object.get("Name").getAsString());
-        task.setNote(object.get("Note").getAsString());
         task.setChecked(object.get("IsChecked").getAsBoolean());
-        task.setPriority(Priority.valueOf(object.get("Priority").getAsString()));
+
+        if (object.has("Priority")) {
+            task.setPriority(Priority.valueOf(object.get("Priority").getAsString()));
+        }
+
+        if (object.has("Note")) {
+            task.setNote(object.get("Note").getAsString());
+        }
 
         if (object.has("Date")) {
             Calendar cal = Calendar.getInstance();

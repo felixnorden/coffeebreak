@@ -1,8 +1,7 @@
 package cbstudios.coffeebreak.view.activity;
 
-/**
- * Created by Lenovo on 2017-05-08.
- */
+import android.support.v7.app.AppCompatActivity;
 
 public interface IMainView {
+    AppCompatActivity getAppCompatActivity();
 }

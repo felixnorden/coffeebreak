@@ -49,9 +49,7 @@ public class CategoryListTest {
         categoryList.removeLabelCategory(categoryList.getLabelCategories().get(0));
         assertTrue(categoryList.labelCategories.isEmpty());
         assertTrue(categoryList.timeCategories.isEmpty());
-        categoryList.initTimeCategories();
         assertFalse(categoryList.timeCategories.isEmpty());
-        categoryList.initLabelCategories();
         assertFalse(categoryList.labelCategories.isEmpty());
     }
     @Test

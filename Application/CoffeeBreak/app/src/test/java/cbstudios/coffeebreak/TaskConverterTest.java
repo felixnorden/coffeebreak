@@ -92,7 +92,7 @@ public class TaskConverterTest {
 
     @Test
     public void testListToJsonArray() {
-        JsonArray array = converter.listToJsonArray(list);
+        JsonArray array = converter.toJsonArray(list);
         assertTrue(array.size() == 3);
 
         //Extract JsonObjects from array
@@ -168,8 +168,8 @@ public class TaskConverterTest {
 
     @Test
     public void testTaskToJsonObject() {
-        JsonObject listTaskObj = converter.taskToJsonObject(list.get(2));
-        JsonObject advancedTaskObj = converter.taskToJsonObject(list.get(0));
+        JsonObject listTaskObj = converter.toJsonObject(list.get(2));
+        JsonObject advancedTaskObj = converter.toJsonObject(list.get(0));
 
         assertNotNull(listTaskObj);
         assertNotNull(advancedTaskObj);

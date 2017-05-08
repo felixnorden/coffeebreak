@@ -32,18 +32,7 @@ public class ToDoDataModule {
         stats = new statistics();
     }
 
-    /**
-     * Initializes the two components of the datamodule.
-     */
-
-    public void initialize() {
-        initCategories();
-        initToDoList();
-    }
-
     public List<ILabelCategory> getLabelCategories(){
-        //TODO
-        initCategories();
         return categoryList.getLabelCategories();
     }
 
@@ -63,22 +52,6 @@ public class ToDoDataModule {
      */
     public List<ITimeCategory> getTimeCategories() {
         return categoryList.getTimeCategories();
-    }
-
-    /**
-     * Initializes the categories with saved data
-     */
-    private void initCategories() {
-        // TODO: 2017-04-04
-        //SKALL BYTAS UT MOT initCategories NÄR DEN IMPLEMENTERATS!!!
-        categoryList.initAllCategories();
-    }
-
-    /**
-     * Initializes the categories with saved data
-     */
-    private void initToDoList() {
-        //// TODO: 2017-04-04
     }
 
     /**

@@ -28,6 +28,7 @@ public class CategoryList implements ICategoryList {
     public CategoryList() {
         labelCategories = new ArrayList<>();
         timeCategories = new ArrayList<>();
+        initTimeCategories();
     }
 
     /**
@@ -44,8 +45,6 @@ public class CategoryList implements ICategoryList {
     public void addLabelCategory(String name) {
         labelCategories.add(CategoryFactory.getInstance().createLabelCategory(name));
     }
-
-
 
     /**
      * Remove a labelCategory from the labelCategory list.
@@ -76,17 +75,9 @@ public class CategoryList implements ICategoryList {
     }
 
     /**
-     * Initialize all the categories by calling on initTimeCategories and initLabelCategories
-     */
-    public void initAllCategories() {
-        initLabelCategories();
-        initTimeCategories();
-    }
-
-    /**
      * Creates all the timeCategories.
      */
-    public void initTimeCategories() {
+    private void initTimeCategories() {
         Calendar currentDate = Calendar.getInstance();
         timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("Today", currentDate));
         currentDate.add(Calendar.DAY_OF_YEAR, 1);
@@ -95,16 +86,6 @@ public class CategoryList implements ICategoryList {
         timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("Next 7 days", currentDate));
         currentDate.add(Calendar.DAY_OF_YEAR, 23);
         timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("Next 30 days", currentDate));
-    }
-
-    /**
-     * Creates all the labelCategories
-     */
-    public void initLabelCategories() {
-        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Work"));
-        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Home"));
-        labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Meetings"));
-
     }
     /**
      *
