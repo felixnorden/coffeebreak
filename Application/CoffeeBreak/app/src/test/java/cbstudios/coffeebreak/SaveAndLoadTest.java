@@ -62,8 +62,6 @@ public class SaveAndLoadTest {
         orgList.add(mockTask1);
         orgList.add(mockTask2);
 
-        StorageUtil.saveTasks(null, orgList);
-        loadedList = StorageUtil.loadTasks(null);
         assertTrue(loadedList.size() == orgList.size());
 
         IAdvancedTask loadedMockTask1 = loadedList.get(0);

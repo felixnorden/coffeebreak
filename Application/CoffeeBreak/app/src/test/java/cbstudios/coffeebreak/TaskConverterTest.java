@@ -18,7 +18,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.Task;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -49,8 +49,9 @@ public class TaskConverterTest {
         labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Label"));
         labelCategories.add(CategoryFactory.getInstance().createLabelCategory("Label2"));
 
-        ITask subTask1 = new Task("Subtask1");
-        ITask subTask2 = new Task("Subtask2");
+        ITask subTask1 = TaskFactory.getInstance().createTask("Subtask1");
+        ITask subTask2 = TaskFactory.getInstance().createTask("Subtask2");
+
         subTask1.setChecked(false);
         subTask2.setChecked(true);
         subtasks.add(subTask1);
