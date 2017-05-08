@@ -5,7 +5,7 @@ package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
  */
 
 
-public class numberAchievement implements IAchievement {
+public class NumberAchievement implements IAchievement {
     String name;
     int numberLimit;
     Boolean isCompleted;
@@ -16,7 +16,7 @@ public class numberAchievement implements IAchievement {
      * @param numberLimit is the number of times a specific assigment has to done
      *                    in order to complete the achievement
      */
-    public numberAchievement(String name, int numberLimit){
+    public NumberAchievement(String name, int numberLimit){
         this.name = name + " " + numberLimit;
         this.numberLimit = numberLimit;
         this.isCompleted = false;

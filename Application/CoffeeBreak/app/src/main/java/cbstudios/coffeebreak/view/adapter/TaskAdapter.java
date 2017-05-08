@@ -17,12 +17,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.controller.IMainPresenter;
-import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
@@ -39,6 +37,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         public ImageView ivCategory;
         public ImageButton ibMore;
         public Drawable etBackgroundDrawable;
+
+
         public ViewHolder(View itemView){
             super(itemView);
 
@@ -96,9 +96,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         final ImageView ivCategory = viewHolder.ivCategory;
         final ImageButton ibMore = viewHolder.ibMore;
 
-        if(task.getLabels().size() == 1)
+        if(task.getLabels().size() >= 1) {
             ivCategory.setColorFilter(Color.parseColor(task.getLabels().get(0).getColor()), PorterDuff.Mode.MULTIPLY);
-
+        } else {
+            ivCategory.setVisibility(View.INVISIBLE);
+        }
         // Set up task layout based on whether the task has data or not.
         setUpTask(viewHolder, task, position);
 

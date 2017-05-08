@@ -5,7 +5,7 @@ package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
  */
 
 
-public class timeAchievement implements IAchievement {
+public class TimeAchievement implements IAchievement {
     String name;
     Boolean isCompleted;
 
@@ -13,7 +13,7 @@ public class timeAchievement implements IAchievement {
      * The class constructor
      * @param name is the name of the achievement
      */
-    public timeAchievement(String name){
+    public TimeAchievement(String name){
         this.name = name;
         this.isCompleted = false;
     }

@@ -17,12 +17,12 @@ public interface IAchievementFactory {
      *                    in order to complete the achievement
      * @return a new numberAchievement
      */
-    numberAchievement createNumberAchievements(String name, int numberLimit);
+    NumberAchievement createNumberAchievements(String name, int numberLimit);
 
     /**
      *
      * @param name is the name of the achievement
      * @return a new timeAchievement
      */
-    timeAchievement createTimeAchievements(String name);
+    TimeAchievement createTimeAchievements(String name);
 }

@@ -4,7 +4,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.Calendar;
 
-import cbstudios.coffeebreak.eventBus.statisticEvent;
+import cbstudios.coffeebreak.eventBus.StatisticEvent;
 
 /**
  * @author Felix
@@ -27,7 +27,7 @@ class Task implements ITask {
         name = null;
         checked = false;
         creationCalendar = Calendar.getInstance();
-        EventBus.getDefault().post(new statisticEvent("Create"));
+        EventBus.getDefault().post(new StatisticEvent("Create"));
     }
 
     /**

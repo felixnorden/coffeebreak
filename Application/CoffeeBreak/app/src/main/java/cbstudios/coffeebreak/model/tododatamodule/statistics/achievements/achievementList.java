@@ -10,17 +10,17 @@ import java.util.List;
 /**
  * A class that holds all lists with different achievments
  */
-public class achievementList implements IAchievementList {
-    public final List<numberAchievement> createTaskAchievmentsList;
-    public final List<numberAchievement> checkTaskAchievmentsList;
-    public final List<timeAchievement> timeAcvhievementsList;
+public class AchievementList implements IAchievementList {
+    public final List<NumberAchievement> createTaskAchievmentsList;
+    public final List<NumberAchievement> checkTaskAchievEmentsList;
+    public final List<TimeAchievement> timeAcvhievementsList;
 
     /**
      * The class constructor that will init the lists to arraylists
      */
-    public achievementList(){
+    public AchievementList(){
         createTaskAchievmentsList = new ArrayList<>();
-        checkTaskAchievmentsList = new ArrayList<>();
+        checkTaskAchievEmentsList = new ArrayList<>();
         timeAcvhievementsList = new ArrayList<>();
     }
 
@@ -30,8 +30,8 @@ public class achievementList implements IAchievementList {
     public void initNumberAchievements(){
         int[] number = new int[]{1,10,25,50,100};
         for (int i : number){
-            createTaskAchievmentsList.add(achievementFactory.getInstance().createNumberAchievements("Create", i));
-            checkTaskAchievmentsList.add(achievementFactory.getInstance().createNumberAchievements("Check",i));
+            createTaskAchievmentsList.add(AchievementFactory.getInstance().createNumberAchievements("Create", i));
+            checkTaskAchievEmentsList.add(AchievementFactory.getInstance().createNumberAchievements("Check",i));
         }
 
     }

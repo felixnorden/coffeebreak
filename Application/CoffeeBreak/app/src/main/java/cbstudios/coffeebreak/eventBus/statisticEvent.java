@@ -4,10 +4,10 @@ package cbstudios.coffeebreak.eventBus;
  * Created by johan on 5/8/2017.
  */
 
-public class statisticEvent {
+public class StatisticEvent {
     private final String message;
 
-    public statisticEvent(String message){
+    public StatisticEvent(String message){
         this.message = message;
     }
 

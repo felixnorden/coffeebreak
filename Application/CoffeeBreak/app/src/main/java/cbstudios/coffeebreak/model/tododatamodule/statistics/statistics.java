@@ -3,13 +3,13 @@ package cbstudios.coffeebreak.model.tododatamodule.statistics;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import cbstudios.coffeebreak.eventBus.statisticEvent;
+import cbstudios.coffeebreak.eventBus.StatisticEvent;
 
 /**
  * Created by johan on 5/8/2017.
  */
 
-public class statistics {
+public class Statistics {
     int createdTasks;
     int checkOffTasks;
     int timesUpdated;
@@ -22,7 +22,7 @@ public class statistics {
 
 
 
-    public statistics(){
+    public Statistics(){
         createdTasks = 0;
         checkOffTasks = 0;
         timesUpdated = 0;
@@ -38,7 +38,7 @@ public class statistics {
     }
 
     @Subscribe
-    public void onEvent(statisticEvent event){
+    public void onEvent(StatisticEvent event){
         if(event.getMessage().equals("Create")){
             createdTasks++;
         }

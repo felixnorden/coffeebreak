@@ -7,8 +7,8 @@ package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
 /**
  * A factory class for achievements that will create all new achievements
  */
-public class achievementFactory implements IAchievementFactory {
-    private static final IAchievementFactory achievementsFactory = new achievementFactory();
+public class AchievementFactory implements IAchievementFactory {
+    private static final IAchievementFactory achievementsFactory = new AchievementFactory();
 
     /**
      *
@@ -26,8 +26,8 @@ public class achievementFactory implements IAchievementFactory {
      * @return a new numberAchievement
      */
     @Override
-    public numberAchievement createNumberAchievements(String name, int numberLimit) {
-        return new numberAchievement(name, numberLimit);
+    public NumberAchievement createNumberAchievements(String name, int numberLimit) {
+        return new NumberAchievement(name, numberLimit);
     }
 
     /**
@@ -36,7 +36,7 @@ public class achievementFactory implements IAchievementFactory {
      * @return a new timeAchievement
      */
     @Override
-    public timeAchievement createTimeAchievements(String name) {
-        return new timeAchievement(name);
+    public TimeAchievement createTimeAchievements(String name) {
+        return new TimeAchievement(name);
     }
 }

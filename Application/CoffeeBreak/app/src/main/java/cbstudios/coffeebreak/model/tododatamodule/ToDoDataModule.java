@@ -14,14 +14,14 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
-import cbstudios.coffeebreak.model.tododatamodule.statistics.statistics;
+import cbstudios.coffeebreak.model.tododatamodule.statistics.Statistics;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ToDoList;
 
 public class ToDoDataModule {
     private ICategoryList categoryList;
     private ToDoList todoList;
-    private statistics stats;
+    private Statistics stats;
 
     /**
      *
@@ -29,7 +29,7 @@ public class ToDoDataModule {
     public ToDoDataModule() {
         categoryList = new CategoryList();
         todoList = new ToDoList();
-        stats = new statistics();
+        stats = new Statistics();
     }
 
     public List<ILabelCategory> getLabelCategories(){
@@ -134,7 +134,7 @@ public class ToDoDataModule {
         return todoList.getTasks().get(index);
     }
 
-    public statistics getStats(){
+    public Statistics getStats(){
         return stats;
     }
 }
