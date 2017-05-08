@@ -17,8 +17,8 @@ public class PresenterFactory implements IPresenterFactory{
     }
 
     @Override
-    public IMainPresenter createMainPresenter(IMainView mainView, ITaskAdapter taskAdapter) {
-        return new MainPresenter(mainView, taskAdapter);
+    public IMainPresenter createMainPresenter(IMainView mainView) {
+        return new MainPresenter(mainView);
     }
 
     private PresenterFactory(){}

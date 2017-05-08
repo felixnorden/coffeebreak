@@ -8,5 +8,5 @@ import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
  */
 
 public interface IPresenterFactory {
-    IMainPresenter createMainPresenter(IMainView mainView, ITaskAdapter taskAdapter);
+    IMainPresenter createMainPresenter(IMainView mainView);
 }

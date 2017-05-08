@@ -35,7 +35,7 @@ import cbstudios.coffeebreak.view.adapter.MergeAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
 
-class MainActivity extends AppCompatActivity  implements IMainView{
+class MainActivity extends AppCompatActivity  implements IMainView {
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -61,12 +61,15 @@ class MainActivity extends AppCompatActivity  implements IMainView{
     private ICategory currentCategory = null;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mainPresenter = presenterFactory.createMainPresenter(this);
+        mainPresenter.onCreate();
+        labelCategories = mainPresenter.getLabelCategories();
+        timeCategories = mainPresenter.getTimeCategories();
 
         // Set up Buttons for adding tasks
         fabAddBtn = (FloatingActionButton) findViewById(R.id.fab_add_task);
@@ -75,19 +78,6 @@ class MainActivity extends AppCompatActivity  implements IMainView{
 
         txtAdvBtn = (TextView) findViewById(R.id.advanced_text);
         txtListBtn = (TextView) findViewById(R.id.list_text);
-
-        //TODO
-        // Set up navDrawer
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, mainPresenter);
-        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories, mainPresenter);
-        final MergeAdapter mergeAdapter = new MergeAdapter();
-        mergeAdapter.addAdapter(timeCategoryAdapter);
-        mergeAdapter.addAdapter(labelCategoryAdapter);
-        mDrawerList.setAdapter(mergeAdapter);
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
 
 
         // Set up RecyclerView for tasks and render each item.
@@ -118,24 +108,11 @@ class MainActivity extends AppCompatActivity  implements IMainView{
                 imm.showSoftInput(taskList, InputMethodManager.SHOW_IMPLICIT);
             }
         });
-
-        // Load in and set up Toolbar
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("All");
-
-        // Set up drawer button in toolbar
-        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
-        mActionBarDrawerToggle.syncState();
-        mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
-
-        mainPresenter = presenterFactory.createMainPresenter(this, taskAdapter);
-        labelCategories = mainPresenter.getLabelCategories();
-        timeCategories = mainPresenter.getTimeCategories();
+        
+        setNavDrawer();
+        setToolbar();
+        mainPresenter.setTaskAdapter(taskAdapter);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -159,12 +136,17 @@ class MainActivity extends AppCompatActivity  implements IMainView{
         return super.onOptionsItemSelected(item);
     }
 
-    private void toggleFabState(){
+    @Override
+    public void setTitle(CharSequence title) {
+        getSupportActionBar().setTitle(title);
+    }
+
+    private void toggleFabState() {
         isFabOpen = !isFabOpen;
     }
 
-    private void startFabAnimation(){
-        if(isFabOpen){
+    private void startFabAnimation() {
+        if (isFabOpen) {
             fabAdvBtn.startAnimation(FabClose);
             fabListBtn.startAnimation(FabClose);
             fabAddBtn.startAnimation(FabRAnticlockwise);
@@ -176,8 +158,7 @@ class MainActivity extends AppCompatActivity  implements IMainView{
             txtListBtn.setVisibility(View.INVISIBLE);
 
             toggleFabState();
-        }
-        else{
+        } else {
             fabAdvBtn.startAnimation(FabOpen);
             fabListBtn.startAnimation(FabOpen);
             fabAddBtn.startAnimation(FabRClockwise);
@@ -193,20 +174,19 @@ class MainActivity extends AppCompatActivity  implements IMainView{
     }
 
     private void setAnimations() {
-        FabOpen = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_open);
-        FabClose = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fab_close);
-        FabRClockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_clockwise);
-        FabRAnticlockwise = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.rotate_anticlockwise);
-        TxtSlideIn = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_in_right);
-        TxtSlideOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.slide_out_right);
+        FabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
+        FabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
+        FabRClockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_clockwise);
+        FabRAnticlockwise = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_anticlockwise);
+        TxtSlideIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_in_right);
+        TxtSlideOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_out_right);
     }
 
     private void addAdvTask() {
         mainPresenter.createTask();
-        if(currentCategory == null){
+        if (currentCategory == null) {
             taskList.setAdapter(new TaskAdapter(this, mainPresenter));
-        }
-        else{
+        } else {
             taskList.setAdapter(new TaskAdapter(this, mainPresenter));
         }
     }
@@ -220,7 +200,9 @@ class MainActivity extends AppCompatActivity  implements IMainView{
         }
     }
 
-    /** Swaps fragments in the main content view */
+    /**
+     * Swaps fragments in the main content view
+     */
     private void selectItem(int position) {
 
         // Highlight the selected item, update the title, and close the drawer
@@ -237,8 +219,35 @@ class MainActivity extends AppCompatActivity  implements IMainView{
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
-    @Override
-    public void setTitle(CharSequence title) {
-        getSupportActionBar().setTitle(title);
+    private void setNavDrawer() {
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, mainPresenter);
+        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories, mainPresenter);
+        final MergeAdapter mergeAdapter = new MergeAdapter();
+
+        mergeAdapter.addAdapter(timeCategoryAdapter);
+        mergeAdapter.addAdapter(labelCategoryAdapter);
+
+        mDrawerList.setAdapter(mergeAdapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
     }
+
+    private void setToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("All");
+
+        setDrawerButton();
+
     }
+
+    private void setDrawerButton() {
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+        mActionBarDrawerToggle.syncState();
+        mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
+    }
+}

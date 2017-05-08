@@ -8,6 +8,7 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.view.activity.IMainView;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
+import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 
 /**
  * @author Felix, Elias
@@ -20,9 +21,8 @@ class MainPresenter implements IMainPresenter{
     private ITaskAdapter taskAdapter;
 
 
-    public MainPresenter(IMainView mainView, ITaskAdapter taskAdapter){
+    public MainPresenter(IMainView mainView){
         this.mainView = mainView;
-        this.taskAdapter = taskAdapter;
     }
     @Override
     public void onCreate() {
@@ -42,6 +42,11 @@ class MainPresenter implements IMainPresenter{
     @Override
     public void onDestroy() {
 
+    }
+
+    @Override
+    public void setTaskAdapter(TaskAdapter adapter) {
+        taskAdapter = adapter;
     }
 
     @Override
