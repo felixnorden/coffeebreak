@@ -7,7 +7,6 @@ package cbstudios.coffeebreak.model.tododatamodule;
 //  @ Author : 
 
 
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +14,14 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
+import cbstudios.coffeebreak.model.tododatamodule.statistics.statistics;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ToDoList;
 
 public class ToDoDataModule {
     private ICategoryList categoryList;
     private ToDoList todoList;
+    private statistics stats;
 
     /**
      *
@@ -28,6 +29,7 @@ public class ToDoDataModule {
     public ToDoDataModule() {
         categoryList = new CategoryList();
         todoList = new ToDoList();
+        stats = new statistics();
     }
 
     /**
@@ -157,5 +159,9 @@ public class ToDoDataModule {
      */
     public IAdvancedTask getTask(int index){
         return todoList.getTasks().get(index);
+    }
+
+    public statistics getStats(){
+        return stats;
     }
 }

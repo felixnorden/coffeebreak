@@ -1,4 +1,4 @@
-package cbstudios.coffeebreak.model.achievements;
+package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
 
 /**
  * Created by johan on 5/6/2017.

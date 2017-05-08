@@ -1,4 +1,4 @@
-package cbstudios.coffeebreak.model.achievements;
+package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
 
 import java.util.ArrayList;
 import java.util.List;
