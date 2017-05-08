@@ -1,24 +1,20 @@
-package cbstudios.coffeebreak.model.Achievements;
+package cbstudios.coffeebreak.model.achievements;
 
 /**
  * Created by johan on 5/6/2017.
  */
 
 
-public class numberAchievments implements IAchievements {
+public class timeAchievement implements IAchievement {
     String name;
-    int numberLimit;
     Boolean isCompleted;
 
     /**
-     * Class constructor
+     * The class constructor
      * @param name is the name of the achievement
-     * @param numberLimit is the number that of times a specific assigment has to done
-     *                    in order to complete the achievement
      */
-    public numberAchievments(String name, int numberLimit){
-        this.name = name + " " + numberLimit;
-        this.numberLimit = numberLimit;
+    public timeAchievement(String name){
+        this.name = name;
         this.isCompleted = false;
     }
 
@@ -32,11 +28,23 @@ public class numberAchievments implements IAchievements {
     }
 
     /**
-     * set the achievement to completed
+     * set the achievement completed
      */
     @Override
     public void setCompleted() {
         this.isCompleted = true;
+    }
+
+    /**
+     * Check if an achievement is completed
+     *
+     * @param number is the number of times a specific assigment has to done
+     *               in order to complete the achievement
+     * @return true if achievement is completed, false if not
+     */
+    @Override
+    public boolean isCompleted(int number) {
+        return false;
     }
 
     /**
@@ -56,7 +64,7 @@ public class numberAchievments implements IAchievements {
      * @return True if equal, false if not equal
      */
     @Override
-    public boolean equals(Object o){
+    public boolean equals(Object o) {
         return false;
     }
 }

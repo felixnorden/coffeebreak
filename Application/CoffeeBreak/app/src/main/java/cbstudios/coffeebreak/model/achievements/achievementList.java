@@ -1,4 +1,4 @@
-package cbstudios.coffeebreak.model.Achievements;
+package cbstudios.coffeebreak.model.achievements;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,15 +10,15 @@ import java.util.List;
 /**
  * A class that holds all lists with different achievments
  */
-public class AchievementsList implements IAchievementsList {
-    public final List<numberAchievments> createTaskAchievmentsList;
-    public final List<numberAchievments> checkTaskAchievmentsList;
-    public final List<timeAchievements> timeAcvhievementsList;
+public class achievementList implements IAchievementList {
+    public final List<numberAchievement> createTaskAchievmentsList;
+    public final List<numberAchievement> checkTaskAchievmentsList;
+    public final List<timeAchievement> timeAcvhievementsList;
 
     /**
      * The class constructor that will init the lists to arraylists
      */
-    public AchievementsList(){
+    public achievementList(){
         createTaskAchievmentsList = new ArrayList<>();
         checkTaskAchievmentsList = new ArrayList<>();
         timeAcvhievementsList = new ArrayList<>();
@@ -30,8 +30,8 @@ public class AchievementsList implements IAchievementsList {
     public void initNumberAchievements(){
         int[] number = new int[]{1,10,25,50,100};
         for (int i : number){
-            createTaskAchievmentsList.add(AchievementsFactory.getInstance().createNumberAchievements("Create", i));
-            checkTaskAchievmentsList.add(AchievementsFactory.getInstance().createNumberAchievements("Check",i));
+            createTaskAchievmentsList.add(achievementFactory.getInstance().createNumberAchievements("Create", i));
+            checkTaskAchievmentsList.add(achievementFactory.getInstance().createNumberAchievements("Check",i));
         }
 
     }

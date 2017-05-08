@@ -1,4 +1,4 @@
-package cbstudios.coffeebreak.model.Achievements;
+package cbstudios.coffeebreak.model.achievements;
 
 /**
  * Created by johan on 5/6/2017.
@@ -7,7 +7,7 @@ package cbstudios.coffeebreak.model.Achievements;
 /**
  * Interface for Achievement list
  */
-public interface IAchievementsList {
+public interface IAchievementList {
     /**
      * Creates all number achievements and adds them to different lists
      */

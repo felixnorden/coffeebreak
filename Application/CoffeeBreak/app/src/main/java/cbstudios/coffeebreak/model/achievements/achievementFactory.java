@@ -1,4 +1,4 @@
-package cbstudios.coffeebreak.model.Achievements;
+package cbstudios.coffeebreak.model.achievements;
 
 /**
  * Created by johan on 5/6/2017.
@@ -7,14 +7,14 @@ package cbstudios.coffeebreak.model.Achievements;
 /**
  * A factory class for achievements that will create all new achievements
  */
-public class AchievementsFactory implements IAchievementsFactory{
-    private static final IAchievementsFactory achievementsFactory = new AchievementsFactory();
+public class achievementFactory implements IAchievementFactory {
+    private static final IAchievementFactory achievementsFactory = new achievementFactory();
 
     /**
      *
      * @return a static AchievmentsFactory
      */
-    public static IAchievementsFactory getInstance() {
+    public static IAchievementFactory getInstance() {
         return achievementsFactory;
     }
 
@@ -26,8 +26,8 @@ public class AchievementsFactory implements IAchievementsFactory{
      * @return a new numberAchievement
      */
     @Override
-    public numberAchievments createNumberAchievements(String name, int numberLimit) {
-        return new numberAchievments(name, numberLimit);
+    public numberAchievement createNumberAchievements(String name, int numberLimit) {
+        return new numberAchievement(name, numberLimit);
     }
 
     /**
@@ -36,7 +36,7 @@ public class AchievementsFactory implements IAchievementsFactory{
      * @return a new timeAchievement
      */
     @Override
-    public timeAchievements createTimeAchievements(String name) {
-        return new timeAchievements(name);
+    public timeAchievement createTimeAchievements(String name) {
+        return new timeAchievement(name);
     }
 }
