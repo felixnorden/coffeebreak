@@ -3,6 +3,7 @@ package cbstudios.coffeebreak.model;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievement;
@@ -41,7 +42,20 @@ public class AchievementConverter {
         }
     }
 
-    private JsonObject numberAchievementToJsonObject(NumberAchievement achievement){
+    public List<IAchievement> toAchievementList(JsonArray array){
+        List<IAchievement> list = new ArrayList<>();
+        for (int i = 0; i < array.size(); i++){
+            JsonObject object = array.get(i).getAsJsonObject();
+            String name = object.get("Name").getAsString();
+
+            if(name.equals("Create")){
+                list.add(jsonObjectToNumberAchievement(object));
+            }
+        }
+        return list;
+    }
+
+    private JsonObject numberAchievementToJsonObject(IAchievement achievement){
         JsonObject achievementObject = new JsonObject();
 
         achievementObject.addProperty("Name", achievement.getName());

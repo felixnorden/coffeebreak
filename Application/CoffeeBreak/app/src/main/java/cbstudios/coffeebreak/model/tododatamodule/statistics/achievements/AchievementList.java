@@ -11,43 +11,40 @@ import java.util.List;
  * A class that holds all lists with different achievments
  */
 public class AchievementList implements IAchievementList {
-    public final List<NumberAchievement> createTaskAchievmentsList;
-    public final List<NumberAchievement> checkTaskAchievEmentsList;
-    public final List<TimeAchievement> timeAcvhievementsList;
+    private List<IAchievement> createTaskAchievementsList;
+    private List<IAchievement> checkTaskAchievementsList;
+    private List<IAchievement> timesAppOpenAchievementList;
 
     /**
      * The class constructor that will init the lists to arraylists
      */
     public AchievementList(){
-        createTaskAchievmentsList = new ArrayList<>();
-        checkTaskAchievEmentsList = new ArrayList<>();
-        timeAcvhievementsList = new ArrayList<>();
+        createTaskAchievementsList = new ArrayList<>();
+        checkTaskAchievementsList = new ArrayList<>();
+        timesAppOpenAchievementList = new ArrayList<>();
     }
 
-    /**
-     * Creates all number achievements and adds them to different lists
-     */
-    public void initNumberAchievements(){
-        int[] number = new int[]{1,10,25,50,100};
-        for (int i : number){
-            createTaskAchievmentsList.add(AchievementFactory.getInstance().createNumberAchievements("Create", i));
-            checkTaskAchievEmentsList.add(AchievementFactory.getInstance().createNumberAchievements("Check",i));
-        }
-
+    public List<IAchievement> getCreateTaskAchievementsList() {
+        return createTaskAchievementsList;
     }
 
-    /**
-     * Creates all time achievements and adds them to a list
-     */
-    public void initTimeAchievements(){
-
+    public void setCreateTaskAchievementsList(List<IAchievement> createTaskAchievementsList){
+        this.createTaskAchievementsList = createTaskAchievementsList;
     }
 
-    /**
-     * Calls on all init achievements method
-     */
-    public void initAllAchievements(){
-        initNumberAchievements();
-        initTimeAchievements();
+        public List<IAchievement> getCheckTaskAchievementsList() {
+        return checkTaskAchievementsList;
+    }
+
+    public void setCheckTaskAchievementsList(List<IAchievement> checkTaskAchievementsList){
+        this.checkTaskAchievementsList = checkTaskAchievementsList;
+    }
+
+    public List<IAchievement> getTimesAppOpenAchievementList() {
+        return timesAppOpenAchievementList;
+    }
+
+    public void setTimesAppOpenAchievementList(List<IAchievement> timesAppOpenAchievementList) {
+        this.timesAppOpenAchievementList = timesAppOpenAchievementList;
     }
 }

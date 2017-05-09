@@ -10,15 +10,15 @@ import cbstudios.coffeebreak.eventBus.StatisticEvent;
  */
 
 public class Statistics {
-    int createdTasks;
-    int checkOffTasks;
-    int timesUpdated;
-    int timesAppStarted;
-    int timesNavOpen;
-    int timesTaskDeleted;
-    int timesCategoryCreated;
-    int timesSettingsChanged;
-    int tasksAlive;
+    private int createdTasks;
+    private int checkOffTasks;
+    private int timesUpdated;
+    private int timesAppStarted;
+    private int timesNavOpen;
+    private int timesTaskDeleted;
+    private int timesCategoryCreated;
+    private int timesSettingsChanged;
+    private int tasksAlive;
 
 
 

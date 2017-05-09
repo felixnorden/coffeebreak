@@ -19,10 +19,4 @@ public interface IAchievementFactory {
      */
     NumberAchievement createNumberAchievements(String name, int numberLimit);
 
-    /**
-     *
-     * @param name is the name of the achievement
-     * @return a new timeAchievement
-     */
-    TimeAchievement createTimeAchievements(String name);
 }

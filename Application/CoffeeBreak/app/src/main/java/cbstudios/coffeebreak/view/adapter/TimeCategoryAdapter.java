@@ -63,9 +63,9 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
         for (int j = 0; j < timeCategories.size(); j++) {
             if (timeCategory.equals(timeCategories.get(j))) {
                 if (timeCategory.getTaskCount(tasks) != 0) {
-                    categorySize.setText(Integer.toString(timeCategory.getTaskCount(tasks)));
+                    //categorySize.setText(Integer.toString(timeCategory.getTaskCount(tasks)));
                     //Test function
-                    //categorySize.setText((Integer.toString(mainPresenter.getModel().getToDoDataModule().getStats().getAppStarted())));
+                    categorySize.setText((Integer.toString(mainPresenter.getModel().getToDoDataModule().getStats().getTimesUpdated())));
                 }
             }
         }

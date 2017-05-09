@@ -4,22 +4,21 @@ package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
  * Created by johan on 5/6/2017.
  */
 
+import java.util.List;
+
 /**
  * Interface for Achievement list
  */
 public interface IAchievementList {
-    /**
-     * Creates all number achievements and adds them to different lists
-     */
-    public void initNumberAchievements();
+    public List<IAchievement> getCreateTaskAchievementsList();
 
-    /**
-     * Creates all time achievements and adds them to a list
-     */
-    public void initTimeAchievements();
+    public void setCreateTaskAchievementsList(List<IAchievement> createTaskAchievementsList);
 
-    /**
-     * Calls on all init achievements method
-     */
-    public void initAllAchievements();
+    public List<IAchievement> getCheckTaskAchievementsList();
+
+    public void setCheckTaskAchievementsList(List<IAchievement> checkTaskAchievementsList);
+
+    public List<IAchievement> getTimesAppOpenAchievementList();
+
+    public void setTimesAppOpenAchievementList(List<IAchievement> timesAppOpenAchievementList);
 }

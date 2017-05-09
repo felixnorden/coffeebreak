@@ -15,6 +15,8 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryList;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.Statistics;
+import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.AchievementList;
+import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievementList;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ToDoList;
 
@@ -22,6 +24,7 @@ public class ToDoDataModule {
     private ICategoryList categoryList;
     private ToDoList todoList;
     private Statistics stats;
+    private IAchievementList achievementList;
 
     /**
      *
@@ -30,10 +33,7 @@ public class ToDoDataModule {
         categoryList = new CategoryList();
         todoList = new ToDoList();
         stats = new Statistics();
-    }
-
-    public void setStatistic(Statistics statistics){
-        this.stats = statistics;
+        achievementList = new AchievementList();
     }
 
     public List<ILabelCategory> getLabelCategories(){
@@ -140,5 +140,13 @@ public class ToDoDataModule {
 
     public Statistics getStats(){
         return stats;
+    }
+
+    public void setStatistic(Statistics statistics){
+        this.stats = statistics;
+    }
+
+    public IAchievementList getAchievementList(){
+        return achievementList;
     }
 }

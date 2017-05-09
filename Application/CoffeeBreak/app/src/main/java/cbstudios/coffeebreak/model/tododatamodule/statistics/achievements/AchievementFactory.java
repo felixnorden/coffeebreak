@@ -29,14 +29,4 @@ public class AchievementFactory implements IAchievementFactory {
     public NumberAchievement createNumberAchievements(String name, int numberLimit) {
         return new NumberAchievement(name, numberLimit);
     }
-
-    /**
-     * Creates a new timeAchievement
-     * @param name is the name of the achievement
-     * @return a new timeAchievement
-     */
-    @Override
-    public TimeAchievement createTimeAchievements(String name) {
-        return new TimeAchievement(name);
-    }
 }

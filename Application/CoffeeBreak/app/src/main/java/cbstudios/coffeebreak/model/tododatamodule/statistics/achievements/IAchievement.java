@@ -28,4 +28,8 @@ public interface IAchievement {
      */
     boolean isCompleted(int number);
 
+    int getNumberLimit();
+
+    boolean checkIfCompleted();
+
 }
