@@ -4,9 +4,7 @@ import android.content.Context;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.io.File;
@@ -14,20 +12,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
-
-import cbstudios.coffeebreak.model.Priority;
-import cbstudios.coffeebreak.model.TaskSorter;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
 /**
  * A utility class used to save and load data between application executions.
@@ -58,9 +42,9 @@ public class StorageUtil {
     }
 
     /**
-     * Loads JsonElement with specified ID and returns.
+     * Loads data with specified ID and returns it as a JsonElement.
      *
-     * @return JsonElement.
+     * @return Loaded data as JsonElement.
      */
     public static JsonElement load(Context context, String id) {
         File file = new File(context.getFilesDir(), id);
