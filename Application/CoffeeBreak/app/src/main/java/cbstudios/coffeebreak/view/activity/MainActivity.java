@@ -19,17 +19,18 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.controller.IMainPresenter;
 import cbstudios.coffeebreak.controller.IPresenterFactory;
 import cbstudios.coffeebreak.controller.PresenterFactory;
-import cbstudios.coffeebreak.model.Model;
+import cbstudios.coffeebreak.eventBus.StatisticEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.view.adapter.LabelCategoryAdapter;
 import cbstudios.coffeebreak.view.adapter.MergeAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
@@ -59,6 +60,8 @@ class MainActivity extends AppCompatActivity  implements IMainView {
     private List<ITimeCategory> timeCategories;
     private RecyclerView taskList;
     private ICategory currentCategory = null;
+
+
 
     @Override
     protected void onPause(){
@@ -116,6 +119,7 @@ class MainActivity extends AppCompatActivity  implements IMainView {
         
         setNavDrawer();
         setToolbar();
+        EventBus.getDefault().post(new StatisticEvent("appStarted"));
         mainPresenter.setTaskAdapter(taskAdapter);
     }
 

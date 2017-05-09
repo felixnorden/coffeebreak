@@ -32,6 +32,10 @@ public class ToDoDataModule {
         stats = new Statistics();
     }
 
+    public void setStatistic(Statistics statistics){
+        this.stats = statistics;
+    }
+
     public List<ILabelCategory> getLabelCategories(){
         return categoryList.getLabelCategories();
     }

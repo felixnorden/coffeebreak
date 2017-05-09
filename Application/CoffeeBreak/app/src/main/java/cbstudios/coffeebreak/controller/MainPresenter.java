@@ -2,13 +2,16 @@ package cbstudios.coffeebreak.controller;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
 import cbstudios.coffeebreak.model.Model;
+import cbstudios.coffeebreak.model.StatisticsConverter;
 import cbstudios.coffeebreak.model.TaskConverter;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
+import cbstudios.coffeebreak.model.tododatamodule.statistics.Statistics;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.storage.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IMainView;
@@ -33,11 +36,13 @@ class MainPresenter implements IMainPresenter {
     public void onCreate() {
         model = new Model();
         loadTasks();
+        loadStatistics();
     }
 
     @Override
     public void onPause() {
         saveTasks();
+        saveStatistics();
     }
 
     @Override
@@ -80,6 +85,23 @@ class MainPresenter implements IMainPresenter {
         return model.getToDoDataModule().getTimeCategories();
     }
 
+    private void saveStatistics() {
+        JsonObject object = StatisticsConverter.getInstance().toJsonObject(model.getToDoDataModule().getStats());
+        StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Statistics", object);
+    }
+    private void loadStatistics() {
+        JsonElement element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Statistics");
+
+        if (element == null || !element.isJsonObject()){
+            return;
+        }
+        JsonObject object = element.getAsJsonObject();
+
+        Statistics statistics = StatisticsConverter.getInstance().toStatistics(object);
+
+        model.getToDoDataModule().setStatistic(statistics);
+    }
+
     private void loadTasks() {
         JsonElement element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Tasks");
 
@@ -97,5 +119,9 @@ class MainPresenter implements IMainPresenter {
     private void saveTasks() {
         JsonArray array = TaskConverter.getInstance().toJsonArray(model.getToDoDataModule().getTasks());
         StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Tasks", array);
+    }
+
+    public Model getModel(){
+        return this.model;
     }
 }

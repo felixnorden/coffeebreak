@@ -2,6 +2,7 @@ package cbstudios.coffeebreak.controller;
 
 import java.util.List;
 
+import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
@@ -19,6 +20,7 @@ public interface IMainPresenter {
     void setTaskAdapter(TaskAdapter adapter);
     void createTask();
     void removeTask(IAdvancedTask task);
+    Model getModel();
 
 
     List<IAdvancedTask> getTasks();
