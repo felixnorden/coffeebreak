@@ -13,7 +13,7 @@ public class Statistics {
     int createdTasks;
     int checkOffTasks;
     int timesUpdated;
-    int appStarted;
+    int timesAppStarted;
     int timesNavOpen;
     int timesTaskDeleted;
     int timesCategoryCreated;
@@ -26,7 +26,7 @@ public class Statistics {
         createdTasks = 0;
         checkOffTasks = 0;
         timesUpdated = 0;
-        appStarted = 0;
+        timesAppStarted = 0;
         timesNavOpen = 0;
         timesTaskDeleted = 0;
         timesCategoryCreated = 0;
@@ -39,8 +39,31 @@ public class Statistics {
 
     @Subscribe
     public void onEvent(StatisticEvent event){
-        if(event.getMessage().equals("Create")){
-            createdTasks++;
+        switch (event.getMessage()) {
+            case "Create":
+                createdTasks++;
+                break;
+            case "Check":
+                checkOffTasks++;
+                break;
+            case "Updated":
+                timesUpdated++;
+                break;
+            case "appStarted":
+                timesAppStarted++;
+                break;
+            case "NavOpen":
+                timesNavOpen++;
+                break;
+            case "TaskDeleted":
+                timesTaskDeleted++;
+                break;
+            case "CategoryCreated":
+                timesCategoryCreated++;
+                break;
+            case "SettingsChanged":
+                timesSettingsChanged++;
+                break;
         }
     }
 
@@ -57,7 +80,7 @@ public class Statistics {
     }
 
     public int getAppStarted() {
-        return appStarted;
+        return timesAppStarted;
     }
 
     public int getTimesNavOpen() {
@@ -92,8 +115,8 @@ public class Statistics {
         this.timesUpdated = timesUpdated;
     }
 
-    public void setAppStarted(int appStarted) {
-        this.appStarted = appStarted;
+    public void setAppStarted(int timesAppStarted) {
+        this.timesAppStarted = timesAppStarted;
     }
 
     public void setTimesNavOpen(int timesNavOpen) {
