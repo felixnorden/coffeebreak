@@ -105,7 +105,7 @@ class MainPresenter implements IMainPresenter {
             try {
                 JsonParser parser = new JsonParser();
 
-                JsonArray jsonArray = (JsonArray) parser.parse(new FileReader("C:\\coffeebreak\\Application\\CoffeeBreak\\app\\src\\main\\java\\cbstudios\\coffeebreak\\model\\tododatamodule\\statistics\\achievements\\AchievementColletion.Json"));
+                JsonArray jsonArray = (JsonArray) parser.parse(new FileReader("."));
 
 
                 List<IAchievement> achievements = AchievementConverter.getInstance().toAchievementList(jsonArray);
