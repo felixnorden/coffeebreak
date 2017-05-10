@@ -18,7 +18,7 @@ public interface IAchievement {
     /**
      * Set the achievement to completed by changing a boolean to true
      */
-    void setCompleted();
+    void setIsCompleted(boolean isCompleted);
 
     /**
      * Check if an achievement is completed

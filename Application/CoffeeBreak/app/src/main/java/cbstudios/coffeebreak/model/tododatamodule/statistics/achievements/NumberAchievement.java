@@ -22,6 +22,26 @@ public class NumberAchievement implements IAchievement {
         this.isCompleted = false;
     }
 
+    public NumberAchievement(){
+
+    }
+
+    public int getNumberLimit(){
+        return this.numberLimit;
+    }
+
+    public boolean checkIfCompleted(){
+        return this.isCompleted;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public void setNumberLimit(int numberLimit){
+        this.numberLimit = numberLimit;
+    }
+
     /**
      *
      * @return the name of the achievement
@@ -35,8 +55,8 @@ public class NumberAchievement implements IAchievement {
      * set the achievement to completed
      */
     @Override
-    public void setCompleted() {
-        this.isCompleted = true;
+    public void setIsCompleted(boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 
     /**

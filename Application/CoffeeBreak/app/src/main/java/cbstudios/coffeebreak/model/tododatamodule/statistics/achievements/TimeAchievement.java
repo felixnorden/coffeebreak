@@ -28,11 +28,13 @@ public class TimeAchievement implements IAchievement {
     }
 
     /**
-     * set the achievement completed
+     * Set the achievement to completed if boolean is true
+     *
+     * @param isCompleted
      */
     @Override
-    public void setCompleted() {
-        this.isCompleted = true;
+    public void setIsCompleted(boolean isCompleted) {
+
     }
 
     /**

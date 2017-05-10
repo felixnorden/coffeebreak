@@ -11,7 +11,6 @@ import java.util.List;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.controller.IMainPresenter;
-import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
@@ -65,6 +64,8 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
             if (timeCategory.equals(timeCategories.get(j))) {
                 if (timeCategory.getTaskCount(tasks) != 0) {
                     categorySize.setText(Integer.toString(timeCategory.getTaskCount(tasks)));
+                    //Test function
+                    //categorySize.setText((Integer.toString(mainPresenter.getModel().getToDoDataModule().getStats().getAppStarted())));
                 }
             }
         }
