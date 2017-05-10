@@ -36,7 +36,7 @@ import cbstudios.coffeebreak.view.adapter.MergeAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
 
-class MainActivity extends AppCompatActivity  implements IMainView {
+public class MainActivity extends AppCompatActivity  implements IMainView {
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
