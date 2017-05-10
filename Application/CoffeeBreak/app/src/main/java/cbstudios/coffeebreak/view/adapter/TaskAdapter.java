@@ -121,11 +121,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
 
     public void updateTasks(ICategory currentCategory){
+        for(IAdvancedTask task: mainPresenter.getTasks()){
+            if(task.isChecked()){
+                mainPresenter.removeTask(task);
+            }
+        }
         if(currentCategory != null) {
-            this.mTasks = currentCategory.getValidTasks(mainPresenter.getTasks());
+            mTasks.clear();
+            this.mTasks.addAll(currentCategory.getValidTasks(mainPresenter.getTasks()));
 
         }else{
-            this.mTasks = mainPresenter.getTasks();
+            mTasks.clear();
+            this.mTasks.addAll(mainPresenter.getTasks());
         }
         notifyDataSetChanged();
     }
@@ -139,30 +146,37 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             disableTaskName(taskHolder.etTaskName);
     }
     private void disableTaskName(EditText taskName) {
-        taskName.setKeyListener(null);
-        taskName.setBackground(null);
+        //taskName.setKeyListener(null);
+        taskName.getBackground().setTint(Color.TRANSPARENT);
         taskName.setFocusable(false);
     }
 
     private void setUpTask(final ViewHolder taskHolder, IAdvancedTask task, final int position){
         if(task.getName() != null){
+            taskHolder.cbCheckBox.setChecked(false);
             taskHolder.cbCheckBox.setVisibility(View.VISIBLE);
             taskHolder.ivCategory.setVisibility(View.VISIBLE);
             taskHolder.ibMore.setVisibility(View.VISIBLE);
             taskHolder.vPriority.setVisibility(View.VISIBLE);
+            taskHolder.etTaskName.setPaintFlags(taskHolder.etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             taskHolder.etTaskName.setText(task.getName());
 
             setTaskName(taskHolder, false);
             taskHolder.vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
+            taskHolder.etTaskName.clearFocus();
         }
         else{
             // Task creation, hide all unset elements except for text field
+            taskHolder.etTaskName.setEnabled(true);
+            taskHolder.etTaskName.setFocusable(true);
+            taskHolder.etTaskName.setFocusableInTouchMode(true);
             taskHolder.cbCheckBox.setChecked(false);
             taskHolder.cbCheckBox.setVisibility(View.INVISIBLE);
             taskHolder.ivCategory.setVisibility(View.INVISIBLE);
             taskHolder.ibMore.setVisibility(View.INVISIBLE);
             taskHolder.vPriority.setVisibility(View.INVISIBLE);
-            taskHolder.etTaskName.setText(null);
+            taskHolder.etTaskName.setText("");
+            taskHolder.etTaskName.getBackground().setTint(Color.GRAY);
 
             addKeyboardListener(taskHolder, task);
 
@@ -170,10 +184,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             taskHolder.etTaskName.requestFocus();
         }
         // Listen for checked off by user
+        addOnCheckedChangedListener(taskHolder, task);
+    }
+
+    private void addOnCheckedChangedListener(final ViewHolder taskHolder,final IAdvancedTask task){
         taskHolder.cbCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                //task.setChecked(isChecked);
+                task.setChecked(isChecked);
                 taskHolder.etTaskName.setEnabled(!isChecked);
                 if(isChecked)
                     taskHolder.etTaskName.setPaintFlags(taskHolder.etTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
@@ -182,7 +200,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             }
         });
     }
-
     private void addKeyboardListener(final ViewHolder taskHolder, final IAdvancedTask task){
         // Listen for enter key to hide Keyboard
         final int position = taskHolder.getAdapterPosition();
@@ -196,9 +213,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
                     // and update adapter of removal
                     //TODO FIX SHIEET
                     if(input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)){
+                        int rangeStart = mTasks.indexOf(task);
                         mainPresenter.removeTask(task);
                         mTasks.remove(task);
                         TaskAdapter.super.notifyItemRemoved(position);
+                        notifyItemRangeChanged(rangeStart, mTasks.size());
                         return false;
                     }
                     task.setName(input);
