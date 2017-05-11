@@ -34,7 +34,8 @@
         android:inputType="text"
         android:layout_marginLeft="72dp"
         android:maxLines="1"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:backgroundTint="@color/colorAccent"/>
 
     <ImageView
         android:id="@+id/imageViewCategory"
