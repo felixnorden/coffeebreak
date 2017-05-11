@@ -139,7 +139,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     private void setTaskName(ViewHolder taskHolder, boolean value){
         if(value){
-            taskHolder.etTaskName.setBackground(taskHolder.etBackgroundDrawable);
+            taskHolder.etTaskName.getBackground().setTint(Color.parseColor("#dd2b25"));
             taskHolder.etTaskName.setFocusable(value);
         }
         else
@@ -176,7 +176,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             taskHolder.ibMore.setVisibility(View.INVISIBLE);
             taskHolder.vPriority.setVisibility(View.INVISIBLE);
             taskHolder.etTaskName.setText("");
-            taskHolder.etTaskName.getBackground().setTint(Color.GRAY);
 
             addKeyboardListener(taskHolder, task);
 
