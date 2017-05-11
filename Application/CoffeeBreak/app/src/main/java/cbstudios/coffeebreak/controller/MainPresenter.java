@@ -33,8 +33,7 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
  * @author Felix, Elias, Zack
  * @version 0.1
  */
-class MainPresenter implements IMainPresenter {
-    private Model model;
+class MainPresenter extends BasePresenter implements IMainPresenter {
     private IMainView mainView;
     private ITaskAdapter taskAdapter;
 
@@ -45,7 +44,6 @@ class MainPresenter implements IMainPresenter {
 
     @Override
     public void onCreate() {
-        model = new Model();
         loadTasks();
         loadStatistics();
         loadAchievements();
@@ -98,7 +96,7 @@ class MainPresenter implements IMainPresenter {
         return model.getToDoDataModule().getTimeCategories();
     }
 
-    private void loadAchievements(){
+    private void loadAchievements() {
         JsonElement element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Create");
 
         if (element == null || !element.isJsonObject()) {
@@ -128,7 +126,7 @@ class MainPresenter implements IMainPresenter {
         model.getToDoDataModule().getAchievementList().setCreateTaskAchievementsList(achievements);
     }
 
-    private void saveAchievements(){
+    private void saveAchievements() {
         JsonArray array = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getAchievementList().getCreateTaskAchievementsList());
         StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Create", array);
         JsonArray array2 = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getAchievementList().getCheckTaskAchievementsList());
@@ -141,10 +139,11 @@ class MainPresenter implements IMainPresenter {
         JsonObject object = StatisticsConverter.getInstance().toJsonObject(model.getToDoDataModule().getStats());
         StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Statistics", object);
     }
+
     private void loadStatistics() {
         JsonElement element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Statistics");
 
-        if (element == null || !element.isJsonObject()){
+        if (element == null || !element.isJsonObject()) {
             return;
         }
         JsonObject object = element.getAsJsonObject();
@@ -173,7 +172,7 @@ class MainPresenter implements IMainPresenter {
         StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Tasks", array);
     }
 
-    public Model getModel(){
+    public Model getModel() {
         return this.model;
     }
 }
