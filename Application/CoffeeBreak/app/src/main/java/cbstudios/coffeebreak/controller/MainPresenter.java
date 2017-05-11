@@ -97,7 +97,16 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     private void loadAchievements() {
-        JsonElement element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Create");
+        JsonElement element = null;
+        try {
+            element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Create");
+        } catch (IllegalStateException e) {
+            // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
+            StorageUtil.resetData(mainView.getAppCompatActivity().getApplicationContext(), "Tasks");
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         if (element == null || !element.isJsonObject()) {
             try {
@@ -111,10 +120,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
                 model.getToDoDataModule().getAchievementList().setCreateTaskAchievementsList(achievements);
             } catch (FileNotFoundException e) {
                 EventBus.getDefault().post(new StatisticEvent("Updated"));
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
                 e.printStackTrace();
             }
             return;
@@ -141,7 +146,16 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     private void loadStatistics() {
-        JsonElement element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Statistics");
+        JsonElement element = null;
+        try {
+            element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Statistics");
+        } catch (IllegalStateException e) {
+            // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
+            StorageUtil.resetData(mainView.getAppCompatActivity().getApplicationContext(), "Statistics");
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
         if (element == null || !element.isJsonObject()) {
             return;
@@ -154,16 +168,26 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     private void loadTasks() {
-        JsonElement element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Tasks");
+        JsonElement element;
 
-        if (element == null || !element.isJsonArray())
-            return;
+        try {
+            element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Tasks");
 
-        JsonArray array = element.getAsJsonArray();
-        List<IAdvancedTask> tasks = TaskConverter.getInstance().toList(array);
+            if (element == null || !element.isJsonArray())
+                return;
 
-        for (IAdvancedTask task : tasks) {
-            model.getToDoDataModule().addTask(task);
+            JsonArray array = element.getAsJsonArray();
+            List<IAdvancedTask> tasks = TaskConverter.getInstance().toList(array);
+
+            for (IAdvancedTask task : tasks) {
+                model.getToDoDataModule().addTask(task);
+            }
+        } catch (IllegalStateException e) {
+            // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
+            StorageUtil.resetData(mainView.getAppCompatActivity().getApplicationContext(), "Tasks");
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
     }
 
@@ -173,6 +197,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     public Model getModel() {
-        return this.model;
+        return model;
     }
 }

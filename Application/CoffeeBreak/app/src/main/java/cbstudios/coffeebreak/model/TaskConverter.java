@@ -81,10 +81,13 @@ public class TaskConverter {
             JsonObject object = array.get(i).getAsJsonObject();
             String type = object.get("Type").getAsString();
 
-            if (type.equals("ListTask")) {
-                list.add(jsonObjectToListTask(object));
-            } else if (type.equals("AdvancedTask")) {
-                list.add(jsonObjectToAdvancedTask(object));
+            switch (type) {
+                case "ListTask":
+                    list.add(jsonObjectToListTask(object));
+                    break;
+                case "AdvancedTask":
+                    list.add(jsonObjectToAdvancedTask(object));
+                    break;
             }
         }
 
@@ -158,10 +161,9 @@ public class TaskConverter {
      */
     private ListTask jsonObjectToListTask(JsonObject object) {
         ListTask task = new ListTask();
+
         task.setName(object.get("Name").getAsString());
-
         task.setChecked(object.get("IsChecked").getAsBoolean());
-
 
         if (object.has("Priority")) {
             task.setPriority(Priority.valueOf(object.get("Priority").getAsString()));
