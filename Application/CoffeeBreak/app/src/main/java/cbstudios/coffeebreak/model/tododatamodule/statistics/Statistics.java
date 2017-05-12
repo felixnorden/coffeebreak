@@ -3,7 +3,7 @@ package cbstudios.coffeebreak.model.tododatamodule.statistics;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import cbstudios.coffeebreak.eventBus.StatisticEvent;
+import cbstudios.coffeebreak.eventbus.StatisticEvent;
 
 /**
  * Created by johan on 5/8/2017.

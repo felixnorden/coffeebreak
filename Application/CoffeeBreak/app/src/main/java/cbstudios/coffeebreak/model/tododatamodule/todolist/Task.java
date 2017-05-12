@@ -4,7 +4,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.Calendar;
 
-import cbstudios.coffeebreak.eventBus.StatisticEvent;
+import cbstudios.coffeebreak.eventbus.StatisticEvent;
 
 /**
  * @author Felix

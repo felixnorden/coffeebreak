@@ -1,4 +1,4 @@
-package cbstudios.coffeebreak.eventBus;
+package cbstudios.coffeebreak.eventbus;
 
 /**
  * Created by johan on 5/8/2017.

@@ -27,7 +27,7 @@ import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.controller.IMainPresenter;
 import cbstudios.coffeebreak.controller.IPresenterFactory;
 import cbstudios.coffeebreak.controller.PresenterFactory;
-import cbstudios.coffeebreak.eventBus.StatisticEvent;
+import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;

@@ -1,7 +1,5 @@
 package cbstudios.coffeebreak.controller;
 
-import android.net.ParseException;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -11,10 +9,9 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
 
-import cbstudios.coffeebreak.eventBus.StatisticEvent;
+import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.AchievementConverter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.StatisticsConverter;
