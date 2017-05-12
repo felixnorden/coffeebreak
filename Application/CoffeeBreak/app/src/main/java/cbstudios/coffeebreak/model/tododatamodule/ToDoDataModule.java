@@ -138,6 +138,15 @@ public class ToDoDataModule {
         return todoList.getTasks().get(index);
     }
 
+    /**
+     * Searches for a task with the given hashCode in the database.
+     * @param hashCode The hashCode of the task.
+     * @return The task with matching hashCode if it exists, null otherwise.
+     */
+    public IAdvancedTask findTask(int hashCode){
+        return todoList.findTask(hashCode);
+    }
+
     public Statistics getStats(){
         return stats;
     }

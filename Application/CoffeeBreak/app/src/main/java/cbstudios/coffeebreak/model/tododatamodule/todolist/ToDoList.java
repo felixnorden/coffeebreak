@@ -17,53 +17,57 @@ public class ToDoList {
     /**
      * Class constructor
      */
-    public ToDoList(){
+    public ToDoList() {
         initComponents();
     }
 
     /**
      * Adds a task that implements the interface IAdvancedTask to the
      * ToDoList's list of existing tasks.
-     * @param task  the task that will be added
+     *
+     * @param task the task that will be added
      */
-    public void add(IAdvancedTask task){
+    public void add(IAdvancedTask task) {
         tasks.add(task);
     }
 
     /**
      * Removes the specified task from ToDoList's list of tasks,
      * with regard to reference.
-     * @param task  the task that will be removed
+     *
+     * @param task the task that will be removed
      */
-    public void remove(IAdvancedTask task){
+    public void remove(IAdvancedTask task) {
         int index = 0;
         boolean found = false;
-        for(int i = 0; i < tasks.size(); i++){
-            if(task == tasks.get(i)){
+        for (int i = 0; i < tasks.size(); i++) {
+            if (task == tasks.get(i)) {
                 index = i;
                 found = true;
                 break;
             }
         }
-        if(found)
+        if (found)
             tasks.remove(index);
     }
 
     /**
      * Returns a the list of tasks in ToDoList
-     * @return      the list of tasks in ToDoList
+     *
+     * @return the list of tasks in ToDoList
      */
-    public List<IAdvancedTask> getTasks(){
+    public List<IAdvancedTask> getTasks() {
         return new ArrayList<>(tasks);
     }
 
     /**
      * Returns the boolean value of  the specified task being
      * of the list is of the type IListTask
-     * @param advancedTask  the task that is to be checked
-     * @return      true if the task is of type IListTask
+     *
+     * @param advancedTask the task that is to be checked
+     * @return true if the task is of type IListTask
      */
-    public boolean isListTask(IAdvancedTask advancedTask){
+    public boolean isListTask(IAdvancedTask advancedTask) {
         return advancedTask instanceof IListTask;
     }
 
@@ -73,14 +77,32 @@ public class ToDoList {
         loadSavedData();
     }
 
-    private void loadSavedData(){
+    private void loadSavedData() {
 
     }
 
     /**
      * Creates a new Advanced Task and adds it to the List
      */
-    public void createTask(){
+    public void createTask() {
         add(taskFactory.createAdvancedTask());
+    }
+
+    /**
+     * Searches for a task with the given hashcode in the database.
+     * @param hashCode The hashcode of the task.
+     * @return The task with matching hashcode if it exists, null otherwise.
+     */
+    public IAdvancedTask findTask(int hashCode) {
+        IAdvancedTask match = null;
+
+        for (IAdvancedTask task : tasks) {
+            if (task.hashCode() == hashCode) {
+                match = task;
+                break;
+            }
+        }
+
+        return match;
     }
 }
