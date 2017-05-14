@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         taskList = (RecyclerView) findViewById(R.id.taskList);
         taskList.setAdapter(taskAdapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
+        taskAdapter.updateTasks(currentCategory);
 
         //TODO Set up on click functionality
         //TODO Bind FAB for creation

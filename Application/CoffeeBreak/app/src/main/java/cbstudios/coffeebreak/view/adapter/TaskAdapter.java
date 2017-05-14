@@ -64,6 +64,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         mContext = context;
         this.mainPresenter = mainPresenter;
         mTasks = mainPresenter.getTasks();
+
     }
 
     /**
@@ -281,7 +282,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         @Override
         public Object getChangePayload(int oldItemPosition, int newItemPosition) {
 
-            return super.getChangePayload(oldItemPosition, newItemPosition);
+        return super.getChangePayload(oldItemPosition, newItemPosition);
         }
     }
 }
