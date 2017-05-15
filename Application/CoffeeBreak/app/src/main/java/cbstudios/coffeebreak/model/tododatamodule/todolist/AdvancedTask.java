@@ -103,7 +103,7 @@ public class AdvancedTask implements IAdvancedTask {
      * {@inheritDoc}
      */
     public boolean hasNote() {
-        return !note.isEmpty();
+        return note != null;
     }
 
     /**

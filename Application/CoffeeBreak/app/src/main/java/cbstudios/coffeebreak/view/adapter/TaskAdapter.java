@@ -37,7 +37,8 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> implements ITaskAdapter{
 
-    public static class TaskViewHolder extends RecyclerView.ViewHolder{
+    public abstract static class TaskViewHolder extends RecyclerView.ViewHolder{
+        public IAdvancedTask task;
         public View vPriority;
         public CheckBox cbCheckBox;
         public EditText etTaskName;
@@ -56,6 +57,44 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             ibMore = (ImageButton) itemView.findViewById(R.id.imageButtonMore);
             etBackgroundDrawable = etTaskName.getBackground();
         }
+        public void setUpTask(){
+            if(task.getName() != null){
+                cbCheckBox.setChecked(false);
+                cbCheckBox.setVisibility(View.VISIBLE);
+                ivCategory.setVisibility(View.VISIBLE);
+                ibMore.setVisibility(View.VISIBLE);
+                vPriority.setVisibility(View.VISIBLE);
+                etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                etTaskName.setText(task.getName());
+                vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
+                etTaskName.clearFocus();
+
+                setTaskNameEnabled(false);
+                setSpecificFields();
+            }
+            else{
+                etTaskName.setEnabled(true);
+                cbCheckBox.setChecked(false);
+                cbCheckBox.setVisibility(View.INVISIBLE);
+                ivCategory.setVisibility(View.INVISIBLE);
+                ibMore.setVisibility(View.INVISIBLE);
+                vPriority.setVisibility(View.INVISIBLE);
+                etTaskName.setText("");
+                etTaskName.getBackground().setTint(Color.RED);
+            }
+
+        }
+        private void setTaskNameEnabled(boolean value){
+            if(value){
+                etTaskName.getBackground().setTint(Color.parseColor("#dd2b25"));
+            }
+            else {
+                etTaskName.getBackground().setTint(Color.TRANSPARENT);
+            }
+            etTaskName.setFocusable(value);
+            etTaskName.setFocusableInTouchMode(value);
+        }
+        abstract void setSpecificFields();
     }
     public static class AdvancedTaskViewHolder extends TaskViewHolder{
         public TextView tvSubTask;
@@ -64,6 +103,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             super(itemView);
 
             tvSubTask = (TextView) itemView.findViewById(R.id.subTextView);
+        }
+
+        @Override
+        void setSpecificFields() {
+            String information;
+            if(task.hasNote())
+                information = task.getNote();
+            else if(task.getDate() != null)
+                information = task.getDate().toString();
+            else
+                information = "No info, add plez";
+            tvSubTask.setText(information);
         }
 
     }
@@ -77,6 +128,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
             tvSubTask = (TextView) itemView.findViewById(R.id.subTextView);
             ivSubTask = (ImageView) itemView.findViewById(R.id.imageViewSubTask);
+
+        }
+
+        @Override
+        void setSpecificFields() {
 
         }
 
@@ -145,7 +201,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      */
     @Override
     public void onBindViewHolder(TaskAdapter.TaskViewHolder viewHolder, final int position){
+
         IAdvancedTask task = mTasks.get(position);
+        viewHolder.task = mTasks.get(position);
 
         final View vPriority = viewHolder.vPriority;
         final CheckBox cbCheckBox = viewHolder.cbCheckBox;
@@ -159,7 +217,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             ivCategory.setVisibility(View.INVISIBLE);
         }
         // Set up task layout based on whether the task has data or not.
-        setUpTask(viewHolder, task, position);
+        setUpTask(viewHolder, task);
 
     }
 
@@ -209,51 +267,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     }
 
-    private void setTaskName(TaskViewHolder taskHolder, boolean value){
-        if(value){
-            taskHolder.etTaskName.getBackground().setTint(Color.parseColor("#dd2b25"));
-            taskHolder.etTaskName.setFocusable(value);
-        }
-        else
-            disableTaskName(taskHolder.etTaskName);
-    }
-    private void disableTaskName(EditText taskName) {
-        //taskName.setKeyListener(null);
-        taskName.getBackground().setTint(Color.TRANSPARENT);
-        taskName.setFocusable(false);
-    }
+
 
     /*
      * Set up for the IAdvancedTask that is to be viewed, based on the ViewType
      * calculated in previous steps.
      */
-    private void setUpTask(final TaskViewHolder taskHolder, IAdvancedTask task, final int position){
-        if(task.getName() != null){
-            taskHolder.cbCheckBox.setChecked(false);
-            taskHolder.cbCheckBox.setVisibility(View.VISIBLE);
-            taskHolder.ivCategory.setVisibility(View.VISIBLE);
-            taskHolder.ibMore.setVisibility(View.VISIBLE);
-            taskHolder.vPriority.setVisibility(View.VISIBLE);
-            taskHolder.etTaskName.setPaintFlags(taskHolder.etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-            taskHolder.etTaskName.setText(task.getName());
-
-            setTaskName(taskHolder, false);
-            taskHolder.vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
-            taskHolder.etTaskName.clearFocus();
-        }
-        else{
-            // Task creation, hide all unset elements except for text field
-            taskHolder.etTaskName.setEnabled(true);
-            taskHolder.etTaskName.setFocusable(true);
-            taskHolder.etTaskName.setFocusableInTouchMode(true);
-            taskHolder.cbCheckBox.setChecked(false);
-            taskHolder.cbCheckBox.setVisibility(View.INVISIBLE);
-            taskHolder.ivCategory.setVisibility(View.INVISIBLE);
-            taskHolder.ibMore.setVisibility(View.INVISIBLE);
-            taskHolder.vPriority.setVisibility(View.INVISIBLE);
-            taskHolder.etTaskName.setText("");
-            taskHolder.etTaskName.getBackground().setTint(Color.RED);
-
+    private void setUpTask(final TaskViewHolder taskHolder, IAdvancedTask task){
+        taskHolder.setUpTask();
+        if(task.getName() == null){
             addKeyboardListener(taskHolder, task);
 
             // Request focus for keyboard input

@@ -17,6 +17,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -38,6 +39,7 @@ import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
 
 public class MainActivity extends AppCompatActivity  implements IMainView {
     private ActionBarDrawerToggle mActionBarDrawerToggle;
+    private RelativeLayout mDrawer;
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private Toolbar mToolbar;
@@ -207,7 +209,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     private void addAdvTask() {
         mainPresenter.createTask();
         TaskAdapter taskAdapter = (TaskAdapter) taskList.getAdapter();
-        taskAdapter.filterTasks(currentCategory);
+        taskAdapter.filterTasks();
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -237,11 +239,12 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         taskAdapter.filterTasks(currentCategory);
 
         // Close drawer
-        mDrawerLayout.closeDrawer(mDrawerList);
+        mDrawerLayout.closeDrawer(mDrawer);
     }
 
     private void setNavDrawer() {
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.drawer_list);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, mainPresenter);
