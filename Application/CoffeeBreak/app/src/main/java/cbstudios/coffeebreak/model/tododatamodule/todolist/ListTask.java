@@ -11,11 +11,11 @@ import java.util.List;
 public class ListTask extends AdvancedTask implements IListTask {
     private final List<ITask> subtasks;
 
-    public ListTask() {
+    ListTask() {
         subtasks = new ArrayList<>();
     }
 
-    public ListTask(String name) {
+    ListTask(String name) {
         super(name);
         subtasks = new ArrayList<>();
     }

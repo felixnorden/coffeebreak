@@ -7,10 +7,12 @@ import java.util.Calendar;
 import java.util.List;
 
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.ITaskFactory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
@@ -21,6 +23,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 public class TaskConverter {
 
     private static TaskConverter INSTANCE = new TaskConverter();
+    private ITaskFactory factory = TaskFactory.getInstance();
 
     /**
      * Fetches the singleton instance of the TaskConverter
@@ -160,7 +163,7 @@ public class TaskConverter {
      * @return The task created.
      */
     private ListTask jsonObjectToListTask(JsonObject object) {
-        ListTask task = new ListTask();
+        ListTask task = (ListTask) factory.createListTask();
 
         task.setName(object.get("Name").getAsString());
         task.setChecked(object.get("IsChecked").getAsBoolean());
@@ -217,7 +220,7 @@ public class TaskConverter {
      * @return The task created.
      */
     private AdvancedTask jsonObjectToAdvancedTask(JsonObject object) {
-        AdvancedTask task = new AdvancedTask();
+        AdvancedTask task = (AdvancedTask) factory.createAdvancedTask();
         task.setName(object.get("Name").getAsString());
         task.setChecked(object.get("IsChecked").getAsBoolean());
 

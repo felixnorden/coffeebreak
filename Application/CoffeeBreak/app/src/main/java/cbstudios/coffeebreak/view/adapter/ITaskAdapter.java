@@ -8,4 +8,5 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 
 public interface ITaskAdapter {
     void updateTasks();
+    void filterTasks();
 }

@@ -12,6 +12,7 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ToDoList;
 import cbstudios.coffeebreak.storage.StorageUtil;
 
@@ -42,7 +43,7 @@ public class SaveAndLoadTest {
         tomorrow.add(Calendar.DAY_OF_MONTH, 1);
 
 
-        AdvancedTask mockTask1 = new AdvancedTask();
+        AdvancedTask mockTask1 = (AdvancedTask) TaskFactory.getInstance().createAdvancedTask();
         mockTask1.setName("Task1");
         mockTask1.addLabel(labelCategories.get(0));
         mockTask1.setDate(today);
@@ -50,7 +51,7 @@ public class SaveAndLoadTest {
         mockTask1.setPriority(Priority.ONE);
         mockTask1.setChecked(false);
 
-        AdvancedTask mockTask2 = new AdvancedTask();
+        AdvancedTask mockTask2 = (AdvancedTask) TaskFactory.getInstance().createAdvancedTask();
         mockTask2.setName("Task2");
         mockTask2.addLabel(labelCategories.get(0));
         mockTask2.addLabel(labelCategories.get(1));

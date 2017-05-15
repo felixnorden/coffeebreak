@@ -29,7 +29,7 @@ public class AdvancedTask implements IAdvancedTask {
     /**
      * Constructs a new Advanced Task with empty attributes
      */
-    public AdvancedTask() {
+    AdvancedTask() {
         labels = new ArrayList<>();
         task = new Task();
         priority = Priority.NONE;
@@ -41,7 +41,7 @@ public class AdvancedTask implements IAdvancedTask {
      *
      * @param name The name for the task
      */
-    public AdvancedTask(String name) {
+    AdvancedTask(String name) {
         labels = new ArrayList<>();
         task = new Task(name);
         priority = Priority.NONE;
