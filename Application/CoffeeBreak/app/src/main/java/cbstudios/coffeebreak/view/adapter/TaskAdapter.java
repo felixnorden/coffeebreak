@@ -122,20 +122,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         return mTasks.size();
     }
 
-    public void removeUnvalidTasks(){
-        removeCheckedTasks();
-        removeNullTasks();
+    public void filterTasks(ICategory currentCategory){
+        swapTasks(currentCategory.getValidTasks(mainPresenter.getTasks()));
     }
 
-    public void updateTasks(ICategory currentCategory, boolean resetTasks){
-        if(resetTasks) {
-            removeUnvalidTasks();
-        }
-        if(currentCategory != null) {
-            swapTasks(currentCategory.getValidTasks(mainPresenter.getTasks()));
-        }else{
-            swapTasks(mainPresenter.getTasks());
-        }
+    public void filterTasks(){
+        swapTasks(mainPresenter.getTasks());
+    }
+
+    public void updateTasks(){
+        removeCheckedTasks();
+        removeNullTasks();
     }
 
     private void swapTasks(List<IAdvancedTask> newTasks){

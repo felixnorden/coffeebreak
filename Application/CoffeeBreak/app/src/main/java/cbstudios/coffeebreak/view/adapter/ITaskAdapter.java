@@ -7,5 +7,5 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
  */
 
 public interface ITaskAdapter {
-    public void updateTasks(ICategory category, boolean resetTasks);
+    void updateTasks();
 }

@@ -93,7 +93,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         taskList = (RecyclerView) findViewById(R.id.taskList);
         taskList.setAdapter(taskAdapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
-        taskAdapter.updateTasks(currentCategory, true);
+        taskAdapter.updateTasks();
+        //TODO hide later when All-category is avalable.
+        taskAdapter.filterTasks();
 
         //TODO Set up on click functionality
         //TODO Bind FAB for creation
@@ -156,6 +158,11 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         return currentCategory;
     }
 
+    @Override
+    public AppCompatActivity getAppCompatActivity() {
+        return this;
+    }
+
     private void toggleFabState() {
         isFabOpen = !isFabOpen;
     }
@@ -199,14 +206,8 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     private void addAdvTask() {
         mainPresenter.createTask();
-            ((TaskAdapter) taskList.getAdapter()).updateTasks(currentCategory, false);
-
-
-    }
-
-    @Override
-    public AppCompatActivity getAppCompatActivity() {
-        return this;
+        TaskAdapter taskAdapter = (TaskAdapter) taskList.getAdapter();
+        taskAdapter.filterTasks(currentCategory);
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -231,7 +232,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
         // Set adapter
         //TODO UGLY AF
-        ((TaskAdapter) taskList.getAdapter()).updateTasks(currentCategory, true);
+        TaskAdapter taskAdapter = (TaskAdapter) taskList.getAdapter();
+        taskAdapter.updateTasks();
+        taskAdapter.filterTasks(currentCategory);
 
         // Close drawer
         mDrawerLayout.closeDrawer(mDrawerList);

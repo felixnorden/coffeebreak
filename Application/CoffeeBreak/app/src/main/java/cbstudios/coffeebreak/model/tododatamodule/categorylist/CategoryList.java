@@ -19,13 +19,15 @@ import java.util.Objects;
 
 public class CategoryList implements ICategoryList {
 
-    public final List<ILabelCategory> labelCategories;
-    public final List<ITimeCategory> timeCategories;
+    private final ICategory AllCategory;
+    private final List<ILabelCategory> labelCategories;
+    private final List<ITimeCategory> timeCategories;
 
     /**
      * The constructor that will create two lists.
      */
     public CategoryList() {
+        AllCategory = new AllCategory();
         labelCategories = new ArrayList<>();
         timeCategories = new ArrayList<>();
         initTimeCategories();

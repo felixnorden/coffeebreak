@@ -12,13 +12,11 @@ import java.util.Calendar;
 public interface ICategoryFactory {
 
     /**
-     *
      * @return a LabelCategory with no name
      */
     ILabelCategory createLabelCategory();
 
     /**
-     *
      * @param name of the new labelCategory
      * @return a new labelCategory with a name
      */
