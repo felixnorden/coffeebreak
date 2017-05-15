@@ -120,30 +120,31 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         return mTasks.size();
     }
 
+    public void updateTasks(ICategory currentCategory, boolean resetTasks){
+        if(resetTasks) {
+            removeCheckedTasks();
+        }
+        if(currentCategory != null) {
+            swapTasks(currentCategory.getValidTasks(mainPresenter.getTasks()));
+        }else{
+            swapTasks(mainPresenter.getTasks());
+        }
+    }
 
-    public void updateTasks(ICategory currentCategory){
+    private void swapTasks(List<IAdvancedTask> newTasks){
+        final TaskDiffCallback diffCallback = new TaskDiffCallback(this.mTasks, newTasks);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+
+        this.mTasks.clear();
+        this.mTasks.addAll(newTasks);
+        diffResult.dispatchUpdatesTo(this);
+    }
+
+    private void removeCheckedTasks(){
         for(IAdvancedTask task: mainPresenter.getTasks()){
             if(task.isChecked()){
                 mainPresenter.removeTask(task);
             }
-        }
-        if(currentCategory != null) {
-            List<IAdvancedTask> newTasks = currentCategory.getValidTasks(mainPresenter.getTasks());
-            final TaskDiffCallback diffCallback = new TaskDiffCallback(this.mTasks, newTasks);
-            final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-
-            this.mTasks.clear();
-            this.mTasks.addAll(newTasks);
-            diffResult.dispatchUpdatesTo(this);
-
-        }else{
-            List<IAdvancedTask> newTasks = mainPresenter.getTasks();
-            final TaskDiffCallback diffCallback = new TaskDiffCallback(this.mTasks, newTasks);
-            final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
-
-            this.mTasks.clear();
-            this.mTasks.addAll(newTasks);
-            diffResult.dispatchUpdatesTo(this);
         }
     }
 
@@ -225,7 +226,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
                     // Check if input is empty, if so, remove task from database
                     // and update adapter of removal
-                    //TODO FIX SHIEET
                     if(input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)){
                         int rangeStart = mTasks.indexOf(task);
                         mainPresenter.removeTask(task);
@@ -244,7 +244,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         });
     }
 
-    public class TaskDiffCallback extends DiffUtil.Callback {
+    private class TaskDiffCallback extends DiffUtil.Callback {
 
         private final List<IAdvancedTask> mOldTaskList;
         private final List<IAdvancedTask> mNewTaskList;
