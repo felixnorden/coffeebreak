@@ -152,6 +152,10 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         getSupportActionBar().setTitle(title);
     }
 
+    public ICategory getCurrentCategory(){
+        return currentCategory;
+    }
+
     private void toggleFabState() {
         isFabOpen = !isFabOpen;
     }

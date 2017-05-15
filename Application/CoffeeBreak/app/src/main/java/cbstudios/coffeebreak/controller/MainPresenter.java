@@ -48,13 +48,17 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     @Override
     public void onPause() {
+        taskAdapter.updateTasks(mainView.getCurrentCategory(), true);
         saveTasks();
         saveStatistics();
         saveAchievements();
+
+
     }
 
     @Override
     public void onResume() {
+
 
     }
 

@@ -89,6 +89,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         return viewHolder;
     }
 
+
+
     /**
      * {@inheritDoc}
      */
@@ -120,9 +122,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         return mTasks.size();
     }
 
+    public void removeUnvalidTasks(){
+        removeCheckedTasks();
+        removeNullTasks();
+    }
+
     public void updateTasks(ICategory currentCategory, boolean resetTasks){
         if(resetTasks) {
-            removeCheckedTasks();
+            removeUnvalidTasks();
         }
         if(currentCategory != null) {
             swapTasks(currentCategory.getValidTasks(mainPresenter.getTasks()));
@@ -146,6 +153,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
                 mainPresenter.removeTask(task);
             }
         }
+    }
+    private void removeNullTasks(){
+        for(IAdvancedTask task: mainPresenter.getTasks()){
+            if(task.getName()== null){
+                mainPresenter.removeTask(task);
+            }
+        }
+
     }
 
     private void setTaskName(ViewHolder taskHolder, boolean value){
