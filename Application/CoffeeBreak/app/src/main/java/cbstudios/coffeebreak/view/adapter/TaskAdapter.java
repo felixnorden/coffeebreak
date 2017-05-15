@@ -17,12 +17,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.controller.IMainPresenter;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 /**
@@ -33,9 +35,9 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
  * Used by: MainActivity to represent the linear list of tasks in its viewport.
  */
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> implements ITaskAdapter{
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> implements ITaskAdapter{
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class TaskViewHolder extends RecyclerView.ViewHolder{
         public View vPriority;
         public CheckBox cbCheckBox;
         public EditText etTaskName;
@@ -44,7 +46,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         public Drawable etBackgroundDrawable;
 
 
-        public ViewHolder(View itemView){
+        public TaskViewHolder(View itemView){
             super(itemView);
 
             vPriority = (View) itemView.findViewById(R.id.viewPriority);
@@ -55,6 +57,34 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             etBackgroundDrawable = etTaskName.getBackground();
         }
     }
+    public static class AdvancedTaskViewHolder extends TaskViewHolder{
+        public TextView tvSubTask;
+
+        public AdvancedTaskViewHolder(View itemView){
+            super(itemView);
+
+            tvSubTask = (TextView) itemView.findViewById(R.id.subTextView);
+        }
+
+    }
+
+    public static class ListTaskViewHolder extends TaskViewHolder{
+        public TextView tvSubTask;
+        public ImageView ivSubTask;
+
+        public ListTaskViewHolder(View itemView){
+            super(itemView);
+
+            tvSubTask = (TextView) itemView.findViewById(R.id.subTextView);
+            ivSubTask = (ImageView) itemView.findViewById(R.id.imageViewSubTask);
+
+        }
+
+    }
+
+    // Important ViewType constants
+    private static final int ADVANCED_TASK = 0;
+    private static final int LIST_TASK = 1;
 
     private List<IAdvancedTask> mTasks;
     private Context mContext;
@@ -79,23 +109,42 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      * {@inheritDoc}
      */
     @Override
-    public TaskAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public TaskAdapter.TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
+        View taskView;
+        TaskViewHolder viewHolder;
 
-        View taskView = inflater.inflate(R.layout.advanced_task_layout, parent, false);
+        if(viewType == ADVANCED_TASK) {
+            taskView = inflater.inflate(R.layout.advanced_task_layout, parent, false);
+            viewHolder = new AdvancedTaskViewHolder(taskView);
+        }
+        // If not an AdvancedTask, then it must be a ListTask
+        else{
+            taskView = inflater.inflate(R.layout.list_task_layout, parent, false);
+            viewHolder = new ListTaskViewHolder(taskView);
+        }
 
-        ViewHolder viewHolder = new ViewHolder(taskView);
         return viewHolder;
     }
-
 
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void onBindViewHolder(TaskAdapter.ViewHolder viewHolder, final int position){
+    public int getItemViewType(int position){
+        if(mTasks.get(position) instanceof AdvancedTask)
+            return 0;
+        else
+            return 1;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void onBindViewHolder(TaskAdapter.TaskViewHolder viewHolder, final int position){
         IAdvancedTask task = mTasks.get(position);
 
         final View vPriority = viewHolder.vPriority;
@@ -160,7 +209,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     }
 
-    private void setTaskName(ViewHolder taskHolder, boolean value){
+    private void setTaskName(TaskViewHolder taskHolder, boolean value){
         if(value){
             taskHolder.etTaskName.getBackground().setTint(Color.parseColor("#dd2b25"));
             taskHolder.etTaskName.setFocusable(value);
@@ -178,7 +227,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
      * Set up for the IAdvancedTask that is to be viewed, based on the ViewType
      * calculated in previous steps.
      */
-    private void setUpTask(final ViewHolder taskHolder, IAdvancedTask task, final int position){
+    private void setUpTask(final TaskViewHolder taskHolder, IAdvancedTask task, final int position){
         if(task.getName() != null){
             taskHolder.cbCheckBox.setChecked(false);
             taskHolder.cbCheckBox.setVisibility(View.VISIBLE);
@@ -214,7 +263,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         addOnCheckedChangedListener(taskHolder, task);
     }
 
-    private void addOnCheckedChangedListener(final ViewHolder taskHolder,final IAdvancedTask task){
+    private void addOnCheckedChangedListener(final TaskViewHolder taskHolder,final IAdvancedTask task){
         taskHolder.cbCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -227,7 +276,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             }
         });
     }
-    private void addKeyboardListener(final ViewHolder taskHolder, final IAdvancedTask task){
+    private void addKeyboardListener(final TaskViewHolder taskHolder, final IAdvancedTask task){
         // Listen for enter key to hide Keyboard
         final int position = taskHolder.getAdapterPosition();
         taskHolder.etTaskName.setOnKeyListener(new View.OnKeyListener() {
