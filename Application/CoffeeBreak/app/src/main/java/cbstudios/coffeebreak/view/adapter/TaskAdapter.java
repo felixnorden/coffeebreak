@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -63,6 +64,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         mContext = context;
         this.mainPresenter = mainPresenter;
         mTasks = mainPresenter.getTasks();
+
     }
 
     /**
@@ -118,22 +120,32 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         return mTasks.size();
     }
 
+    public void updateTasks(ICategory currentCategory, boolean resetTasks){
+        if(resetTasks) {
+            removeCheckedTasks();
+        }
+        if(currentCategory != null) {
+            swapTasks(currentCategory.getValidTasks(mainPresenter.getTasks()));
+        }else{
+            swapTasks(mainPresenter.getTasks());
+        }
+    }
 
-    public void updateTasks(ICategory currentCategory){
+    private void swapTasks(List<IAdvancedTask> newTasks){
+        final TaskDiffCallback diffCallback = new TaskDiffCallback(this.mTasks, newTasks);
+        final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
+
+        this.mTasks.clear();
+        this.mTasks.addAll(newTasks);
+        diffResult.dispatchUpdatesTo(this);
+    }
+
+    private void removeCheckedTasks(){
         for(IAdvancedTask task: mainPresenter.getTasks()){
             if(task.isChecked()){
                 mainPresenter.removeTask(task);
             }
         }
-        if(currentCategory != null) {
-            mTasks.clear();
-            this.mTasks.addAll(currentCategory.getValidTasks(mainPresenter.getTasks()));
-
-        }else{
-            mTasks.clear();
-            this.mTasks.addAll(mainPresenter.getTasks());
-        }
-        notifyDataSetChanged();
     }
 
     private void setTaskName(ViewHolder taskHolder, boolean value){
@@ -179,6 +191,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
             taskHolder.ibMore.setVisibility(View.INVISIBLE);
             taskHolder.vPriority.setVisibility(View.INVISIBLE);
             taskHolder.etTaskName.setText("");
+            taskHolder.etTaskName.getBackground().setTint(Color.RED);
 
             addKeyboardListener(taskHolder, task);
 
@@ -213,7 +226,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
                     // Check if input is empty, if so, remove task from database
                     // and update adapter of removal
-                    //TODO FIX SHIEET
                     if(input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)){
                         int rangeStart = mTasks.indexOf(task);
                         mainPresenter.removeTask(task);
@@ -230,6 +242,48 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
                 return false;
             }
         });
+    }
+
+    private class TaskDiffCallback extends DiffUtil.Callback {
+
+        private final List<IAdvancedTask> mOldTaskList;
+        private final List<IAdvancedTask> mNewTaskList;
+
+        public TaskDiffCallback(List<IAdvancedTask> oldEmployeeList, List<IAdvancedTask> newEmployeeList) {
+            this.mOldTaskList = oldEmployeeList;
+            this.mNewTaskList = newEmployeeList;
+        }
+
+        @Override
+        public int getOldListSize() {
+            return mOldTaskList.size();
+        }
+
+        @Override
+        public int getNewListSize() {
+            return mNewTaskList.size();
+        }
+
+        @Override
+        public boolean areItemsTheSame(int oldItemPosition, int newItemPosition) {
+            return mOldTaskList.get(oldItemPosition).hashCode() == mNewTaskList.get(
+                    newItemPosition).hashCode();
+        }
+
+        @Override
+        public boolean areContentsTheSame(int oldItemPosition, int newItemPosition) {
+            final IAdvancedTask oldTask = mOldTaskList.get(oldItemPosition);
+            final IAdvancedTask newTask = mNewTaskList.get(newItemPosition);
+
+            return oldTask.getName().equals(newTask.getName());
+        }
+
+
+        @Override
+        public Object getChangePayload(int oldItemPosition, int newItemPosition) {
+
+        return super.getChangePayload(oldItemPosition, newItemPosition);
+        }
     }
 }
 

@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         taskList = (RecyclerView) findViewById(R.id.taskList);
         taskList.setAdapter(taskAdapter);
         taskList.setLayoutManager(new LinearLayoutManager(this));
+        taskAdapter.updateTasks(currentCategory, true);
 
         //TODO Set up on click functionality
         //TODO Bind FAB for creation
@@ -194,7 +195,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     private void addAdvTask() {
         mainPresenter.createTask();
-            ((TaskAdapter) taskList.getAdapter()).updateTasks(currentCategory);
+            ((TaskAdapter) taskList.getAdapter()).updateTasks(currentCategory, false);
 
 
     }
@@ -226,7 +227,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
         // Set adapter
         //TODO UGLY AF
-        ((TaskAdapter) taskList.getAdapter()).updateTasks(currentCategory);
+        ((TaskAdapter) taskList.getAdapter()).updateTasks(currentCategory, true);
 
         // Close drawer
         mDrawerLayout.closeDrawer(mDrawerList);
