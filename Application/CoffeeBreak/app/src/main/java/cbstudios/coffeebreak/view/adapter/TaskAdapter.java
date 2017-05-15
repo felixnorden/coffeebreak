@@ -25,7 +25,11 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 /**
- * Created by Felix on 2017-04-14.
+ * @author Felix , Elias
+ * @version  1.1
+ * Responsibility: Handling the visual representation for all tasks in the Model.
+ * Uses: IAdvancedTask, IListTask, ICategory and IMainPresenter interfaces for abstraction.
+ * Used by: MainActivity to represent the linear list of tasks in its viewport.
  */
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> implements ITaskAdapter{
@@ -106,11 +110,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
 
     }
 
-    @Override
-    public void onViewAttachedToWindow(ViewHolder taskHolder){
-        final int position = taskHolder.getAdapterPosition();
-
-    }
     /**
      * {@inheritDoc}
      */
@@ -151,6 +150,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> im
         taskName.setFocusable(false);
     }
 
+    /*
+     * Set up for the IAdvancedTask that is to be viewed, based on the ViewType
+     * calculated in previous steps.
+     */
     private void setUpTask(final ViewHolder taskHolder, IAdvancedTask task, final int position){
         if(task.getName() != null){
             taskHolder.cbCheckBox.setChecked(false);
