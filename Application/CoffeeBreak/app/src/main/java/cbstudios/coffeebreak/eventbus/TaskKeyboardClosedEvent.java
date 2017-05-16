@@ -3,7 +3,6 @@ package cbstudios.coffeebreak.eventbus;
 import android.view.View;
 
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
 
 /**
  * @author Felix
