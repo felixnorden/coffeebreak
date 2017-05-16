@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -28,6 +30,7 @@ import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.controller.IMainPresenter;
 import cbstudios.coffeebreak.controller.IPresenterFactory;
 import cbstudios.coffeebreak.controller.PresenterFactory;
+import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
@@ -163,6 +166,17 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     @Override
     public AppCompatActivity getAppCompatActivity() {
         return this;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void displayKeyboard(ShowKeyboardEvent event){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if(event.showKeyboard){
+            imm.hideSoftInputFromWindow(event.view.getWindowToken(), 0);
+        }
+        else{
+            imm.showSoftInput(event.view, InputMethodManager.SHOW_IMPLICIT);
+        }
     }
 
     private void toggleFabState() {
