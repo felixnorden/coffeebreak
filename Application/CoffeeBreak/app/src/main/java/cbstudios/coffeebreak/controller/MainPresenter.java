@@ -96,7 +96,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     private void loadAchievements() {
         JsonElement element = null;
         try {
-            element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Create");
+            element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Achievement");
         } catch (IllegalStateException e) {
             // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
             StorageUtil.resetData(mainView.getAppCompatActivity().getApplicationContext(), "Tasks");
@@ -105,26 +105,18 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
             e.printStackTrace();
         }
 
-
-
         if (element == null || !element.isJsonArray()) {
             return;
         }
         JsonArray array = element.getAsJsonArray();
 
         List<IAchievement> achievements = AchievementConverter.getInstance().toAchievementList(array);
-        for (IAchievement achievement : achievements){
-            model.getToDoDataModule().getStats().getAchievementList().getCreateTaskAchievementsList().add(achievement);
-        }
+        getModel().getToDoDataModule().getStats().setAchievementList(achievements);
     }
 
     private void saveAchievements(){
-        JsonArray array = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getStats().getAchievementList().getCreateTaskAchievementsList());
-        StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Create", array);
-        JsonArray array2 = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getStats().getAchievementList().getCheckTaskAchievementsList());
-        StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Check", array2);
-        JsonArray array3 = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getStats().getAchievementList().getTimesAppOpenAchievementList());
-        StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Started", array3);
+        JsonArray array = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getStats().getAchievementList());
+        StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Achievement", array);
     }
 
     private void saveStatistics() {

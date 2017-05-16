@@ -50,7 +50,7 @@ public class StatisticsConverter {
         statistics.setCreatedTasks(object.get("CreatedTasks").getAsInt());
         statistics.setCheckOffTasks(object.get("CheckOffTasks").getAsInt());
         statistics.setTimesUpdated(object.get("TimesUpdated").getAsInt());
-        statistics.setAppStarted(object.get("TimesAppStarted").getAsInt());
+        statistics.setTimesAppStarted(object.get("TimesAppStarted").getAsInt());
         statistics.setTimesNavOpen(object.get("TimesNavOpen").getAsInt());
         statistics.setTimesTaskDeleted(object.get("TimesTaskDeleted").getAsInt());
         statistics.setTimesCategoryCreated(object.get("TimesCategoryCreated").getAsInt());

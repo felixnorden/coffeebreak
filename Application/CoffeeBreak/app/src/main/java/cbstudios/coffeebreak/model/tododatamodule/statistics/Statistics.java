@@ -3,9 +3,12 @@ package cbstudios.coffeebreak.model.tododatamodule.statistics;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
-import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.AchievementList;
-import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievementList;
+import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.AchievementFactory;
+import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievement;
 
 /**
  * Created by johan on 5/8/2017.
@@ -13,9 +16,7 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchie
 
 public class Statistics {
 
-    private IAchievementList achievementList;
-
-    //private List<IAchievement> achievementList;
+    private List<IAchievement> achievementList;
 
     private int createdTasks;
     private int checkOffTasks;
@@ -39,8 +40,7 @@ public class Statistics {
         timesCategoryCreated = 0;
         timesSettingsChanged = 0;
         tasksAlive = 0;
-        achievementList = new AchievementList();
-        achievementList.InitAchievement();
+        achievementList = new ArrayList<>();
         EventBus.getDefault().register(this);
 
     }
@@ -51,8 +51,6 @@ public class Statistics {
             case "Create":
                 createdTasks++;
                 tasksAlive++;
-                achievementList.getCreateTaskAchievementsList().get(0).checkIfCompleted(createdTasks, achievementList.getCreateTaskAchievementsList(), 0);
-                //achievementList.getTaskAliveAchievementList().get(0).checkIfCompleted(tasksAlive);
                 break;
             case "Check":
                 checkOffTasks++;
@@ -76,6 +74,22 @@ public class Statistics {
             case "SettingsChanged":
                 timesSettingsChanged++;
                 break;
+        }
+    }
+
+    public void InitAchievement(){
+        //int[] array = new int[]{5,25,100,500};
+        int[] array = new int[]{2,5,7,10};
+
+        for (int i = 0; i < array.length; i++) {
+            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("Create", array[i]));
+            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("Check", array[i]));
+            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesUpdated", array[i]));
+            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("AppOpen", array[i]));
+            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesNavOpen", array[i]));
+            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesTaskDeleted", array[i]));
+            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesCategoryCreated", array[i]));
+            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TasksAlive", array[i]));
         }
     }
 
@@ -127,7 +141,7 @@ public class Statistics {
         this.timesUpdated = timesUpdated;
     }
 
-    public void setAppStarted(int timesAppStarted) {
+    public void setTimesAppStarted(int timesAppStarted) {
         this.timesAppStarted = timesAppStarted;
     }
 
@@ -151,8 +165,12 @@ public class Statistics {
         this.tasksAlive = tasksAlive;
     }
 
-    public IAchievementList getAchievementList() {
-        return achievementList;
+    public void setAchievementList(List<IAchievement> achievementList) {
+        this.achievementList = achievementList;
+    }
+
+    public List<IAchievement> getAchievementList() {
+        return this.achievementList;
     }
 
 }

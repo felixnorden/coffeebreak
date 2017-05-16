@@ -1,10 +1,6 @@
 package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.List;
-
-import cbstudios.coffeebreak.eventbus.AchievementEvent;
 
 /**
  * Created by johan on 5/6/2017.
@@ -54,7 +50,7 @@ public class NumberAchievement implements IAchievement {
     }
 
     public void checkIfCompleted(int number, List<IAchievement> achievementList, int i){
-        if(this.isCompleted){
+        /*if(this.isCompleted){
             achievementList.get(i+1).checkIfCompleted(number, achievementList, i+1);
             return;
         }
@@ -62,7 +58,7 @@ public class NumberAchievement implements IAchievement {
         if (this.numberLimit == number) {
             isCompleted = true;
             EventBus.getDefault().post(new AchievementEvent(this));
-        }
+        }*/
     }
 
     /**
