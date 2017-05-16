@@ -81,6 +81,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 vPriority.setVisibility(View.INVISIBLE);
                 etTaskName.setText("");
                 etTaskName.getBackground().setTint(Color.RED);
+
+                setTaskNameEnabled(true);
             }
 
         }

@@ -121,13 +121,18 @@
 
     <RelativeLayout
         android:id="@+id/left_drawer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
         android:layout_gravity="start">
 
-        <View
+        <TextView
             android:layout_width="240dp"
-            android:layout_height="240dp" />
+            android:layout_height="160dp"
+            android:id="@+id/drawer_header"
+            android:text="COOL HEADER"
+            android:textAlignment="center"
+            android:textSize="56dp"
+            android:background="@android:color/white"/>
 
         <ListView
             android:id="@+id/drawer_list"
@@ -141,5 +146,6 @@
             android:drawSelectorOnTop="true"
             android:elevation="16dp" />
     </RelativeLayout>
+
 </android.support.v4.widget.DrawerLayout>
 
