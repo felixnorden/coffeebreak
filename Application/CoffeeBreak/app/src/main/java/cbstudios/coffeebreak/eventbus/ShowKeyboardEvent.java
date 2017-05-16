@@ -11,7 +11,7 @@ public class ShowKeyboardEvent {
     public final boolean showKeyboard;
     public final View view;
 
-    public ShowKeyboardEvent(boolean showKeyboard, View view){
+    public ShowKeyboardEvent(boolean showKeyboard, View view) {
         this.showKeyboard = showKeyboard;
         this.view = view;
     }
