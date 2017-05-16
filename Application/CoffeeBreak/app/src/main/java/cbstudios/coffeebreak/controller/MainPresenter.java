@@ -49,8 +49,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         loadTasks();
         loadStatistics();
         loadAchievements();
-        EventBus.getDefault().register(mainView);
-        EventBus.getDefault().register(taskAdapter);
     }
 
     @Override
@@ -61,15 +59,12 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         saveTasks();
         saveStatistics();
         saveAchievements();
-
-        EventBus.getDefault().unregister(mainView);
-        EventBus.getDefault().unregister(taskAdapter);
     }
 
     @Override
     public void onResume() {
-        EventBus.getDefault().register(mainView);
-        EventBus.getDefault().register(taskAdapter);
+        //EventBus.getDefault().register(mainView);
+        //EventBus.getDefault().register(taskAdapter);
     }
 
     @Override
