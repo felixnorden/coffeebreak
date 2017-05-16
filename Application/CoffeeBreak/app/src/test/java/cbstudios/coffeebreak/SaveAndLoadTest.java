@@ -14,7 +14,6 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ToDoList;
-import cbstudios.coffeebreak.storage.StorageUtil;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;

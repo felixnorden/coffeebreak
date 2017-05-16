@@ -21,7 +21,7 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.Statistics;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievement;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
-import cbstudios.coffeebreak.storage.StorageUtil;
+import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IMainView;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;

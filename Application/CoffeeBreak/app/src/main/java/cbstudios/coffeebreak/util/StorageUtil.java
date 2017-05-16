@@ -1,4 +1,4 @@
-package cbstudios.coffeebreak.storage;
+package cbstudios.coffeebreak.util;
 
 import android.content.Context;
 
