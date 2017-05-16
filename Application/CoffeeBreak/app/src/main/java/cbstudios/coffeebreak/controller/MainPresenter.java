@@ -3,15 +3,10 @@ package cbstudios.coffeebreak.controller;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.List;
 
-import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.AchievementConverter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.StatisticsConverter;
@@ -110,35 +105,25 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
             e.printStackTrace();
         }
 
-        if (element == null || !element.isJsonObject()) {
-            try {
-                JsonParser parser = new JsonParser();
-
-                JsonArray jsonArray = (JsonArray) parser.parse(new FileReader("."));
 
 
-                List<IAchievement> achievements = AchievementConverter.getInstance().toAchievementList(jsonArray);
-
-                model.getToDoDataModule().getAchievementList().setCreateTaskAchievementsList(achievements);
-            } catch (FileNotFoundException e) {
-                EventBus.getDefault().post(new StatisticEvent("Updated"));
-                e.printStackTrace();
-            }
+        if (element == null || !element.isJsonArray()) {
             return;
         }
         JsonArray array = element.getAsJsonArray();
 
         List<IAchievement> achievements = AchievementConverter.getInstance().toAchievementList(array);
-
-        model.getToDoDataModule().getAchievementList().setCreateTaskAchievementsList(achievements);
+        for (IAchievement achievement : achievements){
+            model.getToDoDataModule().getStats().getAchievementList().getCreateTaskAchievementsList().add(achievement);
+        }
     }
 
-    private void saveAchievements() {
-        JsonArray array = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getAchievementList().getCreateTaskAchievementsList());
+    private void saveAchievements(){
+        JsonArray array = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getStats().getAchievementList().getCreateTaskAchievementsList());
         StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Create", array);
-        JsonArray array2 = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getAchievementList().getCheckTaskAchievementsList());
+        JsonArray array2 = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getStats().getAchievementList().getCheckTaskAchievementsList());
         StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Check", array2);
-        JsonArray array3 = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getAchievementList().getTimesAppOpenAchievementList());
+        JsonArray array3 = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getStats().getAchievementList().getTimesAppOpenAchievementList());
         StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Started", array3);
     }
 

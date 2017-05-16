@@ -60,7 +60,7 @@ public class AchievementConverter {
 
         achievementObject.addProperty("Name", achievement.getName());
         achievementObject.addProperty("NumberLimit", achievement.getNumberLimit());
-        achievementObject.addProperty("IsCompleted", achievement.checkIfCompleted());
+        achievementObject.addProperty("IsCompleted", achievement.getIfCompleted());
 
         return achievementObject;
     }

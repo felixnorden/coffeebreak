@@ -34,7 +34,7 @@ public class StatisticsConverter {
         statisticsObject.addProperty("CreatedTasks", statistics.getCreatedTasks());
         statisticsObject.addProperty("CheckOffTasks", statistics.getCheckOffTasks());
         statisticsObject.addProperty("TimesUpdated", statistics.getTimesUpdated());
-        statisticsObject.addProperty("TimesAppStarted", statistics.getAppStarted());
+        statisticsObject.addProperty("TimesAppStarted", statistics.getTimesAppStarted());
         statisticsObject.addProperty("TimesNavOpen", statistics.getTimesNavOpen());
         statisticsObject.addProperty("TimesTaskDeleted", statistics.getTimesTaskDeleted());
         statisticsObject.addProperty("TimesCategoryCreated", statistics.getTimesCategoryCreated());

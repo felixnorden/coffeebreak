@@ -4,12 +4,19 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
+import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.AchievementList;
+import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievementList;
 
 /**
  * Created by johan on 5/8/2017.
  */
 
 public class Statistics {
+
+    private IAchievementList achievementList;
+
+    //private List<IAchievement> achievementList;
+
     private int createdTasks;
     private int checkOffTasks;
     private int timesUpdated;
@@ -32,7 +39,8 @@ public class Statistics {
         timesCategoryCreated = 0;
         timesSettingsChanged = 0;
         tasksAlive = 0;
-
+        achievementList = new AchievementList();
+        achievementList.InitAchievement();
         EventBus.getDefault().register(this);
 
     }
@@ -42,9 +50,13 @@ public class Statistics {
         switch (event.getMessage()) {
             case "Create":
                 createdTasks++;
+                tasksAlive++;
+                achievementList.getCreateTaskAchievementsList().get(0).checkIfCompleted(createdTasks, achievementList.getCreateTaskAchievementsList(), 0);
+                //achievementList.getTaskAliveAchievementList().get(0).checkIfCompleted(tasksAlive);
                 break;
             case "Check":
                 checkOffTasks++;
+                tasksAlive--;
                 break;
             case "Updated":
                 timesUpdated++;
@@ -79,7 +91,7 @@ public class Statistics {
         return timesUpdated;
     }
 
-    public int getAppStarted() {
+    public int getTimesAppStarted() {
         return timesAppStarted;
     }
 
@@ -137,6 +149,10 @@ public class Statistics {
 
     public void setTasksAlive(int tasksAlive) {
         this.tasksAlive = tasksAlive;
+    }
+
+    public IAchievementList getAchievementList() {
+        return achievementList;
     }
 
 }
