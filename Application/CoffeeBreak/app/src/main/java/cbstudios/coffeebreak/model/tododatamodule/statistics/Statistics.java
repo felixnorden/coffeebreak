@@ -29,6 +29,8 @@ public class Statistics {
     private int timesSettingsChanged;
     private int tasksAlive;
 
+    private int daysInARow;
+    private Calendar lastDayCheckedTask;
 
 
     public Statistics(){
@@ -41,6 +43,10 @@ public class Statistics {
         timesCategoryCreated = 0;
         timesSettingsChanged = 0;
         tasksAlive = 0;
+
+        daysInARow = 0;
+        lastDayCheckedTask = null;
+
         achievementList = new ArrayList<>();
         InitAchievement();
         EventBus.getDefault().register(this);
@@ -55,14 +61,32 @@ public class Statistics {
                 tasksAlive++;
                 checkAchievement(event.getMessage(), createdTasks);
                 checkAchievement("TasksAlive", tasksAlive);
-
-                Calendar.getInstance();
-
                 break;
             case "Check":
                 checkOffTasks++;
                 tasksAlive--;
                 checkAchievement(event.getMessage(), checkOffTasks);
+                
+                if(lastDayCheckedTask == null) {
+                    lastDayCheckedTask = Calendar.getInstance();
+                    daysInARow++;
+                    return;
+                }
+                Calendar now = Calendar.getInstance();
+                
+                if((now.get(Calendar.YEAR) == lastDayCheckedTask.get(Calendar.YEAR))){
+                    if((now.get(Calendar.DAY_OF_YEAR))-(lastDayCheckedTask.get(Calendar.DAY_OF_YEAR)) ==1){
+                        lastDayCheckedTask = now;
+                        daysInARow++;
+                    } else if ((now.get(Calendar.DAY_OF_YEAR))-(lastDayCheckedTask.get(Calendar.DAY_OF_YEAR)) > 1){
+                        lastDayCheckedTask = now;
+                        daysInARow = 0;
+                    }
+                }
+
+                checkAchievement("DaysInARow", daysInARow);
+
+
                 break;
             case "TimesUpdated":
                 timesUpdated++;
@@ -116,6 +140,8 @@ public class Statistics {
             achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesCategoryCreated", array[i]));
             achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesSettingsChanged", array[i]));
             achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TasksAlive", array[i]));
+            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("DaysInARow", array[i]));
+
         }
     }
 
