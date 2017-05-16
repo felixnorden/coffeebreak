@@ -44,28 +44,22 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         loadTasks();
         loadStatistics();
         loadAchievements();
-        EventBus.getDefault().register(mainView);
-        EventBus.getDefault().register(taskAdapter);
     }
 
     @Override
     public void onPause() {
-
         //TODO Fix shiet
         taskAdapter.updateTasks();
         taskAdapter.filterTasks();
         saveTasks();
         saveStatistics();
         saveAchievements();
-
-        EventBus.getDefault().unregister(mainView);
-        EventBus.getDefault().unregister(taskAdapter);
     }
 
     @Override
     public void onResume() {
-        EventBus.getDefault().register(mainView);
-        EventBus.getDefault().register(taskAdapter);
+        //EventBus.getDefault().register(mainView);
+        //EventBus.getDefault().register(taskAdapter);
     }
 
     @Override
@@ -102,6 +96,11 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Override
     public List<ITimeCategory> getTimeCategories() {
         return model.getToDoDataModule().getTimeCategories();
+    }
+
+    public void registerComponentsToEventBus(){
+        EventBus.getDefault().register(mainView);
+        EventBus.getDefault().register(taskAdapter);
     }
 
     private void loadAchievements() {
@@ -203,8 +202,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         JsonArray array = TaskConverter.getInstance().toJsonArray(model.getToDoDataModule().getTasks());
         StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Tasks", array);
     }
-
-    public Model getModel() {
-        return model;
-    }
 }
+
+
