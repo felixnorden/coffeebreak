@@ -78,7 +78,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
                         task.setName(input);
                         EventBus.getDefault().post(new TaskKeyboardClosedEvent(itemView, getAdapterPosition(), false, task));
-                        EventBus.getDefault().post(new ShowKeyboardEvent(false, etTaskName));
                     }
                     return false;
                 }
@@ -91,8 +90,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 }
             });
         }
-
-        void setUpTask(){
+        public void setUpTask(){
             if(task.getName() != null){
                 cbCheckBox.setChecked(false);
                 cbCheckBox.setVisibility(View.VISIBLE);
@@ -102,7 +100,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 etTaskName.setText(task.getName());
                 vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
-
 
                 // Set Category-color if only one category is specified.
                 if(task.getLabels().size() >= 1) {
@@ -252,7 +249,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         // Set up task layout based on whether the task has data or not.
         setUpTask(viewHolder, task);
-
     }
 
     /**
@@ -377,6 +373,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             }
         });
     }
+
     private class TaskDiffCallback extends DiffUtil.Callback {
 
         private final List<IAdvancedTask> mOldTaskList;
