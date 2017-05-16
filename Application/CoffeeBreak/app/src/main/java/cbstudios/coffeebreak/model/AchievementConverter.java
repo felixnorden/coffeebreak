@@ -46,11 +46,8 @@ public class AchievementConverter {
         List<IAchievement> list = new ArrayList<>();
         for (int i = 0; i < array.size(); i++){
             JsonObject object = array.get(i).getAsJsonObject();
-            String name = object.get("Name").getAsString();
 
-            if(name.equals("Create")){
-                list.add(jsonObjectToNumberAchievement(object));
-            }
+            list.add(jsonObjectToNumberAchievement(object));
         }
         return list;
     }

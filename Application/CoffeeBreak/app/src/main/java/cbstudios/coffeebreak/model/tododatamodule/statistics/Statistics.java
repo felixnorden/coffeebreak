@@ -4,6 +4,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
@@ -41,6 +42,7 @@ public class Statistics {
         timesSettingsChanged = 0;
         tasksAlive = 0;
         achievementList = new ArrayList<>();
+        InitAchievement();
         EventBus.getDefault().register(this);
 
     }
@@ -51,44 +53,68 @@ public class Statistics {
             case "Create":
                 createdTasks++;
                 tasksAlive++;
+                checkAchievement(event.getMessage(), createdTasks);
+                checkAchievement("TasksAlive", tasksAlive);
+
+                Calendar.getInstance();
+
                 break;
             case "Check":
                 checkOffTasks++;
                 tasksAlive--;
+                checkAchievement(event.getMessage(), checkOffTasks);
                 break;
-            case "Updated":
+            case "TimesUpdated":
                 timesUpdated++;
+                checkAchievement(event.getMessage(), timesUpdated);
                 break;
-            case "appStarted":
+            case "TimesAppStarted":
                 timesAppStarted++;
+                checkAchievement(event.getMessage(), timesAppStarted);
                 break;
-            case "NavOpen":
+            case "TimesNavOpen":
                 timesNavOpen++;
+                checkAchievement(event.getMessage(), timesNavOpen);
                 break;
-            case "TaskDeleted":
+            case "TimesTaskDeleted":
                 timesTaskDeleted++;
+                tasksAlive--;
+                checkAchievement(event.getMessage(), timesTaskDeleted);
                 break;
-            case "CategoryCreated":
+            case "TimesCategoryCreated":
                 timesCategoryCreated++;
+                checkAchievement(event.getMessage(), timesCategoryCreated);
                 break;
-            case "SettingsChanged":
+            case "TimesSettingsChanged":
                 timesSettingsChanged++;
+                checkAchievement(event.getMessage(), timesSettingsChanged);
                 break;
+        }
+    }
+
+    private void checkAchievement(String name, int stats) {
+        for (int i = 0; i < achievementList.size(); i++){
+            if(achievementList.get(i).getName().equals(name)){
+                if(!(achievementList.get(i).getIfCompleted())){
+                    achievementList.get(i).checkIfCompleted(stats);
+                }
+            }
         }
     }
 
     public void InitAchievement(){
         //int[] array = new int[]{5,25,100,500};
-        int[] array = new int[]{2,5,7,10};
+        int[] array = new int[]{2,5,20,25};
 
         for (int i = 0; i < array.length; i++) {
             achievementList.add(AchievementFactory.getInstance().createNumberAchievements("Create", array[i]));
             achievementList.add(AchievementFactory.getInstance().createNumberAchievements("Check", array[i]));
             achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesUpdated", array[i]));
-            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("AppOpen", array[i]));
+            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesAppStarted", array[i]));
             achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesNavOpen", array[i]));
             achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesTaskDeleted", array[i]));
             achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesCategoryCreated", array[i]));
+            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesSettingsChanged", array[i]));
             achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TasksAlive", array[i]));
         }
     }
