@@ -1,7 +1,6 @@
 package cbstudios.coffeebreak.eventbus;
 
 import android.view.View;
-
 /**
  * @author Felix
  * @version 1.0
