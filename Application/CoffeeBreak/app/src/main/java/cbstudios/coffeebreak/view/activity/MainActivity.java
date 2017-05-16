@@ -67,13 +67,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     private ICategory currentCategory = null;
 
 
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        mainPresenter.onPause();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,8 +122,25 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         setToolbar();
         EventBus.getDefault().post(new StatisticEvent("appStarted"));
         mainPresenter.setTaskAdapter(taskAdapter);
+        mainPresenter.registerComponentsToEventBus();
     }
 
+    @Override
+    protected void onPause(){
+        mainPresenter.onPause();
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
+
+    @Override
+    protected void onDestroy(){
+        mainPresenter.onDestroy();
+        super.onDestroy();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
