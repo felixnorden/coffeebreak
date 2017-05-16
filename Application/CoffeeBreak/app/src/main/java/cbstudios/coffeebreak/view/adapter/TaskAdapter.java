@@ -374,7 +374,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             }
         });
     }
-
     private class TaskDiffCallback extends DiffUtil.Callback {
 
         private final List<IAdvancedTask> mOldTaskList;
