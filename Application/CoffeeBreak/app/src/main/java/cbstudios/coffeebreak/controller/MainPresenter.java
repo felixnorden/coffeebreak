@@ -117,6 +117,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         EventBus.getDefault().postSticky(new EditTaskActivityEvent(event.getTask()));
     }
 
+
     private void loadAchievements() {
         JsonElement element = null;
         try {
