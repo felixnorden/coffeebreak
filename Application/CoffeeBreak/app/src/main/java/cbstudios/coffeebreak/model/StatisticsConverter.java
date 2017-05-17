@@ -34,7 +34,7 @@ public class StatisticsConverter {
         statisticsObject.addProperty("CreatedTasks", statistics.getCreatedTasks());
         statisticsObject.addProperty("CheckOffTasks", statistics.getCheckOffTasks());
         statisticsObject.addProperty("TimesUpdated", statistics.getTimesUpdated());
-        statisticsObject.addProperty("TimesAppStarted", statistics.getAppStarted());
+        statisticsObject.addProperty("TimesAppStarted", statistics.getTimesAppStarted());
         statisticsObject.addProperty("TimesNavOpen", statistics.getTimesNavOpen());
         statisticsObject.addProperty("TimesTaskDeleted", statistics.getTimesTaskDeleted());
         statisticsObject.addProperty("TimesCategoryCreated", statistics.getTimesCategoryCreated());
@@ -50,7 +50,7 @@ public class StatisticsConverter {
         statistics.setCreatedTasks(object.get("CreatedTasks").getAsInt());
         statistics.setCheckOffTasks(object.get("CheckOffTasks").getAsInt());
         statistics.setTimesUpdated(object.get("TimesUpdated").getAsInt());
-        statistics.setAppStarted(object.get("TimesAppStarted").getAsInt());
+        statistics.setTimesAppStarted(object.get("TimesAppStarted").getAsInt());
         statistics.setTimesNavOpen(object.get("TimesNavOpen").getAsInt());
         statistics.setTimesTaskDeleted(object.get("TimesTaskDeleted").getAsInt());
         statistics.setTimesCategoryCreated(object.get("TimesCategoryCreated").getAsInt());

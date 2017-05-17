@@ -20,16 +20,10 @@ public interface IAchievement {
      */
     void setIsCompleted(boolean isCompleted);
 
-    /**
-     * Check if an achievement is completed
-     * @param number is the number of times a specific assigment has to done
-     *                    in order to complete the achievement
-     * @return
-     */
-    boolean isCompleted(int number);
-
     int getNumberLimit();
 
-    boolean checkIfCompleted();
+    void checkIfCompleted(int number);
+
+    boolean getIfCompleted();
 
 }

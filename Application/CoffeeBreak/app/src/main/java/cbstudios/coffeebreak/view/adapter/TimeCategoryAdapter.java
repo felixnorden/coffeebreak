@@ -27,14 +27,14 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
     private final List<ITimeCategory> timeCategories;
     private IMainPresenter mainPresenter;
 
-    public TimeCategoryAdapter(Context context, List<ITimeCategory> categories, IMainPresenter mainPresenter){
+    public TimeCategoryAdapter(Context context, List<ITimeCategory> categories, IMainPresenter mainPresenter) {
         super(context, drawer_list_item_label, categories);
         this.context = context;
         this.timeCategories = categories;
         this.mainPresenter = mainPresenter;
     }
 
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View rowItem = inflater.inflate(drawer_list_item_time, parent, false);
 
@@ -43,7 +43,7 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
         TextView categorySize = (TextView) rowItem.findViewById(R.id.textViewNumber);
 
 
-        if(timeCategory.getName() != null) {
+        if (timeCategory.getName() != null) {
             etNameView.setText(timeCategory.getName());
 
             updateNumberOfTaskInCategory(timeCategory, categorySize);
@@ -54,6 +54,7 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
 
     /**
      * * Updates the number that represent number of task in the given category
+     *
      * @param timeCategory is the current labelCategory
      * @param categorySize is ID for a TextView field
      */
@@ -65,7 +66,7 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
                 if (timeCategory.getTaskCount(tasks) != 0) {
                     categorySize.setText(Integer.toString(timeCategory.getTaskCount(tasks)));
                     //Test function
-                    //categorySize.setText((Integer.toString(mainPresenter.getModel().getToDoDataModule().getStats().getTimesUpdated())));
+                    //categorySize.setText((Integer.toString(mainPresenter.getModel().getToDoDataModule().getStats().getAchievementList().size())));
                 }
             }
         }
