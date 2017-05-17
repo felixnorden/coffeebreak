@@ -83,7 +83,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     return false;
                 }
             });
-
             ibMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
