@@ -46,7 +46,8 @@
             android:text="@string/advanced_task"
             android:textAlignment="center"
             android:textSize="16sp"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:elevation="6dp"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_advanced_task"
@@ -75,7 +76,8 @@
             android:text="@string/list_task"
             android:textAlignment="center"
             android:textSize="16sp"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            android:elevation="6dp"/>
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_list_task"
@@ -123,7 +125,8 @@
         android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_gravity="start"
+        android:elevation="16dp">
 
         <TextView
             android:layout_width="240dp"
