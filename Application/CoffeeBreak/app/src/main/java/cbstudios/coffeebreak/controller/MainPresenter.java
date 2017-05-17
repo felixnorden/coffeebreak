@@ -1,6 +1,5 @@
 package cbstudios.coffeebreak.controller;
 
-import android.app.usage.UsageEvents;
 import android.content.Intent;
 
 import com.google.gson.JsonArray;
@@ -15,8 +14,8 @@ import java.util.List;
 
 import cbstudios.coffeebreak.eventbus.EditTaskActivityEvent;
 import cbstudios.coffeebreak.eventbus.EditTaskEvent;
+import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.AchievementConverter;
-import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.StatisticsConverter;
 import cbstudios.coffeebreak.model.TaskConverter;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
@@ -82,11 +81,14 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Override
     public void createTask() {
         model.getToDoDataModule().createTask();
+        EventBus.getDefault().post(new StatisticEvent("Create"));
     }
 
     @Override
     public void removeTask(IAdvancedTask task) {
         model.getToDoDataModule().removeTask(task);
+        EventBus.getDefault().post(new StatisticEvent("Check"));
+
     }
 
     @Override
@@ -197,6 +199,11 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     private void saveTasks() {
         JsonArray array = TaskConverter.getInstance().toJsonArray(model.getToDoDataModule().getTasks());
         StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Tasks", array);
+    }
+
+    @Subscribe
+    public void onEvent(StatisticEvent event){
+        model.getToDoDataModule().getStats().onEvent(event.getMessage());
     }
 }
 

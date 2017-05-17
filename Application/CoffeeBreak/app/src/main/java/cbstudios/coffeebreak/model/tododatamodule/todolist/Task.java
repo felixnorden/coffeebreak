@@ -1,10 +1,6 @@
 package cbstudios.coffeebreak.model.tododatamodule.todolist;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.Calendar;
-
-import cbstudios.coffeebreak.eventbus.StatisticEvent;
 
 /**
  * @author Felix
@@ -27,7 +23,6 @@ class Task implements ITask {
         name = null;
         checked = false;
         creationCalendar = Calendar.getInstance();
-        EventBus.getDefault().post(new StatisticEvent("Create"));
     }
 
     /**

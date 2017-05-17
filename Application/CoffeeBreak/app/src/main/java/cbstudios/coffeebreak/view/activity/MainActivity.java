@@ -121,7 +121,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         
         setNavDrawer();
         setToolbar();
-        EventBus.getDefault().post(new StatisticEvent("appStarted"));
+        EventBus.getDefault().post(new StatisticEvent("TimesAppStarted"));
         mainPresenter.setTaskAdapter(taskAdapter);
         mainPresenter.registerComponentsToEventBus();
     }

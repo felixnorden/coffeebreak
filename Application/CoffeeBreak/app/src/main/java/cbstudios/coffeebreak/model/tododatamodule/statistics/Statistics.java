@@ -1,13 +1,9 @@
 package cbstudios.coffeebreak.model.tododatamodule.statistics;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.AchievementFactory;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievement;
 
@@ -49,23 +45,20 @@ public class Statistics {
 
         achievementList = new ArrayList<>();
         InitAchievement();
-        EventBus.getDefault().register(this);
-
     }
 
-    @Subscribe
-    public void onEvent(StatisticEvent event){
-        switch (event.getMessage()) {
+    public void onEvent(String name){
+        switch (name) {
             case "Create":
                 createdTasks++;
                 tasksAlive++;
-                checkAchievement(event.getMessage(), createdTasks);
+                checkAchievement(name, createdTasks);
                 checkAchievement("TasksAlive", tasksAlive);
                 break;
             case "Check":
                 checkOffTasks++;
                 tasksAlive--;
-                checkAchievement(event.getMessage(), checkOffTasks);
+                checkAchievement(name, checkOffTasks);
                 
                 if(lastDayCheckedTask == null) {
                     lastDayCheckedTask = Calendar.getInstance();
@@ -90,28 +83,28 @@ public class Statistics {
                 break;
             case "TimesUpdated":
                 timesUpdated++;
-                checkAchievement(event.getMessage(), timesUpdated);
+                checkAchievement(name, timesUpdated);
                 break;
             case "TimesAppStarted":
                 timesAppStarted++;
-                checkAchievement(event.getMessage(), timesAppStarted);
+                checkAchievement(name, timesAppStarted);
                 break;
             case "TimesNavOpen":
                 timesNavOpen++;
-                checkAchievement(event.getMessage(), timesNavOpen);
+                checkAchievement(name, timesNavOpen);
                 break;
             case "TimesTaskDeleted":
                 timesTaskDeleted++;
                 tasksAlive--;
-                checkAchievement(event.getMessage(), timesTaskDeleted);
+                checkAchievement(name, timesTaskDeleted);
                 break;
             case "TimesCategoryCreated":
                 timesCategoryCreated++;
-                checkAchievement(event.getMessage(), timesCategoryCreated);
+                checkAchievement(name, timesCategoryCreated);
                 break;
             case "TimesSettingsChanged":
                 timesSettingsChanged++;
-                checkAchievement(event.getMessage(), timesSettingsChanged);
+                checkAchievement(name, timesSettingsChanged);
                 break;
         }
     }
