@@ -4,6 +4,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.FileNotFoundException;
 import java.util.List;
 
@@ -116,7 +118,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         JsonArray array = element.getAsJsonArray();
 
         List<IAchievement> achievements = AchievementConverter.getInstance().toAchievementList(array);
-        getModel().getToDoDataModule().getStats().setAchievementList(achievements);
+        model.getToDoDataModule().getStats().setAchievementList(achievements);
     }
 
     private void saveAchievements(){
