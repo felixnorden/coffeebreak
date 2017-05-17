@@ -33,6 +33,7 @@ import cbstudios.coffeebreak.eventbus.TaskKeyboardClosedEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
 
 /**
  * @author Felix , Elias
@@ -233,10 +234,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      */
     @Override
     public int getItemViewType(int position){
-        if(mTasks.get(position) instanceof AdvancedTask)
-            return 0;
+        if(mTasks.get(position) instanceof ListTask)
+            return LIST_TASK;
         else
-            return 1;
+            return ADVANCED_TASK;
     }
 
     /**
