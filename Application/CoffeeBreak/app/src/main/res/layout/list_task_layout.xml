@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:layout_toStartOf="@+id/imageViewCategory"
         android:hint="@string/create_task_hint"
-        android:inputType="text"
+        android:inputType="textCapSentences"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="69dp"
         android:paddingTop="0dp"
