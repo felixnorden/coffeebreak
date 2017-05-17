@@ -16,7 +16,8 @@ public interface IMainPresenter extends IPresenter {
     void setTaskAdapter(TaskAdapter adapter);
     void createTask();
     void removeTask(IAdvancedTask task);
-    Model getModel();
+    //Model getModel();
+    void registerComponentsToEventBus();
 
 
     List<IAdvancedTask> getTasks();

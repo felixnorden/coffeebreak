@@ -19,10 +19,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.controller.IMainPresenter;
+import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
+import cbstudios.coffeebreak.eventbus.TaskKeyboardClosedEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
@@ -47,7 +53,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public Drawable etBackgroundDrawable;
 
 
-        public TaskViewHolder(View itemView){
+        public TaskViewHolder(final View itemView) {
             super(itemView);
 
             vPriority = (View) itemView.findViewById(R.id.viewPriority);
@@ -56,8 +62,29 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             ivCategory = (ImageView) itemView.findViewById(R.id.imageViewCategory);
             ibMore = (ImageButton) itemView.findViewById(R.id.imageButtonMore);
             etBackgroundDrawable = etTaskName.getBackground();
+
+            etTaskName.setOnKeyListener(new View.OnKeyListener() {
+                @Override
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+                    if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
+                        String input = etTaskName.getText().toString();
+                        // Check if input is empty, if so, remove task from database
+                        // and update adapter of removal
+                        if (input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)) {
+                            EventBus.getDefault().post(new TaskKeyboardClosedEvent(itemView, getAdapterPosition(), true, task));
+                            return false;
+                        }
+
+                        task.setName(input);
+                        EventBus.getDefault().post(new TaskKeyboardClosedEvent(itemView, getAdapterPosition(), false, task));
+                        EventBus.getDefault().post(new ShowKeyboardEvent(false, etTaskName));
+                    }
+                    return false;
+                }
+            });
         }
-        public void setUpTask(){
+
+        void setUpTask(){
             if(task.getName() != null){
                 cbCheckBox.setChecked(false);
                 cbCheckBox.setVisibility(View.VISIBLE);
@@ -67,9 +94,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 etTaskName.setText(task.getName());
                 vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
-                etTaskName.clearFocus();
 
+
+                // Set Category-color if only one category is specified.
+                if(task.getLabels().size() >= 1) {
+                    ivCategory.setColorFilter(Color.parseColor(task.getLabels().get(0).getColor()), PorterDuff.Mode.MULTIPLY);
+                } else {
+                    ivCategory.setVisibility(View.INVISIBLE);
+                }
                 setTaskNameEnabled(false);
+                //etTaskName.clearFocus();
                 setSpecificFields();
             }
             else{
@@ -80,12 +114,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 ibMore.setVisibility(View.INVISIBLE);
                 vPriority.setVisibility(View.INVISIBLE);
                 etTaskName.setText("");
-                etTaskName.getBackground().setTint(Color.RED);
 
                 setTaskNameEnabled(true);
+                etTaskName.requestFocus();
             }
 
         }
+
         private void setTaskNameEnabled(boolean value){
             if(value){
                 etTaskName.getBackground().setTint(Color.parseColor("#dd2b25"));
@@ -96,8 +131,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             etTaskName.setFocusable(value);
             etTaskName.setFocusableInTouchMode(value);
         }
+
         abstract void setSpecificFields();
     }
+
     public static class AdvancedTaskViewHolder extends TaskViewHolder{
         public TextView tvSubTask;
 
@@ -112,8 +149,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             String information;
             if(task.hasNote())
                 information = task.getNote();
-            else if(task.getDate() != null)
-                information = task.getDate().toString();
+            else if(!task.getLabels().isEmpty())
+                information = task.getLabels().toString();
             else
                 information = "No info, add plez";
             tvSubTask.setText(information);
@@ -152,7 +189,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         mContext = context;
         this.mainPresenter = mainPresenter;
         mTasks = mainPresenter.getTasks();
-
     }
 
     /**
@@ -203,21 +239,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      */
     @Override
     public void onBindViewHolder(TaskAdapter.TaskViewHolder viewHolder, final int position){
-
         IAdvancedTask task = mTasks.get(position);
         viewHolder.task = mTasks.get(position);
 
-        final View vPriority = viewHolder.vPriority;
-        final CheckBox cbCheckBox = viewHolder.cbCheckBox;
-        final EditText etTaskName = viewHolder.etTaskName;
-        final ImageView ivCategory = viewHolder.ivCategory;
-        final ImageButton ibMore = viewHolder.ibMore;
-
-        if(task.getLabels().size() >= 1) {
-            ivCategory.setColorFilter(Color.parseColor(task.getLabels().get(0).getColor()), PorterDuff.Mode.MULTIPLY);
-        } else {
-            ivCategory.setVisibility(View.INVISIBLE);
-        }
         // Set up task layout based on whether the task has data or not.
         setUpTask(viewHolder, task);
 
@@ -244,6 +268,25 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         removeNullTasks();
     }
 
+    /**
+     * Handles the update of a task when the name is supposed to have been given to
+     * the task in the holding {@link TaskViewHolder} representation
+     * @param event The object containing necessary update information.
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void handleKeyboardClosed(TaskKeyboardClosedEvent event){
+        if(event.removeTask){
+            int rangeStart = mTasks.indexOf(event.task);
+            mainPresenter.removeTask(event.task);
+            mTasks.remove(event.task);
+            notifyItemRemoved(event.position);
+            notifyItemRangeChanged(rangeStart, mTasks.size());
+        }
+        else {
+            notifyItemChanged(event.position);
+        }
+    }
+
     private void swapTasks(List<IAdvancedTask> newTasks){
         final TaskDiffCallback diffCallback = new TaskDiffCallback(this.mTasks, newTasks);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
@@ -260,16 +303,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             }
         }
     }
+
     private void removeNullTasks(){
         for(IAdvancedTask task: mainPresenter.getTasks()){
             if(task.getName()== null){
                 mainPresenter.removeTask(task);
             }
         }
-
     }
-
-
 
     /*
      * Set up for the IAdvancedTask that is to be viewed, based on the ViewType
@@ -278,10 +319,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     private void setUpTask(final TaskViewHolder taskHolder, IAdvancedTask task){
         taskHolder.setUpTask();
         if(task.getName() == null){
-            addKeyboardListener(taskHolder, task);
+            //addKeyboardListener(taskHolder, task);
 
             // Request focus for keyboard input
-            taskHolder.etTaskName.requestFocus();
+            //taskHolder.etTaskName.requestFocus();
         }
         // Listen for checked off by user
         addOnCheckedChangedListener(taskHolder, task);
@@ -323,12 +364,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(taskHolder.etTaskName.getWindowToken(), 0);
                     TaskAdapter.super.notifyItemChanged(position);
-                }
+            }
                 return false;
             }
         });
     }
-
     private class TaskDiffCallback extends DiffUtil.Callback {
 
         private final List<IAdvancedTask> mOldTaskList;
