@@ -8,6 +8,6 @@ import cbstudios.coffeebreak.model.Model;
  * Responsibility: Hold the only reference to the instatiated Model for each extending subclass Presenter.
  */
 
-class BasePresenter {
+class BasePresenter{
     protected static final Model model = new Model();
 }
