@@ -29,7 +29,7 @@ public class ToDoDataModule {
     public ToDoDataModule() {
         categoryList = new CategoryList();
         todoList = new ToDoList();
-    //        stats = new Statistics();
+        stats = new Statistics();
     }
 
     public List<ILabelCategory> getLabelCategories(){

@@ -4,6 +4,7 @@ import android.content.Intent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import cbstudios.coffeebreak.eventbus.EditTaskActivityEvent;
 import cbstudios.coffeebreak.eventbus.EditTaskEvent;
@@ -16,13 +17,14 @@ public class TaskDetailPresenter extends BasePresenter implements ITaskDetailPre
     private ITaskDetailView view;
     private IAdvancedTask task;
 
-    TaskDetailPresenter(ITaskDetailView taskDetailView){
+    TaskDetailPresenter(ITaskDetailView taskDetailView) {
         this.view = taskDetailView;
     }
 
     @Override
     public void onCreate() {
         EventBus.getDefault().register(this);
+        System.out.println("Regged for event");
     }
 
     @Override
@@ -50,8 +52,8 @@ public class TaskDetailPresenter extends BasePresenter implements ITaskDetailPre
         task.setName(name);
     }
 
-    @Subscribe
-    public void onEditTaskActivityEvent(EditTaskActivityEvent event){
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEditTaskActivityEvent(EditTaskActivityEvent event) {
         System.out.println("EditTaskActivityEvent!! - " + event.getTask().getName());
         this.task = event.getTask();
         view.setNameText(task.getName());

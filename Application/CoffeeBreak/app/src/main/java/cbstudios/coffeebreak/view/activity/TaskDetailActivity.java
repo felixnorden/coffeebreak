@@ -19,10 +19,11 @@ public class TaskDetailActivity extends AppCompatActivity implements ITaskDetail
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
+
+        textView = (TextView) findViewById(R.id.testText);
+
         presenter = PresenterFactory.getInstance().createTaskDetailPresenter(this);
         presenter.onCreate();
-
-        textView = (TextView) findViewById(R.id.textView);
     }
 
     @Override

@@ -114,7 +114,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         Intent intent = new Intent(mainView.getAppCompatActivity(), TaskDetailActivity.class);
         mainView.getAppCompatActivity().startActivity(intent);
 
-        EventBus.getDefault().post(new EditTaskActivityEvent(event.getTask()));
+        EventBus.getDefault().postSticky(new EditTaskActivityEvent(event.getTask()));
     }
 
     private void loadAchievements() {
