@@ -1,14 +1,20 @@
 package cbstudios.coffeebreak.controller;
 
+import android.app.usage.UsageEvents;
+import android.content.Intent;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.io.FileNotFoundException;
 import java.util.List;
 
+import cbstudios.coffeebreak.eventbus.EditTaskActivityEvent;
+import cbstudios.coffeebreak.eventbus.EditTaskEvent;
 import cbstudios.coffeebreak.model.AchievementConverter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.StatisticsConverter;
@@ -20,6 +26,7 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchie
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IMainView;
+import cbstudios.coffeebreak.view.activity.TaskDetailActivity;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 
@@ -32,12 +39,13 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     private ITaskAdapter taskAdapter;
 
 
-    public MainPresenter(IMainView mainView) {
+    MainPresenter(IMainView mainView) {
         this.mainView = mainView;
     }
 
     @Override
     public void onCreate() {
+        EventBus.getDefault().register(this);
         loadTasks();
         loadStatistics();
         loadAchievements();
@@ -61,6 +69,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     @Override
     public void onDestroy() {
+        EventBus.getDefault().unregister(this);
         EventBus.getDefault().unregister(mainView);
         EventBus.getDefault().unregister(taskAdapter);
     }
@@ -98,6 +107,14 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     public void registerComponentsToEventBus(){
         EventBus.getDefault().register(mainView);
         EventBus.getDefault().register(taskAdapter);
+    }
+
+    @Subscribe
+    public void onEditTaskEvent(EditTaskEvent event) {
+        Intent intent = new Intent(mainView.getAppCompatActivity(), TaskDetailActivity.class);
+        mainView.getAppCompatActivity().startActivity(intent);
+
+        EventBus.getDefault().post(new EditTaskActivityEvent(event.getTask()));
     }
 
     private void loadAchievements() {

@@ -1,8 +1,8 @@
 package cbstudios.coffeebreak.controller;
 
-/**
- * Created by Zack on 2017-05-16.
- */
+import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
-public interface ITaskDetailPresenter {
+public interface ITaskDetailPresenter extends IPresenter {
+    String getTaskName();
+    void setTaskName(String name);
 }

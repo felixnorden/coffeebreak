@@ -12,17 +12,12 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
  * Created by Lenovo on 2017-05-08.
  */
 
-public interface IMainPresenter {
-    void onCreate();
-    void onPause();
-    void onResume();
-    void onDestroy();
+public interface IMainPresenter extends IPresenter {
     void setTaskAdapter(TaskAdapter adapter);
     void createTask();
     void removeTask(IAdvancedTask task);
     //Model getModel();
     void registerComponentsToEventBus();
-
 
     List<IAdvancedTask> getTasks();
     List<ILabelCategory> getLabelCategories();
