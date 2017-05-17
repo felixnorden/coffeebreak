@@ -41,7 +41,7 @@ public class TaskEqualsAndHashcodeTest {
         advancedTask = taskFactory.createAdvancedTask(task.getName());
         advancedTask2 = taskFactory.createAdvancedTask();
         advancedTask2.setName(task.getName());
-        advancedTask3 = (IAdvancedTask) taskFactory.createListTask(task3.getName());
+        advancedTask3 = taskFactory.createListTask(task3.getName());
 
         listTask = taskFactory.createListTask(task.getName());
         listTask2 = taskFactory.createListTask(advancedTask.getName());

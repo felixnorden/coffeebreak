@@ -58,7 +58,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public TaskViewHolder(final View itemView) {
             super(itemView);
 
-            vPriority = (View) itemView.findViewById(R.id.viewPriority);
+            vPriority = itemView.findViewById(R.id.viewPriority);
             cbCheckBox = (CheckBox) itemView.findViewById(R.id.checkBox);
             etTaskName = (EditText) itemView.findViewById(R.id.editTextField);
             ivCategory = (ImageView) itemView.findViewById(R.id.imageViewCategory);

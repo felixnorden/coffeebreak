@@ -21,7 +21,7 @@ public class StatisticsConverter {
     }
 
     public JsonObject toJsonObject(Statistics statistics){
-        return statisticsToJsonObject((Statistics) statistics);
+        return statisticsToJsonObject(statistics);
     }
 
     public Statistics toStatistics(JsonObject object){

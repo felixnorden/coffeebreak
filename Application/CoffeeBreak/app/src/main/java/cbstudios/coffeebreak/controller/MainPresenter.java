@@ -76,6 +76,11 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     @Override
+    public void onStop() {
+
+    }
+
+    @Override
     public void setTaskAdapter(TaskAdapter adapter) {
         taskAdapter = adapter;
     }

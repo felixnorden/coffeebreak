@@ -110,9 +110,8 @@ public class CategoryList implements ICategoryList {
         CategoryList that = (CategoryList) o;
 
         if (labelCategories != null ? !labelCategories.equals(that.getLabelCategories()): that.getLabelCategories() != null ) return false;
-        if (timeCategories != null ? !timeCategories.equals(that.getTimeCategories()): that.getTimeCategories() != null ) return false;
+        return timeCategories != null ? timeCategories.equals(that.getTimeCategories()) : that.getTimeCategories() == null;
 
-        return true;
     }
 
     /**
