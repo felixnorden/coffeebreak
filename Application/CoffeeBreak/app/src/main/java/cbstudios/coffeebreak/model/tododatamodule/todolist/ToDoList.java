@@ -84,7 +84,7 @@ public class ToDoList {
     /**
      * Creates a new Advanced Task and adds it to the List
      */
-    public void createTask() {
+    public void createAdvancedTask() {
         add(taskFactory.createAdvancedTask());
     }
 
@@ -102,7 +102,21 @@ public class ToDoList {
                 break;
             }
         }
-
         return match;
+    }
+
+    /**
+     * Creates a Task and adds it to the references ListTask
+     * @param listTask ListTask to hold the task
+     */
+    public void createTask(IListTask listTask){
+        listTask.add(taskFactory.createTask());
+    }
+
+    /**
+     * Creates a ListTask and adds it to the list.
+     */
+    public void createListTask(){
+        add(taskFactory.createListTask());
     }
 }

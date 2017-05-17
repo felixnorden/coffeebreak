@@ -111,11 +111,15 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
             public void onClick(View v) {
                 addAdvTask();
                 startFabAnimation();
-
-                // Notify adapter to update, with alias to data list.
-                //taskList.getAdapter().notifyItemInserted(taskList.getAdapter().getItemCount());
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.showSoftInput(taskList, InputMethodManager.SHOW_IMPLICIT);
+                displayKeyboard();
+            }
+        });
+        fabListBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addListTask();
+                startFabAnimation();
+                displayKeyboard();
             }
         });
         
@@ -125,6 +129,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mainPresenter.setTaskAdapter(taskAdapter);
         mainPresenter.registerComponentsToEventBus();
     }
+
 
     @Override
     protected void onPause(){
@@ -232,7 +237,22 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
     private void addAdvTask() {
-        mainPresenter.createTask();
+        mainPresenter.createAdvancedTask();
+        updateAdapter();
+    }
+
+
+    private void addListTask() {
+        mainPresenter.createListTask();
+        updateAdapter();
+    }
+
+    private void displayKeyboard(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(taskList, InputMethodManager.SHOW_IMPLICIT);
+    }
+
+    private void updateAdapter(){
         TaskAdapter taskAdapter = (TaskAdapter) taskList.getAdapter();
         taskAdapter.filterTasks();
     }

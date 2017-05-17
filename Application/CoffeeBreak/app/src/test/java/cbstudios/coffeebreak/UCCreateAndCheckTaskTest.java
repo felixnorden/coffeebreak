@@ -17,7 +17,7 @@ public class UCCreateAndCheckTaskTest {
 
     @Before
     public void beforeTest(){
-        model.getToDoDataModule().createTask();
+        model.getToDoDataModule().createAdvancedTask();
         model.getToDoDataModule().getTask(0).setName("Test");
         model.getToDoDataModule().getTask(0).toggleChecked();
     }
