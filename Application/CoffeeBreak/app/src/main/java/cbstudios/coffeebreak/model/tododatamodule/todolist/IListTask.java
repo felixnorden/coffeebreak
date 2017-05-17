@@ -7,7 +7,7 @@ import java.util.List;
 //  @ Date : 03/04/2017
 //  @ Author : 
 //
-public interface IListTask {
+public interface IListTask extends IAdvancedTask {
     List<ITask> getSubtasks();
 
     void add(ITask subtask);

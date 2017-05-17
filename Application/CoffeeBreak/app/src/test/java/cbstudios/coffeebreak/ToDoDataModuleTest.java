@@ -1,5 +1,5 @@
 package cbstudios.coffeebreak;
-/*
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,6 +10,7 @@ import cbstudios.coffeebreak.model.tododatamodule.ToDoDataModule;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -41,34 +42,34 @@ public class ToDoDataModuleTest {
     @Test
     public void testAddTask() {
         assertTrue(toDoDataModule.getTasks().size() == 0);
-        toDoDataModule.addTask(new AdvancedTask("Test"));
+        toDoDataModule.addTask(TaskFactory.getInstance().createAdvancedTask("Test"));
         assertTrue(toDoDataModule.getTasks().size() == 1);
-        toDoDataModule.addTask(new ListTask("Test"));
+        toDoDataModule.addTask(TaskFactory.getInstance().createListTask("Test"));
         assertTrue(toDoDataModule.getTasks().size() == 2);
-        toDoDataModule.addTask(new AdvancedTask("Test2"));
+        toDoDataModule.addTask(TaskFactory.getInstance().createAdvancedTask("Test2"));
         assertTrue(toDoDataModule.getTasks().size() == 3);
-        toDoDataModule.addTask(new ListTask("Test2"));
+        toDoDataModule.addTask(TaskFactory.getInstance().createListTask("Test2"));
         assertTrue(toDoDataModule.getTasks().size() == 4);
     }
 
     @Test
     public void testIsListTask() {
-        assertTrue(toDoDataModule.isListTask(new ListTask("Test")));
-        assertFalse(toDoDataModule.isListTask(new AdvancedTask("Test")));
+        assertTrue(toDoDataModule.isListTask(TaskFactory.getInstance().createListTask("Test")));
+        assertFalse(toDoDataModule.isListTask(TaskFactory.getInstance().createAdvancedTask("Test")));
     }
 
     @Test
     public void testRemoveTask() {
-        IAdvancedTask at = new AdvancedTask("Test");
-        IAdvancedTask at2 = new ListTask("Test");
-        IAdvancedTask at3 = new AdvancedTask("Test");
-        IAdvancedTask at4 = new ListTask("Test");
+        IAdvancedTask at = TaskFactory.getInstance().createAdvancedTask("Test");
+        IAdvancedTask at2 = TaskFactory.getInstance().createListTask("Test");
+        IAdvancedTask at3 = TaskFactory.getInstance().createAdvancedTask("Test");
+        IAdvancedTask at4 = TaskFactory.getInstance().createListTask("Test");
         toDoDataModule.addTask(at);
         toDoDataModule.addTask(at2);
         toDoDataModule.addTask(at3);
         toDoDataModule.addTask(at4);
         toDoDataModule.removeTask(at2);
-        toDoDataModule.removeTask(new AdvancedTask("Test"));
+        toDoDataModule.removeTask(TaskFactory.getInstance().createListTask("Test"));
 
         assertTrue(toDoDataModule.getTasks().size() == 3);
         assertTrue(toDoDataModule.getTasks().get(0) instanceof AdvancedTask);
@@ -77,7 +78,7 @@ public class ToDoDataModuleTest {
 
         toDoDataModule.removeTask(at);
         toDoDataModule.removeTask(at2);
-        toDoDataModule.removeTask(new ListTask("Test"));
+        toDoDataModule.removeTask(TaskFactory.getInstance().createListTask("Test"));
 
         assertTrue(toDoDataModule.getTasks().size() == 2);
         assertTrue(toDoDataModule.getTasks().get(0) instanceof AdvancedTask);
@@ -90,4 +91,3 @@ public class ToDoDataModuleTest {
         assertTrue(toDoDataModule.getTasks().isEmpty());
     }
 }
-*/
