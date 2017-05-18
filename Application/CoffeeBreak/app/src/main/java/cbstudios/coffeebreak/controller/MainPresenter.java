@@ -57,19 +57,25 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         loadTasks();
         loadStatistics();
         loadAchievements();
+
+        EventBus.getDefault().register(this);
     }
 
-    @Override
+    @Subscribe (threadMode = ThreadMode.MAIN)
     public void onCreate(OnCreateEvent event) {
-        EventBus.getDefault().register(this);
+        if(event.getObject() instanceof IMainView) {
 
-        mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
-        mainView.setTaskAdapter(taskAdapter);
+            registerComponentsToEventBus();
+            mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
+            mainView.setTaskAdapter(taskAdapter);
 
-        // TODO Check later when All-category is implemented
-        taskAdapter.updateTasks();
-        taskAdapter.filterTasks();
+            // TODO Check later when All-category is implemented
+            taskAdapter.updateTasks();
+            taskAdapter.filterTasks();
 
+            mainView.setNavDrawer();
+            mainView.setToolbar();
+        }
     }
 
     @Override

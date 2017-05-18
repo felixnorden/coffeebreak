@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         taskList = (RecyclerView) findViewById(R.id.taskList);
         taskList.setLayoutManager(new LinearLayoutManager(this));
         mainPresenter = presenterFactory.createMainPresenter(this);
-        mainPresenter.onCreate(new OnCreateEvent(this));
+
 
         // Set up Buttons for adding tasks
         fabAddBtn = (FloatingActionButton) findViewById(R.id.fab_add_task);
@@ -91,18 +91,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         txtAdvBtn = (TextView) findViewById(R.id.advanced_text);
         txtListBtn = (TextView) findViewById(R.id.list_text);
 
-
-        // Set up RecyclerView for tasks and render each item.
-        //final TaskAdapter taskAdapter = new TaskAdapter(this, mainPresenter);
-
-        //taskList.setAdapter(taskAdapter);
-
-        //taskAdapter.updateTasks();
-        //TODO hide later when All-category is avalable.
-        //taskAdapter.filterTasks();
-
-        //TODO Set up on click functionality
-        //TODO Bind FAB for creation
         // Generate animations and bind listeners
         setAnimations();
         fabAddBtn.setOnClickListener(new View.OnClickListener() {
@@ -127,11 +115,10 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
                 displayKeyboard();
             }
         });
-        
-        setNavDrawer();
-        setToolbar();
+
+        EventBus.getDefault().post(new OnCreateEvent(this));
         EventBus.getDefault().post(new StatisticEvent("TimesAppStarted"));
-        EventBus.getDefault().post(new QueryRegistrationEvent(true, this));
+
     }
 
 
@@ -188,6 +175,35 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     public void setCategories(List<ILabelCategory> labelCategories, List<ITimeCategory> timeCategories) {
         this.labelCategories = labelCategories;
         this.timeCategories = timeCategories;
+    }
+
+    public void setNavDrawer() {
+        mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.drawer_list);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer.setBackgroundColor(Color.WHITE);
+
+        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, mainPresenter);
+        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories, mainPresenter);
+        final MergeAdapter mergeAdapter = new MergeAdapter();
+
+        mergeAdapter.addAdapter(timeCategoryAdapter);
+        mergeAdapter.addAdapter(labelCategoryAdapter);
+
+        mDrawerList.setAdapter(mergeAdapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+    }
+
+    public void setToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("All");
+
+        setDrawerButton();
+
     }
 
     @Override
@@ -303,34 +319,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mDrawerLayout.closeDrawer(mDrawer);
     }
 
-    private void setNavDrawer() {
-        mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
-        mDrawerList = (ListView) findViewById(R.id.drawer_list);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawer.setBackgroundColor(Color.WHITE);
-
-        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, mainPresenter);
-        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories, mainPresenter);
-        final MergeAdapter mergeAdapter = new MergeAdapter();
-
-        mergeAdapter.addAdapter(timeCategoryAdapter);
-        mergeAdapter.addAdapter(labelCategoryAdapter);
-
-        mDrawerList.setAdapter(mergeAdapter);
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-    }
-
-    private void setToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("All");
-
-        setDrawerButton();
-
-    }
 
     private void setDrawerButton() {
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close){
