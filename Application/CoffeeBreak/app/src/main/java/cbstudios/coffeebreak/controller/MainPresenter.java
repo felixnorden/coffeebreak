@@ -14,6 +14,11 @@ import java.util.List;
 
 import cbstudios.coffeebreak.eventbus.EditTaskActivityEvent;
 import cbstudios.coffeebreak.eventbus.EditTaskEvent;
+import cbstudios.coffeebreak.eventbus.OnCreateEvent;
+import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
+import cbstudios.coffeebreak.eventbus.OnPauseEvent;
+import cbstudios.coffeebreak.eventbus.OnResumeEvent;
+import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.AchievementConverter;
 import cbstudios.coffeebreak.model.Model;
@@ -44,18 +49,20 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     MainPresenter(IMainView mainView) {
         this.mainView = mainView;
+        taskAdapter = new TaskAdapter(mainView.getContext(), this);
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate(OnCreateEvent event) {
         EventBus.getDefault().register(this);
         loadTasks();
         loadStatistics();
         loadAchievements();
+        mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
     }
 
     @Override
-    public void onPause() {
+    public void onPause(OnPauseEvent event) {
         //TODO Fix shiet
         taskAdapter.updateTasks();
         taskAdapter.filterTasks();
@@ -65,27 +72,24 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     @Override
-    public void onResume() {
+    public void onResume(OnResumeEvent event) {
         //EventBus.getDefault().register(mainView);
         //EventBus.getDefault().register(taskAdapter);
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy(OnDestroyEvent event) {
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().unregister(mainView);
         EventBus.getDefault().unregister(taskAdapter);
     }
 
     @Override
-    public void onStop() {
+    public void onStop(OnStopEvent event) {
 
     }
 
-    @Override
-    public void setTaskAdapter(TaskAdapter adapter) {
-        taskAdapter = adapter;
-    }
+
 
     
     public void createTask() {
@@ -114,7 +118,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     }
 
-    @Override
+   /* @Override
     public List<IAdvancedTask> getTasks() {
         return model.getToDoDataModule().getTasks();
     }
@@ -127,7 +131,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Override
     public List<ITimeCategory> getTimeCategories() {
         return model.getToDoDataModule().getTimeCategories();
-    }
+    }*/
 
     public void registerComponentsToEventBus(){
         EventBus.getDefault().register(mainView);
