@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -21,6 +22,7 @@ import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
 import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
+import cbstudios.coffeebreak.eventbus.QueryRegistrationEvent;
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.AchievementConverter;
 import cbstudios.coffeebreak.model.Model;
@@ -51,15 +53,23 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     MainPresenter(IMainView mainView) {
         this.mainView = mainView;
         taskAdapter = new TaskAdapter(mainView.getAppCompatActivity(), this);
+
+        loadTasks();
+        loadStatistics();
+        loadAchievements();
     }
 
     @Override
     public void onCreate(OnCreateEvent event) {
         EventBus.getDefault().register(this);
-        loadTasks();
-        loadStatistics();
-        loadAchievements();
+
         mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
+        mainView.setTaskAdapter(taskAdapter);
+
+        // TODO Check later when All-category is implemented
+        taskAdapter.updateTasks();
+        taskAdapter.filterTasks();
+
     }
 
     @Override
@@ -232,7 +242,18 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         model.getToDoDataModule().getStats().onEvent(event.getMessage());
     }
 
-    public Model getModel() {
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void registerViewComponents(QueryRegistrationEvent event){
+        if(event.register) {
+            EventBus.getDefault().register(mainView);
+            EventBus.getDefault().register(taskAdapter);
+        }
+        else{
+            EventBus.getDefault().unregister(mainView);
+            EventBus.getDefault().unregister(taskAdapter);
+        }
+    }
+    public Model getModel(){
         return model;
     }
 }
