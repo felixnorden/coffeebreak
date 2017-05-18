@@ -8,14 +8,14 @@ import java.util.Calendar;
 
 import cbstudios.coffeebreak.eventbus.EditTaskActivityEvent;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
-import cbstudios.coffeebreak.view.activity.ITaskDetailView;
+import cbstudios.coffeebreak.view.activity.ITaskEditView;
 
-public class TaskDetailPresenter extends BasePresenter implements ITaskDetailPresenter {
+public class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
 
-    private ITaskDetailView view;
+    private ITaskEditView view;
     private IAdvancedTask task;
 
-    TaskDetailPresenter(ITaskDetailView taskDetailView) {
+    TaskEditPresenter(ITaskEditView taskDetailView) {
         this.view = taskDetailView;
     }
 

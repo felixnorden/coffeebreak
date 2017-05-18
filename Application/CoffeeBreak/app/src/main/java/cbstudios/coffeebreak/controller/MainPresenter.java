@@ -27,7 +27,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IMainView;
-import cbstudios.coffeebreak.view.activity.TaskDetailActivity;
+import cbstudios.coffeebreak.view.activity.TaskEditActivity;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 
@@ -39,6 +39,8 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     private IMainView mainView;
     private ITaskAdapter taskAdapter;
 
+    // TODO: 2017-05-18 Gather presenters in List somewhere
+    private ITaskEditPresenter taskEditPresenter;
 
     MainPresenter(IMainView mainView) {
         this.mainView = mainView;
@@ -134,7 +136,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     @Subscribe
     public void onEditTaskEvent(EditTaskEvent event) {
-        Intent intent = new Intent(mainView.getAppCompatActivity(), TaskDetailActivity.class);
+        Intent intent = new Intent(mainView.getAppCompatActivity(), TaskEditActivity.class);
         mainView.getAppCompatActivity().startActivity(intent);
 
         EventBus.getDefault().postSticky(new EditTaskActivityEvent(event.getTask()));

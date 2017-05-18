@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -20,19 +19,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
-import java.text.ParseException;
+import org.greenrobot.eventbus.EventBus;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 import cbstudios.coffeebreak.R;
-import cbstudios.coffeebreak.controller.ITaskDetailPresenter;
-import cbstudios.coffeebreak.controller.PresenterFactory;
+import cbstudios.coffeebreak.controller.ITaskEditPresenter;
+import cbstudios.coffeebreak.eventbus.onCreateEvent;
+import cbstudios.coffeebreak.eventbus.onDestroyEvent;
+import cbstudios.coffeebreak.eventbus.onPauseEvent;
+import cbstudios.coffeebreak.eventbus.onStopEvent;
 
-public class TaskDetailActivity extends AppCompatActivity implements ITaskDetailView {
-
-    private ITaskDetailPresenter presenter;
+public class TaskEditActivity extends AppCompatActivity implements ITaskEditView {
 
     //Toolbar Area
     private ImageButton backButton;
@@ -49,16 +50,14 @@ public class TaskDetailActivity extends AppCompatActivity implements ITaskDetail
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
 
+        EventBus.getDefault().post(new onCreateEvent(this));
+
         //Get elements
         backButton = (ImageButton) findViewById(R.id.etBackButton);
         taskName = (EditText) findViewById(R.id.etTaskName);
         notificationLayout = (RelativeLayout) findViewById(R.id.etNotification);
         notificationIcon = (ImageView) findViewById(R.id.etTimeIcon);
         notificationText = (TextView) findViewById(R.id.etNotificationText);
-
-        //Setup presenter
-        presenter = PresenterFactory.getInstance().createTaskDetailPresenter(this);
-        presenter.onCreate();
 
         //On Backbutton-click, return to previous activity.
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -72,7 +71,7 @@ public class TaskDetailActivity extends AppCompatActivity implements ITaskDetail
         notificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showTimerPickerDialog(v, presenter);
+                //showTimerPickerDialog(v);
             }
         });
 
@@ -84,9 +83,9 @@ public class TaskDetailActivity extends AppCompatActivity implements ITaskDetail
 
                     // Check if valid input, otherwise reset name.
                     if (input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)) {
-                        taskName.setText(presenter.getTaskName());
+                        //taskName.setText();
                     } else {
-                        presenter.setTaskName(input);
+                        //presenter.setTaskName(input);
                     }
 
                     setShowKeyboard(false, v);
@@ -101,19 +100,19 @@ public class TaskDetailActivity extends AppCompatActivity implements ITaskDetail
     @Override
     protected void onPause() {
         super.onPause();
-        presenter.onPause();
+        EventBus.getDefault().post(new onPauseEvent(this));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        presenter.onDestroy();
+        EventBus.getDefault().post(new onDestroyEvent(this));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        presenter.onStop();
+        EventBus.getDefault().post(new onStopEvent(this));
     }
 
     @Override
@@ -144,7 +143,7 @@ public class TaskDetailActivity extends AppCompatActivity implements ITaskDetail
      * @param v
      * @param presenter A presenter to give the input to.
      */
-    private void showTimerPickerDialog(View v, ITaskDetailPresenter presenter) {
+    private void showTimerPickerDialog(View v, ITaskEditPresenter presenter) {
         TimePickerFragment fragment = new TimePickerFragment();
         fragment.setPresenter(presenter);
         fragment.show(getFragmentManager(), "timePicker");
@@ -171,9 +170,9 @@ public class TaskDetailActivity extends AppCompatActivity implements ITaskDetail
     public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
 
-        private ITaskDetailPresenter presenter;
+        private ITaskEditPresenter presenter;
 
-        public void setPresenter(ITaskDetailPresenter presenter) {
+        public void setPresenter(ITaskEditPresenter presenter) {
             this.presenter = presenter;
         }
 
@@ -208,9 +207,9 @@ public class TaskDetailActivity extends AppCompatActivity implements ITaskDetail
             implements DatePickerDialog.OnDateSetListener {
 
         private Calendar cal;
-        private ITaskDetailPresenter presenter;
+        private ITaskEditPresenter presenter;
 
-        public void setPresenter(ITaskDetailPresenter presenter) {
+        public void setPresenter(ITaskEditPresenter presenter) {
             this.presenter = presenter;
         }
 

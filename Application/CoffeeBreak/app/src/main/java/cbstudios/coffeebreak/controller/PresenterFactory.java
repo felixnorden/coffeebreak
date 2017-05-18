@@ -1,9 +1,7 @@
 package cbstudios.coffeebreak.controller;
 
 import cbstudios.coffeebreak.view.activity.IMainView;
-import cbstudios.coffeebreak.view.activity.ITaskDetailView;
-import cbstudios.coffeebreak.view.activity.TaskDetailActivity;
-import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
+import cbstudios.coffeebreak.view.activity.ITaskEditView;
 
 /**
  * @author Felix, Elias
@@ -24,8 +22,8 @@ public class PresenterFactory implements IPresenterFactory{
     }
 
     @Override
-    public ITaskDetailPresenter createTaskDetailPresenter(ITaskDetailView taskDetailView) {
-        return new TaskDetailPresenter(taskDetailView);
+    public ITaskEditPresenter createTaskDetailPresenter(ITaskEditView taskDetailView) {
+        return new TaskEditPresenter(taskDetailView);
     }
 
 
