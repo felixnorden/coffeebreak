@@ -27,7 +27,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import cbstudios.coffeebreak.R;
-import cbstudios.coffeebreak.controller.ITaskEditPresenter;
+import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
 import cbstudios.coffeebreak.eventbus.onCreateEvent;
 import cbstudios.coffeebreak.eventbus.onDestroyEvent;
 import cbstudios.coffeebreak.eventbus.onPauseEvent;
@@ -43,6 +43,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     private RelativeLayout notificationLayout;
     private ImageView notificationIcon;
     private TextView notificationText;
+    private Calendar cal;
 
 
     @Override
@@ -121,12 +122,22 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     }
 
     @Override
-    public void setNameText(String nameText) {
-        taskName.setText(nameText);
+    public String getNameText() {
+        return taskName.getText().toString();
+    }
+
+    @Override
+    public void setNameText(String text) {
+        taskName.setText(text);
     }
 
     @Override
     public void setNotificationCalendar(Calendar cal) {
+        this.cal = cal;
+
+        if (cal == null)
+            return;
+
         Date date = cal.getTime();
 
         String dateTime = new SimpleDateFormat("EE", Locale.getDefault()).format(date)
@@ -137,15 +148,17 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         notificationText.setText(dateTime);
     }
 
+    @Override
+    public Calendar getNotificationCalendar() {
+        return this.cal;
+    }
+
     /**
      * Shows a time picker dialog.
-     *
-     * @param v
-     * @param presenter A presenter to give the input to.
      */
-    private void showTimerPickerDialog(View v, ITaskEditPresenter presenter) {
+    private void showTimerPickerDialog() {
         TimePickerFragment fragment = new TimePickerFragment();
-        fragment.setPresenter(presenter);
+        fragment.setCalendar(cal);
         fragment.show(getFragmentManager(), "timePicker");
     }
 
@@ -170,10 +183,10 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
 
-        private ITaskEditPresenter presenter;
+        private Calendar cal;
 
-        public void setPresenter(ITaskEditPresenter presenter) {
-            this.presenter = presenter;
+        public void setCalendar(Calendar cal) {
+            this.cal = cal;
         }
 
         @Override
@@ -189,13 +202,15 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            Calendar cal = Calendar.getInstance();
+            if (this.cal == null) {
+                cal = Calendar.getInstance();
+            }
+
             cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
             cal.set(Calendar.MINUTE, minute);
 
             DatePickerFragment newFragment = new DatePickerFragment();
             newFragment.setCalendar(cal);
-            newFragment.setPresenter(presenter);
             newFragment.show(getFragmentManager(), "datePicker");
         }
     }
@@ -207,11 +222,6 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
             implements DatePickerDialog.OnDateSetListener {
 
         private Calendar cal;
-        private ITaskEditPresenter presenter;
-
-        public void setPresenter(ITaskEditPresenter presenter) {
-            this.presenter = presenter;
-        }
 
         public void setCalendar(Calendar cal) {
             this.cal = cal;
@@ -234,7 +244,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
             cal.set(Calendar.MONTH, month);
             cal.set(Calendar.DAY_OF_YEAR, day);
 
-            presenter.setNotificationCalendar(cal);
+            EventBus.getDefault().post(new TaskEditedEvent());
         }
     }
 }

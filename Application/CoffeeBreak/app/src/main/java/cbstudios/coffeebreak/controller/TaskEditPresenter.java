@@ -7,6 +7,11 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.Calendar;
 
 import cbstudios.coffeebreak.eventbus.EditTaskActivityEvent;
+import cbstudios.coffeebreak.eventbus.onCreateEvent;
+import cbstudios.coffeebreak.eventbus.onDestroyEvent;
+import cbstudios.coffeebreak.eventbus.onPauseEvent;
+import cbstudios.coffeebreak.eventbus.onResumeEvent;
+import cbstudios.coffeebreak.eventbus.onStopEvent;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.view.activity.ITaskEditView;
 
@@ -17,31 +22,7 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
 
     TaskEditPresenter(ITaskEditView taskDetailView) {
         this.view = taskDetailView;
-    }
-
-    @Override
-    public void onCreate() {
         EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
-    public void onResume() {
-
-    }
-
-    @Override
-    public void onDestroy() {
-
-    }
-
-    @Override
-    public void onStop(){
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -60,6 +41,7 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
     }
 
     @Override
+    @Subscribe
     public void setNotificationCalendar(Calendar cal) {
         task.setDate(cal);
         view.setNotificationCalendar(cal);
@@ -70,5 +52,35 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
         this.task = event.getTask();
         view.setNameText(task.getName());
         view.setNotificationCalendar(task.getDate());
+    }
+
+    @Override
+    @Subscribe
+    public void onCreate(onCreateEvent event) {
+
+    }
+
+    @Override
+    @Subscribe
+    public void onPause(onPauseEvent event) {
+
+    }
+
+    @Override
+    @Subscribe
+    public void onResume(onResumeEvent event) {
+
+    }
+
+    @Override
+    @Subscribe
+    public void onDestroy(onDestroyEvent event) {
+
+    }
+
+    @Override
+    @Subscribe
+    public void onStop(onStopEvent event) {
+
     }
 }
