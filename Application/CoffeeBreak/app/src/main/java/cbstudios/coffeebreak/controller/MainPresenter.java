@@ -1,7 +1,8 @@
 package cbstudios.coffeebreak.controller;
 
-import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -13,7 +14,7 @@ import org.greenrobot.eventbus.Subscribe;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import cbstudios.coffeebreak.eventbus.EditTaskActivityEvent;
+import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.eventbus.EditTaskEvent;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
 import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
@@ -25,14 +26,13 @@ import cbstudios.coffeebreak.model.AchievementConverter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.StatisticsConverter;
 import cbstudios.coffeebreak.model.TaskConverter;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.Statistics;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievement;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IMainView;
+import cbstudios.coffeebreak.view.activity.ITaskEditView;
 import cbstudios.coffeebreak.view.activity.TaskEditActivity;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
@@ -91,8 +91,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
 
-
-    
     public void createTask() {
         model.getToDoDataModule().createAdvancedTask();
         EventBus.getDefault().post(new StatisticEvent("Create"));
@@ -134,17 +132,16 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         return model.getToDoDataModule().getTimeCategories();
     }*/
 
-    public void registerComponentsToEventBus(){
+    public void registerComponentsToEventBus() {
         EventBus.getDefault().register(mainView);
         EventBus.getDefault().register(taskAdapter);
     }
 
     @Subscribe
     public void onEditTaskEvent(EditTaskEvent event) {
+        taskEditPresenter = PresenterFactory.getInstance().createTaskDetailPresenter(event.getTask());
         Intent intent = new Intent(mainView.getAppCompatActivity(), TaskEditActivity.class);
         mainView.getAppCompatActivity().startActivity(intent);
-
-        EventBus.getDefault().postSticky(new EditTaskActivityEvent(event.getTask()));
     }
 
 
@@ -169,7 +166,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         model.getToDoDataModule().getStats().setAchievementList(achievements);
     }
 
-    private void saveAchievements(){
+    private void saveAchievements() {
         JsonArray array = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getStats().getAchievementList());
         StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Achievement", array);
     }
@@ -231,11 +228,11 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     @Subscribe
-    public void onEvent(StatisticEvent event){
+    public void onEvent(StatisticEvent event) {
         model.getToDoDataModule().getStats().onEvent(event.getMessage());
     }
 
-    public Model getModel(){
+    public Model getModel() {
         return model;
     }
 }

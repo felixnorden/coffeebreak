@@ -1,5 +1,6 @@
 package cbstudios.coffeebreak.controller;
 
+import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.view.activity.IMainView;
 import cbstudios.coffeebreak.view.activity.ITaskEditView;
 
@@ -22,8 +23,8 @@ public class PresenterFactory implements IPresenterFactory{
     }
 
     @Override
-    public ITaskEditPresenter createTaskDetailPresenter(ITaskEditView taskDetailView) {
-        return new TaskEditPresenter(null, null);
+    public ITaskEditPresenter createTaskDetailPresenter(IAdvancedTask task) {
+        return new TaskEditPresenter(task);
     }
 
 

@@ -38,6 +38,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     //Toolbar Area
     private ImageButton backButton;
     private EditText taskName;
+    private String latestSavedName;
 
     //Notification Area
     private RelativeLayout notificationLayout;
@@ -49,9 +50,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_task_detail);
-
-        EventBus.getDefault().post(new OnCreateEvent(this));
+        setContentView(R.layout.activity_task_edit);
 
         //Get elements
         backButton = (ImageButton) findViewById(R.id.etBackButton);
@@ -84,9 +83,9 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
 
                     // Check if valid input, otherwise reset name.
                     if (input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)) {
-                        //taskName.setText();
+                        taskName.setText(latestSavedName);
                     } else {
-                        //presenter.setTaskName(input);
+                        EventBus.getDefault().post(new TaskEditedEvent());
                     }
 
                     setShowKeyboard(false, v);
@@ -96,6 +95,8 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
                 return false;
             }
         });
+
+        EventBus.getDefault().post(new OnCreateEvent(this));
     }
 
     @Override
@@ -129,22 +130,23 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     @Override
     public void setNameText(String text) {
         taskName.setText(text);
+        latestSavedName = text;
     }
 
     @Override
     public void setNotificationCalendar(Calendar cal) {
         this.cal = cal;
 
-        if (cal == null)
+        if (cal == null) {
+            notificationText.setText("");
             return;
+        }
 
         Date date = cal.getTime();
-
         String dateTime = new SimpleDateFormat("EE", Locale.getDefault()).format(date)
                 + " " + new SimpleDateFormat("dd", Locale.getDefault()).format(date)
                 + " " + new SimpleDateFormat("MMM", Locale.getDefault()).format(date)
                 + " " + new SimpleDateFormat("HH:mm", Locale.getDefault()).format(date);
-
         notificationText.setText(dateTime);
     }
 
@@ -157,6 +159,10 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
      * Shows a time picker dialog.
      */
     private void showTimerPickerDialog() {
+        if (cal == null) {
+            cal = Calendar.getInstance();
+        }
+
         TimePickerFragment fragment = new TimePickerFragment();
         fragment.setCalendar(cal);
         fragment.show(getFragmentManager(), "timePicker");
@@ -202,10 +208,6 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         }
 
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            if (this.cal == null) {
-                cal = Calendar.getInstance();
-            }
-
             cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
             cal.set(Calendar.MINUTE, minute);
 
