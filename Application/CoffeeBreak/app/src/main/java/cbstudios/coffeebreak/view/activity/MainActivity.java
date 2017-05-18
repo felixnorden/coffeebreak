@@ -34,11 +34,13 @@ import cbstudios.coffeebreak.controller.PresenterFactory;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
 import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
 import cbstudios.coffeebreak.eventbus.OnPauseEvent;
+import cbstudios.coffeebreak.eventbus.QueryRegistrationEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
+import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
 import cbstudios.coffeebreak.view.adapter.LabelCategoryAdapter;
 import cbstudios.coffeebreak.view.adapter.MergeAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
@@ -76,6 +78,8 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        taskList = (RecyclerView) findViewById(R.id.taskList);
+        taskList.setLayoutManager(new LinearLayoutManager(this));
         mainPresenter = presenterFactory.createMainPresenter(this);
         mainPresenter.onCreate(new OnCreateEvent(this));
 
@@ -89,13 +93,13 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
 
         // Set up RecyclerView for tasks and render each item.
-        final TaskAdapter taskAdapter = new TaskAdapter(this, mainPresenter);
-        taskList = (RecyclerView) findViewById(R.id.taskList);
-        taskList.setAdapter(taskAdapter);
-        taskList.setLayoutManager(new LinearLayoutManager(this));
-        taskAdapter.updateTasks();
+        //final TaskAdapter taskAdapter = new TaskAdapter(this, mainPresenter);
+
+        //taskList.setAdapter(taskAdapter);
+
+        //taskAdapter.updateTasks();
         //TODO hide later when All-category is avalable.
-        taskAdapter.filterTasks();
+        //taskAdapter.filterTasks();
 
         //TODO Set up on click functionality
         //TODO Bind FAB for creation
@@ -127,7 +131,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         setNavDrawer();
         setToolbar();
         EventBus.getDefault().post(new StatisticEvent("TimesAppStarted"));
-        mainPresenter.registerComponentsToEventBus();
+        EventBus.getDefault().post(new QueryRegistrationEvent(true, this));
     }
 
 
@@ -187,8 +191,8 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
     @Override
-    public void setTaskAdapter(TaskAdapter adapter) {
-        taskList.setAdapter(adapter);
+    public void setTaskAdapter(ITaskAdapter adapter) {
+        taskList.setAdapter((TaskAdapter) adapter);
     }
 
     @Override

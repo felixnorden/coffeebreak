@@ -8,6 +8,7 @@ import java.util.List;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
+import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 
 public interface IMainView extends IView{
@@ -15,6 +16,6 @@ public interface IMainView extends IView{
 
     void setCategories(List<ILabelCategory> labelCategories, List<ITimeCategory> timeCategories);
 
-    void setTaskAdapter(TaskAdapter adapter);
+    void setTaskAdapter(ITaskAdapter adapter);
 
 }
