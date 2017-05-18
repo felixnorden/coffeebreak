@@ -7,11 +7,11 @@ import android.view.View;
  * @version 1.0
  */
 
-public class ShowKeyboardEvent {
+public class ShowKeyboardEvent implements IEvent {
     public final boolean showKeyboard;
     public final View view;
 
-    public ShowKeyboardEvent(boolean showKeyboard, View view){
+    public ShowKeyboardEvent(boolean showKeyboard, View view) {
         this.showKeyboard = showKeyboard;
         this.view = view;
     }

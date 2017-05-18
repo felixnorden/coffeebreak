@@ -5,9 +5,9 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 /**
  * @author Zack Lundqvist
  * @version 1.0
- * Responsibility: Contains information about the EditTask-event.
+ *          Responsibility: Contains information about the EditTask-event.
  */
-public class EditTaskEvent {
+public class EditTaskEvent implements IEvent {
     private final IAdvancedTask task;
 
     public EditTaskEvent(IAdvancedTask task) {
