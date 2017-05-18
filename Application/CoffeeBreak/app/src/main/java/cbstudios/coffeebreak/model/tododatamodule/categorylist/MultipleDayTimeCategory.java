@@ -89,9 +89,8 @@ class MultipleDayTimeCategory implements ITimeCategory {
         MultipleDayTimeCategory that = (MultipleDayTimeCategory) o;
 
         if (name != null ? !name.equals(that.getName()): that.name != null ) return false;
-        if (time != null ? !time.equals(that.time) : that.time != null) return false;
+        return time != null ? time.equals(that.time) : that.time == null;
 
-        return true;
     }
 
     @Override

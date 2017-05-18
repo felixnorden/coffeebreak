@@ -16,6 +16,7 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.Statistics;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ToDoList;
 
 public class ToDoDataModule {
@@ -29,7 +30,7 @@ public class ToDoDataModule {
     public ToDoDataModule() {
         categoryList = new CategoryList();
         todoList = new ToDoList();
-    //        stats = new Statistics();
+        stats = new Statistics();
     }
 
     public List<ILabelCategory> getLabelCategories(){
@@ -85,10 +86,25 @@ public class ToDoDataModule {
     }
 
     /**
-     * Creates a new task
+     * Creates a new AdvancedTask
      */
-    public void createTask() {
-        todoList.createTask();
+    public void createAdvancedTask() {
+        todoList.createAdvancedTask();
+    }
+
+    /**
+     * Creates a new ListTask
+     */
+    public void createListTask(){
+        todoList.createListTask();
+    }
+
+    /**
+     * Creates a Task and adds it to the ListTask's list
+     * @param listTask The ListTask holding subTasks
+     */
+    public void createTask(IListTask listTask){
+        todoList.createTask(listTask);
     }
 
     /**

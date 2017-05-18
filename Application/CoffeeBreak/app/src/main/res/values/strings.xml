@@ -28,5 +28,6 @@
     <string name="navigation">Navigation</string>
     <string name="action_save">Save</string>
     <string name="action_abort">Cancel</string>
+    <string name="edit_task_notification">Set a notification</string>
 </resources>
 

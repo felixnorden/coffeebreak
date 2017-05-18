@@ -33,6 +33,7 @@ import cbstudios.coffeebreak.eventbus.TaskKeyboardClosedEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
 
 /**
  * @author Felix , Elias
@@ -57,7 +58,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public TaskViewHolder(final View itemView) {
             super(itemView);
 
-            vPriority = (View) itemView.findViewById(R.id.viewPriority);
+            vPriority = itemView.findViewById(R.id.viewPriority);
             cbCheckBox = (CheckBox) itemView.findViewById(R.id.checkBox);
             etTaskName = (EditText) itemView.findViewById(R.id.editTextField);
             ivCategory = (ImageView) itemView.findViewById(R.id.imageViewCategory);
@@ -83,7 +84,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     return false;
                 }
             });
-
             ibMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -91,7 +91,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 }
             });
         }
-
         void setUpTask(){
             if(task.getName() != null){
                 cbCheckBox.setChecked(false);
@@ -102,7 +101,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 etTaskName.setText(task.getName());
                 vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
-
 
                 // Set Category-color if only one category is specified.
                 if(task.getLabels().size() >= 1) {
@@ -236,10 +234,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      */
     @Override
     public int getItemViewType(int position){
-        if(mTasks.get(position) instanceof AdvancedTask)
-            return 0;
+        if(mTasks.get(position) instanceof ListTask)
+            return LIST_TASK;
         else
-            return 1;
+            return ADVANCED_TASK;
     }
 
     /**
@@ -252,7 +250,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         // Set up task layout based on whether the task has data or not.
         setUpTask(viewHolder, task);
-
     }
 
     /**

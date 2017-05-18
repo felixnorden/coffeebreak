@@ -28,7 +28,7 @@ public class AchievementConverter {
 
         for (IAchievement achievement : achievements){
             if (achievement instanceof NumberAchievement) {
-                array.add(numberAchievementToJsonObject((NumberAchievement) achievement));
+                array.add(numberAchievementToJsonObject(achievement));
             }
         }
         return array;
@@ -36,7 +36,7 @@ public class AchievementConverter {
 
     public JsonObject toJsonObject(IAchievement achievement){
         if (achievement instanceof NumberAchievement){
-            return numberAchievementToJsonObject((NumberAchievement) achievement);
+            return numberAchievementToJsonObject(achievement);
         } else {
             return null;
         }
