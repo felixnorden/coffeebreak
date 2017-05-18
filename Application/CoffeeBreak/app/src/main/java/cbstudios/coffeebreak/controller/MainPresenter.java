@@ -14,6 +14,11 @@ import java.util.List;
 
 import cbstudios.coffeebreak.eventbus.EditTaskActivityEvent;
 import cbstudios.coffeebreak.eventbus.EditTaskEvent;
+import cbstudios.coffeebreak.eventbus.OnCreateEvent;
+import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
+import cbstudios.coffeebreak.eventbus.OnPauseEvent;
+import cbstudios.coffeebreak.eventbus.OnResumeEvent;
+import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.AchievementConverter;
 import cbstudios.coffeebreak.model.Model;
@@ -48,7 +53,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     @Override
-    public void onCreate() {
+    public void onCreate(OnCreateEvent event) {
         EventBus.getDefault().register(this);
         loadTasks();
         loadStatistics();
@@ -57,7 +62,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     @Override
-    public void onPause() {
+    public void onPause(OnPauseEvent event) {
         //TODO Fix shiet
         taskAdapter.updateTasks();
         taskAdapter.filterTasks();
@@ -67,20 +72,20 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     @Override
-    public void onResume() {
+    public void onResume(OnResumeEvent event) {
         //EventBus.getDefault().register(mainView);
         //EventBus.getDefault().register(taskAdapter);
     }
 
     @Override
-    public void onDestroy() {
+    public void onDestroy(OnDestroyEvent event) {
         EventBus.getDefault().unregister(this);
         EventBus.getDefault().unregister(mainView);
         EventBus.getDefault().unregister(taskAdapter);
     }
 
     @Override
-    public void onStop() {
+    public void onStop(OnStopEvent event) {
 
     }
 

@@ -1,5 +1,6 @@
 package cbstudios.coffeebreak.view.activity;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
@@ -15,4 +16,5 @@ public interface IMainView extends IView{
     void setCategories(List<ILabelCategory> labelCategories, List<ITimeCategory> timeCategories);
 
     void setTaskAdapter(TaskAdapter adapter);
+
 }

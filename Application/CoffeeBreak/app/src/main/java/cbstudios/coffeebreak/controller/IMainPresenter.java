@@ -21,7 +21,7 @@ public interface IMainPresenter extends IPresenter {
     Model getModel();
     void registerComponentsToEventBus();
 
-/*     List<IAdvancedTask> getTasks();
-   List<ILabelCategory> getLabelCategories();
+    List<IAdvancedTask> getTasks();
+/*   List<ILabelCategory> getLabelCategories();
     List<ITimeCategory> getTimeCategories();
 */}

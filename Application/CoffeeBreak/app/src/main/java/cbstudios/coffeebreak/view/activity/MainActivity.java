@@ -31,6 +31,9 @@ import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.controller.IMainPresenter;
 import cbstudios.coffeebreak.controller.IPresenterFactory;
 import cbstudios.coffeebreak.controller.PresenterFactory;
+import cbstudios.coffeebreak.eventbus.OnCreateEvent;
+import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
+import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
@@ -74,7 +77,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         setContentView(R.layout.activity_main);
 
         mainPresenter = presenterFactory.createMainPresenter(this);
-        mainPresenter.onCreate();
+        mainPresenter.onCreate(new OnCreateEvent(this));
 
         // Set up Buttons for adding tasks
         fabAddBtn = (FloatingActionButton) findViewById(R.id.fab_add_task);
@@ -130,7 +133,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     @Override
     protected void onPause(){
-        mainPresenter.onPause();
+        mainPresenter.onPause(new OnPauseEvent(this));
         super.onPause();
     }
 
@@ -141,7 +144,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     @Override
     protected void onDestroy(){
-        mainPresenter.onDestroy();
+        mainPresenter.onDestroy(new OnDestroyEvent(this));
         super.onDestroy();
     }
     @Override
