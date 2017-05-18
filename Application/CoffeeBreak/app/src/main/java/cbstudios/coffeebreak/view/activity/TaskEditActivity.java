@@ -72,7 +72,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         notificationLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //showTimerPickerDialog(v);
+                showTimerPickerDialog();
             }
         });
 
