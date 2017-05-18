@@ -9,6 +9,7 @@ import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.ToDoDataModule;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
@@ -72,17 +73,17 @@ public class ToDoDataModuleTest {
         toDoDataModule.removeTask(TaskFactory.getInstance().createListTask("Test"));
 
         assertTrue(toDoDataModule.getTasks().size() == 3);
-        assertTrue(toDoDataModule.getTasks().get(0) instanceof AdvancedTask);
-        assertTrue(toDoDataModule.getTasks().get(1) instanceof AdvancedTask);
-        assertTrue(toDoDataModule.getTasks().get(2) instanceof ListTask);
+        assertTrue(toDoDataModule.getTasks().get(0) instanceof IAdvancedTask);
+        assertTrue(toDoDataModule.getTasks().get(1) instanceof IAdvancedTask);
+        assertTrue(toDoDataModule.getTasks().get(2) instanceof IListTask);
 
         toDoDataModule.removeTask(at);
         toDoDataModule.removeTask(at2);
         toDoDataModule.removeTask(TaskFactory.getInstance().createListTask("Test"));
 
         assertTrue(toDoDataModule.getTasks().size() == 2);
-        assertTrue(toDoDataModule.getTasks().get(0) instanceof AdvancedTask);
-        assertTrue(toDoDataModule.getTasks().get(1) instanceof ListTask);
+        assertTrue(toDoDataModule.getTasks().get(0) instanceof IAdvancedTask);
+        assertTrue(toDoDataModule.getTasks().get(1) instanceof IListTask);
 
         toDoDataModule.removeTask(at3);
         toDoDataModule.removeTask(at4);

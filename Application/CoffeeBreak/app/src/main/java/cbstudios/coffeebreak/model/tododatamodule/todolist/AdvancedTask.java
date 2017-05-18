@@ -19,7 +19,7 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
  *          Different controllers and subsequent classes through the IAdvancedTask interface.
  *          </p>
  */
-public class AdvancedTask implements IAdvancedTask {
+class AdvancedTask implements IAdvancedTask {
     protected final ITask task;
     private final List<ILabelCategory> labels;
     private Calendar date;
