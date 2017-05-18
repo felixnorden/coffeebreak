@@ -14,11 +14,10 @@ import cbstudios.coffeebreak.model.Priority;
 import cbstudios.coffeebreak.model.TaskConverter;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITaskFactory;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
 import static org.junit.Assert.assertEquals;
@@ -59,21 +58,21 @@ public class TaskConverterTest {
         subtasks.add(subTask1);
         subtasks.add(subTask2);
 
-        AdvancedTask at1 = (AdvancedTask) factory.createAdvancedTask("AdvancedTask1");
+        IAdvancedTask at1 = factory.createAdvancedTask("AdvancedTask1");
         at1.setDate(currentCal);
         at1.addLabel(labelCategories.get(0));
         at1.setChecked(true);
         at1.setNote("Exempel");
         at1.setPriority(Priority.THREE);
 
-        AdvancedTask at2 = (AdvancedTask) factory.createAdvancedTask("AdvancedTask2");
+        IAdvancedTask at2 = factory.createAdvancedTask("AdvancedTask2");
         at2.addLabel(labelCategories.get(0));
         at2.addLabel(labelCategories.get(1));
         at2.setChecked(false);
         at2.setNote("");
         at2.setPriority(Priority.TWO);
 
-        ListTask lt1 = (ListTask) factory.createListTask("ListTask1");
+        IListTask lt1 = factory.createListTask("ListTask1");
         lt1.setDate(threeMonthCal);
         lt1.addLabel(labelCategories.get(1));
         lt1.setChecked(true);

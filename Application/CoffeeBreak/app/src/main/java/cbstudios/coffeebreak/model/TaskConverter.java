@@ -9,11 +9,10 @@ import java.util.List;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.AdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITaskFactory;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.ListTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
 /**
@@ -47,9 +46,9 @@ public class TaskConverter {
         JsonArray array = new JsonArray();
 
         for (IAdvancedTask task : tasks) {
-            if (task instanceof ListTask) {
-                array.add(listTaskToJsonObject((ListTask) task));
-            } else if (task instanceof AdvancedTask) {
+            if (task instanceof IListTask) {
+                array.add(listTaskToJsonObject((IListTask) task));
+            } else if (task != null) {
                 array.add(advancedTaskToJsonObject(task));
             }
         }
@@ -64,8 +63,8 @@ public class TaskConverter {
      * @return The JsonObject containing the data of the task.
      */
     public JsonObject toJsonObject(IAdvancedTask task) {
-        if (task instanceof ListTask) {
-            return listTaskToJsonObject((ListTask) task);
+        if (task instanceof IListTask) {
+            return listTaskToJsonObject((IListTask) task);
         } else {
             return advancedTaskToJsonObject(task);
         }
@@ -103,7 +102,7 @@ public class TaskConverter {
      * @param listTask The task that is to be converted into a JsonObject.
      * @return The JsonObject generated from the task.
      */
-    private JsonObject listTaskToJsonObject(ListTask listTask) {
+    private JsonObject listTaskToJsonObject(IListTask listTask) {
         JsonObject listTaskObject = advancedTaskToJsonObject(listTask);
         JsonArray subTaskArray = new JsonArray();
 
@@ -130,7 +129,7 @@ public class TaskConverter {
         JsonObject taskObject = new JsonObject();
         JsonArray labelArray = new JsonArray();
 
-        if (advancedTask instanceof ListTask) {
+        if (advancedTask instanceof IListTask) {
             taskObject.addProperty("Type", "ListTask");
         } else {
             taskObject.addProperty("Type", "AdvancedTask");
@@ -162,8 +161,8 @@ public class TaskConverter {
      * @param object The JsonObject to be converted.
      * @return The task created.
      */
-    private ListTask jsonObjectToListTask(JsonObject object) {
-        ListTask task = (ListTask) factory.createListTask();
+    private IListTask jsonObjectToListTask(JsonObject object) {
+        IListTask task = factory.createListTask();
 
         task.setName(object.get("Name").getAsString());
         task.setChecked(object.get("IsChecked").getAsBoolean());
@@ -219,8 +218,8 @@ public class TaskConverter {
      * @param object The JsonObject to be converted.
      * @return The task created.
      */
-    private AdvancedTask jsonObjectToAdvancedTask(JsonObject object) {
-        AdvancedTask task = (AdvancedTask) factory.createAdvancedTask();
+    private IAdvancedTask jsonObjectToAdvancedTask(JsonObject object) {
+        IAdvancedTask task = factory.createAdvancedTask();
         task.setName(object.get("Name").getAsString());
         task.setChecked(object.get("IsChecked").getAsBoolean());
 
