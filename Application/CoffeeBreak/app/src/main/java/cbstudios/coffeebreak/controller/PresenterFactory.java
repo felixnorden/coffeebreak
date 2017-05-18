@@ -23,7 +23,7 @@ public class PresenterFactory implements IPresenterFactory{
 
     @Override
     public ITaskEditPresenter createTaskDetailPresenter(ITaskEditView taskDetailView) {
-        return new TaskEditPresenter(taskDetailView);
+        return new TaskEditPresenter(null, null);
     }
 
 
