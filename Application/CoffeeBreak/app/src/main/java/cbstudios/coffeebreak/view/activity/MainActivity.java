@@ -75,8 +75,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
         mainPresenter = presenterFactory.createMainPresenter(this);
         mainPresenter.onCreate();
-        labelCategories = mainPresenter.getLabelCategories();
-        timeCategories = mainPresenter.getTimeCategories();
 
         // Set up Buttons for adding tasks
         fabAddBtn = (FloatingActionButton) findViewById(R.id.fab_add_task);
@@ -126,7 +124,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         setNavDrawer();
         setToolbar();
         EventBus.getDefault().post(new StatisticEvent("TimesAppStarted"));
-        mainPresenter.setTaskAdapter(taskAdapter);
         mainPresenter.registerComponentsToEventBus();
     }
 
@@ -170,6 +167,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         return super.onOptionsItemSelected(item);
     }
 
+
     @Override
     public void setTitle(CharSequence title) {
         getSupportActionBar().setTitle(title);
@@ -177,6 +175,17 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     public ICategory getCurrentCategory(){
         return currentCategory;
+    }
+
+    @Override
+    public void setCategories(List<ILabelCategory> labelCategories, List<ITimeCategory> timeCategories) {
+        this.labelCategories = labelCategories;
+        this.timeCategories = timeCategories;
+    }
+
+    @Override
+    public void setTaskAdapter(TaskAdapter adapter) {
+        taskList.setAdapter(adapter);
     }
 
     @Override

@@ -14,7 +14,6 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
  */
 
 public interface IMainPresenter extends IPresenter {
-    void setTaskAdapter(TaskAdapter adapter);
     void createAdvancedTask();
     void createListTask();
     void createTask(IListTask listTask);
@@ -22,7 +21,7 @@ public interface IMainPresenter extends IPresenter {
     Model getModel();
     void registerComponentsToEventBus();
 
-    List<IAdvancedTask> getTasks();
-    List<ILabelCategory> getLabelCategories();
+/*     List<IAdvancedTask> getTasks();
+   List<ILabelCategory> getLabelCategories();
     List<ITimeCategory> getTimeCategories();
-}
+*/}

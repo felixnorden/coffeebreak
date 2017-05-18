@@ -44,6 +44,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     MainPresenter(IMainView mainView) {
         this.mainView = mainView;
+        taskAdapter = new TaskAdapter(mainView.getContext(), this);
     }
 
     @Override
@@ -52,6 +53,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         loadTasks();
         loadStatistics();
         loadAchievements();
+        mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
     }
 
     @Override
@@ -82,10 +84,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     }
 
-    @Override
-    public void setTaskAdapter(TaskAdapter adapter) {
-        taskAdapter = adapter;
-    }
+
 
     
     public void createTask() {
@@ -114,7 +113,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     }
 
-    @Override
+   /* @Override
     public List<IAdvancedTask> getTasks() {
         return model.getToDoDataModule().getTasks();
     }
@@ -127,7 +126,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Override
     public List<ITimeCategory> getTimeCategories() {
         return model.getToDoDataModule().getTimeCategories();
-    }
+    }*/
 
     public void registerComponentsToEventBus(){
         EventBus.getDefault().register(mainView);
