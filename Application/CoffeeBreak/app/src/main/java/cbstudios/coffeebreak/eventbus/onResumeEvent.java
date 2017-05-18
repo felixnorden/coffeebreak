@@ -1,9 +1,9 @@
 package cbstudios.coffeebreak.eventbus;
 
-public class onResumeEvent implements IEvent {
+public class OnResumeEvent implements IEvent {
     private Object object;
 
-    public onResumeEvent(Object o) {
+    public OnResumeEvent(Object o) {
         this.object = o;
     }
 

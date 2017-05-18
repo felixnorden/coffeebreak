@@ -1,9 +1,9 @@
 package cbstudios.coffeebreak.eventbus;
 
-public class onStopEvent implements IEvent {
+public class OnStopEvent implements IEvent {
     private Object object;
 
-    public onStopEvent(Object o) {
+    public OnStopEvent(Object o) {
         this.object = o;
     }
 

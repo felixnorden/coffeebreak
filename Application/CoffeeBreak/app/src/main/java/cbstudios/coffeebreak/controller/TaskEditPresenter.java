@@ -7,11 +7,11 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.Calendar;
 
 import cbstudios.coffeebreak.eventbus.EditTaskActivityEvent;
-import cbstudios.coffeebreak.eventbus.onCreateEvent;
-import cbstudios.coffeebreak.eventbus.onDestroyEvent;
-import cbstudios.coffeebreak.eventbus.onPauseEvent;
-import cbstudios.coffeebreak.eventbus.onResumeEvent;
-import cbstudios.coffeebreak.eventbus.onStopEvent;
+import cbstudios.coffeebreak.eventbus.OnCreateEvent;
+import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
+import cbstudios.coffeebreak.eventbus.OnPauseEvent;
+import cbstudios.coffeebreak.eventbus.OnResumeEvent;
+import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.view.activity.ITaskEditView;
 
@@ -56,31 +56,31 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
 
     @Override
     @Subscribe
-    public void onCreate(onCreateEvent event) {
+    public void onCreate(OnCreateEvent event) {
 
     }
 
     @Override
     @Subscribe
-    public void onPause(onPauseEvent event) {
+    public void onPause(OnPauseEvent event) {
 
     }
 
     @Override
     @Subscribe
-    public void onResume(onResumeEvent event) {
+    public void onResume(OnResumeEvent event) {
 
     }
 
     @Override
     @Subscribe
-    public void onDestroy(onDestroyEvent event) {
+    public void onDestroy(OnDestroyEvent event) {
 
     }
 
     @Override
     @Subscribe
-    public void onStop(onStopEvent event) {
+    public void onStop(OnStopEvent event) {
 
     }
 }

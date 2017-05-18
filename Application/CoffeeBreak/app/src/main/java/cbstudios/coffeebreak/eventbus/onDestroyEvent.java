@@ -1,9 +1,9 @@
 package cbstudios.coffeebreak.eventbus;
 
-public class onDestroyEvent implements IEvent {
+public class OnDestroyEvent implements IEvent {
     private Object object;
 
-    public onDestroyEvent(Object o) {
+    public OnDestroyEvent(Object o) {
         this.object = o;
     }
 

@@ -28,10 +28,10 @@ import java.util.Locale;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
-import cbstudios.coffeebreak.eventbus.onCreateEvent;
-import cbstudios.coffeebreak.eventbus.onDestroyEvent;
-import cbstudios.coffeebreak.eventbus.onPauseEvent;
-import cbstudios.coffeebreak.eventbus.onStopEvent;
+import cbstudios.coffeebreak.eventbus.OnCreateEvent;
+import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
+import cbstudios.coffeebreak.eventbus.OnPauseEvent;
+import cbstudios.coffeebreak.eventbus.OnStopEvent;
 
 public class TaskEditActivity extends AppCompatActivity implements ITaskEditView {
 
@@ -51,7 +51,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
 
-        EventBus.getDefault().post(new onCreateEvent(this));
+        EventBus.getDefault().post(new OnCreateEvent(this));
 
         //Get elements
         backButton = (ImageButton) findViewById(R.id.etBackButton);
@@ -101,19 +101,19 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     @Override
     protected void onPause() {
         super.onPause();
-        EventBus.getDefault().post(new onPauseEvent(this));
+        EventBus.getDefault().post(new OnPauseEvent(this));
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().post(new onDestroyEvent(this));
+        EventBus.getDefault().post(new OnDestroyEvent(this));
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        EventBus.getDefault().post(new onStopEvent(this));
+        EventBus.getDefault().post(new OnStopEvent(this));
     }
 
     @Override
