@@ -21,6 +21,7 @@ import cbstudios.coffeebreak.eventbus.OnCreateEvent;
 import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
 import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
+import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.QueryRegistrationEvent;
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
@@ -57,47 +58,65 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         loadTasks();
         loadStatistics();
         loadAchievements();
-    }
 
-    @Override
-    public void onCreate(OnCreateEvent event) {
+        //TODO Make Creating Presenter subscribe instead of in this constructor!
         EventBus.getDefault().register(this);
-
-        mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
-        mainView.setTaskAdapter(taskAdapter);
-
-        // TODO Check later when All-category is implemented
-        taskAdapter.updateTasks();
-        taskAdapter.filterTasks();
-
     }
 
-    @Override
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void onCreate(OnCreateEvent event) {
+        if(event.object instanceof IMainView) {
+
+
+            mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
+            mainView.setTaskAdapter(taskAdapter);
+
+            // TODO Check later when All-category is implemented
+            taskAdapter.updateTasks();
+            taskAdapter.filterTasks();
+
+            mainView.setNavDrawer();
+            mainView.setToolbar();
+        }
+    }
+
+    @Subscribe (threadMode = ThreadMode.MAIN)
     public void onPause(OnPauseEvent event) {
         //TODO Fix shiet
-        taskAdapter.updateTasks();
-        taskAdapter.filterTasks();
-        saveTasks();
-        saveStatistics();
-        saveAchievements();
+        if(event.object == mainView) {
+            taskAdapter.updateTasks();
+            taskAdapter.filterTasks();
+            saveTasks();
+            saveStatistics();
+            saveAchievements();
+        }
     }
 
-    @Override
+    @Subscribe (threadMode = ThreadMode.MAIN)
     public void onResume(OnResumeEvent event) {
-        //EventBus.getDefault().register(mainView);
-        //EventBus.getDefault().register(taskAdapter);
+
     }
 
-    @Override
+    @Subscribe (threadMode = ThreadMode.MAIN)
     public void onDestroy(OnDestroyEvent event) {
-        EventBus.getDefault().unregister(this);
-        EventBus.getDefault().unregister(mainView);
-        EventBus.getDefault().unregister(taskAdapter);
+        if(event.object == mainView)
+            EventBus.getDefault().unregister(this);
     }
 
-    @Override
+    @Subscribe (threadMode = ThreadMode.MAIN)
     public void onStop(OnStopEvent event) {
+        if(event.object == mainView) {
+            registerViewComponents(false);
+            System.out.println("Unregister");
+        }
+    }
 
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void onStart(OnStartEvent event) {
+        if(event.object == mainView) {
+            registerViewComponents(true);
+            System.out.println("Register");
+        }
     }
 
 
@@ -142,10 +161,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         return model.getToDoDataModule().getTimeCategories();
     }*/
 
-    public void registerComponentsToEventBus() {
-        EventBus.getDefault().register(mainView);
-        EventBus.getDefault().register(taskAdapter);
-    }
 
     @Subscribe
     public void onEditTaskEvent(EditTaskEvent event) {
@@ -154,6 +169,26 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         mainView.getAppCompatActivity().startActivity(intent);
     }
 
+    @Subscribe
+    public void onEvent(StatisticEvent event) {
+        model.getToDoDataModule().getStats().onEvent(event.getMessage());
+    }
+
+
+    public Model getModel(){
+        return model;
+    }
+
+    private void registerViewComponents(boolean value){
+        if(value) {
+            EventBus.getDefault().register(mainView);
+            EventBus.getDefault().register(taskAdapter);
+        }
+        else{
+            EventBus.getDefault().unregister(mainView);
+            EventBus.getDefault().unregister(taskAdapter);
+        }
+    }
 
     private void loadAchievements() {
         JsonElement element = null;
@@ -235,26 +270,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     private void saveTasks() {
         JsonArray array = TaskConverter.getInstance().toJsonArray(model.getToDoDataModule().getTasks());
         StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Tasks", array);
-    }
-
-    @Subscribe
-    public void onEvent(StatisticEvent event) {
-        model.getToDoDataModule().getStats().onEvent(event.getMessage());
-    }
-
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void registerViewComponents(QueryRegistrationEvent event){
-        if(event.register) {
-            EventBus.getDefault().register(mainView);
-            EventBus.getDefault().register(taskAdapter);
-        }
-        else{
-            EventBus.getDefault().unregister(mainView);
-            EventBus.getDefault().unregister(taskAdapter);
-        }
-    }
-    public Model getModel(){
-        return model;
     }
 }
 

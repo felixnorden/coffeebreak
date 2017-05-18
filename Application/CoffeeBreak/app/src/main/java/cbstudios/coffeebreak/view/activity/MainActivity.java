@@ -34,7 +34,9 @@ import cbstudios.coffeebreak.controller.PresenterFactory;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
 import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
 import cbstudios.coffeebreak.eventbus.OnPauseEvent;
-import cbstudios.coffeebreak.eventbus.QueryRegistrationEvent;
+import cbstudios.coffeebreak.eventbus.OnResumeEvent;
+import cbstudios.coffeebreak.eventbus.OnStartEvent;
+import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         taskList = (RecyclerView) findViewById(R.id.taskList);
         taskList.setLayoutManager(new LinearLayoutManager(this));
         mainPresenter = presenterFactory.createMainPresenter(this);
-        mainPresenter.onCreate(new OnCreateEvent(this));
+
 
         // Set up Buttons for adding tasks
         fabAddBtn = (FloatingActionButton) findViewById(R.id.fab_add_task);
@@ -91,18 +93,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         txtAdvBtn = (TextView) findViewById(R.id.advanced_text);
         txtListBtn = (TextView) findViewById(R.id.list_text);
 
-
-        // Set up RecyclerView for tasks and render each item.
-        //final TaskAdapter taskAdapter = new TaskAdapter(this, mainPresenter);
-
-        //taskList.setAdapter(taskAdapter);
-
-        //taskAdapter.updateTasks();
-        //TODO hide later when All-category is avalable.
-        //taskAdapter.filterTasks();
-
-        //TODO Set up on click functionality
-        //TODO Bind FAB for creation
         // Generate animations and bind listeners
         setAnimations();
         fabAddBtn.setOnClickListener(new View.OnClickListener() {
@@ -127,28 +117,38 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
                 displayKeyboard();
             }
         });
-        
-        setNavDrawer();
-        setToolbar();
+
+        EventBus.getDefault().post(new OnCreateEvent(this));
         EventBus.getDefault().post(new StatisticEvent("TimesAppStarted"));
-        EventBus.getDefault().post(new QueryRegistrationEvent(true, this));
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        EventBus.getDefault().post(new OnStartEvent(this));
+    }
 
     @Override
+    protected void onStop(){
+        EventBus.getDefault().post(new OnStopEvent(this));
+        super.onStop();
+    }
+    @Override
     protected void onPause(){
-        mainPresenter.onPause(new OnPauseEvent(this));
+        EventBus.getDefault().post(new OnPauseEvent(this));
+        //mainPresenter.onPause(new OnPauseEvent(this));
         super.onPause();
     }
 
     @Override
     protected void onResume(){
         super.onResume();
+        EventBus.getDefault().post(new OnResumeEvent(this));
     }
 
     @Override
     protected void onDestroy(){
-        mainPresenter.onDestroy(new OnDestroyEvent(this));
+        EventBus.getDefault().post(new OnDestroyEvent(this));
         super.onDestroy();
     }
     @Override
@@ -188,6 +188,37 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     public void setCategories(List<ILabelCategory> labelCategories, List<ITimeCategory> timeCategories) {
         this.labelCategories = labelCategories;
         this.timeCategories = timeCategories;
+    }
+
+    @Override
+    public void setNavDrawer() {
+        mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.drawer_list);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawer.setBackgroundColor(Color.WHITE);
+
+        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, mainPresenter);
+        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories, mainPresenter);
+        final MergeAdapter mergeAdapter = new MergeAdapter();
+
+        mergeAdapter.addAdapter(timeCategoryAdapter);
+        mergeAdapter.addAdapter(labelCategoryAdapter);
+
+        mDrawerList.setAdapter(mergeAdapter);
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+    }
+
+    @Override
+    public void setToolbar() {
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        setSupportActionBar(mToolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setTitle("All");
+
+        setDrawerButton();
+
     }
 
     @Override
@@ -303,34 +334,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mDrawerLayout.closeDrawer(mDrawer);
     }
 
-    private void setNavDrawer() {
-        mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
-        mDrawerList = (ListView) findViewById(R.id.drawer_list);
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawer.setBackgroundColor(Color.WHITE);
-
-        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, mainPresenter);
-        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories, mainPresenter);
-        final MergeAdapter mergeAdapter = new MergeAdapter();
-
-        mergeAdapter.addAdapter(timeCategoryAdapter);
-        mergeAdapter.addAdapter(labelCategoryAdapter);
-
-        mDrawerList.setAdapter(mergeAdapter);
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
-    }
-
-    private void setToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("All");
-
-        setDrawerButton();
-
-    }
 
     private void setDrawerButton() {
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close){

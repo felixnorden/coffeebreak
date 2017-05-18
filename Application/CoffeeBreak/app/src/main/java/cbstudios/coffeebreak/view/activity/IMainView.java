@@ -18,4 +18,7 @@ public interface IMainView extends IView{
 
     void setTaskAdapter(ITaskAdapter adapter);
 
+    void setNavDrawer();
+
+    void setToolbar();
 }
