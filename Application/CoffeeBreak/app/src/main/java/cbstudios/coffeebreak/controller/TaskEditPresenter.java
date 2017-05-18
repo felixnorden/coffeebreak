@@ -27,10 +27,7 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
 
     @Subscribe
     public void onTaskEdited(TaskEditedEvent event) {
-        task.setName(view.getNameText());
-
-        task.setDate(view.getNotificationCalendar());
-        view.setNotificationCalendar(view.getNotificationCalendar());
+        updateModel();
     }
 
     @Override
@@ -52,7 +49,7 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
     @Subscribe
     public void setNotificationCalendar(Calendar cal) {
         task.setDate(cal);
-        view.setNotificationCalendar(cal);
+        view.setNotification(cal);
     }
 
     @Override
@@ -96,8 +93,22 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
         }
     }
 
-    private void setupView() {
+    /**
+     * Sets up view with current data from model.
+     */
+    private void setupView(){
         view.setNameText(task.getName());
-        view.setNotificationCalendar(task.getDate());
+        view.setTitle(task.getName());
+        view.setNotification(task.getDate());
+    }
+
+    /**
+     * Updates model with current data from view.
+     * Calls setupView() to make sure view correctly reflects new model-state.
+     */
+    private void updateModel() {
+        task.setName(view.getNameText());
+        task.setDate(view.getNotification());
+        setupView();
     }
 }

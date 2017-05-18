@@ -7,7 +7,9 @@ public interface ITaskEditView extends IView {
 
     void setNameText(String text);
 
-    void setNotificationCalendar(Calendar cal);
+    void setNotification(Calendar cal);
 
-    Calendar getNotificationCalendar();
+    Calendar getNotification();
+
+    void setTitle(String title);
 }
