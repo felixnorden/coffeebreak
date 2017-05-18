@@ -8,4 +8,5 @@ public interface IPresenter {
     void onResume(OnResumeEvent event);
     void onDestroy(OnDestroyEvent event);
     void onStop(OnStopEvent event);
+    void onStart(OnStartEvent event);
 }

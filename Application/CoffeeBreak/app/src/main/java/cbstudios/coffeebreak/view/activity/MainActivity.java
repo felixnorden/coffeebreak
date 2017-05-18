@@ -34,6 +34,9 @@ import cbstudios.coffeebreak.controller.PresenterFactory;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
 import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
 import cbstudios.coffeebreak.eventbus.OnPauseEvent;
+import cbstudios.coffeebreak.eventbus.OnResumeEvent;
+import cbstudios.coffeebreak.eventbus.OnStartEvent;
+import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.QueryRegistrationEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
@@ -121,21 +124,33 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     }
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        EventBus.getDefault().post(new OnStartEvent(this));
+    }
 
     @Override
+    protected void onStop(){
+        EventBus.getDefault().post(new OnStopEvent(this));
+        super.onStop();
+    }
+    @Override
     protected void onPause(){
-        mainPresenter.onPause(new OnPauseEvent(this));
+        EventBus.getDefault().post(new OnPauseEvent(this));
+        //mainPresenter.onPause(new OnPauseEvent(this));
         super.onPause();
     }
 
     @Override
     protected void onResume(){
         super.onResume();
+        EventBus.getDefault().post(new OnResumeEvent(this));
     }
 
     @Override
     protected void onDestroy(){
-        mainPresenter.onDestroy(new OnDestroyEvent(this));
+        EventBus.getDefault().post(new OnDestroyEvent(this));
         super.onDestroy();
     }
     @Override
@@ -177,6 +192,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         this.timeCategories = timeCategories;
     }
 
+    @Override
     public void setNavDrawer() {
         mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
         mDrawerList = (ListView) findViewById(R.id.drawer_list);
@@ -195,6 +211,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     }
 
+    @Override
     public void setToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 

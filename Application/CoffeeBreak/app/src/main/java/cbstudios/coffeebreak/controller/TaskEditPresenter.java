@@ -2,6 +2,7 @@ package cbstudios.coffeebreak.controller;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.Calendar;
 
@@ -9,6 +10,7 @@ import cbstudios.coffeebreak.eventbus.OnCreateEvent;
 import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
 import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
+import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
@@ -49,51 +51,52 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
     }
 
     @Override
-    @Subscribe
+    @Subscribe (threadMode = ThreadMode.MAIN)
     public void setNotificationCalendar(Calendar cal) {
         task.setDate(cal);
         view.setNotificationCalendar(cal);
     }
 
-    @Override
-    @Subscribe
+    @Subscribe (threadMode = ThreadMode.MAIN)
     public void onCreate(OnCreateEvent event) {
-        if (event.getObject() instanceof TaskEditActivity) {
-            view = (ITaskEditView) event.getObject();
+        if (event.object instanceof ITaskEditView) {
+            view = (ITaskEditView) event.object;
             setupView();
         }
     }
 
-    @Override
-    @Subscribe
+    @Subscribe (threadMode = ThreadMode.MAIN)
     public void onPause(OnPauseEvent event) {
-        if (event.getObject() instanceof TaskEditActivity) {
+        if (event.object instanceof ITaskEditView) {
 
         }
     }
 
-    @Override
-    @Subscribe
+    @Subscribe (threadMode = ThreadMode.MAIN)
     public void onResume(OnResumeEvent event) {
-        if (event.getObject() instanceof TaskEditActivity) {
+        if (event.object instanceof ITaskEditView) {
 
         }
     }
 
-    @Override
-    @Subscribe
+    @Subscribe (threadMode = ThreadMode.MAIN)
     public void onDestroy(OnDestroyEvent event) {
-        if (event.getObject() instanceof TaskEditActivity) {
+        if (event.object instanceof ITaskEditView) {
 
         }
     }
 
-    @Override
-    @Subscribe
+    @Subscribe (threadMode = ThreadMode.MAIN)
     public void onStop(OnStopEvent event) {
-        if (event.getObject() instanceof TaskEditActivity) {
+        if (event.object instanceof ITaskEditView) {
             EventBus.getDefault().unregister(this);
         }
+    }
+
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void onStart(OnStartEvent event) {
+        if(event.object instanceof ITaskEditView)
+            EventBus.getDefault().register(this);
     }
 
     private void setupView() {
