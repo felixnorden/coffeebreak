@@ -1,5 +1,6 @@
 package cbstudios.coffeebreak.controller;
 
+import android.content.Context;
 import android.content.Intent;
 
 import com.google.gson.JsonArray;
@@ -49,7 +50,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     MainPresenter(IMainView mainView) {
         this.mainView = mainView;
-        taskAdapter = new TaskAdapter(mainView.getContext(), this);
+        taskAdapter = new TaskAdapter(mainView.getAppCompatActivity(), this);
     }
 
     @Override
@@ -118,12 +119,12 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     }
 
-   /* @Override
+    @Override
     public List<IAdvancedTask> getTasks() {
         return model.getToDoDataModule().getTasks();
     }
 
-    @Override
+    /*@Override
     public List<ILabelCategory> getLabelCategories() {
         return model.getToDoDataModule().getLabelCategories();
     }
