@@ -16,6 +16,7 @@ import cbstudios.coffeebreak.eventbus.EditTaskActivityEvent;
 import cbstudios.coffeebreak.eventbus.EditTaskEvent;
 import cbstudios.coffeebreak.eventbus.StatisticEvent;
 import cbstudios.coffeebreak.model.AchievementConverter;
+import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.StatisticsConverter;
 import cbstudios.coffeebreak.model.TaskConverter;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
@@ -225,6 +226,10 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Subscribe
     public void onEvent(StatisticEvent event){
         model.getToDoDataModule().getStats().onEvent(event.getMessage());
+    }
+
+    public Model getModel(){
+        return model;
     }
 }
 

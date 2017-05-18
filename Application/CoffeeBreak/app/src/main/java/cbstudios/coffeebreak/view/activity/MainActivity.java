@@ -317,8 +317,18 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
     private void setDrawerButton() {
-        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close){
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                if (slideOffset != 0){
+                    EventBus.getDefault().post(new StatisticEvent("TimesNavOpen"));
+                }
+                super.onDrawerSlide(drawerView, slideOffset);
+            }
+        };
         mActionBarDrawerToggle.syncState();
+
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
     }
 }
