@@ -140,47 +140,15 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         abstract void setSpecificFields();
     }
 
-    public static class AdvancedTaskViewHolder extends TaskViewHolder{
-        public TextView tvSubTask;
+   /* public static class AdvancedTaskViewHolder extends TaskViewHolder{
 
-        public AdvancedTaskViewHolder(View itemView){
-            super(itemView);
 
-            tvSubTask = (TextView) itemView.findViewById(R.id.subTextView);
-        }
+    }*/
 
-        @Override
-        void setSpecificFields() {
-            String information;
-            if(task.hasNote())
-                information = task.getNote();
-            else if(!task.getLabels().isEmpty())
-                information = task.getLabels().toString();
-            else
-                information = "No info, add plez";
-            tvSubTask.setText(information);
-        }
+   /* public static class ListTaskViewHolder extends TaskViewHolder{
 
-    }
 
-    public static class ListTaskViewHolder extends TaskViewHolder{
-        public TextView tvSubTask;
-        public ImageView ivSubTask;
-
-        public ListTaskViewHolder(View itemView){
-            super(itemView);
-
-            tvSubTask = (TextView) itemView.findViewById(R.id.subTextView);
-            ivSubTask = (ImageView) itemView.findViewById(R.id.imageViewSubTask);
-
-        }
-
-        @Override
-        void setSpecificFields() {
-
-        }
-
-    }
+    }*/
 
     // Important ViewType constants
     private static final int ADVANCED_TASK = 0;
