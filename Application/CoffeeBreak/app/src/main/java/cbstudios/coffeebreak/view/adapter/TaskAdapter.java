@@ -89,6 +89,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     EventBus.getDefault().post(new EditTaskEvent(task));
                 }
             });
+            addOnCheckedChangedListener();
         }
         void setUpTask(){
             if(task.getName() != null){
@@ -108,7 +109,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     ivCategory.setVisibility(View.INVISIBLE);
                 }
                 setTaskNameEnabled(false);
-                //etTaskName.clearFocus();
                 setSpecificFields();
             }
             else{
@@ -123,9 +123,21 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 setTaskNameEnabled(true);
                 etTaskName.requestFocus();
             }
-
         }
 
+        private void addOnCheckedChangedListener(){
+            cbCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    task.setChecked(isChecked);
+                    etTaskName.setEnabled(!isChecked);
+                    if(isChecked)
+                        etTaskName.setPaintFlags(etTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    else
+                        etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                }
+            });
+        }
         private void setTaskNameEnabled(boolean value){
             if(value){
                 etTaskName.getBackground().setTint(Color.parseColor("#dd2b25"));
@@ -216,7 +228,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         viewHolder.task = mTasks.get(position);
 
         // Set up task layout based on whether the task has data or not.
-        setUpTask(viewHolder, task);
+        viewHolder.setUpTask();
     }
 
     /**
@@ -284,35 +296,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
     }
 
-    /*
-     * Set up for the IAdvancedTask that is to be viewed, based on the ViewType
-     * calculated in previous steps.
-     */
-    private void setUpTask(final TaskViewHolder taskHolder, IAdvancedTask task){
-        taskHolder.setUpTask();
-        if(task.getName() == null){
-            //addKeyboardListener(taskHolder, task);
-
-            // Request focus for keyboard input
-            //taskHolder.etTaskName.requestFocus();
-        }
-        // Listen for checked off by user
-        addOnCheckedChangedListener(taskHolder, task);
-    }
-
-    private void addOnCheckedChangedListener(final TaskViewHolder taskHolder,final IAdvancedTask task){
-        taskHolder.cbCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                task.setChecked(isChecked);
-                taskHolder.etTaskName.setEnabled(!isChecked);
-                if(isChecked)
-                    taskHolder.etTaskName.setPaintFlags(taskHolder.etTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                else
-                    taskHolder.etTaskName.setPaintFlags(taskHolder.etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-            }
-        });
-    }
     private void addKeyboardListener(final TaskViewHolder taskHolder, final IAdvancedTask task){
         // Listen for enter key to hide Keyboard
         final int position = taskHolder.getAdapterPosition();

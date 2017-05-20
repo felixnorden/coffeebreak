@@ -82,8 +82,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
         taskList = (RecyclerView) findViewById(R.id.taskList);
         taskList.setLayoutManager(new LinearLayoutManager(this));
-        mainPresenter = presenterFactory.createMainPresenter(this);
-
+        attachPresenter();
 
         // Set up Buttons for adding tasks
         fabAddBtn = (FloatingActionButton) findViewById(R.id.fab_add_task);
@@ -240,6 +239,19 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         else{
             imm.showSoftInput(event.view, InputMethodManager.SHOW_IMPLICIT);
         }
+    }
+
+    @Override
+    public Object onRetainCustomNonConfigurationInstance(){
+        return mainPresenter;
+    }
+    private void attachPresenter(){
+        mainPresenter = (IMainPresenter) getLastCustomNonConfigurationInstance();
+        if(mainPresenter == null){
+            mainPresenter = presenterFactory.createMainPresenter(this);
+            return;
+        }
+        mainPresenter.updateView(this);
     }
 
     private void toggleFabState() {

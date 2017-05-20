@@ -7,6 +7,7 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
+import cbstudios.coffeebreak.view.activity.IMainView;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 
 /**
@@ -19,8 +20,9 @@ public interface IMainPresenter extends IPresenter {
     void createTask(IListTask listTask);
     void removeTask(IAdvancedTask task);
     Model getModel();
-
+    void updateView(IMainView view);
     List<IAdvancedTask> getTasks();
+    void detachView();
 /*   List<ILabelCategory> getLabelCategories();
     List<ITimeCategory> getTimeCategories();
 */}

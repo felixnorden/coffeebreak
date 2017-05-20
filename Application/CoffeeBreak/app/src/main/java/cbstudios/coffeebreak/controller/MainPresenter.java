@@ -47,6 +47,7 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 class MainPresenter extends BasePresenter implements IMainPresenter {
     private IMainView mainView;
     private ITaskAdapter taskAdapter;
+    private static boolean loadedData = false;
 
     // TODO: 2017-05-18 Gather presenters in List somewhere
     private ITaskEditPresenter taskEditPresenter;
@@ -55,10 +56,12 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         this.mainView = mainView;
         taskAdapter = new TaskAdapter(mainView.getAppCompatActivity(), this);
 
-        loadTasks();
-        loadStatistics();
-        loadAchievements();
-
+        if(!loadedData) {
+            loadTasks();
+            loadStatistics();
+            loadAchievements();
+            loadedData = true;
+        }
         //TODO Make Creating Presenter subscribe instead of in this constructor!
         EventBus.getDefault().register(this);
     }
@@ -66,8 +69,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onCreate(OnCreateEvent event) {
         if(event.object instanceof IMainView) {
-
-
+            mainView = (IMainView) event.object;
             mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
             mainView.setTaskAdapter(taskAdapter);
 
@@ -99,8 +101,10 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onDestroy(OnDestroyEvent event) {
-        if(event.object == mainView)
-            EventBus.getDefault().unregister(this);
+        if(event.object == mainView) {
+            //EventBus.getDefault().unregister(this);
+            detachView();
+        }
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -151,6 +155,14 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         return model.getToDoDataModule().getTasks();
     }
 
+    @Override
+    public void detachView() {
+        this.mainView = null;
+    }
+
+    public void updateView(IMainView view){
+        mainView = view;
+    }
     /*@Override
     public List<ILabelCategory> getLabelCategories() {
         return model.getToDoDataModule().getLabelCategories();
@@ -173,7 +185,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     public void onEvent(StatisticEvent event) {
         model.getToDoDataModule().getStats().onEvent(event.getMessage());
     }
-
 
     public Model getModel(){
         return model;
