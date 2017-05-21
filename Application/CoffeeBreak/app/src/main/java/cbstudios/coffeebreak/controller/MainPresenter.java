@@ -1,8 +1,6 @@
 package cbstudios.coffeebreak.controller;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -15,7 +13,8 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import cbstudios.coffeebreak.R;
+import cbstudios.coffeebreak.eventbus.CheckTaskEvent;
+import cbstudios.coffeebreak.eventbus.CreateTaskEvent;
 import cbstudios.coffeebreak.eventbus.EditTaskEvent;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
 import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
@@ -23,8 +22,12 @@ import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
-import cbstudios.coffeebreak.eventbus.QueryRegistrationEvent;
-import cbstudios.coffeebreak.eventbus.StatisticEvent;
+import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
+import cbstudios.coffeebreak.eventbus.TimesCategoryCreatedEvent;
+import cbstudios.coffeebreak.eventbus.TimesNavOpenEvent;
+import cbstudios.coffeebreak.eventbus.TimesSettingsChangedEvent;
+import cbstudios.coffeebreak.eventbus.TimesTaskDeletedEvent;
+import cbstudios.coffeebreak.eventbus.TimesUpdatedEvent;
 import cbstudios.coffeebreak.model.AchievementConverter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.StatisticsConverter;
@@ -35,7 +38,6 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IMainView;
-import cbstudios.coffeebreak.view.activity.ITaskEditView;
 import cbstudios.coffeebreak.view.activity.TaskEditActivity;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
@@ -126,7 +128,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     public void createTask() {
         model.getToDoDataModule().createAdvancedTask();
-        EventBus.getDefault().post(new StatisticEvent("Create"));
+        EventBus.getDefault().post(new CreateTaskEvent());
     }
 
     public void createAdvancedTask() {
@@ -146,8 +148,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Override
     public void removeTask(IAdvancedTask task) {
         model.getToDoDataModule().removeTask(task);
-        EventBus.getDefault().post(new StatisticEvent("Check"));
-
+        EventBus.getDefault().post(new CheckTaskEvent());
     }
 
     @Override
@@ -182,8 +183,43 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
 
     @Subscribe
-    public void onEvent(StatisticEvent event) {
-        model.getToDoDataModule().getStats().onEvent(event.getMessage());
+    public void onCreateTaskEvent(CreateTaskEvent event) {
+        model.getToDoDataModule().getStats().onCreateTaskEvent();
+    }
+
+    @Subscribe
+    public void onCheckTaskEvent(CheckTaskEvent event){
+        model.getToDoDataModule().getStats().onCheckTaskEvent();
+    }
+
+    @Subscribe
+    public void onTimesAppStartedEvent(TimesAppStartedEvent event) {
+        model.getToDoDataModule().getStats().onTimesAppStartedEvent();
+    }
+
+    @Subscribe
+    public void onTimesCategoryCreated(TimesCategoryCreatedEvent event) {
+        model.getToDoDataModule().getStats().onTimesCategoryCreated();
+    }
+
+    @Subscribe
+    public void onTimesNavOpenEvent(TimesNavOpenEvent event) {
+        model.getToDoDataModule().getStats().onTimesNavOpenEvent();
+    }
+
+    @Subscribe
+    public void onTimesSettingsChangedEvent(TimesSettingsChangedEvent event) {
+        model.getToDoDataModule().getStats().onTimesSettingsChangedEvent();
+    }
+
+    @Subscribe
+    public void onTimesTaskDeletedEvent(TimesTaskDeletedEvent event){
+        model.getToDoDataModule().getStats().onTimesTaskDeletedEvent();
+    }
+
+    @Subscribe
+    public void onTimesUpdatedEvent(TimesUpdatedEvent event){
+        model.getToDoDataModule().getStats().onTimesUpdatedEvent();
     }
 
     public Model getModel(){

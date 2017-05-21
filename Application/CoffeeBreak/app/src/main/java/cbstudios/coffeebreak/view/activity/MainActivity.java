@@ -38,7 +38,8 @@ import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
-import cbstudios.coffeebreak.eventbus.StatisticEvent;
+import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
+import cbstudios.coffeebreak.eventbus.TimesNavOpenEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
@@ -118,7 +119,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         });
 
         EventBus.getDefault().post(new OnCreateEvent(this));
-        EventBus.getDefault().post(new StatisticEvent("TimesAppStarted"));
+        EventBus.getDefault().post(new TimesAppStartedEvent());
     }
 
     @Override
@@ -353,7 +354,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 if (slideOffset != 0){
-                    EventBus.getDefault().post(new StatisticEvent("TimesNavOpen"));
+                    EventBus.getDefault().post(new TimesNavOpenEvent());
                 }
                 super.onDrawerSlide(drawerView, slideOffset);
             }

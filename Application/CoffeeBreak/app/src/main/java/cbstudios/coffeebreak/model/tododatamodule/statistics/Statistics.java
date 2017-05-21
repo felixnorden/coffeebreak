@@ -47,66 +47,55 @@ public class Statistics {
         InitAchievement();
     }
 
-    public void onEvent(String name){
-        switch (name) {
-            case "Create":
-                createdTasks++;
-                tasksAlive++;
-                checkAchievement(name, createdTasks);
-                checkAchievement("TasksAlive", tasksAlive);
-                break;
-            case "Check":
-                checkOffTasks++;
-                tasksAlive--;
-                checkAchievement(name, checkOffTasks);
-                
-                if(lastDayCheckedTask == null) {
-                    lastDayCheckedTask = Calendar.getInstance();
-                    daysInARow++;
-                    return;
-                }
-                Calendar now = Calendar.getInstance();
-                
-                if((now.get(Calendar.YEAR) == lastDayCheckedTask.get(Calendar.YEAR))){
-                    if((now.get(Calendar.DAY_OF_YEAR))-(lastDayCheckedTask.get(Calendar.DAY_OF_YEAR)) ==1){
-                        lastDayCheckedTask = now;
-                        daysInARow++;
-                    } else if ((now.get(Calendar.DAY_OF_YEAR))-(lastDayCheckedTask.get(Calendar.DAY_OF_YEAR)) > 1){
-                        lastDayCheckedTask = now;
-                        daysInARow = 0;
-                    }
-                }
+    public void onCreateTaskEvent() {
+        createdTasks++;
+        tasksAlive++;
+    }
 
-                checkAchievement("DaysInARow", daysInARow);
+    public void onCheckTaskEvent(){
+        checkOffTasks++;
+        tasksAlive--;
 
-
-                break;
-            case "TimesUpdated":
-                timesUpdated++;
-                checkAchievement(name, timesUpdated);
-                break;
-            case "TimesAppStarted":
-                timesAppStarted++;
-                checkAchievement(name, timesAppStarted);
-                break;
-            case "TimesNavOpen":
-                timesNavOpen++;
-                checkAchievement(name, timesNavOpen);
-                break;
-            case "TimesTaskDeleted":
-                timesTaskDeleted++;
-                tasksAlive--;
-                checkAchievement(name, timesTaskDeleted);
-                break;
-            case "TimesCategoryCreated":
-                timesCategoryCreated++;
-                checkAchievement(name, timesCategoryCreated);
-                break;
-            case "TimesSettingsChanged":
-                timesSettingsChanged++;
-                checkAchievement(name, timesSettingsChanged);
-                break;
+        if(lastDayCheckedTask == null) {
+            lastDayCheckedTask = Calendar.getInstance();
+            daysInARow++;
+            return;
         }
+        Calendar now = Calendar.getInstance();
+
+        if((now.get(Calendar.YEAR) == lastDayCheckedTask.get(Calendar.YEAR))){
+            if((now.get(Calendar.DAY_OF_YEAR))-(lastDayCheckedTask.get(Calendar.DAY_OF_YEAR)) ==1){
+                lastDayCheckedTask = now;
+                daysInARow++;
+            } else if ((now.get(Calendar.DAY_OF_YEAR))-(lastDayCheckedTask.get(Calendar.DAY_OF_YEAR)) > 1){
+                lastDayCheckedTask = now;
+                daysInARow = 0;
+            }
+        }
+    }
+
+    public void onTimesAppStartedEvent() {
+        timesAppStarted++;
+    }
+
+    public void onTimesCategoryCreated() {
+        timesCategoryCreated++;
+    }
+
+    public void onTimesNavOpenEvent() {
+        timesNavOpen++;
+    }
+
+    public void onTimesSettingsChangedEvent() {
+        timesSettingsChanged++;
+    }
+
+    public void onTimesTaskDeletedEvent(){
+        timesTaskDeleted++;
+    }
+
+    public void onTimesUpdatedEvent(){
+        timesUpdated++;
     }
 
     private void checkAchievement(String name, int stats) {
