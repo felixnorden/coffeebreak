@@ -29,6 +29,7 @@ import java.util.List;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.controller.IMainPresenter;
+import cbstudios.coffeebreak.controller.IPresenter;
 import cbstudios.coffeebreak.controller.IPresenterFactory;
 import cbstudios.coffeebreak.controller.PresenterFactory;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
@@ -37,6 +38,7 @@ import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
+import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
 import cbstudios.coffeebreak.eventbus.TimesNavOpenEvent;
@@ -68,13 +70,14 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     private Animation TxtSlideIn;
     private Animation TxtSlideOut;
 
-    private IMainPresenter mainPresenter;
+    public IMainPresenter mainPresenter;
     private final IPresenterFactory presenterFactory = PresenterFactory.getInstance();
     private List<ILabelCategory> labelCategories;
     private List<ITimeCategory> timeCategories;
     private RecyclerView taskList;
     private ICategory currentCategory = null;
 
+    private static boolean initialized = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +86,10 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
         taskList = (RecyclerView) findViewById(R.id.taskList);
         taskList.setLayoutManager(new LinearLayoutManager(this));
+        if(!initialized) {
+            presenterFactory.initializeDelegatingPresenter(this);
+            initialized = true;
+        }
         attachPresenter();
 
         // Set up Buttons for adding tasks
@@ -119,7 +126,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         });
 
         EventBus.getDefault().post(new OnCreateEvent(this));
-        EventBus.getDefault().post(new TimesAppStartedEvent());
+       if(!initialized)
+            EventBus.getDefault().post(new TimesAppStartedEvent());
+
     }
 
     @Override
@@ -231,6 +240,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         return this;
     }
 
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void displayKeyboard(ShowKeyboardEvent event){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -246,10 +256,13 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     public Object onRetainCustomNonConfigurationInstance(){
         return mainPresenter;
     }
+
     private void attachPresenter(){
         mainPresenter = (IMainPresenter) getLastCustomNonConfigurationInstance();
         if(mainPresenter == null){
-            mainPresenter = presenterFactory.createMainPresenter(this);
+            EventBus.getDefault().post(new RequestPresenterEvent(this));
+            System.out.println("Request sent");
+            //mainPresenter = presenterFactory.createMainPresenter(this);
             return;
         }
         mainPresenter.updateView(this);

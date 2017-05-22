@@ -1,6 +1,7 @@
 package cbstudios.coffeebreak.controller;
 
 import cbstudios.coffeebreak.eventbus.*;
+import cbstudios.coffeebreak.model.Model;
 
 public interface IPresenter {
     void onCreate(OnCreateEvent event);
@@ -9,4 +10,5 @@ public interface IPresenter {
     void onDestroy(OnDestroyEvent event);
     void onStop(OnStopEvent event);
     void onStart(OnStartEvent event);
+    void injectModel(Model model);
 }

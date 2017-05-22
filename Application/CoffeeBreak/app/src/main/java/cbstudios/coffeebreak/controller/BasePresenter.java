@@ -9,5 +9,5 @@ import cbstudios.coffeebreak.model.Model;
  */
 
 class BasePresenter{
-    protected static final Model model = new Model();
+    protected Model model;
 }

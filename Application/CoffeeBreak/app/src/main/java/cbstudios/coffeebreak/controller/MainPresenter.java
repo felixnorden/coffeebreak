@@ -1,5 +1,6 @@
 package cbstudios.coffeebreak.controller;
 
+import android.app.usage.UsageEvents;
 import android.content.Intent;
 
 import com.google.gson.JsonArray;
@@ -22,6 +23,7 @@ import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
+import cbstudios.coffeebreak.eventbus.SaveStateEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
 import cbstudios.coffeebreak.eventbus.TimesCategoryCreatedEvent;
 import cbstudios.coffeebreak.eventbus.TimesNavOpenEvent;
@@ -49,23 +51,19 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 class MainPresenter extends BasePresenter implements IMainPresenter {
     private IMainView mainView;
     private ITaskAdapter taskAdapter;
-    private static boolean loadedData = false;
+    //private static boolean loadedData = false;
 
     // TODO: 2017-05-18 Gather presenters in List somewhere
     private ITaskEditPresenter taskEditPresenter;
 
-    MainPresenter(IMainView mainView) {
+    MainPresenter(IMainView mainView, Model model) {
+        this.model = model;
         this.mainView = mainView;
         taskAdapter = new TaskAdapter(mainView.getAppCompatActivity(), this);
 
-        if(!loadedData) {
-            loadTasks();
-            loadStatistics();
-            loadAchievements();
-            loadedData = true;
-        }
         //TODO Make Creating Presenter subscribe instead of in this constructor!
         EventBus.getDefault().register(this);
+        System.out.println("MainPresenter");
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -90,9 +88,8 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         if(event.object == mainView) {
             taskAdapter.updateTasks();
             taskAdapter.filterTasks();
-            saveTasks();
-            saveStatistics();
-            saveAchievements();
+
+            EventBus.getDefault().post(new SaveStateEvent());
         }
     }
 
@@ -104,7 +101,8 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onDestroy(OnDestroyEvent event) {
         if(event.object == mainView) {
-            //EventBus.getDefault().unregister(this);
+//            EventBus.getDefault().unregister(this);
+            System.out.println("Presenter unreg");
             detachView();
         }
     }
@@ -123,6 +121,11 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
             registerViewComponents(true);
             System.out.println("Register");
         }
+    }
+
+    @Override
+    public void injectModel(Model model) {
+        this.model = model;
     }
 
 

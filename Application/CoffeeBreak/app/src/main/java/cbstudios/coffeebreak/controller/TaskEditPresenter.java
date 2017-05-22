@@ -13,6 +13,7 @@ import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
+import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.view.activity.ITaskEditView;
 import cbstudios.coffeebreak.view.activity.TaskEditActivity;
@@ -25,6 +26,11 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
     TaskEditPresenter(IAdvancedTask task) {
         this.task = task;
         EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void injectModel(Model model) {
+        this.model = model;
     }
 
     @Subscribe

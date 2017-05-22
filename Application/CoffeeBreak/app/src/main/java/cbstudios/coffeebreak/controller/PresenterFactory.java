@@ -1,5 +1,8 @@
 package cbstudios.coffeebreak.controller;
 
+import android.content.Context;
+
+import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.view.activity.IMainView;
 import cbstudios.coffeebreak.view.activity.ITaskEditView;
@@ -18,13 +21,22 @@ public class PresenterFactory implements IPresenterFactory{
     }
 
     @Override
-    public IMainPresenter createMainPresenter(IMainView mainView) {
-        return new MainPresenter(mainView);
+    public IMainPresenter createMainPresenter(IMainView mainView, Model model) {
+        return new MainPresenter(mainView, model);
     }
 
     @Override
     public ITaskEditPresenter createTaskDetailPresenter(IAdvancedTask task) {
         return new TaskEditPresenter(task);
+    }
+
+    @Override
+    public DelegatingPresenter initializeDelegatingPresenter(Context context) {
+        return new DelegatingPresenter(context);
+    }
+    @Override
+    public DelegatingPresenter initializeDelegatingPresenter() {
+        return new DelegatingPresenter();
     }
 
 
