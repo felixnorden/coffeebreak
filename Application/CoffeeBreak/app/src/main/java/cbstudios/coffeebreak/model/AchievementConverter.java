@@ -62,8 +62,8 @@ public class AchievementConverter {
         return achievementObject;
     }
 
-    private NumberAchievement jsonObjectToNumberAchievement(JsonObject object){
-        NumberAchievement numberAchievement = new NumberAchievement();
+    private IAchievement jsonObjectToNumberAchievement(JsonObject object){
+        IAchievement numberAchievement = new NumberAchievement();
 
         numberAchievement.setName(object.get("Name").getAsString());
         numberAchievement.setNumberLimit(object.get("NumberLimit").getAsInt());

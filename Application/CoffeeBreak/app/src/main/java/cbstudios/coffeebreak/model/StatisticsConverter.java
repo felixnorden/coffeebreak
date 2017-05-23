@@ -40,7 +40,9 @@ public class StatisticsConverter {
         statisticsObject.addProperty("TimesCategoryCreated", statistics.getTimesCategoryCreated());
         statisticsObject.addProperty("TimesSettingsChanged", statistics.getTimesSettingsChanged());
         statisticsObject.addProperty("TasksAlive", statistics.getTasksAlive());
+        statisticsObject.addProperty("DaysInARow", statistics.getDaysInARow());
 
+        //statisticsObject.addProperty("LastDayCheckedTask", statistics.getLastDayCheckedTask());
         return statisticsObject;
     }
 
@@ -56,6 +58,7 @@ public class StatisticsConverter {
         statistics.setTimesCategoryCreated(object.get("TimesCategoryCreated").getAsInt());
         statistics.setTimesSettingsChanged(object.get("TimesSettingsChanged").getAsInt());
         statistics.setTasksAlive(object.get("TasksAlive").getAsInt());
+        statistics.setDaysInARow(object.get("DaysInARow").getAsInt());
 
         return statistics;
     }

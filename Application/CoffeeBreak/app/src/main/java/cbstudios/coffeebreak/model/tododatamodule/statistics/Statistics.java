@@ -11,6 +11,9 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchie
  * Created by johan on 5/8/2017.
  */
 
+/**
+ * A class that holds all statistic in the app
+ */
 public class Statistics {
 
     private List<IAchievement> achievementList;
@@ -28,7 +31,9 @@ public class Statistics {
     private int daysInARow;
     private Calendar lastDayCheckedTask;
 
-
+    /**
+     * The class constructor that will init alla ints and call for initAchievement
+     */
     public Statistics(){
         createdTasks = 0;
         checkOffTasks = 0;
@@ -47,11 +52,18 @@ public class Statistics {
         InitAchievement();
     }
 
+    /**
+     * Adds 1 to createdTask and adds 1 to tasksAlive
+     */
     public void onCreateTaskEvent() {
         createdTasks++;
         tasksAlive++;
     }
 
+    /**
+     * Adds 1 to checkOffTask and subtract 1 from tasksAlive, also checks if the int daysInARow should
+     * increase or be set to zero
+     */
     public void onCheckTaskEvent(){
         checkOffTasks++;
         tasksAlive--;
@@ -72,32 +84,56 @@ public class Statistics {
                 daysInARow = 0;
             }
         }
+
     }
 
+    /**
+     * Adds 1 to TimesAppStarted
+     */
     public void onTimesAppStartedEvent() {
         timesAppStarted++;
     }
 
+    /**
+     * Adds 1 to TimesCategoryCreated
+     */
     public void onTimesCategoryCreated() {
         timesCategoryCreated++;
     }
 
+    /**
+     * Adds 1 to TimesNavOpen
+     */
     public void onTimesNavOpenEvent() {
         timesNavOpen++;
     }
 
+    /**
+     * Adds 1 to TimesSettingsChanged
+     */
     public void onTimesSettingsChangedEvent() {
         timesSettingsChanged++;
     }
 
+    /**
+     * Adds 1 to TimesTaskDeleted
+     */
     public void onTimesTaskDeletedEvent(){
         timesTaskDeleted++;
     }
 
+    /**
+     * Adds 1 to TimesUpdatedEvent
+     */
     public void onTimesUpdatedEvent(){
         timesUpdated++;
     }
 
+    /**
+     * Loop through the list and checks if a new achievement is completed
+     * @param name is the name of the wanted achievement
+     * @param stats is the stats achieved and compared to the achievement
+     */
     private void checkAchievement(String name, int stats) {
         for (int i = 0; i < achievementList.size(); i++){
             if(achievementList.get(i).getName().equals(name)){
@@ -108,6 +144,9 @@ public class Statistics {
         }
     }
 
+    /**
+     * Initialise all the achievements
+     */
     public void InitAchievement(){
         //int[] array = new int[]{5,25,100,500};
         int[] array = new int[]{2,5,20,25};
@@ -197,6 +236,22 @@ public class Statistics {
 
     public void setTasksAlive(int tasksAlive) {
         this.tasksAlive = tasksAlive;
+    }
+
+    public int getDaysInARow(){
+        return daysInARow;
+    }
+
+    public void setDaysInARow(int daysInARow){
+        this.daysInARow = daysInARow;
+    }
+
+    public Calendar getLastDayCheckedTask(){
+        return lastDayCheckedTask;
+    }
+
+    public void setLastDayCheckedTask(Calendar lastDayCheckedTask){
+        this.lastDayCheckedTask = lastDayCheckedTask;
     }
 
     public void setAchievementList(List<IAchievement> achievementList) {

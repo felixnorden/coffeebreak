@@ -66,7 +66,7 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
                 if (timeCategory.getTaskCount(tasks) != 0) {
                     categorySize.setText(Integer.toString(timeCategory.getTaskCount(tasks)));
                     //Test function
-                    //categorySize.setText((Integer.toString(mainPresenter.getModel().getToDoDataModule().getStats().getTimesNavOpen())));
+                    //categorySize.setText((Integer.toString(mainPresenter.getModel().getToDoDataModule().getStats().getAchievementList().size())));
                 }
             }
         }
