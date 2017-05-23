@@ -28,6 +28,8 @@ import java.util.List;
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.controller.IMainPresenter;
 import cbstudios.coffeebreak.eventbus.EditTaskEvent;
+import cbstudios.coffeebreak.eventbus.RemoveTaskEvent;
+import cbstudios.coffeebreak.eventbus.RequestTaskListEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.eventbus.TaskKeyboardClosedEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
@@ -152,21 +154,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         abstract void setSpecificFields();
     }
 
-   /* public static class AdvancedTaskViewHolder extends TaskViewHolder{
-
-
-    }*/
-
-   /* public static class ListTaskViewHolder extends TaskViewHolder{
-
-
-    }*/
-
     // Important ViewType constants
     private static final int ADVANCED_TASK = 0;
     private static final int LIST_TASK = 1;
 
     private List<IAdvancedTask> mTasks;
+    private List<IAdvancedTask> tmpTasks;
     private Context mContext;
     private IMainPresenter mainPresenter;
 
@@ -174,6 +167,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         mContext = context;
         this.mainPresenter = mainPresenter;
         mTasks = mainPresenter.getTasks();
+        tmpTasks = mainPresenter.getTasks();
     }
 
     /**
@@ -224,7 +218,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      */
     @Override
     public void onBindViewHolder(TaskAdapter.TaskViewHolder viewHolder, final int position){
-        IAdvancedTask task = mTasks.get(position);
+        //IAdvancedTask task = mTasks.get(position);
         viewHolder.task = mTasks.get(position);
 
         // Set up task layout based on whether the task has data or not.
@@ -243,11 +237,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         swapTasks(currentCategory.getValidTasks(mainPresenter.getTasks()));
     }
 
+    @Override
     public void filterTasks(){
         swapTasks(mainPresenter.getTasks());
     }
 
+    @Override
+    public void updateTmpTasks(List<IAdvancedTask> tasks){
+        this.tmpTasks = tasks;
+    }
+
     public void updateTasks(){
+        EventBus.getDefault().post(new RequestTaskListEvent(this));
         removeCheckedTasks();
         removeNullTasks();
     }
@@ -261,7 +262,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void handleKeyboardClosed(TaskKeyboardClosedEvent event){
         if(event.removeTask){
             int rangeStart = mTasks.indexOf(event.task);
-            mainPresenter.removeTask(event.task);
+            EventBus.getDefault().post(new RemoveTaskEvent(event.task, false));
             mTasks.remove(event.task);
             notifyItemRemoved(event.position);
             notifyItemRangeChanged(rangeStart, mTasks.size());
@@ -283,7 +284,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     private void removeCheckedTasks(){
         for(IAdvancedTask task: mainPresenter.getTasks()){
             if(task.isChecked()){
-                mainPresenter.removeTask(task);
+                EventBus.getDefault().post(new RemoveTaskEvent(task, true));
             }
         }
     }
@@ -291,7 +292,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     private void removeNullTasks(){
         for(IAdvancedTask task: mainPresenter.getTasks()){
             if(task.getName()== null){
-                mainPresenter.removeTask(task);
+                EventBus.getDefault().post(new RemoveTaskEvent(task, false));
             }
         }
     }
@@ -309,7 +310,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     // and update adapter of removal
                     if(input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)){
                         int rangeStart = mTasks.indexOf(task);
-                        mainPresenter.removeTask(task);
+                        EventBus.getDefault().post(new RemoveTaskEvent(task, false));
                         mTasks.remove(task);
                         TaskAdapter.super.notifyItemRemoved(position);
                         notifyItemRangeChanged(rangeStart, mTasks.size());

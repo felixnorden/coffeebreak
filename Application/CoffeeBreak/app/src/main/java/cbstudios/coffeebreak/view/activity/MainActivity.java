@@ -256,21 +256,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         }
     }
 
-//    @Override
-//    public Object onRetainCustomNonConfigurationInstance(){
-//        return mainPresenter;
-//    }
-
     private void attachPresenter(){
-        mainPresenter = (IMainPresenter) getLastCustomNonConfigurationInstance();
-        if(mainPresenter == null){
             System.out.println("Request sent");
             EventBus.getDefault().post(new RequestPresenterEvent(this));
-
-            //mainPresenter = presenterFactory.createMainPresenter(this);
-            return;
-        }
-        mainPresenter.updateView(this);
     }
 
     private void toggleFabState() {

@@ -24,7 +24,9 @@ import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.RemovePresenterEvent;
+import cbstudios.coffeebreak.eventbus.RemoveTaskEvent;
 import cbstudios.coffeebreak.eventbus.RequestTaskCreationEvent;
+import cbstudios.coffeebreak.eventbus.RequestTaskListEvent;
 import cbstudios.coffeebreak.eventbus.SaveStateEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
 import cbstudios.coffeebreak.eventbus.TimesCategoryCreatedEvent;
@@ -158,10 +160,12 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         model.getToDoDataModule().createTask(listTask);
     }
 
-    @Override
-    public void removeTask(IAdvancedTask task) {
-        model.getToDoDataModule().removeTask(task);
-        EventBus.getDefault().post(new CheckTaskEvent());
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void removeTask(RemoveTaskEvent event) {
+        model.getToDoDataModule().removeTask(event.task);
+        if(event.checked){
+            EventBus.getDefault().post(new CheckTaskEvent());
+        }
     }
 
     @Override
@@ -169,25 +173,10 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         return model.getToDoDataModule().getTasks();
     }
 
-    @Override
-    public void detachView() {
-        this.mainView = null;
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void onTaskListRequest(RequestTaskListEvent event){
+        event.adapter.updateTmpTasks(getTasks());
     }
-
-    public void updateView(IMainView view){
-        mainView = view;
-    }
-    /*@Override
-    public List<ILabelCategory> getLabelCategories() {
-        return model.getToDoDataModule().getLabelCategories();
-    }
-
-    @Override
-    public List<ITimeCategory> getTimeCategories() {
-        return model.getToDoDataModule().getTimeCategories();
-    }*/
-
-
     @Subscribe
     public void onEditTaskEvent(EditTaskEvent event) {
         taskEditPresenter = PresenterFactory.getInstance().createTaskDetailPresenter(event.getTask());
@@ -250,87 +239,10 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         }
     }
 
-    private void loadAchievements() {
-        JsonElement element = null;
-        try {
-            element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Achievement");
-        } catch (IllegalStateException e) {
-            // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
-            StorageUtil.resetData(mainView.getAppCompatActivity().getApplicationContext(), "Tasks");
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        if (element == null || !element.isJsonArray()) {
-            return;
-        }
-        JsonArray array = element.getAsJsonArray();
-
-        List<IAchievement> achievements = AchievementConverter.getInstance().toAchievementList(array);
-        model.getToDoDataModule().getStats().setAchievementList(achievements);
+    private void detachView() {
+        this.mainView = null;
     }
 
-    private void saveAchievements() {
-        JsonArray array = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getStats().getAchievementList());
-        StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Achievement", array);
-    }
-
-    private void saveStatistics() {
-        JsonObject object = StatisticsConverter.getInstance().toJsonObject(model.getToDoDataModule().getStats());
-        StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Statistics", object);
-    }
-
-    private void loadStatistics() {
-        JsonElement element = null;
-        try {
-            element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Statistics");
-        } catch (IllegalStateException e) {
-            // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
-            StorageUtil.resetData(mainView.getAppCompatActivity().getApplicationContext(), "Statistics");
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        if (element == null || !element.isJsonObject()) {
-            return;
-        }
-        JsonObject object = element.getAsJsonObject();
-
-        Statistics statistics = StatisticsConverter.getInstance().toStatistics(object);
-
-        model.getToDoDataModule().setStatistic(statistics);
-    }
-
-    private void loadTasks() {
-        JsonElement element;
-
-        try {
-            element = StorageUtil.load(mainView.getAppCompatActivity().getApplicationContext(), "Tasks");
-
-            if (element == null || !element.isJsonArray())
-                return;
-
-            JsonArray array = element.getAsJsonArray();
-            List<IAdvancedTask> tasks = TaskConverter.getInstance().toList(array);
-
-            for (IAdvancedTask task : tasks) {
-                model.getToDoDataModule().addTask(task);
-            }
-        } catch (IllegalStateException e) {
-            // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
-            StorageUtil.resetData(mainView.getAppCompatActivity().getApplicationContext(), "Tasks");
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void saveTasks() {
-        JsonArray array = TaskConverter.getInstance().toJsonArray(model.getToDoDataModule().getTasks());
-        StorageUtil.save(mainView.getAppCompatActivity().getApplicationContext(), "Tasks", array);
-    }
 }
 
 
