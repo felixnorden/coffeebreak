@@ -240,12 +240,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     public void filterTasks(ICategory currentCategory){
-        swapTasks(currentCategory.getValidTasks(mainPresenter.getTasks()));
+        EventBus.getDefault().post(new RequestTaskListEvent(this));
+        swapTasks(currentCategory.getValidTasks(tmpTasks));
     }
 
     @Override
     public void filterTasks(){
-        swapTasks(mainPresenter.getTasks());
+        EventBus.getDefault().post(new RequestTaskListEvent(this));
+        swapTasks(tmpTasks);
     }
 
     @Override
@@ -253,6 +255,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         this.tmpTasks = tasks;
     }
 
+    //TODO ELIAS FIX DIS PLOX One event only 
     public void updateTasks(){
         EventBus.getDefault().post(new RequestTaskListEvent(this));
         removeCheckedTasks();
