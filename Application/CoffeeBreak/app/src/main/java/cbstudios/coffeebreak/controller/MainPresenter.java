@@ -23,6 +23,7 @@ import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
+import cbstudios.coffeebreak.eventbus.RemovePresenterEvent;
 import cbstudios.coffeebreak.eventbus.RequestTaskCreationEvent;
 import cbstudios.coffeebreak.eventbus.SaveStateEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
@@ -52,7 +53,7 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 class MainPresenter extends BasePresenter implements IMainPresenter {
     private IMainView mainView;
     private ITaskAdapter taskAdapter;
-    private static int presenters = 0;
+
     // TODO: 2017-05-18 Gather presenters in List somewhere
     private ITaskEditPresenter taskEditPresenter;
 
@@ -61,9 +62,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         this.mainView = mainView;
         taskAdapter = new TaskAdapter(mainView.getAppCompatActivity(), this);
 
-        //TODO Make Creating Presenter subscribe instead of in this constructor!
         EventBus.getDefault().register(this);
-        System.out.println("MainPresenters: " + ++presenters);
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -102,16 +101,20 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     public void onDestroy(OnDestroyEvent event) {
         if(event.object == mainView) {
             EventBus.getDefault().unregister(this);
-            System.out.println("Presenter unreg");
-            detachView();
+            collectDeadPresenter();
         }
+    }
+
+    private void collectDeadPresenter() {
+        detachView();
+        EventBus.getDefault().post(new RemovePresenterEvent(this));
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onStop(OnStopEvent event) {
         if(event.object == mainView) {
             registerViewComponents(false);
-            System.out.println("Unregister");
+//            System.out.println("Unregister");
         }
     }
 
@@ -119,7 +122,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     public void onStart(OnStartEvent event) {
         if(event.object == mainView) {
             registerViewComponents(true);
-            System.out.println("Register");
+//            System.out.println("Register");
         }
     }
 

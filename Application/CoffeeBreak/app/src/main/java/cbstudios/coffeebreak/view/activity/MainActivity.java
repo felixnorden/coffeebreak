@@ -43,6 +43,7 @@ import cbstudios.coffeebreak.eventbus.RequestTaskCreationEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
 import cbstudios.coffeebreak.eventbus.TimesNavOpenEvent;
+import cbstudios.coffeebreak.eventbus.UpdateContextReferenceEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
@@ -91,6 +92,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
             presenterFactory.initializeDelegatingPresenter(this);
             initialized = true;
         }
+        else{
+            EventBus.getDefault().post(new UpdateContextReferenceEvent(this));
+        }
         attachPresenter();
 
         // Set up Buttons for adding tasks
@@ -127,7 +131,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         });
 
         EventBus.getDefault().post(new OnCreateEvent(this));
-       if(!initialized)
+        if(!initialized)
             EventBus.getDefault().post(new TimesAppStartedEvent());
 
     }

@@ -16,8 +16,10 @@ import java.util.List;
 
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
 import cbstudios.coffeebreak.eventbus.OnPauseEvent;
+import cbstudios.coffeebreak.eventbus.RemovePresenterEvent;
 import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
 import cbstudios.coffeebreak.eventbus.SaveStateEvent;
+import cbstudios.coffeebreak.eventbus.UpdateContextReferenceEvent;
 import cbstudios.coffeebreak.model.AchievementConverter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.StatisticsConverter;
@@ -63,9 +65,14 @@ class DelegatingPresenter {
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
-    public void updateMainContext(OnCreateEvent event){
-        if(event.object instanceof IMainView)
-            this.mContext = (Context) event.object;
+    public void updateMainContext(UpdateContextReferenceEvent event){
+        if(event.context instanceof IMainView)
+            this.mContext = (Context) event.context;
+    }
+
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void RemoveDeadPresenter(RemovePresenterEvent event){
+        presenters.remove(event.presenter);
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -77,7 +84,7 @@ class DelegatingPresenter {
 
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onPresenterRequest(RequestPresenterEvent event){
-        if(event.view == (IMainView) mContext){
+        if(event.view == mContext){
             System.out.println("Request Recieved");
 
             IPresenter mainPresenter = factory.createMainPresenter((IMainView) mContext, model);
