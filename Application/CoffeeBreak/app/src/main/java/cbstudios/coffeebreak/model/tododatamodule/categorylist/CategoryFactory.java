@@ -63,4 +63,8 @@ public class CategoryFactory implements ICategoryFactory {
         return new SingleDayTimeCategory(name , date);
     }
 
+    public ITimeCategory createAllCategory(){
+        return new AllCategory();
+    }
+
 }

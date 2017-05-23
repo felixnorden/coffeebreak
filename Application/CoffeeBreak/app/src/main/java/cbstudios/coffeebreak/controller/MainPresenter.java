@@ -74,10 +74,12 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
             mainView = (IMainView) event.object;
             mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
             mainView.setTaskAdapter(taskAdapter);
+            mainView.setCurrentCategory(model.getToDoDataModule().getTimeCategories().get(0));
+
 
             // TODO Check later when All-category is implemented
             taskAdapter.updateTasks();
-            taskAdapter.filterTasks();
+            taskAdapter.filterTasks(mainView.getCurrentCategory());
 
             mainView.setNavDrawer();
             mainView.setToolbar();
@@ -89,7 +91,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         //TODO Fix shiet
         if(event.object == mainView) {
             taskAdapter.updateTasks();
-            taskAdapter.filterTasks();
+            taskAdapter.filterTasks(mainView.getCurrentCategory());
 
             EventBus.getDefault().post(new SaveStateEvent());
         }

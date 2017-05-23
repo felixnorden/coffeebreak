@@ -37,4 +37,6 @@ public interface ICategoryFactory {
      * @return a new SingleDayCategory with a name and date
      */
     ITimeCategory createSingleDayCategory(String name, Calendar date);
+
+    ITimeCategory createAllCategory();
 }

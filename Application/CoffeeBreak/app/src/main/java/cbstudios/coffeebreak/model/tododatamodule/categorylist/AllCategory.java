@@ -1,5 +1,6 @@
 package cbstudios.coffeebreak.model.tododatamodule.categorylist;
 
+import java.util.Calendar;
 import java.util.List;
 
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
@@ -11,12 +12,32 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
  * Used by: TaskAdapter and MainActivity.
  */
 
-final class AllCategory implements ICategory {
-    private final String name = "All";
+ class AllCategory implements ITimeCategory {
+    private String name = "All";
 
     @Override
     public String getName() {
         return name;
+    }
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public boolean isInIntervall(Calendar date) {
+        return true;
+    }
+
+    @Override
+    public Calendar getTime() {
+        return null;
+    }
+
+    @Override
+    public void setTime(Calendar time) {
+
     }
 
     @Override
