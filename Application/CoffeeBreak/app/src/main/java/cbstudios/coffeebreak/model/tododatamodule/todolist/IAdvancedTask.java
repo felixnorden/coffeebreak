@@ -9,75 +9,75 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 /**
  * @author Felix
  * @version 1.0
- * <p>Responsibility: Abstraction interface for the implementing class Advanced Task
- * and the extending class List Task</br>
- * Used by: All controllers and subsequent classes handling tasks in a list.
- * </p>
+ *          <p>Responsibility: Abstraction interface for the implementing class Advanced Task
+ *          and the extending class List Task</br>
+ *          Used by: All controllers and subsequent classes handling tasks in a list.
+ *          </p>
  */
 public interface IAdvancedTask {
 
     /**
-     * @return          the name if the task
+     * @return the name if the task
      */
     String getName();
 
     /**
-     * @param name      the name for the task
+     * @param name the name for the task
      */
     void setName(String name);
 
     /**
-     * @return          the date for when the task is due
+     * @return the date for when the task is due
      */
     Calendar getDate();
 
     /**
-     * @param date      the date to set for the task
+     * @param date the date to set for the task
      */
     void setDate(Calendar date);
 
     /**
-     * @return          the labels which the task is assigned
+     * @return the labels which the task is assigned
      */
     List<ILabelCategory> getLabels();
 
     /**
-     * @param label     the label that will be added to the task
+     * @param label the label that will be added to the task
      */
     void addLabel(ILabelCategory label);
 
     /**
-     * @param label     the label which will be removed from the task
+     * @param label the label which will be removed from the task
      */
     void removeLabel(ILabelCategory label);
 
     /**
-     * @return          True if the task has any note
+     * @return True if the task has any note
      */
     boolean hasNote();
 
     /**
-     * @return          the note that the task contained
+     * @return the note that the task contained
      */
     String getNote();
 
     /**
-     * @param note      the note that will be set for the task
+     * @param note the note that will be set for the task
      */
     void setNote(String note);
 
     /**
-     * @return          the priority of the task
+     * @return the priority of the task
      */
     Priority getPriority();
 
     /**
-     * @param priority  the priority which will be set on the task
+     * @param priority the priority which will be set on the task
      */
     void setPriority(Priority priority);
 
     /**
-     * @return          True if the task has been checked off
+     * @return True if the task has been checked off
      */
     boolean isChecked();
 
@@ -89,18 +89,23 @@ public interface IAdvancedTask {
     void toggleChecked();
 
     /**
-     * @param value     the value to set task's checked value
+     * @param value the value to set task's checked value
      */
     void setChecked(boolean value);
 
     /**
-     *  @return         creation date and time for the task
+     * @return creation date and time for the task
      */
     Calendar getCreationCalendar();
 
     /**
-     *
-     * @param calendar  creation date to set for the task
+     * @param calendar creation date to set for the task
      */
     void setCreationCalendar(Calendar calendar);
+
+    /**
+     * @param name Name of category
+     * @return True if true, false if false (big if true)
+     */
+    boolean hasILabelCategory(String name);
 }
