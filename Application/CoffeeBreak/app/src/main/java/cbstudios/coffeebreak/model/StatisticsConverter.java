@@ -58,7 +58,7 @@ public class StatisticsConverter {
         statistics.setTimesCategoryCreated(object.get("TimesCategoryCreated").getAsInt());
         statistics.setTimesSettingsChanged(object.get("TimesSettingsChanged").getAsInt());
         statistics.setTasksAlive(object.get("TasksAlive").getAsInt());
-//        statistics.setDaysInARow(object.get("DaysInARow").getAsInt());
+        //statistics.setDaysInARow(object.get("DaysInARow").getAsInt());
 
 
         /*Calendar time = Calendar.getInstance();

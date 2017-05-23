@@ -12,11 +12,13 @@ import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -26,7 +28,10 @@ import org.greenrobot.eventbus.EventBus;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+
+import javax.crypto.spec.RC5ParameterSpec;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
@@ -35,12 +40,15 @@ import cbstudios.coffeebreak.eventbus.OnCreateEvent;
 import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
 import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
+import cbstudios.coffeebreak.view.adapter.TaskEditCategoryAdapter;
 
 public class TaskEditActivity extends AppCompatActivity implements ITaskEditView {
 
     private String backupName;  //Used for when empty string is set as task name.
 
     private Toolbar toolbar;
+    private TaskEditCategoryAdapter adapter;
 
     //Taskname Area
     private RelativeLayout nameLayout;
@@ -53,6 +61,12 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     private Calendar cal;
     private ImageButton notificationRemoveButton;
 
+    //Categories Area
+    private RelativeLayout categoriesLayout;
+    private ListView categoriesListView;
+    private ImageView categoriesIcon;
+    private ImageButton categoriesAddButton;
+    private EditText categoriesAddText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,51 +82,17 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         notificationText = (TextView) findViewById(R.id.task_edit_notification_text);
         notificationRemoveButton = (ImageButton) findViewById(R.id.task_edit_notification_remove_button);
 
-        //On notification area touch, show time picker
-        notificationLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                showTimerPickerDialog();
-                return false;
-            }
-        });
+        categoriesLayout = (RelativeLayout) findViewById(R.id.task_edit_categories_layout);
+        categoriesListView = (ListView) findViewById(R.id.task_edit_categories_list);
+        categoriesIcon = (ImageView) findViewById(R.id.task_edit_categories_icon);
+        categoriesAddButton = (ImageButton) findViewById(R.id.task_edit_categories_add_image_button);
+        categoriesAddText = (EditText) findViewById(R.id.task_edit_categories_add_text_view);
 
-        //Handle name input
-        nameText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
-                    String input = nameText.getText().toString();
-
-                    // Check if valid input, otherwise reset name.
-                    if (input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)) {
-                        nameText.setText(backupName);
-                    } else {
-                        EventBus.getDefault().post(new TaskEditedEvent());
-                    }
-
-                    setShowKeyboard(false, v);
-                    nameText.clearFocus();
-                    return true;
-                }
-                return false;
-            }
-        });
-
-        //Remove date from task and updated view
-        notificationRemoveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cal = null;
-                EventBus.getDefault().post(new TaskEditedEvent());
-            }
-        });
-
-
-        toolbar = (Toolbar) findViewById(R.id.edit_task_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        //Setup view
+        setupToolbar();
+        setupNameLayout();
+        setupNotificationLayout();
+        setupCategoriesLayout();
 
         EventBus.getDefault().post(new OnCreateEvent(this));
     }
@@ -163,7 +143,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
 
         if (cal == null) {
             notificationRemoveButton.setVisibility(View.INVISIBLE);
-            notificationIcon.setAlpha(0.1f);
+            notificationIcon.setAlpha(0.2f);
             notificationText.setText("");
         } else {
             notificationRemoveButton.setVisibility(View.VISIBLE);
@@ -213,6 +193,125 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         } else {
             imm.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT);
         }
+    }
+
+    /**
+     * Setups the name-layout by adding a handler for input.
+     * On enter closes keyboard and notifies controller that it should update model.
+     * Although, if the new name is an empty string it gets reset to the model.
+     */
+    private void setupNameLayout() {
+        nameText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
+                    String input = nameText.getText().toString();
+
+                    // Check if valid input, otherwise reset name.
+                    if (input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)) {
+                        nameText.setText(backupName);
+                    } else {
+                        EventBus.getDefault().post(new TaskEditedEvent());
+                    }
+
+                    setShowKeyboard(false, v);
+                    nameText.clearFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Setups toolbar by setting it as SupportActionBar and adding a "backbutton" to it.
+     */
+    private void setupToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.edit_task_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    /**
+     * Setups notification layout by adding listeners to touch and click events for the different
+     * elements.
+     */
+    private void setupNotificationLayout() {
+        //Setup notification area to begin date-set process on click.
+        notificationLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                showTimerPickerDialog();
+                return false;
+            }
+        });
+
+        //Remove date from task and updated view
+        notificationRemoveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal = null;
+                EventBus.getDefault().post(new TaskEditedEvent());
+            }
+        });
+    }
+
+    private void setupCategoriesLayout() {
+        categoriesAddText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
+                    String input = categoriesAddText.getText().toString();
+
+                    // Check if valid input, otherwise reset name.
+                    if (!input.equalsIgnoreCase("")) {
+                        EventBus.getDefault().post(new TaskEditedEvent());
+                    }
+
+                    setShowKeyboard(false, v);
+                    categoriesAddText.clearFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public String getNewLabelText() {
+        String text = categoriesAddText.getText().toString();
+        categoriesAddText.setText(null);
+        adapter.notifyDataSetChanged();
+        return text;
+    }
+
+    @Override
+    public void notifyCategoriesChanged() {
+        adapter.notifyDataSetChanged();
+        updateCategoriesListHeight();
+    }
+
+    private void updateCategoriesListHeight(){
+        ViewGroup.LayoutParams params = categoriesListView.getLayoutParams();
+        int newHeight = 50;
+
+        newHeight += categoriesListView.getCount() * 65 * 4;
+        params.height = newHeight;
+
+        categoriesListView.setLayoutParams(params);
+        categoriesListView.requestLayout();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setupCategories(List<ILabelCategory> list) {
+        //resource = 0 because of no need for custom layout ID.
+        adapter = new TaskEditCategoryAdapter(this, 0, list);
+        categoriesListView.setAdapter(adapter);
+        updateCategoriesListHeight();
     }
 
     /**
@@ -282,4 +381,6 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
             EventBus.getDefault().post(new TaskEditedEvent());
         }
     }
+
+
 }

@@ -49,12 +49,14 @@ public class TaskEditCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EventBus.getDefault().post(new TaskEditedEvent());
                 categories.remove(category);
+                EventBus.getDefault().post(new TaskEditedEvent());
             }
         });
 
         labelName.setText(category.getName());
+
+        notifyDataSetChanged();
 
         return view;
     }

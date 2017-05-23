@@ -64,7 +64,7 @@
                     android:layout_marginStart="48dp"
                     android:background="@null"
                     android:hint="Task Name"
-                    android:singleLine="true"
+                    android:maxLines="1"
                     android:textSize="18sp" />
             </RelativeLayout>
 
@@ -86,9 +86,10 @@
                     android:id="@+id/task_edit_notification_icon"
                     android:layout_width="25dp"
                     android:layout_height="match_parent"
-                    app:srcCompat="@android:drawable/ic_lock_idle_alarm"
+                    android:layout_alignParentStart="true"
                     android:layout_centerVertical="true"
-                    android:layout_alignParentStart="true" />
+                    android:tint="@color/colorPrimaryDark"
+                    app:srcCompat="@drawable/ic_alarm_white_24dp" />
 
                 <TextView
                     android:id="@+id/task_edit_notification_text"
@@ -125,41 +126,67 @@
                 android:background="@color/colorPrimary" />
 
             <RelativeLayout
+                android:id="@+id/task_edit_categories_layout"
                 android:layout_width="match_parent"
-                android:layout_height="64dp">
+                android:layout_height="wrap_content">
 
-                <RelativeLayout
-                    android:id="@+id/category_layout"
+                <ImageView
+                    android:id="@+id/task_edit_categories_icon"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="84dp"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
-                    android:orientation="vertical"
-                    android:paddingBottom="8dp"
-                    android:paddingRight="8dp"
-                    android:paddingTop="16dp">
+                    android:tint="@color/colorPrimaryDark"
+                    app:srcCompat="@drawable/ic_label_outline_black_24dp"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="81dp" />
 
-                    <TextView
-                        android:id="@+id/textView_category"
+                <ListView
+                    android:id="@+id/task_edit_categories_list"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentTop="true"
+                    android:cacheColorHint="@android:color/background_light"
+                    android:scrollbars="none"
+                    tools:layout_editor_absoluteX="32dp"
+                    tools:layout_editor_absoluteY="81dp"
+                    android:layout_toEndOf="@+id/task_edit_categories_icon" />
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="45dp"
+                    android:layout_alignEnd="@+id/task_edit_categories_list"
+                    android:layout_alignParentBottom="true"
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="81dp"
+                    android:layout_toEndOf="@+id/task_edit_categories_icon"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/task_edit_categories_list">
+
+                    <ImageButton
+                        android:id="@+id/task_edit_categories_add_image_button"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:labelFor="@+id/spinner_category"
-                        android:paddingStart="4dp"
-                        android:text="Category"
-                        android:textColor="@color/textPrimaryColor"
-                        android:textSize="12sp"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentStart="true" />
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:tint="@color/colorPrimary"
+                        app:srcCompat="@drawable/ic_add_white_24dp" />
 
-                    <Spinner
-                        android:id="@+id/spinner_category"
-                        android:layout_width="120dp"
-                        android:layout_height="48dp"
-                        android:layout_alignLeft="@+id/textView_category"
-                        android:layout_below="@+id/textView_category"
-                        android:paddingTop="8dp"
-                        android:textColor="@color/textPrimaryColor"
-                        android:textSize="16sp" />
+                    <EditText
+                        android:id="@+id/task_edit_categories_add_text_view"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:layout_centerVertical="true"
+                        android:background="@null"
+                        android:hint="Add to new category"
+                        android:maxLines="1"
+                        android:selectAllOnFocus="false"
+                        android:singleLine="true"
+                        android:textAlignment="center"
+                        android:textSize="14sp" />
                 </RelativeLayout>
 
             </RelativeLayout>
@@ -170,33 +197,20 @@
                 android:background="@color/colorPrimary" />
 
             <RelativeLayout
-                android:id="@+id/relativeLayout"
+                android:id="@+id/task_edit_priority_layout"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentTop="true"
                 android:paddingBottom="8dp"
                 android:paddingTop="16dp">
 
-                <TextView
-                    android:id="@+id/textView_priority"
+                <ImageView
+                    android:id="@+id/task_edit_priority_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:labelFor="@+id/spinner_priority"
-                    android:paddingStart="4dp"
-                    android:text="Priority"
-                    android:textColor="@color/textPrimaryColor"
-                    android:textSize="12sp" />
-
-                <Spinner
-                    android:id="@+id/spinner_priority"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:layout_alignLeft="@+id/textView_priority"
-                    android:layout_below="@+id/textView_priority"
-                    android:paddingTop="8dp"
-                    android:textColor="@color/textPrimaryColor"
-                    android:textSize="16sp" />
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:tint="@color/colorPrimaryDark"
+                    app:srcCompat="@drawable/ic_priority_high_black_24dp" />
             </RelativeLayout>
 
             <View
@@ -205,7 +219,7 @@
                 android:background="@color/colorPrimary" />
 
             <RelativeLayout
-                android:id="@+id/RLNote"
+                android:id="@+id/task_edit_note_layout"
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:orientation="vertical"
@@ -213,24 +227,14 @@
                 android:paddingTop="16dp">
 
                 <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="28dp"
+                    android:id="@+id/task_edit_note_icon"
+                    android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    app:srcCompat="@android:drawable/ic_input_add" />
-
-                <EditText
-                    android:id="@+id/editText_note"
-                    android:layout_width="310dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:background="@android:color/transparent"
-                    android:hint="Add a note"
-                    android:paddingTop="8dp"
-                    android:textColor="@color/textPrimaryColor"
-                    android:textSize="16sp" />
+                    android:tint="@color/colorPrimaryDark"
+                    app:srcCompat="@drawable/ic_add_white_24dp" />
+
             </RelativeLayout>
 
             <View

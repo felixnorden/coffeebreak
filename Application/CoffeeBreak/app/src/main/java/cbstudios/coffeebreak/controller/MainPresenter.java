@@ -207,6 +207,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Subscribe
     public void onEditTaskEvent(EditTaskEvent event) {
         taskEditPresenter = PresenterFactory.getInstance().createTaskDetailPresenter(event.getTask());
+        taskEditPresenter.injectModel(this.model);
         Intent intent = new Intent(mainView.getAppCompatActivity(), TaskEditActivity.class);
         mainView.getAppCompatActivity().startActivity(intent);
     }

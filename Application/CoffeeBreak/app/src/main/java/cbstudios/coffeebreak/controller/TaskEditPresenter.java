@@ -14,9 +14,9 @@ import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
 import cbstudios.coffeebreak.model.Model;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.view.activity.ITaskEditView;
-import cbstudios.coffeebreak.view.activity.TaskEditActivity;
 
 public class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
 
@@ -54,13 +54,13 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
     }
 
     @Override
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void setNotificationCalendar(Calendar cal) {
         task.setDate(cal);
         view.setNotification(cal);
     }
 
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCreate(OnCreateEvent event) {
         if (event.object instanceof ITaskEditView) {
             view = (ITaskEditView) event.object;
@@ -68,44 +68,48 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
         }
     }
 
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPause(OnPauseEvent event) {
         if (event.object instanceof ITaskEditView) {
 
         }
     }
 
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onResume(OnResumeEvent event) {
         if (event.object instanceof ITaskEditView) {
 
         }
     }
 
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDestroy(OnDestroyEvent event) {
         if (event.object instanceof ITaskEditView) {
 
         }
     }
 
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStop(OnStopEvent event) {
         if (event.object instanceof ITaskEditView) {
             EventBus.getDefault().unregister(this);
         }
     }
 
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStart(OnStartEvent event) {
-        if(event.object instanceof ITaskEditView)
+        if (event.object instanceof ITaskEditView)
             EventBus.getDefault().register(this);
     }
 
+    /**
+     * Updates view with current data in model.
+     */
     private void setupView() {
         view.setNameText(task.getName());
         view.setTitle(task.getName());
         view.setNotification(task.getDate());
+        view.setupCategories(task.getLabels());
     }
 
     /**
@@ -115,6 +119,23 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
     private void updateModel() {
         task.setName(view.getNameText());
         task.setDate(view.getNotification());
+        updateLabels();
+
         setupView();
+    }
+
+    /**
+     * Updates the task with possible new information on
+     */
+    private void updateLabels() {
+        String newName = view.getNewLabelText();
+
+        if(newName == null || newName.equals(""))
+            return;
+
+        if(!task.hasILabelCategory(newName)){
+            task.addLabel(model.getToDoDataModule().getLabelCategory(newName));
+            view.notifyCategoriesChanged();
+        }
     }
 }
