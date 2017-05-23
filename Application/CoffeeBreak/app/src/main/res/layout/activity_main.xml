@@ -43,11 +43,11 @@
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="170dp"
             android:layout_marginRight="64dp"
+            android:elevation="6dp"
             android:text="@string/advanced_task"
             android:textAlignment="center"
             android:textSize="16sp"
-            android:visibility="invisible"
-            android:elevation="6dp"/>
+            android:visibility="invisible" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_advanced_task"
@@ -73,11 +73,11 @@
             android:layout_gravity="bottom|end"
             android:layout_marginBottom="110dp"
             android:layout_marginRight="64dp"
+            android:elevation="6dp"
             android:text="@string/list_task"
             android:textAlignment="center"
             android:textSize="16sp"
-            android:visibility="invisible"
-            android:elevation="6dp"/>
+            android:visibility="invisible" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab_list_task"
@@ -110,15 +110,20 @@
             app:pressedTranslationZ="12dp" />
 
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/taskList"
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="2dp"
-            android:paddingBottom="8dp"
-            android:paddingTop="8dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            android:layout_height="match_parent">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/taskList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:elevation="2dp"
+                android:paddingBottom="8dp"
+                android:paddingTop="8dp"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.design.widget.CoordinatorLayout>
 
     <RelativeLayout
@@ -129,51 +134,48 @@
         android:elevation="16dp">
 
         <TextView
+            android:id="@+id/drawer_header"
             android:layout_width="240dp"
             android:layout_height="160dp"
-            android:id="@+id/drawer_header"
+            android:background="@android:color/white"
             android:text="COOL HEADER"
             android:textAlignment="center"
-            android:textSize="56dp"
-            android:background="@android:color/white"
-            />
+            android:textSize="56dp" />
 
         <ImageView
             android:id="@+id/time_separator"
             android:layout_width="24dp"
             android:layout_height="24dp"
-            android:layout_marginLeft="8dp"
             android:layout_below="@id/drawer_header"
+            android:layout_marginLeft="8dp"
             app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
 
         <TextView
             android:layout_width="208dp"
             android:layout_height="24dp"
-            android:text="   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _"
             android:layout_below="@id/drawer_header"
-            android:layout_toEndOf="@id/time_separator"/>
+            android:layout_toEndOf="@id/time_separator"
+            android:text="   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _" />
 
         <ListView
             android:id="@+id/drawer_list"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
+            android:layout_below="@id/time_separator"
             android:background="@android:color/white"
             android:choiceMode="singleChoice"
             android:divider="@android:color/transparent"
-            android:layout_below="@id/time_separator"
             android:dividerHeight="2dp"
-            android:drawSelectorOnTop="true"
-            />
-
+            android:drawSelectorOnTop="true" />
 
 
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/background_light"
             android:layout_below="@id/drawer_list"
-            app:srcCompat="@android:drawable/ic_input_add"/>
+            android:backgroundTint="@android:color/background_light"
+            app:srcCompat="@android:drawable/ic_input_add" />
 
 
     </RelativeLayout>
