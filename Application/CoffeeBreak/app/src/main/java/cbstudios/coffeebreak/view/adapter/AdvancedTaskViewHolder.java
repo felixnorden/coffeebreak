@@ -24,7 +24,7 @@ class AdvancedTaskViewHolder extends TaskAdapter.TaskViewHolder {
         if(task.hasNote())
             information = task.getNote();
         else if(!task.getLabels().isEmpty())
-            information = task.getLabels().toString();
+            information = task.getLabels().get(0).getName();
         else
             information = "No info, add plez";
         tvSubTask.setText(information);

@@ -31,6 +31,8 @@ public class Statistics {
     private int daysInARow;
     private Calendar lastDayCheckedTask;
 
+    private boolean created;
+
     /**
      * The class constructor that will init alla ints and call for initAchievement
      */
@@ -239,7 +241,7 @@ public class Statistics {
     }
 
     public int getDaysInARow(){
-        return daysInARow;
+        return this.daysInARow;
     }
 
     public void setDaysInARow(int daysInARow){

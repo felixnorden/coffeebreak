@@ -82,12 +82,15 @@ public class CategoryList implements ICategoryList {
     private void initTimeCategories() {
         Calendar currentDate = Calendar.getInstance();
         timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("Today", currentDate));
-        currentDate.add(Calendar.DAY_OF_YEAR, 1);
-        timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("Tomorrow", currentDate));
-        currentDate.add(Calendar.DAY_OF_YEAR, 6);
-        timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("Next 7 days", currentDate));
-        currentDate.add(Calendar.DAY_OF_YEAR, 23);
-        timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("Next 30 days", currentDate));
+        Calendar tomorrow = Calendar.getInstance();
+        tomorrow.add(Calendar.DATE, 1);
+        timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("Tomorrow", tomorrow));
+        Calendar week = Calendar.getInstance();
+        week.add(Calendar.DATE, 6);
+        timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("Next 7 days", week));
+        Calendar month = Calendar.getInstance();
+        month.add(Calendar.DATE, 30);
+        timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("Next 30 days", month));
     }
     /**
      *

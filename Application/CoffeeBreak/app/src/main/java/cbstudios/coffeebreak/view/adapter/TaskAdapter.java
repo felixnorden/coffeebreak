@@ -81,6 +81,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                         task.setName(input);
                         EventBus.getDefault().post(new TaskKeyboardClosedEvent(itemView, getAdapterPosition(), false, task));
                         EventBus.getDefault().post(new ShowKeyboardEvent(false, etTaskName));
+                        etTaskName.clearFocus();
                     }
                     return false;
                 }
@@ -112,8 +113,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 }
                 setTaskNameEnabled(false);
                 setSpecificFields();
-            }
-            else{
+            }else{
                 etTaskName.setEnabled(true);
                 cbCheckBox.setChecked(false);
                 cbCheckBox.setVisibility(View.INVISIBLE);
@@ -275,8 +275,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             mTasks.remove(event.task);
             notifyItemRemoved(event.position);
             notifyItemRangeChanged(rangeStart, mTasks.size());
-        }
-        else {
+        }else {
             notifyItemChanged(event.position);
         }
     }

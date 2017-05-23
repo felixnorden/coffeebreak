@@ -276,7 +276,8 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         public void onDateSet(DatePicker view, int year, int month, int day) {
             cal.set(Calendar.YEAR, year);
             cal.set(Calendar.MONTH, month);
-            cal.set(Calendar.DAY_OF_YEAR, day);
+            cal.set(Calendar.DAY_OF_MONTH, day);
+
 
             EventBus.getDefault().post(new TaskEditedEvent());
         }
