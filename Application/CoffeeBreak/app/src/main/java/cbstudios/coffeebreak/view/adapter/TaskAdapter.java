@@ -213,6 +213,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             return ADVANCED_TASK;
     }
 
+    @Override
+    public void refreshItems(){
+        updateTasks();
+        filterTasks();
+    }
+
     /**
      * {@inheritDoc}
      */

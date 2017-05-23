@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -77,6 +78,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     private List<ILabelCategory> labelCategories;
     private List<ITimeCategory> timeCategories;
     private RecyclerView taskList;
+    private SwipeRefreshLayout swipeRefreshLayout;
     private ICategory currentCategory = null;
 
     private static boolean initialized = false;
@@ -87,6 +89,8 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         setContentView(R.layout.activity_main);
 
         taskList = (RecyclerView) findViewById(R.id.taskList);
+        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+
         taskList.setLayoutManager(new LinearLayoutManager(this));
         if(!initialized) {
             presenterFactory.initializeDelegatingPresenter(this);
@@ -129,11 +133,25 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
                 displayKeyboard();
             }
         });
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshItems();
+            }
+        });
 
         EventBus.getDefault().post(new OnCreateEvent(this));
         if(!initialized)
             EventBus.getDefault().post(new TimesAppStartedEvent());
 
+    }
+
+    private void refreshItems() {
+        ITaskAdapter adapter = (ITaskAdapter) taskList.getAdapter();
+        adapter.refreshItems();
+
+        // Stop refresh animation
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     @Override

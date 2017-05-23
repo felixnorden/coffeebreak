@@ -13,4 +13,5 @@ public interface ITaskAdapter {
     void updateTasks();
     void filterTasks();
     void updateTmpTasks(List<IAdvancedTask> tasks);
+    void refreshItems();
 }
