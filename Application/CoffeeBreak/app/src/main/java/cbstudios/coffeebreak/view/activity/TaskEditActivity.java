@@ -5,8 +5,8 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
@@ -31,15 +31,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.crypto.spec.RC5ParameterSpec;
-
 import cbstudios.coffeebreak.R;
-import cbstudios.coffeebreak.eventbus.OnResumeEvent;
-import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
 import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
 import cbstudios.coffeebreak.eventbus.OnPauseEvent;
+import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
+import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.view.adapter.TaskEditCategoryAdapter;
 
@@ -68,6 +66,9 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     private ImageButton categoriesAddButton;
     private EditText categoriesAddText;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,46 +98,70 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         EventBus.getDefault().post(new OnCreateEvent(this));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onPause() {
         EventBus.getDefault().post(new OnPauseEvent(this));
         super.onPause();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onDestroy() {
         EventBus.getDefault().post(new OnDestroyEvent(this));
         super.onDestroy();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onStop() {
         EventBus.getDefault().post(new OnStopEvent(this));
         super.onStop();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onResume() {
         super.onResume();
         EventBus.getDefault().post(new OnResumeEvent(this));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public AppCompatActivity getAppCompatActivity() {
         return this;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getNameText() {
         return nameText.getText().toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setNameText(String text) {
         nameText.setText(text);
         backupName = text;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setNotification(Calendar cal) {
         this.cal = cal;
@@ -157,11 +182,17 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Calendar getNotification() {
         return this.cal;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setTitle(String title) {
         getSupportActionBar().setTitle(title);
@@ -257,6 +288,9 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         });
     }
 
+    /**
+     * Adds listener to new-category-text-field.
+     */
     private void setupCategoriesLayout() {
         categoriesAddText.setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -278,6 +312,9 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         });
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getNewLabelText() {
         String text = categoriesAddText.getText().toString();
@@ -286,13 +323,19 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         return text;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void notifyCategoriesChanged() {
         adapter.notifyDataSetChanged();
         updateCategoriesListHeight();
     }
 
-    private void updateCategoriesListHeight(){
+    /**
+     * Sets the ListView to the proper height.
+     */
+    private void updateCategoriesListHeight() {
         ViewGroup.LayoutParams params = categoriesListView.getLayoutParams();
         int newHeight = 50;
 

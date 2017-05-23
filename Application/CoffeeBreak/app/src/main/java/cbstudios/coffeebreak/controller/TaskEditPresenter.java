@@ -38,28 +38,6 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
         updateModel();
     }
 
-    @Override
-    public String getTaskName() {
-        return task.getName();
-    }
-
-    @Override
-    public void setTaskName(String name) {
-        task.setName(name);
-    }
-
-    @Override
-    public Calendar getNotificationCalendar() {
-        return task.getDate();
-    }
-
-    @Override
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void setNotificationCalendar(Calendar cal) {
-        task.setDate(cal);
-        view.setNotification(cal);
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCreate(OnCreateEvent event) {
         if (event.object instanceof ITaskEditView) {
