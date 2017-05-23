@@ -40,9 +40,9 @@ public class StatisticsConverter {
         statisticsObject.addProperty("TimesCategoryCreated", statistics.getTimesCategoryCreated());
         statisticsObject.addProperty("TimesSettingsChanged", statistics.getTimesSettingsChanged());
         statisticsObject.addProperty("TasksAlive", statistics.getTasksAlive());
-        statisticsObject.addProperty("DaysInARow", statistics.getDaysInARow());
+       // statisticsObject.addProperty("DaysInARow", statistics.getDaysInARow());
 
-        //statisticsObject.addProperty("LastDayCheckedTask", statistics.getLastDayCheckedTask());
+//        statisticsObject.addProperty("LastDayCheckedTask", statistics.getLastDayCheckedTask().getTimeInMillis());
         return statisticsObject;
     }
 
@@ -60,6 +60,11 @@ public class StatisticsConverter {
         statistics.setTasksAlive(object.get("TasksAlive").getAsInt());
 //        statistics.setDaysInARow(object.get("DaysInARow").getAsInt());
 
+
+        /*Calendar time = Calendar.getInstance();
+        time.setTimeInMillis(Long.valueOf(object.get("LastDayCheckedTask").getAsString()));
+        statistics.setLastDayCheckedTask(time);
+*/
         return statistics;
     }
 }
