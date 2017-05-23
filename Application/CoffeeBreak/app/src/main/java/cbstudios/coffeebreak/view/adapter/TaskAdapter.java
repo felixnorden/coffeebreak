@@ -290,7 +290,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     private void removeCheckedTasks(){
-        for(IAdvancedTask task: mainPresenter.getTasks()){
+        EventBus.getDefault().post(new RequestTaskListEvent(this));
+        for(IAdvancedTask task: tmpTasks){
             if(task.isChecked()){
                 EventBus.getDefault().post(new RemoveTaskEvent(task, true));
             }
@@ -298,7 +299,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     private void removeNullTasks(){
-        for(IAdvancedTask task: mainPresenter.getTasks()){
+        EventBus.getDefault().post(new RequestTaskListEvent(this));
+        for(IAdvancedTask task: tmpTasks){
             if(task.getName()== null){
                 EventBus.getDefault().post(new RemoveTaskEvent(task, false));
             }
