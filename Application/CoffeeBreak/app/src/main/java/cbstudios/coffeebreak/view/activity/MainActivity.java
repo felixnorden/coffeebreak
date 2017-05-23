@@ -39,6 +39,7 @@ import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
+import cbstudios.coffeebreak.eventbus.RequestTaskCreationEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
 import cbstudios.coffeebreak.eventbus.TimesNavOpenEvent;
@@ -145,7 +146,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     @Override
     protected void onPause(){
         EventBus.getDefault().post(new OnPauseEvent(this));
-        //mainPresenter.onPause(new OnPauseEvent(this));
         super.onPause();
     }
 
@@ -252,16 +252,17 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         }
     }
 
-    @Override
-    public Object onRetainCustomNonConfigurationInstance(){
-        return mainPresenter;
-    }
+//    @Override
+//    public Object onRetainCustomNonConfigurationInstance(){
+//        return mainPresenter;
+//    }
 
     private void attachPresenter(){
         mainPresenter = (IMainPresenter) getLastCustomNonConfigurationInstance();
         if(mainPresenter == null){
-            EventBus.getDefault().post(new RequestPresenterEvent(this));
             System.out.println("Request sent");
+            EventBus.getDefault().post(new RequestPresenterEvent(this));
+
             //mainPresenter = presenterFactory.createMainPresenter(this);
             return;
         }
@@ -310,13 +311,15 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
     private void addAdvTask() {
-        mainPresenter.createAdvancedTask();
+        EventBus.getDefault().post(new RequestTaskCreationEvent(RequestTaskCreationEvent.ADVANCED_TASK));
+        //mainPresenter.createAdvancedTask();
         updateAdapter();
     }
 
 
     private void addListTask() {
-        mainPresenter.createListTask();
+        EventBus.getDefault().post(new RequestTaskCreationEvent(RequestTaskCreationEvent.LIST_TASK));
+        //mainPresenter.createListTask();
         updateAdapter();
     }
 

@@ -10,4 +10,6 @@ import cbstudios.coffeebreak.model.Model;
 
 class BasePresenter{
     protected Model model;
+    protected static final int ADVANCED_TASK = 0;
+    protected static final int LIST_TASK = 1;
 }

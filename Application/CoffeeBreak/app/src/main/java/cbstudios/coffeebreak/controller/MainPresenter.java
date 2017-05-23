@@ -23,6 +23,7 @@ import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
+import cbstudios.coffeebreak.eventbus.RequestTaskCreationEvent;
 import cbstudios.coffeebreak.eventbus.SaveStateEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
 import cbstudios.coffeebreak.eventbus.TimesCategoryCreatedEvent;
@@ -51,8 +52,7 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 class MainPresenter extends BasePresenter implements IMainPresenter {
     private IMainView mainView;
     private ITaskAdapter taskAdapter;
-    //private static boolean loadedData = false;
-
+    private static int presenters = 0;
     // TODO: 2017-05-18 Gather presenters in List somewhere
     private ITaskEditPresenter taskEditPresenter;
 
@@ -63,7 +63,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
         //TODO Make Creating Presenter subscribe instead of in this constructor!
         EventBus.getDefault().register(this);
-        System.out.println("MainPresenter");
+        System.out.println("MainPresenters: " + ++presenters);
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -101,7 +101,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onDestroy(OnDestroyEvent event) {
         if(event.object == mainView) {
-//            EventBus.getDefault().unregister(this);
+            EventBus.getDefault().unregister(this);
             System.out.println("Presenter unreg");
             detachView();
         }
@@ -128,12 +128,19 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         this.model = model;
     }
 
-
-    public void createTask() {
-        model.getToDoDataModule().createAdvancedTask();
-        EventBus.getDefault().post(new CreateTaskEvent());
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void onTaskCreationRequest(RequestTaskCreationEvent event){
+        switch(event.type){
+            case ADVANCED_TASK: createAdvancedTask();
+                break;
+            case LIST_TASK: createListTask();
+                break;
+            default: break;
+        }
     }
 
+    // TODO: 2017-05-23 Make sure that these methods are hidden.
+    @Override
     public void createAdvancedTask() {
         model.getToDoDataModule().createAdvancedTask();
     }
