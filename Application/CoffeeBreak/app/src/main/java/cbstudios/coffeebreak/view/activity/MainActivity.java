@@ -18,6 +18,8 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ import cbstudios.coffeebreak.controller.IMainPresenter;
 import cbstudios.coffeebreak.controller.IPresenter;
 import cbstudios.coffeebreak.controller.IPresenterFactory;
 import cbstudios.coffeebreak.controller.PresenterFactory;
+import cbstudios.coffeebreak.eventbus.CreateCategoryEvent;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
 import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
 import cbstudios.coffeebreak.eventbus.OnPauseEvent;
@@ -63,6 +66,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     private FloatingActionButton fabAddBtn, fabAdvBtn, fabListBtn;
     private TextView txtAdvBtn, txtListBtn;
     //private LinearLayout fabAdvGroup, fabListGroup;
+    private ImageButton mAddCategoryButton;
 
     private boolean isFabOpen = false;
 
@@ -227,6 +231,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mDrawerList = (ListView) findViewById(R.id.drawer_list);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.setBackgroundColor(Color.WHITE);
+        mAddCategoryButton = (ImageButton) findViewById(R.id.add_category);
 
         final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, mainPresenter);
         final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories, mainPresenter);
@@ -237,6 +242,14 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
         mDrawerList.setAdapter(mergeAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+        mAddCategoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getDefault().post(new CreateCategoryEvent());
+                ((MergeAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
+            }
+        });
+
 
     }
 
@@ -340,7 +353,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     private void updateAdapter(){
         TaskAdapter taskAdapter = (TaskAdapter) taskList.getAdapter();
-        taskAdapter.filterTasks();
+        taskAdapter.filterTasks(currentCategory);
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -362,6 +375,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         ICategory category = (ICategory) mDrawerList.getAdapter().getItem(position);
         setTitle(category.getName());
         currentCategory = category;
+        System.out.println(currentCategory.getName());
 
         // Set adapter
         //TODO UGLY AF

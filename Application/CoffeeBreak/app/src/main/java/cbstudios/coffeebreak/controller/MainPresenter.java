@@ -15,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.util.List;
 
 import cbstudios.coffeebreak.eventbus.CheckTaskEvent;
+import cbstudios.coffeebreak.eventbus.CreateCategoryEvent;
 import cbstudios.coffeebreak.eventbus.CreateTaskEvent;
 import cbstudios.coffeebreak.eventbus.EditTaskEvent;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
@@ -182,6 +183,12 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         taskEditPresenter = PresenterFactory.getInstance().createTaskDetailPresenter(event.getTask());
         Intent intent = new Intent(mainView.getAppCompatActivity(), TaskEditActivity.class);
         mainView.getAppCompatActivity().startActivity(intent);
+    }
+
+    @Subscribe
+    public void onCreateCategoryEvent(CreateCategoryEvent event){
+        model.getToDoDataModule().addLabelCategory("mock1");
+
     }
 
     @Subscribe
