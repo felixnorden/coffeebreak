@@ -1,9 +1,11 @@
 package cbstudios.coffeebreak.view.activity;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,7 +13,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,6 +27,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -45,6 +50,7 @@ import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
 import cbstudios.coffeebreak.eventbus.RequestTaskCreationEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
+import cbstudios.coffeebreak.eventbus.SortListEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
 import cbstudios.coffeebreak.eventbus.TimesNavOpenEvent;
 import cbstudios.coffeebreak.eventbus.UpdateContextReferenceEvent;
@@ -56,6 +62,7 @@ import cbstudios.coffeebreak.view.adapter.LabelCategoryAdapter;
 import cbstudios.coffeebreak.view.adapter.MergeAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
+import cbstudios.coffeebreak.view.fragment.SortFragment;
 
 public class MainActivity extends AppCompatActivity  implements IMainView {
     private ActionBarDrawerToggle mActionBarDrawerToggle;
@@ -194,6 +201,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -202,13 +210,34 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch(id){
+            case(R.id.action_settings):
+                return true;
+            case(R.id.action_sort):
+                showSortingDialog();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
     }
 
+
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void onSortingOrderChange(SortListEvent event){
+        switch (event.order){
+            case SortListEvent.ORDERING_ALPHABETICAL:
+                Toast.makeText(this, "Alphabetical order", Toast.LENGTH_SHORT).show();
+                break;
+            case SortListEvent.ORDERING_CHRONOLOGICAL:
+                Toast.makeText(this, "Chronological order", Toast.LENGTH_SHORT).show();
+                break;
+            case SortListEvent.ORDERING_PRIORITY:
+                Toast.makeText(this, "Priority order", Toast.LENGTH_SHORT).show();
+                break;
+            default: return;
+        }
+    }
 
     @Override
     public void setTitle(CharSequence title) {
@@ -289,6 +318,11 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         else{
             imm.showSoftInput(event.view, InputMethodManager.SHOW_IMPLICIT);
         }
+    }
+
+    private void showSortingDialog() {
+        DialogFragment dialog = new SortFragment();
+        dialog.show(getSupportFragmentManager(), "sorting");
     }
 
     private void attachPresenter(){

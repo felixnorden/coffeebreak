@@ -2,6 +2,7 @@ package cbstudios.coffeebreak.controller;
 
 import android.app.usage.UsageEvents;
 import android.content.Intent;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -29,6 +30,7 @@ import cbstudios.coffeebreak.eventbus.RemoveTaskEvent;
 import cbstudios.coffeebreak.eventbus.RequestTaskCreationEvent;
 import cbstudios.coffeebreak.eventbus.RequestTaskListEvent;
 import cbstudios.coffeebreak.eventbus.SaveStateEvent;
+import cbstudios.coffeebreak.eventbus.SortListEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
 import cbstudios.coffeebreak.eventbus.TimesCategoryCreatedEvent;
 import cbstudios.coffeebreak.eventbus.TimesNavOpenEvent;
@@ -39,6 +41,7 @@ import cbstudios.coffeebreak.model.AchievementConverter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.StatisticsConverter;
 import cbstudios.coffeebreak.model.TaskConverter;
+import cbstudios.coffeebreak.model.TaskSorter;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.Statistics;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievement;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
@@ -128,6 +131,27 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         if(event.object == mainView) {
             registerViewComponents(true);
 //            System.out.println("Register");
+        }
+    }
+
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void onSortingOrderChange(SortListEvent event){
+        TaskSorter sorter = TaskSorter.getInstance();
+        List<IAdvancedTask> tasks = getTasks();
+        switch (event.order){
+            case SortListEvent.ORDERING_ALPHABETICAL:
+                sorter.sortAlphabetically(tasks);
+                taskAdapter.swapTasks(tasks);
+                break;
+            case SortListEvent.ORDERING_CHRONOLOGICAL:
+                sorter.sortChronologically(tasks);
+                taskAdapter.swapTasks(tasks);
+                break;
+            case SortListEvent.ORDERING_PRIORITY:
+                sorter.sortPriorities(tasks);
+                taskAdapter.swapTasks(tasks);
+                break;
+            default: return;
         }
     }
 

@@ -274,7 +274,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
     }
 
-    private void swapTasks(List<IAdvancedTask> newTasks){
+    @Override
+    public void swapTasks(List<IAdvancedTask> newTasks){
         final TaskDiffCallback diffCallback = new TaskDiffCallback(this.mTasks, newTasks);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
 
