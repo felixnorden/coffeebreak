@@ -19,6 +19,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daimajia.swipe.SimpleSwipeListener;
+import com.daimajia.swipe.SwipeLayout;
+import com.daimajia.swipe.adapters.RecyclerSwipeAdapter;
+
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -44,7 +48,12 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
  * Used by: MainActivity to represent the linear list of tasks in its viewport.
  */
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> implements ITaskAdapter{
+public class TaskAdapter extends RecyclerSwipeAdapter<TaskAdapter.TaskViewHolder> implements ITaskAdapter{
+
+    @Override
+    public int getSwipeLayoutResourceId(int position) {
+        return 0;
+    }
 
     public abstract static class TaskViewHolder extends RecyclerView.ViewHolder{
         public IAdvancedTask task;
@@ -54,6 +63,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public ImageView ivCategory;
         public ImageButton ibMore;
         public Drawable etBackgroundDrawable;
+        public SwipeLayout swipeLayout;
 
 
         public TaskViewHolder(final View itemView) {
@@ -64,7 +74,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             etTaskName = (EditText) itemView.findViewById(R.id.editTextField);
             ivCategory = (ImageView) itemView.findViewById(R.id.imageViewCategory);
             ibMore = (ImageButton) itemView.findViewById(R.id.imageButtonMore);
+            swipeLayout = (SwipeLayout) itemView.findViewById(R.id.swipeLayout);
             etBackgroundDrawable = etTaskName.getBackground();
+
 
             etTaskName.setOnKeyListener(new View.OnKeyListener() {
                 @Override
@@ -95,6 +107,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             addOnCheckedChangedListener();
         }
         void setUpTask(){
+            swipeLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
+            swipeLayout.addSwipeListener((new SimpleSwipeListener(){
+                @Override
+                public void onOpen(SwipeLayout layout){
+                    
+                }
+            }));
             if(task.getName() != null){
                 cbCheckBox.setChecked(false);
                 cbCheckBox.setVisibility(View.VISIBLE);
