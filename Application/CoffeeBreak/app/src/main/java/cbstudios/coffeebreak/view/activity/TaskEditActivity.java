@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import cbstudios.coffeebreak.R;
+import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
 import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
@@ -116,20 +117,26 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
 
     @Override
     protected void onPause() {
-        super.onPause();
         EventBus.getDefault().post(new OnPauseEvent(this));
+        super.onPause();
     }
 
     @Override
     protected void onDestroy() {
-        super.onDestroy();
         EventBus.getDefault().post(new OnDestroyEvent(this));
+        super.onDestroy();
     }
 
     @Override
     protected void onStop() {
-        super.onStop();
         EventBus.getDefault().post(new OnStopEvent(this));
+        super.onStop();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        EventBus.getDefault().post(new OnResumeEvent(this));
     }
 
     @Override
