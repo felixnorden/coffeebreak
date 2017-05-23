@@ -214,9 +214,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     @Override
-    public void refreshItems(){
+    public void refreshItems(ICategory category){
         updateTasks();
-        filterTasks();
+        filterTasks(category);
     }
 
     /**
@@ -242,12 +242,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void filterTasks(ICategory currentCategory){
         EventBus.getDefault().post(new RequestTaskListEvent(this));
         swapTasks(currentCategory.getValidTasks(tmpTasks));
-    }
-
-    @Override
-    public void filterTasks(){
-        EventBus.getDefault().post(new RequestTaskListEvent(this));
-        swapTasks(tmpTasks);
     }
 
     @Override

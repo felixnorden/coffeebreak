@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     private List<ITimeCategory> timeCategories;
     private RecyclerView taskList;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private ICategory currentCategory = null;
+    private ICategory currentCategory;
 
     private static boolean initialized = false;
 
@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     private void refreshItems() {
         ITaskAdapter adapter = (ITaskAdapter) taskList.getAdapter();
-        adapter.refreshItems();
+        adapter.refreshItems(currentCategory);
 
         // Stop refresh animation
         swipeRefreshLayout.setRefreshing(false);
@@ -259,9 +259,13 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("All");
+        getSupportActionBar().setTitle(currentCategory.getName());
 
         setDrawerButton();
+    }
+
+    public void setCurrentCategory(ICategory currentCategory){
+        this.currentCategory = currentCategory;
 
     }
 
@@ -380,7 +384,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         // Set adapter
         //TODO UGLY AF
         TaskAdapter taskAdapter = (TaskAdapter) taskList.getAdapter();
-        taskAdapter.updateTasks();
         taskAdapter.filterTasks(currentCategory);
 
         // Close drawer

@@ -11,6 +11,7 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -80,6 +81,7 @@ public class CategoryList implements ICategoryList {
      * Creates all the timeCategories.
      */
     private void initTimeCategories() {
+        timeCategories.add(CategoryFactory.getInstance().createAllCategory());
         Calendar currentDate = Calendar.getInstance();
         timeCategories.add(CategoryFactory.getInstance().createSingleDayCategory("Today", currentDate));
         Calendar tomorrow = Calendar.getInstance();

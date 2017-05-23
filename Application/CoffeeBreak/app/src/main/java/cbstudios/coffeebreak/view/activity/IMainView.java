@@ -21,4 +21,5 @@ public interface IMainView extends IView{
     void setNavDrawer();
 
     void setToolbar();
+    void setCurrentCategory(ICategory currentCategory);
 }
