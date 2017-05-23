@@ -169,6 +169,15 @@ class AdvancedTask implements IAdvancedTask {
         task.setCreationCalendar(calendar);
     }
 
+    @Override
+    public boolean hasILabelCategory(String name) {
+        for (ILabelCategory label : labels) {
+            if (label.getName().equals(name))
+                return true;
+        }
+        return false;
+    }
+
     /**
      * Compares equality of the inserted Object o with
      * regards of Task name, Labels, Date and Note.

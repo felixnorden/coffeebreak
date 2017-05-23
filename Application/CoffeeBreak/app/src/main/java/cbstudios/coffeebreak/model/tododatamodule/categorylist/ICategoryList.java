@@ -40,6 +40,14 @@ public interface ICategoryList {
     void removeLabelCategory(String name);
 
     /**
+     * Returns the ILabelCategory with the given name. If the category doesn't exist
+     * it is created, added to list, and returned.
+     * @param name The name of the category.
+     * @return The ILabelCategory found/created.
+     */
+    ILabelCategory getLabelCategory(String name);
+
+    /**
      * Getter for the Time Categories list
      * @return the list with all Time Categories
      */

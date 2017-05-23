@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
@@ -39,6 +40,8 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
 
     private String backupName;  //Used for when empty string is set as task name.
 
+    private Toolbar toolbar;
+
     //Taskname Area
     private RelativeLayout nameLayout;
     private EditText nameText;
@@ -65,11 +68,12 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         notificationText = (TextView) findViewById(R.id.task_edit_notification_text);
         notificationRemoveButton = (ImageButton) findViewById(R.id.task_edit_notification_remove_button);
 
-        //On notification area click, show time picker
-        notificationLayout.setOnClickListener(new View.OnClickListener() {
+        //On notification area touch, show time picker
+        notificationLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onTouch(View v, MotionEvent event) {
                 showTimerPickerDialog();
+                return false;
             }
         });
 
@@ -80,13 +84,10 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
                     String input = nameText.getText().toString();
 
-                    System.out.println(input);
-
                     // Check if valid input, otherwise reset name.
                     if (input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)) {
                         nameText.setText(backupName);
                     } else {
-                        System.out.println("Event");
                         EventBus.getDefault().post(new TaskEditedEvent());
                     }
 
@@ -98,6 +99,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
             }
         });
 
+        //Remove date from task and updated view
         notificationRemoveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,7 +109,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         });
 
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.edit_task_toolbar);
+        toolbar = (Toolbar) findViewById(R.id.edit_task_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -146,7 +148,6 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
 
     @Override
     public String getNameText() {
-        System.out.println(nameText.getText().toString());
         return nameText.getText().toString();
     }
 

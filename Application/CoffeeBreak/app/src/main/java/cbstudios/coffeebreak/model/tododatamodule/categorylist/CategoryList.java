@@ -42,7 +42,22 @@ public class CategoryList implements ICategoryList {
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public ILabelCategory getLabelCategory(String name) {
+        for (ILabelCategory category : labelCategories) {
+            if (category.getName().equals(name)) {
+                return category;
+            }
+        }
+        ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(name);
+        labelCategories.add(category);
+        return category;
+    }
+
+    /**
      * Adds a new labelCategory to the labelCategory list.
+     *
      * @param name the name of the labelCategory
      */
     public void addLabelCategory(String name) {
@@ -51,6 +66,7 @@ public class CategoryList implements ICategoryList {
 
     /**
      * Remove a labelCategory from the labelCategory list.
+     *
      * @param label labelCategory that will be removed
      */
     public void removeLabelCategory(ILabelCategory label) {
@@ -59,18 +75,18 @@ public class CategoryList implements ICategoryList {
 
     /**
      * Remove a labelCategory from the labelCategory list.
+     *
      * @param name the name of the labelCategory that will be removed.
      */
     public void removeLabelCategory(String name) {
-        for(ILabelCategory label : labelCategories){
-            if(Objects.equals(label.getName(), name)){
+        for (ILabelCategory label : labelCategories) {
+            if (Objects.equals(label.getName(), name)) {
                 labelCategories.remove(label);
             }
         }
     }
 
     /**
-     *
      * @return the timeCategories list
      */
     public List<ITimeCategory> getTimeCategories() {
@@ -94,8 +110,8 @@ public class CategoryList implements ICategoryList {
         month.add(Calendar.DATE, 30);
         timeCategories.add(CategoryFactory.getInstance().createMultipleDayCategory("Next 30 days", month));
     }
+
     /**
-     *
      * @return the labelCategories list.
      */
     public List<ILabelCategory> getLabelCategories() {
@@ -104,6 +120,7 @@ public class CategoryList implements ICategoryList {
 
     /**
      * An equals method for the class
+     *
      * @param o is the object that the method will compare to
      * @return True if equal, false if not equal
      */
@@ -114,13 +131,13 @@ public class CategoryList implements ICategoryList {
 
         CategoryList that = (CategoryList) o;
 
-        if (labelCategories != null ? !labelCategories.equals(that.getLabelCategories()): that.getLabelCategories() != null ) return false;
+        if (labelCategories != null ? !labelCategories.equals(that.getLabelCategories()) : that.getLabelCategories() != null)
+            return false;
         return timeCategories != null ? timeCategories.equals(that.getTimeCategories()) : that.getTimeCategories() == null;
 
     }
 
     /**
-     *
      * @return an int that is unique from different objects
      */
     @Override
