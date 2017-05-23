@@ -33,7 +33,7 @@ public class ToDoDataModule {
         stats = new Statistics();
     }
 
-    public List<ILabelCategory> getLabelCategories(){
+    public List<ILabelCategory> getLabelCategories() {
         return categoryList.getLabelCategories();
     }
 
@@ -44,6 +44,10 @@ public class ToDoDataModule {
      */
     public void addLabelCategory(String name) {
         categoryList.addLabelCategory(name);
+    }
+
+    public ILabelCategory getLabelCategory(String name) {
+        return categoryList.get
     }
 
     /**
@@ -58,11 +62,11 @@ public class ToDoDataModule {
     /**
      * Removes all the checked Tasks from the TodoList
      */
-    public void removeChecked(){
+    public void removeChecked() {
         List<IAdvancedTask> toBeRemoved = new ArrayList<>();
-        for(IAdvancedTask advancedTask: getTasks()){
+        for (IAdvancedTask advancedTask : getTasks()) {
             if (advancedTask.isChecked())
-                    toBeRemoved.add(advancedTask);
+                toBeRemoved.add(advancedTask);
         }
         getTasks().removeAll(toBeRemoved);
     }
@@ -95,15 +99,16 @@ public class ToDoDataModule {
     /**
      * Creates a new ListTask
      */
-    public void createListTask(){
+    public void createListTask() {
         todoList.createListTask();
     }
 
     /**
      * Creates a Task and adds it to the ListTask's list
+     *
      * @param listTask The ListTask holding subTasks
      */
-    public void createTask(IListTask listTask){
+    public void createTask(IListTask listTask) {
         todoList.createTask(listTask);
     }
 
@@ -146,24 +151,25 @@ public class ToDoDataModule {
      * @param index Index of the task in ToDoList
      * @return The task at place index in ToDoList
      */
-    public IAdvancedTask getTask(int index){
+    public IAdvancedTask getTask(int index) {
         return todoList.getTasks().get(index);
     }
 
     /**
      * Searches for a task with the given hashCode in the database.
+     *
      * @param hashCode The hashCode of the task.
      * @return The task with matching hashCode if it exists, null otherwise.
      */
-    public IAdvancedTask findTask(int hashCode){
+    public IAdvancedTask findTask(int hashCode) {
         return todoList.findTask(hashCode);
     }
 
-    public Statistics getStats(){
+    public Statistics getStats() {
         return stats;
     }
 
-    public void setStatistic(Statistics statistics){
+    public void setStatistic(Statistics statistics) {
         this.stats = statistics;
     }
 }
