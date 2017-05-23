@@ -47,7 +47,7 @@ public class ToDoDataModule {
     }
 
     public ILabelCategory getLabelCategory(String name) {
-        return categoryList.get
+        return categoryList.getLabelCategory(name);
     }
 
     /**
