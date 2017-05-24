@@ -219,7 +219,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
                 EventBus.getDefault().post(new TaskEditedEvent());
             }
         });
-        
+
         fragment.setCalendar(cal);
         fragment.show(getFragmentManager(), "timePicker");
     }
