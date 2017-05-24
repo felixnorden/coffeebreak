@@ -1,5 +1,7 @@
 package cbstudios.coffeebreak.view.activity;
 
+import android.graphics.Color;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -57,4 +59,17 @@ public interface ITaskEditView extends IView {
      * Notify listview that model has changed.
      */
     void notifyCategoriesChanged();
+
+    /**
+     * Returns the current priority in a string defined in string.xml
+     * @return Priority.
+     */
+    String getPriority();
+
+    /**
+     * Sets the view to show the given priority.
+     * @param priority The string which represents the priority
+     * @param color The color of the priority.
+     */
+    void setPriority(String priority, int color);
 }

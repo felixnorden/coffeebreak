@@ -31,5 +31,10 @@
     <string name="edit_task_notification">Set a notification</string>
     <string name="sorting_order">Sort tasks</string>
     <string name="task_name">Task Name</string>
+    <string name="task_edit_priority_hint">Set a priority</string>
+    <string name="task_edit_note_hint">Add a note</string>
+    <string name="priority_low">! Low</string>
+    <string name="priority_medium">!! Medium</string>
+    <string name="priority_high">!!! High</string>
 </resources>
 

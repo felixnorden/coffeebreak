@@ -6,6 +6,9 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
+import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -41,6 +44,7 @@ import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
+import cbstudios.coffeebreak.model.Priority;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.view.adapter.TaskEditCategoryAdapter;
 
@@ -69,6 +73,16 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     private ImageButton categoriesAddButton;
     private EditText categoriesAddText;
 
+    //Priority Area
+    private RelativeLayout priorityLayout;
+    private ImageView priorityIcon;
+    private TextView priorityText;
+    private ImageButton priorityRemoveButton;
+
+    //Note Area
+    private ImageView noteIcon;
+    private EditText noteText;
+
     /**
      * {@inheritDoc}
      */
@@ -92,11 +106,21 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         categoriesAddButton = (ImageButton) findViewById(R.id.task_edit_categories_add_image_button);
         categoriesAddText = (EditText) findViewById(R.id.task_edit_categories_add_text_view);
 
+        priorityLayout = (RelativeLayout) findViewById(R.id.task_edit_priority_layout);
+        priorityIcon = (ImageView) findViewById(R.id.task_edit_priority_icon);
+        priorityText = (TextView) findViewById(R.id.task_edit_priority_text);
+        priorityRemoveButton = (ImageButton) findViewById(R.id.task_edit_priority_remove_button);
+
+        noteIcon = (ImageView) findViewById(R.id.task_edit_note_icon);
+        noteText = (EditText) findViewById(R.id.task_edit_note_text);
+
         //Setup view
         setupToolbar();
         setupNameLayout();
         setupNotificationLayout();
         setupCategoriesLayout();
+        setupPriorityLayout();
+        setupNoteLayout();
 
         EventBus.getDefault().post(new OnCreateEvent(this));
     }
@@ -269,6 +293,17 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
                 return false;
             }
         });
+
+        nameText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    nameText.getBackground().setTint(getResources().getColor(R.color.colorAccent));
+                } else {
+                    nameText.getBackground().setTint(Color.TRANSPARENT);
+                }
+            }
+        });
     }
 
     /**
@@ -305,6 +340,47 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         });
     }
 
+    private void setupPriorityLayout() {
+        priorityLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final String current = priorityText.getText().toString();
+                final String low = getResources().getString(R.string.priority_low);
+                final String medium = getResources().getString(R.string.priority_medium);
+                final String high = getResources().getString(R.string.priority_high);
+
+                //Switch-case fungerar inte med variabler...
+                //Går null -> low -> medium -> high -> null
+                if (current.equals(low)) {
+                    priorityText.setText(medium);
+                    priorityRemoveButton.setVisibility(View.VISIBLE);
+                } else if (current.equals(medium)) {
+                    priorityText.setText(high);
+                    priorityRemoveButton.setVisibility(View.VISIBLE);
+                } else if (current.equals(high)) {
+                    priorityText.setText("");
+                    priorityRemoveButton.setVisibility(View.INVISIBLE);
+                } else {    //In this case, string will (should) be empty
+                    priorityText.setText(low);
+                    priorityRemoveButton.setVisibility(View.VISIBLE);
+                }
+
+                EventBus.getDefault().post(new TaskEditedEvent());
+                return false;
+            }
+        });
+
+        priorityRemoveButton.setVisibility(View.INVISIBLE);
+        priorityRemoveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                priorityText.setText(null);
+                priorityRemoveButton.setVisibility(View.INVISIBLE);
+                EventBus.getDefault().post(new TaskEditedEvent());
+            }
+        });
+    }
+
     /**
      * Adds listener to new-category-text-field.
      */
@@ -329,6 +405,34 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         });
     }
 
+    private void setupNoteLayout() {
+        noteText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
+                    String input = noteText.getText().toString();
+                    noteText.setText(input.trim());
+
+                    EventBus.getDefault().post(new TaskEditedEvent());
+                    setShowKeyboard(false, v);
+                    noteText.clearFocus();
+                }
+                return false;
+            }
+        });
+
+        noteText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    noteText.getBackground().setTint(getResources().getColor(R.color.colorAccent));
+                } else {
+                    noteText.getBackground().setTint(Color.TRANSPARENT);
+                }
+            }
+        });
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -347,6 +451,17 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     public void notifyCategoriesChanged() {
         adapter.notifyDataSetChanged();
         updateCategoriesListHeight();
+    }
+
+    @Override
+    public String getPriority() {
+        return priorityText.getText().toString();
+    }
+
+    @Override
+    public void setPriority(String priority, int color) {
+        priorityText.setText(priority);
+        priorityText.setTextColor(color);
     }
 
     /**
