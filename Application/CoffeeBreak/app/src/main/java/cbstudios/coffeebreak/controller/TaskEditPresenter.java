@@ -34,16 +34,27 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
         EventBus.getDefault().register(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void injectModel(Model model) {
         this.model = model;
     }
 
+    /**
+     * Method that gets executed when task has been edited in view.
+     *
+     * @param event Specific object for this eveent.
+     */
     @Subscribe
     public void onTaskEdited(TaskEditedEvent event) {
         updateModel();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCreate(OnCreateEvent event) {
         if (event.object instanceof ITaskEditView) {
@@ -59,6 +70,9 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onResume(OnResumeEvent event) {
         if (event.object instanceof ITaskEditView) {
@@ -66,6 +80,9 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDestroy(OnDestroyEvent event) {
         if (event.object instanceof ITaskEditView) {
@@ -73,6 +90,9 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStop(OnStopEvent event) {
         if (event.object instanceof ITaskEditView) {
@@ -80,6 +100,9 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStart(OnStartEvent event) {
         if (event.object instanceof ITaskEditView)
@@ -98,6 +121,9 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
         view.setNote(task.getNote());
     }
 
+    /**
+     * Extracts data from task priority and tells view what to show(String and color).
+     */
     private void setupPriority() {
         String priority = "";   //Default to NONE
         int color = 0;

@@ -513,7 +513,9 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         ViewGroup.LayoutParams params = categoriesListView.getLayoutParams();
         int newHeight = 50;
 
-        newHeight += categoriesListView.getCount() * 65 * 4;
+        //I don't know why that needs a factor of 3 when deciding height. It shouldn't need that as
+        //height of a child is 64dp...
+        newHeight += categoriesListView.getCount() * 65 * 3;
         params.height = newHeight;
 
         categoriesListView.setLayoutParams(params);
