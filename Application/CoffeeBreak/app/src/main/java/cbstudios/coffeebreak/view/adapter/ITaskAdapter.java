@@ -10,7 +10,6 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
  */
 
 public interface ITaskAdapter {
-    void updateTasks();
     void filterTasks(ICategory category);
     void updateTmpTasks(List<IAdvancedTask> tasks);
     void refreshItems(ICategory category);

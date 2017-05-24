@@ -119,4 +119,8 @@ public class ToDoList {
     public void createListTask(){
         add(taskFactory.createListTask());
     }
+
+    public void setTasks(List<IAdvancedTask> tasks){
+        this.tasks = tasks;
+    }
 }

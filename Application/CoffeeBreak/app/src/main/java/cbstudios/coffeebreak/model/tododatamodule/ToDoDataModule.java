@@ -172,4 +172,8 @@ public class ToDoDataModule {
     public void setStatistic(Statistics statistics) {
         this.stats = statistics;
     }
+
+    public void sortTasks(List<IAdvancedTask> sortedTasks){
+        todoList.setTasks(sortedTasks);
+    }
 }

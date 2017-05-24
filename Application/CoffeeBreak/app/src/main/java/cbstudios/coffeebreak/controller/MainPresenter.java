@@ -1,18 +1,11 @@
 package cbstudios.coffeebreak.controller;
 
-import android.app.usage.UsageEvents;
 import android.content.Intent;
-import android.widget.Toast;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 import cbstudios.coffeebreak.eventbus.CheckTaskEvent;
@@ -37,16 +30,10 @@ import cbstudios.coffeebreak.eventbus.TimesNavOpenEvent;
 import cbstudios.coffeebreak.eventbus.TimesSettingsChangedEvent;
 import cbstudios.coffeebreak.eventbus.TimesTaskDeletedEvent;
 import cbstudios.coffeebreak.eventbus.TimesUpdatedEvent;
-import cbstudios.coffeebreak.model.AchievementConverter;
 import cbstudios.coffeebreak.model.Model;
-import cbstudios.coffeebreak.model.StatisticsConverter;
-import cbstudios.coffeebreak.model.TaskConverter;
 import cbstudios.coffeebreak.model.TaskSorter;
-import cbstudios.coffeebreak.model.tododatamodule.statistics.Statistics;
-import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievement;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
-import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IMainView;
 import cbstudios.coffeebreak.view.activity.TaskEditActivity;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
@@ -59,7 +46,6 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 class MainPresenter extends BasePresenter implements IMainPresenter {
     private IMainView mainView;
     private ITaskAdapter taskAdapter;
-
     // TODO: 2017-05-18 Gather presenters in List somewhere
     private ITaskEditPresenter taskEditPresenter;
 
@@ -78,11 +64,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
             mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
             mainView.setTaskAdapter(taskAdapter);
             mainView.setCurrentCategory(model.getToDoDataModule().getTimeCategories().get(0));
-
-
-            // TODO Check later when All-category is implemented
-            taskAdapter.updateTasks();
-            taskAdapter.filterTasks(mainView.getCurrentCategory());
+            taskAdapter.refreshItems(mainView.getCurrentCategory());
 
             mainView.setNavDrawer();
             mainView.setToolbar();
@@ -93,8 +75,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     public void onPause(OnPauseEvent event) {
         //TODO Fix shiet
         if(event.object == mainView) {
-            taskAdapter.updateTasks();
-            taskAdapter.filterTasks(mainView.getCurrentCategory());
+            taskAdapter.refreshItems(mainView.getCurrentCategory());
 
             EventBus.getDefault().post(new SaveStateEvent());
         }
@@ -102,7 +83,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onResume(OnResumeEvent event) {
-
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -141,15 +121,18 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         switch (event.order){
             case SortListEvent.ORDERING_ALPHABETICAL:
                 sorter.sortAlphabetically(tasks);
-                taskAdapter.swapTasks(tasks);
+                model.getToDoDataModule().sortTasks(tasks);
+                taskAdapter.swapTasks(mainView.getCurrentCategory().getValidTasks(tasks));
                 break;
             case SortListEvent.ORDERING_CHRONOLOGICAL:
                 sorter.sortChronologically(tasks);
-                taskAdapter.swapTasks(tasks);
+                model.getToDoDataModule().sortTasks(tasks);
+                taskAdapter.swapTasks(mainView.getCurrentCategory().getValidTasks(tasks));
                 break;
             case SortListEvent.ORDERING_PRIORITY:
                 sorter.sortPriorities(tasks);
-                taskAdapter.swapTasks(tasks);
+                model.getToDoDataModule().sortTasks(tasks);
+                taskAdapter.swapTasks(mainView.getCurrentCategory().getValidTasks(tasks));
                 break;
             default: return;
         }
@@ -202,6 +185,9 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onTaskListRequest(RequestTaskListEvent event){
+
+
+
         event.adapter.updateTmpTasks(getTasks());
     }
     @Subscribe

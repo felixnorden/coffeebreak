@@ -11,13 +11,11 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -215,7 +213,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     @Override
     public void refreshItems(ICategory category){
-        updateTasks();
+        removeUnvalidTasks();
         filterTasks(category);
     }
 
@@ -249,12 +247,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         this.tmpTasks = tasks;
     }
 
-    //TODO ELIAS FIX DIS PLOX One event only 
-    public void updateTasks(){
-        EventBus.getDefault().post(new RequestTaskListEvent(this));
-        removeCheckedTasks();
-        removeNullTasks();
-    }
 
     /**
      * Handles the update of a task when the name is supposed to have been given to
@@ -274,7 +266,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
     }
 
-    @Override
     public void swapTasks(List<IAdvancedTask> newTasks){
         final TaskDiffCallback diffCallback = new TaskDiffCallback(this.mTasks, newTasks);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
@@ -285,7 +276,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     private void removeCheckedTasks(){
-        EventBus.getDefault().post(new RequestTaskListEvent(this));
+        //EventBus.getDefault().post(new RequestTaskListEvent(this));
         for(IAdvancedTask task: tmpTasks){
             if(task.isChecked()){
                 EventBus.getDefault().post(new RemoveTaskEvent(task, true));
@@ -294,12 +285,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     private void removeNullTasks(){
-        EventBus.getDefault().post(new RequestTaskListEvent(this));
+        //EventBus.getDefault().post(new RequestTaskListEvent(this));
         for(IAdvancedTask task: tmpTasks){
             if(task.getName()== null){
                 EventBus.getDefault().post(new RemoveTaskEvent(task, false));
             }
         }
+    }
+
+    private void removeUnvalidTasks(){
+        EventBus.getDefault().post(new RequestTaskListEvent(this));
+        removeCheckedTasks();
+        removeNullTasks();
     }
 
     private class TaskDiffCallback extends DiffUtil.Callback {
