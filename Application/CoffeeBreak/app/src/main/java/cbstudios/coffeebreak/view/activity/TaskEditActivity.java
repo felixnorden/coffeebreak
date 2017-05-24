@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -27,6 +28,7 @@ import android.widget.TimePicker;
 import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -44,20 +46,20 @@ import cbstudios.coffeebreak.view.adapter.TaskEditCategoryAdapter;
 
 public class TaskEditActivity extends AppCompatActivity implements ITaskEditView {
 
-    private String backupName;  //Used for when empty string is set as task name.
-
     private Toolbar toolbar;
     private TaskEditCategoryAdapter adapter;
 
     //Taskname Area
     private RelativeLayout nameLayout;
     private EditText nameText;
+    private String backupName;  //Used for when empty string is set as task name.
 
     //Notification Area
     private RelativeLayout notificationLayout;
     private ImageView notificationIcon;
     private TextView notificationText;
     private Calendar cal;
+    private Calendar backupCal; //Used to reset calendar if setup of new calendar is cancelled.
     private ImageButton notificationRemoveButton;
 
     //Categories Area
@@ -203,8 +205,20 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
      * Shows a time picker dialog.
      */
     private void showTimerPickerDialog() {
+        backupCal = cal;
+        if (cal == null) {
+            cal = Calendar.getInstance();
+        }
+
         TimePickerFragment fragment = new TimePickerFragment();
-        cal = Calendar.getInstance();
+
+        fragment.setCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                cal = backupCal;
+                EventBus.getDefault().post(new TaskEditedEvent());
+            }
+        });
 
         fragment.setCalendar(cal);
         fragment.show(getFragmentManager(), "timePicker");
@@ -229,7 +243,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
      * Setups the name-layout by adding a handler for input.
      * On enter closes keyboard and notifies controller that it should update model.
      * Although, if the new name is an empty string it gets reset to the model.
-     *
+     * <p>
      * Also disables auto-suggestions for name.
      */
     private void setupNameLayout() {
@@ -367,9 +381,21 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
             implements TimePickerDialog.OnTimeSetListener {
 
         private Calendar cal;
+        private DialogInterface.OnCancelListener cancelListener;
 
         public void setCalendar(Calendar cal) {
             this.cal = cal;
+        }
+
+        public void setCancelListener(DialogInterface.OnCancelListener cancelListener) {
+            this.cancelListener = cancelListener;
+        }
+
+
+        @Override
+        public void onCancel(DialogInterface dialog) {
+            cancelListener.onCancel(dialog);
+            super.onCancel(dialog);
         }
 
         @Override
@@ -379,16 +405,29 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
             int hour = c.get(Calendar.HOUR_OF_DAY);
             int minute = c.get(Calendar.MINUTE);
 
-            // Create a new instance of TimePickerDialog and return it
-            return new TimePickerDialog(getActivity(), this, hour, minute,
+            // Create a new instance of DatePickerDialog and return it
+            TimePickerDialog dialog = new TimePickerDialog(getActivity(), this, hour, minute,
                     DateFormat.is24HourFormat(getActivity()));
+
+            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface
+                    .OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    if (which == DialogInterface.BUTTON_NEGATIVE) {
+                        dialog.cancel();
+                    }
+                }
+            });
+
+            return dialog;
         }
 
+        @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
             cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
             cal.set(Calendar.MINUTE, minute);
 
             DatePickerFragment newFragment = new DatePickerFragment();
+            newFragment.setCancelListener(this.cancelListener);
             newFragment.setCalendar(cal);
             newFragment.show(getFragmentManager(), "datePicker");
         }
@@ -402,8 +441,20 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
 
         private Calendar cal;
 
+        private DialogInterface.OnCancelListener cancelListener;
+
         public void setCalendar(Calendar cal) {
             this.cal = cal;
+        }
+
+        public void setCancelListener(DialogInterface.OnCancelListener cancelListener) {
+            this.cancelListener = cancelListener;
+        }
+
+        @Override
+        public void onCancel(DialogInterface dialog) {
+            cancelListener.onCancel(dialog);
+            super.onCancel(dialog);
         }
 
         @Override
@@ -415,14 +466,25 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
             int day = c.get(Calendar.DAY_OF_MONTH);
 
             // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
+            DatePickerDialog dialog = new DatePickerDialog(getActivity(), this, year, month, day);
+
+            dialog.setButton(DialogInterface.BUTTON_NEGATIVE, "Cancel", new DialogInterface
+                    .OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    if (which == DialogInterface.BUTTON_NEGATIVE) {
+                        dialog.cancel();
+                    }
+                }
+            });
+
+            return dialog;
         }
 
+        @Override
         public void onDateSet(DatePicker view, int year, int month, int day) {
             cal.set(Calendar.YEAR, year);
             cal.set(Calendar.MONTH, month);
             cal.set(Calendar.DAY_OF_MONTH, day);
-
 
             EventBus.getDefault().post(new TaskEditedEvent());
         }
