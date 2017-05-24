@@ -26,6 +26,7 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -66,9 +67,9 @@ import cbstudios.coffeebreak.view.fragment.SortFragment;
 
 public class MainActivity extends AppCompatActivity  implements IMainView {
     private ActionBarDrawerToggle mActionBarDrawerToggle;
-    private RelativeLayout mDrawer;
+    private ScrollView mDrawer;
     private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
+    private NonScrollListView mDrawerList;
     private Toolbar mToolbar;
     private FloatingActionButton fabAddBtn, fabAdvBtn, fabListBtn;
     private TextView txtAdvBtn, txtListBtn;
@@ -256,15 +257,17 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     @Override
     public void setNavDrawer() {
-        mDrawer = (RelativeLayout) findViewById(R.id.left_drawer);
-        mDrawerList = (ListView) findViewById(R.id.drawer_list);
+        mDrawer = (ScrollView) findViewById(R.id.left_drawer);
+        mDrawerList = (NonScrollListView) findViewById(R.id.drawer_list);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.setBackgroundColor(Color.WHITE);
         mAddCategoryButton = (ImageButton) findViewById(R.id.add_category);
+        mDrawerList.setScrollContainer(false);
 
         final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, mainPresenter);
         final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories, mainPresenter);
         final MergeAdapter mergeAdapter = new MergeAdapter();
+
 
         mergeAdapter.addAdapter(timeCategoryAdapter);
         mergeAdapter.addAdapter(labelCategoryAdapter);
