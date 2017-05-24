@@ -302,34 +302,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
     }
 
-    private void addKeyboardListener(final TaskViewHolder taskHolder, final IAdvancedTask task){
-        // Listen for enter key to hide Keyboard
-        final int position = taskHolder.getAdapterPosition();
-        taskHolder.etTaskName.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if(keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN){
-                    String input = taskHolder.etTaskName.getText().toString();
-
-                    // Check if input is empty, if so, remove task from database
-                    // and update adapter of removal
-                    if(input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)){
-                        int rangeStart = mTasks.indexOf(task);
-                        EventBus.getDefault().post(new RemoveTaskEvent(task, false));
-                        mTasks.remove(task);
-                        TaskAdapter.super.notifyItemRemoved(position);
-                        notifyItemRangeChanged(rangeStart, mTasks.size());
-                        return false;
-                    }
-                    task.setName(input);
-                    InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(taskHolder.etTaskName.getWindowToken(), 0);
-                    TaskAdapter.super.notifyItemChanged(position);
-            }
-                return false;
-            }
-        });
-    }
     private class TaskDiffCallback extends DiffUtil.Callback {
 
         private final List<IAdvancedTask> mOldTaskList;
