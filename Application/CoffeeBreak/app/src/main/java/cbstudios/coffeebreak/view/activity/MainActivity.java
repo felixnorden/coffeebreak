@@ -373,14 +373,12 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     private void addAdvTask() {
         EventBus.getDefault().post(new RequestTaskCreationEvent(RequestTaskCreationEvent.ADVANCED_TASK));
-        //mainPresenter.createAdvancedTask();
         updateAdapter();
     }
 
 
     private void addListTask() {
         EventBus.getDefault().post(new RequestTaskCreationEvent(RequestTaskCreationEvent.LIST_TASK));
-        //mainPresenter.createListTask();
         updateAdapter();
     }
 
