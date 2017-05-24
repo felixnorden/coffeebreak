@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.InputType;
 import android.text.format.DateFormat;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -202,11 +203,9 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
      * Shows a time picker dialog.
      */
     private void showTimerPickerDialog() {
-        if (cal == null) {
-            cal = Calendar.getInstance();
-        }
-
         TimePickerFragment fragment = new TimePickerFragment();
+        cal = Calendar.getInstance();
+
         fragment.setCalendar(cal);
         fragment.show(getFragmentManager(), "timePicker");
     }
@@ -230,24 +229,28 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
      * Setups the name-layout by adding a handler for input.
      * On enter closes keyboard and notifies controller that it should update model.
      * Although, if the new name is an empty string it gets reset to the model.
+     *
+     * Also disables auto-suggestions for name.
      */
     private void setupNameLayout() {
+        nameText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         nameText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
                     String input = nameText.getText().toString();
 
-                    // Check if valid input, otherwise reset name.
+                    //Check if valid input, otherwise reset name.
+                    //If valid input, trim and send event
                     if (input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)) {
                         nameText.setText(backupName);
                     } else {
+                        nameText.setText(input.trim());
                         EventBus.getDefault().post(new TaskEditedEvent());
                     }
 
                     setShowKeyboard(false, v);
                     nameText.clearFocus();
-                    return true;
                 }
                 return false;
             }

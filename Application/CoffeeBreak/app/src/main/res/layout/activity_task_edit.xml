@@ -63,8 +63,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="48dp"
                     android:background="@null"
-                    android:hint="Task Name"
+                    android:hint="@string/task_name"
                     android:maxLines="1"
+                    android:singleLine="true"
                     android:textSize="18sp" />
             </RelativeLayout>
 
@@ -84,12 +85,12 @@
 
                 <ImageView
                     android:id="@+id/task_edit_notification_icon"
-                    android:layout_width="25dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
                     android:layout_centerVertical="true"
                     android:tint="@color/colorPrimaryDark"
-                    app:srcCompat="@drawable/ic_alarm_white_24dp" />
+                    app:srcCompat="@drawable/ic_alarm_white_24dp"
+                    android:layout_alignParentStart="true" />
 
                 <TextView
                     android:id="@+id/task_edit_notification_text"
@@ -110,7 +111,7 @@
                 <ImageButton
                     android:id="@+id/task_edit_notification_remove_button"
                     android:layout_width="30dp"
-                    android:layout_height="15dp"
+                    android:layout_height="20dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:background="@null"
@@ -130,12 +131,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="22dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/task_edit_categories_icon"
+                    android:layout_marginStart="48dp"
+                    android:hint="Categories"
+                    android:textSize="18sp" />
+
                 <ImageView
                     android:id="@+id/task_edit_categories_icon"
                     android:layout_width="wrap_content"
-                    android:layout_height="84dp"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
+                    android:layout_marginTop="20dp"
                     android:tint="@color/colorPrimaryDark"
                     app:srcCompat="@drawable/ic_label_outline_black_24dp"
                     tools:layout_editor_absoluteX="0dp"
@@ -145,12 +157,16 @@
                     android:id="@+id/task_edit_categories_list"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignStart="@+id/textView"
+                    android:layout_below="@+id/task_edit_categories_icon"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@+id/task_edit_categories_icon"
                     android:cacheColorHint="@android:color/background_light"
                     android:scrollbars="none"
                     tools:layout_editor_absoluteX="32dp"
-                    tools:layout_editor_absoluteY="81dp"
-                    android:layout_toEndOf="@+id/task_edit_categories_icon" />
+                    tools:layout_editor_absoluteY="81dp" />
 
                 <RelativeLayout
                     android:id="@+id/relativeLayout"
@@ -158,11 +174,11 @@
                     android:layout_height="45dp"
                     android:layout_alignEnd="@+id/task_edit_categories_list"
                     android:layout_alignParentBottom="true"
-                    tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="81dp"
+                    android:layout_alignStart="@+id/task_edit_categories_list"
+                    android:layout_below="@+id/task_edit_categories_list"
                     android:layout_toEndOf="@+id/task_edit_categories_icon"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/task_edit_categories_list">
+                    tools:layout_editor_absoluteX="0dp"
+                    tools:layout_editor_absoluteY="81dp">
 
                     <ImageButton
                         android:id="@+id/task_edit_categories_add_image_button"

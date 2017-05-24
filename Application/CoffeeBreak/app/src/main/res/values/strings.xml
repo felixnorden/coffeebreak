@@ -30,5 +30,6 @@
     <string name="action_abort">Cancel</string>
     <string name="edit_task_notification">Set a notification</string>
     <string name="sorting_order">Sort tasks</string>
+    <string name="task_name">Task Name</string>
 </resources>
 
