@@ -9,8 +9,10 @@ import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.ToDoDataModule;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
+import cbstudios.coffeebreak.model.tododatamodule.todolist.ITaskFactory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -35,7 +37,7 @@ public class ToDoDataModuleTest {
 
     @Test
     public void testRemoveLabelCategory() {
-        // TODO: 2017-04-04 Metoder finns ej för att testa detta än
+        //TODO: 2017-04-04 Metoder finns ej för att testa detta än
     }
 
     @Test
@@ -88,5 +90,40 @@ public class ToDoDataModuleTest {
         assertTrue(toDoDataModule.getTasks().size() == 0);
 
         assertTrue(toDoDataModule.getTasks().isEmpty());
+    }
+    @Test
+    public void testUpdateToDoList(){
+        ITaskFactory factory = TaskFactory.getInstance();
+        for(int i = 0; i < 10; i++){
+            int a = 65 + i;
+            char c = (char) a;
+            toDoDataModule.createAdvancedTask();
+            toDoDataModule.getTask(i).setName(Character.toString(c));
+
+            // Set every third task to checked
+            if(i % 3 == 0)
+                toDoDataModule.getTask(i).toggleChecked();
+        }
+
+        // Check correct number of tasks before removal
+        assertEquals(toDoDataModule.getTasks().size(), 10);
+
+        // Update/remove checked tasks
+        for(IAdvancedTask task: toDoDataModule.getTasks()){
+            if(task.isChecked())
+                toDoDataModule.removeTask(task);
+        }
+
+        // Check correct number of tasks after removal
+        assertEquals(toDoDataModule.getTasks().size(), 6);
+
+        // Make sure that all tasks removed are ones that
+        // had index i % 3 = 0
+        assertEquals(toDoDataModule.getTask(0).getName(), "B");
+        assertEquals(toDoDataModule.getTask(1).getName(), "C");
+        assertEquals(toDoDataModule.getTask(2).getName(), "E");
+        assertEquals(toDoDataModule.getTask(3).getName(), "F");
+        assertEquals(toDoDataModule.getTask(4).getName(), "H");
+        assertEquals(toDoDataModule.getTask(5).getName(), "I");
     }
 }

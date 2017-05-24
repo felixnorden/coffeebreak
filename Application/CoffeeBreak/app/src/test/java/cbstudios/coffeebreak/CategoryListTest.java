@@ -60,8 +60,6 @@ public class CategoryListTest {
         mockFalseName.addLabelCategory("Meetings");
         CategoryList mockFalseNameNull = new CategoryList();
         mockFalseNameNull.addLabelCategory(null);
-//        assertTrue(categoryList.equals(mockTrue));
-//        assertTrue(mockTrue.equals(categoryList));
         assertFalse(categoryList.equals(mockFalseName));
         assertFalse(categoryList.equals(mockFalseNameNull));
     }

@@ -35,7 +35,6 @@ public class TaskSorterTest {
     public static void init() {
         for (int i = 0; i < 5; i++){
             // Set name from A through E backwards
-
             int a = 69 - i;
             char c = (char) a;
             IAdvancedTask task = factory.createAdvancedTask(Character.toString(c));
@@ -46,7 +45,7 @@ public class TaskSorterTest {
         tasks.get(1).getCreationCalendar().set(2016,5,10);
         tasks.get(3).getCreationCalendar().set(2017,2,15);
         tasks.get(4).getCreationCalendar().set(2022,3,16);
-    //Set priorities for a few tasks
+        //Set priorities for a few tasks
         tasks.get(0).setPriority(Priority.ONE);
         tasks.get(2).setPriority(Priority.TWO);
         tasks.get(4).setPriority(Priority.THREE);
@@ -60,14 +59,14 @@ public class TaskSorterTest {
     @Test
     public void testAlphabeticallySort() {
         sorter.sortAlphabetically(listCopy);
-
+        
+        //Make sure that order is reversed, due to names being E-A in original list.
         for (int i = 0; i < tasks.size(); i++) {
             assertTrue(listCopy.get(i).equals(tasks.get(tasks.size() - 1 - i)));
         }
         assertFalse(listCopy.get(0).getName().equals(tasks.get(0).getName()));
     }
 
-    // NOTICE: Needs to have either mocked Color parser or set a constant color in Priority Enum!
     @Test
     public void testChronologicallySort() {
         sorter.sortChronologically(listCopy);
@@ -93,6 +92,8 @@ public class TaskSorterTest {
         assertEquals(listCopy.get(3), tasks.get(3));
         assertEquals(listCopy.get(4), tasks.get(1));
 
+        //Control Check that priorities are firstly sorted
+        //then also alphabetically in each priority
         assertEquals(listCopy.get(0).getPriority(), Priority.ONE);
         assertEquals(listCopy.get(2).getPriority(), Priority.THREE);
         assertEquals(listCopy.get(4).getPriority(), Priority.NONE);
