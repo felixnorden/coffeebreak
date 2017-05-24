@@ -90,11 +90,12 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
      * Updates view with current data in model.
      */
     private void setupView() {
-        view.setNameText(task.getName());
         view.setTitle(task.getName());
+        view.setNameText(task.getName());
         view.setNotification(task.getDate());
-        view.setupCategories(task.getLabels());
+        view.setupCategories(task.getLabels(), model.getToDoDataModule().getLabelCategories());
         setupPriority();
+        view.setNote(task.getNote());
     }
 
     private void setupPriority() {
@@ -127,6 +128,7 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
     private void updateModel() {
         task.setName(view.getNameText());
         task.setDate(view.getNotification());
+        task.setNote(view.getNote());
         updateLabels();
         updatePriority();
 

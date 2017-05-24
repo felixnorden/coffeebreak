@@ -49,11 +49,11 @@ public interface ITaskEditView extends IView {
     String getNewLabelText();
 
     /**
-     * Setups the categories with a custom-adapter.
-     *
-     * @param list List of ILabelCategories from task
+     * Setups the label list with correct data.
+     * @param taskLabels
+     * @param allLabels
      */
-    void setupCategories(List<ILabelCategory> list);
+    void setupCategories(List<ILabelCategory> taskLabels, List<ILabelCategory> allLabels);
 
     /**
      * Notify listview that model has changed.
@@ -62,14 +62,28 @@ public interface ITaskEditView extends IView {
 
     /**
      * Returns the current priority in a string defined in string.xml
+     *
      * @return Priority.
      */
     String getPriority();
 
     /**
      * Sets the view to show the given priority.
+     *
      * @param priority The string which represents the priority
-     * @param color The color of the priority.
+     * @param color    The color of the priority.
      */
     void setPriority(String priority, int color);
+
+    /**
+     * @return Note currently in view
+     */
+    String getNote();
+
+    /**
+     * Sets note in view.
+     *
+     * @param note Note from task.
+     */
+    void setNote(String note);
 }

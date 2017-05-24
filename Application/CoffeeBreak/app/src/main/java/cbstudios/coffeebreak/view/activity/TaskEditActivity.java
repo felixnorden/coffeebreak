@@ -6,9 +6,7 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,6 +17,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -44,7 +44,6 @@ import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
-import cbstudios.coffeebreak.model.Priority;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.view.adapter.TaskEditCategoryAdapter;
 
@@ -71,7 +70,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     private ListView categoriesListView;
     private ImageView categoriesIcon;
     private ImageButton categoriesAddButton;
-    private EditText categoriesAddText;
+    private AutoCompleteTextView categoriesAddText;
 
     //Priority Area
     private RelativeLayout priorityLayout;
@@ -104,7 +103,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         categoriesListView = (ListView) findViewById(R.id.task_edit_categories_list);
         categoriesIcon = (ImageView) findViewById(R.id.task_edit_categories_icon);
         categoriesAddButton = (ImageButton) findViewById(R.id.task_edit_categories_add_image_button);
-        categoriesAddText = (EditText) findViewById(R.id.task_edit_categories_add_text_view);
+        categoriesAddText = (AutoCompleteTextView) findViewById(R.id.task_edit_categories_add_text_view);
 
         priorityLayout = (RelativeLayout) findViewById(R.id.task_edit_priority_layout);
         priorityIcon = (ImageView) findViewById(R.id.task_edit_priority_icon);
@@ -159,6 +158,182 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     public void onResume() {
         super.onResume();
         EventBus.getDefault().post(new OnResumeEvent(this));
+    }
+
+    /**
+     * Setups toolbar by setting it as SupportActionBar and adding a "backbutton" to it.
+     */
+    private void setupToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.edit_task_toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    /**
+     * Setups the name-layout by adding a handler for input.
+     * On enter closes keyboard and notifies controller that it should update model.
+     * Although, if the new name is an empty string it gets reset to the model.
+     * Also disables auto-suggestions for name.
+     */
+    private void setupNameLayout() {
+        nameText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        nameText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
+                    String input = nameText.getText().toString();
+
+                    //Check if valid input, otherwise reset name.
+                    //If valid input, trim and send event
+                    if (input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)) {
+                        nameText.setText(backupName);
+                    } else {
+                        nameText.setText(input.trim());
+                        EventBus.getDefault().post(new TaskEditedEvent());
+                    }
+
+                    setShowKeyboard(false, v);
+                    nameText.clearFocus();
+                }
+                return false;
+            }
+        });
+
+        nameText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    nameText.getBackground().setTint(getResources().getColor(R.color.colorAccent));
+                } else {
+                    nameText.getBackground().setTint(Color.TRANSPARENT);
+                }
+            }
+        });
+    }
+
+    /**
+     * Setups notification layout by adding listeners to touch and click events for the different
+     * elements.
+     */
+    private void setupNotificationLayout() {
+        //Setup notification area to begin date-set process on click.
+        notificationLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                showTimerPickerDialog();
+                return false;
+            }
+        });
+
+        //Remove date from task and updated view
+        notificationRemoveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cal = null;
+                EventBus.getDefault().post(new TaskEditedEvent());
+            }
+        });
+    }
+
+    /**
+     * Adds listener to new-category-text-field.
+     */
+    private void setupCategoriesLayout() {
+        categoriesAddText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
+                    String input = categoriesAddText.getText().toString();
+
+                    // Check if valid input, otherwise reset name.
+                    if (!input.equalsIgnoreCase("")) {
+                        EventBus.getDefault().post(new TaskEditedEvent());
+                    }
+
+                    setShowKeyboard(false, v);
+                    categoriesAddText.clearFocus();
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Creates logic for "circling" of priorites when layout is tapped.
+     * Gives remove-button functionality.
+     */
+    private void setupPriorityLayout() {
+        priorityLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final String current = priorityText.getText().toString();
+                final String low = getResources().getString(R.string.priority_low);
+                final String medium = getResources().getString(R.string.priority_medium);
+                final String high = getResources().getString(R.string.priority_high);
+
+                //Switch-case fungerar inte med variabler...
+                //Går null -> low -> medium -> high -> null
+                if (current.equals(low)) {
+                    priorityText.setText(medium);
+                    priorityRemoveButton.setVisibility(View.VISIBLE);
+                } else if (current.equals(medium)) {
+                    priorityText.setText(high);
+                    priorityRemoveButton.setVisibility(View.VISIBLE);
+                } else if (current.equals(high)) {
+                    priorityText.setText("");
+                    priorityRemoveButton.setVisibility(View.INVISIBLE);
+                } else {    //In this case, string will (should) be empty
+                    priorityText.setText(low);
+                    priorityRemoveButton.setVisibility(View.VISIBLE);
+                }
+
+                EventBus.getDefault().post(new TaskEditedEvent());
+                return false;
+            }
+        });
+
+        priorityRemoveButton.setVisibility(View.INVISIBLE);
+        priorityRemoveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                priorityText.setText(null);
+                priorityRemoveButton.setVisibility(View.INVISIBLE);
+                EventBus.getDefault().post(new TaskEditedEvent());
+            }
+        });
+    }
+
+    /**
+     * Setups textfield to save and clear focus on enter.
+     */
+    private void setupNoteLayout() {
+        noteText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
+                    String input = noteText.getText().toString();
+                    noteText.setText(input.trim());
+
+                    EventBus.getDefault().post(new TaskEditedEvent());
+                    setShowKeyboard(false, v);
+                    noteText.clearFocus();
+                }
+                return false;
+            }
+        });
+
+        noteText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    noteText.getBackground().setTint(getResources().getColor(R.color.colorAccent));
+                } else {
+                    noteText.getBackground().setTint(Color.TRANSPARENT);
+                }
+            }
+        });
     }
 
     /**
@@ -226,6 +401,126 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     }
 
     /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getNewLabelText() {
+        String text = categoriesAddText.getText().toString();
+        categoriesAddText.setText(null);
+        adapter.notifyDataSetChanged();
+        return text;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyCategoriesChanged() {
+        adapter.notifyDataSetChanged();
+        updateCategoriesListHeight();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getPriority() {
+        return priorityText.getText().toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setPriority(String priority, int color) {
+        priorityText.setText(priority);
+        priorityText.setTextColor(color);
+
+        if (priority == null || priority.isEmpty()) {
+            priorityIcon.setAlpha(0.2f);
+        } else {
+            priorityIcon.setAlpha(1.0f);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getNote() {
+        return noteText.getText().toString();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setNote(String note) {
+        noteText.setText(note);
+
+        if (note == null || note.isEmpty()) {
+            noteIcon.setAlpha(0.2f);
+        } else {
+            noteIcon.setAlpha(1.0f);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setupCategories(List<ILabelCategory> taskLabels, List<ILabelCategory> allLabels) {
+        //resource = 0 because of no need for custom layout ID.
+        adapter = new TaskEditCategoryAdapter(this, 0, taskLabels);
+        categoriesListView.setAdapter(adapter);
+        updateCategoriesListHeight();
+
+        //Set icon visibilty
+        if (taskLabels.size() < 1) {
+            categoriesIcon.setAlpha(0.2f);
+        } else {
+            categoriesIcon.setAlpha(1.0f);
+        }
+
+        //Fix autocomplete field
+        List<String> strings = new ArrayList<>();
+        for (ILabelCategory c : allLabels) {
+            strings.add(c.getName());
+        }
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, strings);
+        categoriesAddText.setAdapter(adapter);
+    }
+
+    /**
+     * Shows or hides the keyboard
+     *
+     * @param show True to show keyboard, false to hide.
+     * @param v    The view in which the keyboard is active.
+     */
+    private void setShowKeyboard(boolean show, View v) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (!show) {
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        } else {
+            imm.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT);
+        }
+    }
+
+    /**
+     * Sets the ListView to the proper height.
+     */
+    private void updateCategoriesListHeight() {
+        ViewGroup.LayoutParams params = categoriesListView.getLayoutParams();
+        int newHeight = 50;
+
+        newHeight += categoriesListView.getCount() * 65 * 4;
+        params.height = newHeight;
+
+        categoriesListView.setLayoutParams(params);
+        categoriesListView.requestLayout();
+    }
+
+    /**
      * Shows a time picker dialog.
      */
     private void showTimerPickerDialog() {
@@ -246,247 +541,6 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
 
         fragment.setCalendar(cal);
         fragment.show(getFragmentManager(), "timePicker");
-    }
-
-    /**
-     * Shows or hides the keyboard
-     *
-     * @param show True to show keyboard, false to hide.
-     * @param v    The view in which the keyboard is active.
-     */
-    private void setShowKeyboard(boolean show, View v) {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (!show) {
-            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-        } else {
-            imm.showSoftInput(v, InputMethodManager.SHOW_IMPLICIT);
-        }
-    }
-
-    /**
-     * Setups the name-layout by adding a handler for input.
-     * On enter closes keyboard and notifies controller that it should update model.
-     * Although, if the new name is an empty string it gets reset to the model.
-     * <p>
-     * Also disables auto-suggestions for name.
-     */
-    private void setupNameLayout() {
-        nameText.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        nameText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
-                    String input = nameText.getText().toString();
-
-                    //Check if valid input, otherwise reset name.
-                    //If valid input, trim and send event
-                    if (input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)) {
-                        nameText.setText(backupName);
-                    } else {
-                        nameText.setText(input.trim());
-                        EventBus.getDefault().post(new TaskEditedEvent());
-                    }
-
-                    setShowKeyboard(false, v);
-                    nameText.clearFocus();
-                }
-                return false;
-            }
-        });
-
-        nameText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    nameText.getBackground().setTint(getResources().getColor(R.color.colorAccent));
-                } else {
-                    nameText.getBackground().setTint(Color.TRANSPARENT);
-                }
-            }
-        });
-    }
-
-    /**
-     * Setups toolbar by setting it as SupportActionBar and adding a "backbutton" to it.
-     */
-    private void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.edit_task_toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-    }
-
-    /**
-     * Setups notification layout by adding listeners to touch and click events for the different
-     * elements.
-     */
-    private void setupNotificationLayout() {
-        //Setup notification area to begin date-set process on click.
-        notificationLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                showTimerPickerDialog();
-                return false;
-            }
-        });
-
-        //Remove date from task and updated view
-        notificationRemoveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cal = null;
-                EventBus.getDefault().post(new TaskEditedEvent());
-            }
-        });
-    }
-
-    private void setupPriorityLayout() {
-        priorityLayout.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                final String current = priorityText.getText().toString();
-                final String low = getResources().getString(R.string.priority_low);
-                final String medium = getResources().getString(R.string.priority_medium);
-                final String high = getResources().getString(R.string.priority_high);
-
-                //Switch-case fungerar inte med variabler...
-                //Går null -> low -> medium -> high -> null
-                if (current.equals(low)) {
-                    priorityText.setText(medium);
-                    priorityRemoveButton.setVisibility(View.VISIBLE);
-                } else if (current.equals(medium)) {
-                    priorityText.setText(high);
-                    priorityRemoveButton.setVisibility(View.VISIBLE);
-                } else if (current.equals(high)) {
-                    priorityText.setText("");
-                    priorityRemoveButton.setVisibility(View.INVISIBLE);
-                } else {    //In this case, string will (should) be empty
-                    priorityText.setText(low);
-                    priorityRemoveButton.setVisibility(View.VISIBLE);
-                }
-
-                EventBus.getDefault().post(new TaskEditedEvent());
-                return false;
-            }
-        });
-
-        priorityRemoveButton.setVisibility(View.INVISIBLE);
-        priorityRemoveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                priorityText.setText(null);
-                priorityRemoveButton.setVisibility(View.INVISIBLE);
-                EventBus.getDefault().post(new TaskEditedEvent());
-            }
-        });
-    }
-
-    /**
-     * Adds listener to new-category-text-field.
-     */
-    private void setupCategoriesLayout() {
-        categoriesAddText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
-                    String input = categoriesAddText.getText().toString();
-
-                    // Check if valid input, otherwise reset name.
-                    if (!input.equalsIgnoreCase("")) {
-                        EventBus.getDefault().post(new TaskEditedEvent());
-                    }
-
-                    setShowKeyboard(false, v);
-                    categoriesAddText.clearFocus();
-                    return true;
-                }
-                return false;
-            }
-        });
-    }
-
-    private void setupNoteLayout() {
-        noteText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
-                    String input = noteText.getText().toString();
-                    noteText.setText(input.trim());
-
-                    EventBus.getDefault().post(new TaskEditedEvent());
-                    setShowKeyboard(false, v);
-                    noteText.clearFocus();
-                }
-                return false;
-            }
-        });
-
-        noteText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    noteText.getBackground().setTint(getResources().getColor(R.color.colorAccent));
-                } else {
-                    noteText.getBackground().setTint(Color.TRANSPARENT);
-                }
-            }
-        });
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getNewLabelText() {
-        String text = categoriesAddText.getText().toString();
-        categoriesAddText.setText(null);
-        adapter.notifyDataSetChanged();
-        return text;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void notifyCategoriesChanged() {
-        adapter.notifyDataSetChanged();
-        updateCategoriesListHeight();
-    }
-
-    @Override
-    public String getPriority() {
-        return priorityText.getText().toString();
-    }
-
-    @Override
-    public void setPriority(String priority, int color) {
-        priorityText.setText(priority);
-        priorityText.setTextColor(color);
-    }
-
-    /**
-     * Sets the ListView to the proper height.
-     */
-    private void updateCategoriesListHeight() {
-        ViewGroup.LayoutParams params = categoriesListView.getLayoutParams();
-        int newHeight = 50;
-
-        newHeight += categoriesListView.getCount() * 65 * 4;
-        params.height = newHeight;
-
-        categoriesListView.setLayoutParams(params);
-        categoriesListView.requestLayout();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setupCategories(List<ILabelCategory> list) {
-        //resource = 0 because of no need for custom layout ID.
-        adapter = new TaskEditCategoryAdapter(this, 0, list);
-        categoriesListView.setAdapter(adapter);
-        updateCategoriesListHeight();
     }
 
     /**
