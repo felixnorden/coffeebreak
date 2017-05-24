@@ -126,59 +126,65 @@
         </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.design.widget.CoordinatorLayout>
 
-    <RelativeLayout
+    <ScrollView
         android:id="@+id/left_drawer"
         android:layout_width="240dp"
         android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:elevation="16dp">
+        android:fillViewport="true"
+        android:layout_gravity="start">
 
-        <TextView
-            android:id="@+id/drawer_header"
+        <RelativeLayout
             android:layout_width="240dp"
-            android:layout_height="160dp"
-            android:background="@android:color/white"
-            android:text="COOL HEADER"
-            android:textAlignment="center"
-            android:textSize="56dp" />
+            android:layout_height="match_parent"
+            android:elevation="16dp">
 
-        <ImageView
-            android:id="@+id/time_separator"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_below="@id/drawer_header"
-            android:layout_marginLeft="8dp"
-            app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
+            <TextView
+                android:id="@+id/drawer_header"
+                android:layout_width="240dp"
+                android:layout_height="160dp"
+                android:background="@android:color/white"
+                android:text="COOL HEADER"
+                android:textAlignment="center"
+                android:textSize="56dp" />
 
-        <TextView
-            android:layout_width="208dp"
-            android:layout_height="24dp"
-            android:layout_below="@id/drawer_header"
-            android:layout_toEndOf="@id/time_separator"
-            android:text="   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _" />
+            <ImageView
+                android:id="@+id/time_separator"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_below="@id/drawer_header"
+                android:layout_marginLeft="8dp"
+                app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
 
-        <ListView
-            android:id="@+id/drawer_list"
-            android:layout_width="240dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/time_separator"
-            android:background="@android:color/white"
-            android:choiceMode="singleChoice"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="2dp"
-            android:drawSelectorOnTop="true" />
+            <TextView
+                android:layout_width="208dp"
+                android:layout_height="24dp"
+                android:layout_below="@id/drawer_header"
+                android:layout_toEndOf="@id/time_separator"
+                android:text="   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _" />
 
-
-        <ImageButton
-            android:id="@+id/add_category"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/drawer_list"
-            android:backgroundTint="@android:color/background_light"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            <cbstudios.coffeebreak.view.activity.NonScrollListView
+                android:id="@+id/drawer_list"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/time_separator"
+                android:background="@android:color/white"
+                android:choiceMode="singleChoice"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="2dp"
+                android:drawSelectorOnTop="false" />
 
 
-    </RelativeLayout>
+            <ImageButton
+                android:id="@+id/add_category"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/drawer_list"
+                android:backgroundTint="@android:color/background_light"
+                app:srcCompat="@android:drawable/ic_input_add" />
+
+
+        </RelativeLayout>
+    </ScrollView>
 
 </android.support.v4.widget.DrawerLayout>
 

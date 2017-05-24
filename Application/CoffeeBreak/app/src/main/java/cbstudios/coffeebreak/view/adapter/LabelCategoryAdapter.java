@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -39,10 +40,19 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         LayoutInflater inflater = LayoutInflater.from(context);
         View rowItem = inflater.inflate(R.layout.drawer_list_item_label, parent, false);
 
+
         final ILabelCategory labelCategory = getItem(position);
         final TextView etNameView = (TextView) rowItem.findViewById(R.id.nameView);
+        if(position!=0){
+            LinearLayout llSeparator = (LinearLayout) rowItem.findViewById(R.id.separator);
+            llSeparator.setVisibility(View.INVISIBLE);
+            final float scale = getContext().getResources().getDisplayMetrics().density;
+            int px = (int) (48 * scale + 0.5f);
+            rowItem.getLayoutParams().height = px;
+        }
         ImageView ivCategory = (ImageView) rowItem.findViewById(R.id.imageViewCategoryColor);
         TextView categorySize = (TextView) rowItem.findViewById(R.id.textViewNumber);
+
 
 
         if (labelCategory.getName() != null) {
