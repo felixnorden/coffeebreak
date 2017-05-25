@@ -154,11 +154,28 @@ public class TaskEditPresenter extends BasePresenter implements ITaskEditPresent
     private void updateModel() {
         task.setName(view.getNameText());
         task.setDate(view.getNotification());
-        task.setNote(view.getNote());
+        updateNote();
         updateLabels();
         updatePriority();
 
         setupView();
+    }
+
+    /**
+     * Checks if note is empty. If empty, sets task's note to null.
+     * Else sets task's note to text found in note-text in view.
+     *
+     * This works as a quick fix because of the fact that the model uses null
+     * to show that the note hasn't been set yet, instead of an empty string.
+     */
+    private void updateNote() {
+        String note = view.getNote();
+
+        if (note.isEmpty()) {
+            task.setNote(null);
+        } else {
+            task.setNote(note);
+        }
     }
 
     private void updatePriority() {
