@@ -178,7 +178,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         }
     }
 
-    @Override
     public List<IAdvancedTask> getTasks() {
         return model.getToDoDataModule().getTasks();
     }

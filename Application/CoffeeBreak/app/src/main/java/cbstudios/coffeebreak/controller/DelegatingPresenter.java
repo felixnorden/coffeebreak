@@ -30,7 +30,22 @@ import cbstudios.coffeebreak.view.activity.IMainView;
 import cbstudios.coffeebreak.view.activity.MainActivity;
 
 /**
- * Created by Felix on 2017-05-22.
+ * @author Felix
+ * @version 1.1
+ *          <p>Responsibility: Handling all creation, dependency injection and responsibility delegation
+ *          between all presenters and their views.
+ *          Also creates the model and handles persistent data management</br >
+ *          Uses: {@link IMainView}, {@link Context} {@link IPresenterFactory}
+ *          Events:
+ *          <ul>
+ *              <li>{@link UpdateContextReferenceEvent} </li>
+ *              <li>{@link RemovePresenterEvent}</li>
+ *              <li>{@link SaveStateEvent}</li>
+ *              <li>{@link RequestPresenterEvent}</li>
+ *          </ul>
+ *          </br>
+ *          Used by: {@link MainActivity} during startup for initialization.
+ *          </p>
  */
 
 class DelegatingPresenter {
@@ -45,17 +60,6 @@ class DelegatingPresenter {
         this.mContext = mContext;
 
         EventBus.getDefault().register(this);
-        System.out.println("Instatiated");
-        loadTasks();
-        loadStatistics();
-        loadAchievements();
-    }
-    DelegatingPresenter(){
-        this.model = new Model();
-        presenters = new ArrayList<>();
-
-        EventBus.getDefault().register(this);
-
         loadTasks();
         loadStatistics();
         loadAchievements();
@@ -64,7 +68,7 @@ class DelegatingPresenter {
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void updateMainContext(UpdateContextReferenceEvent event){
         if(event.context instanceof IMainView)
-            this.mContext = (Context) event.context;
+            this.mContext = event.context;
     }
 
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -82,7 +86,6 @@ class DelegatingPresenter {
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onPresenterRequest(RequestPresenterEvent event){
         if(event.view == mContext){
-            System.out.println("Request Recieved");
 
             IPresenter mainPresenter = factory.createMainPresenter((IMainView) mContext, model);
             MainActivity activity = (MainActivity) mContext;
