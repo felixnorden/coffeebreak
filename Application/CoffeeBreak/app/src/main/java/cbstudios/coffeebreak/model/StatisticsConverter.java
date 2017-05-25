@@ -61,17 +61,17 @@ public class StatisticsConverter {
         statistics.setTimesSettingsChanged(object.get("TimesSettingsChanged").getAsInt());
         statistics.setTasksAlive(object.get("TasksAlive").getAsInt());
 
-        //if (!(object.get("DaysInARow") == null)) {
+        if (!(object.get("DaysInARow") == null)) {
             statistics.setDaysInARow(object.get("DaysInARow").getAsInt());
-          //  System.out.println("WOHOO");
-       // }
+            System.out.println("WOHOO");
+        }
 
-       // if(!(object.get("LastDayCheckedTask") == null)){
+        if(!(object.get("LastDayCheckedTask") == null)){
             Calendar time = Calendar.getInstance();
             time.setTimeInMillis(Long.valueOf(object.get("LastDayCheckedTask").getAsString()));
             statistics.setLastDayCheckedTask(time);
-        //    System.out.println("YAAAAS");
-       // }
+            System.out.println("YAAAAS");
+        }
 
         return statistics;
     }

@@ -1,15 +1,16 @@
 package cbstudios.coffeebreak.eventbus;
 
-import cbstudios.coffeebreak.view.adapter.TaskAdapter;
+import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
+
 
 /**
  * Created by Lenovo on 2017-05-18.
  */
 
 public class TaskAdapterSetUpEvent {
-    public final TaskAdapter taskAdapter;
+    public final ITaskAdapter taskAdapter;
 
-    public TaskAdapterSetUpEvent(TaskAdapter taskAdapter){
+    public TaskAdapterSetUpEvent(ITaskAdapter taskAdapter){
         this.taskAdapter = taskAdapter;
     }
 }
