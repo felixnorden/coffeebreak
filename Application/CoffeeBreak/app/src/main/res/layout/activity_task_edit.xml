@@ -202,7 +202,7 @@
                         android:tint="@color/colorPrimary"
                         app:srcCompat="@drawable/ic_add_white_24dp" />
 
-                    <AutoCompleteTextView
+                    <android.support.v7.widget.AppCompatAutoCompleteTextView
                         android:id="@+id/task_edit_categories_add_text_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
