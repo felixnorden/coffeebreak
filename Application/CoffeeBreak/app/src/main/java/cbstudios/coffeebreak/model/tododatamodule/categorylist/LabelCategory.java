@@ -41,25 +41,6 @@ class LabelCategory implements ILabelCategory {
 
     /**
      *
-     * @return a random Color
-     */
-    private String getRandomColor(){
-        Random rand = new Random();
-
-        // Create RGB values
-        int R = rand.nextInt(HEX_MAX);
-        int G = rand.nextInt(HEX_MAX);
-        int B = rand.nextInt(HEX_MAX);
-
-        //Format to a RGB color string of hex values for parsing in application.
-        String rgb = String.format("#%02X%02X%02X", R, G, B);
-        return rgb;
-        //return (Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
-        //return Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
-    }
-
-    /**
-     *
      * @return the name of the labelCategory
      */
     public String getName() {
@@ -145,4 +126,22 @@ class LabelCategory implements ILabelCategory {
         return result;
     }
 
+    /**
+     *
+     * @return a random Color
+     */
+    private String getRandomColor(){
+        Random rand = new Random();
+
+        // Create RGB values
+        int R = rand.nextInt(HEX_MAX);
+        int G = rand.nextInt(HEX_MAX);
+        int B = rand.nextInt(HEX_MAX);
+
+        //Format to a RGB color string of hex values for parsing in application.
+        String rgb = String.format("#%02X%02X%02X", R, G, B);
+        return rgb;
+        //return (Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
+        //return Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
+    }
 }

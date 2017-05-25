@@ -79,9 +79,22 @@ public class CategoryList implements ICategoryList {
      * @param name the name of the labelCategory that will be removed.
      */
     public void removeLabelCategory(String name) {
-        for (ILabelCategory label : labelCategories) {
-            if (Objects.equals(label.getName(), name)) {
-                labelCategories.remove(label);
+        List<Integer> indexList = new ArrayList<>();
+
+        // Find all equal labels and store their corresponding index
+        for(int i = 0; i < labelCategories.size(); i++){
+            if(labelCategories.get(i).getName().contentEquals(name)) {
+                indexList.add(i);
+            }
+        }
+
+        // Remove all labels in the list, one by one
+        if(indexList.size() == 1) {
+            labelCategories.remove((int) indexList.get(0));
+        }
+        else{
+            for (int i = 0; i < indexList.size(); i++){
+                labelCategories.remove(indexList.get(i) - i);
             }
         }
     }

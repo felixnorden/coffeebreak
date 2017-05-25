@@ -26,7 +26,21 @@ public class ToDoDataModuleTest {
 
     @Test
     public void testAddLabelCategory() {
-        // TODO: 2017-04-04 Lägg till getLabelCategories så man kan testa detta
+        // Make sure there are no Label categories
+        assertTrue(toDoDataModule.getLabelCategories().isEmpty());
+
+        toDoDataModule.addLabelCategory("Sample 1");
+        toDoDataModule.addLabelCategory("Sample 2");
+
+        // Check that categories have been stored and in correct order
+        assertEquals(toDoDataModule.getLabelCategories().size(), 2);
+        assertEquals(toDoDataModule.getLabelCategories().get(0).getName(), "Sample 1");
+        assertEquals(toDoDataModule.getLabelCategories().get(1).getName(), "Sample 2");
+
+        // Check that colors have been set correctly
+        assertTrue(!toDoDataModule.getLabelCategory("Sample 1").getColor().equalsIgnoreCase(""));
+        assertTrue(!toDoDataModule.getLabelCategory("Sample 1").getColor().equalsIgnoreCase(null));
+
     }
 
     @Test
@@ -37,7 +51,27 @@ public class ToDoDataModuleTest {
 
     @Test
     public void testRemoveLabelCategory() {
-        //TODO: 2017-04-04 Metoder finns ej för att testa detta än
+        toDoDataModule.addLabelCategory("Sample 1");
+        toDoDataModule.addLabelCategory("Sample 2");
+        toDoDataModule.addLabelCategory("Sample 3");
+
+        assertEquals(toDoDataModule.getLabelCategories().size(), 3);
+
+        //Remove a category and make sure the correct categories remain
+        toDoDataModule.removeLabelCategory("Sample 2");
+
+        assertEquals(toDoDataModule.getLabelCategories().size(), 2);
+        assertTrue(toDoDataModule.getLabelCategories().get(0).getName().contentEquals("Sample 1"));
+        assertTrue(toDoDataModule.getLabelCategories().get(1).getName().contentEquals("Sample 3"));
+
+        toDoDataModule.removeLabelCategory("Sample 1");
+
+        assertEquals(toDoDataModule.getLabelCategories().size(), 1);
+        assertTrue(toDoDataModule.getLabelCategories().get(0).getName().contentEquals("Sample 3"));
+
+        toDoDataModule.removeLabelCategory("Sample 3");
+
+        assertTrue(toDoDataModule.getLabelCategories().isEmpty());
     }
 
     @Test
