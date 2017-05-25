@@ -88,7 +88,6 @@ class DelegatingPresenter {
         if(event.view == mContext){
 
             IPresenter mainPresenter = factory.createMainPresenter((IMainView) mContext, model);
-            MainActivity activity = (MainActivity) mContext;
             presenters.add(mainPresenter);
         }
     }
