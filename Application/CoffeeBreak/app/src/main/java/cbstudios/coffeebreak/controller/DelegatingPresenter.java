@@ -65,17 +65,30 @@ class DelegatingPresenter {
         loadAchievements();
     }
 
+    /**
+     * Updates the main context every time the MainActivity is being recreated,
+     * to make sure of persistent data is being managed
+     * @param event containing the new context
+     */
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void updateMainContext(UpdateContextReferenceEvent event){
         if(event.context instanceof IMainView)
             this.mContext = event.context;
     }
 
+    /**
+     * Removes a presenter that has no associated view
+     * @param event containing the presenter
+     */
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void RemoveDeadPresenter(RemovePresenterEvent event){
         presenters.remove(event.presenter);
     }
 
+    /**
+     * Stores the data when request is being made from a view.
+     * @param event
+     */
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void saveState(SaveStateEvent event) {
         saveTasks();
@@ -83,6 +96,11 @@ class DelegatingPresenter {
         saveAchievements();
     }
 
+    /**
+     * Handles requests for presenter creation for different
+     * views
+     * @param event containing context for presenter
+     */
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onPresenterRequest(RequestPresenterEvent event){
         if(event.view == mContext){
@@ -91,6 +109,7 @@ class DelegatingPresenter {
             presenters.add(mainPresenter);
         }
     }
+
     private void loadAchievements() {
         JsonElement element = null;
         try {
