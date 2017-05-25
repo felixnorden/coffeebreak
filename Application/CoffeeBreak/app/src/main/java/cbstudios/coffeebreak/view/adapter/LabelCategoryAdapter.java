@@ -26,6 +26,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 /**
  * Created by elias on 20/04/2017.
+ *
  */
 
 public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
@@ -42,6 +43,10 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         //this.mainPresenter = mainPresenter;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         final View rowItem = inflater.inflate(R.layout.drawer_list_item_label, parent, false);

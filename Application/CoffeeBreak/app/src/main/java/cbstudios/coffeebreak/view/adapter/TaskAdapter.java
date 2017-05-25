@@ -209,6 +209,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             return ADVANCED_TASK;
     }
 
+    /**
+     * Removes all the tasks that is checked or that has a name == null.
+     * Updates the view if any changes was made.
+     * @param category the category that the user is in right now
+     */
     @Override
     public void refreshItems(ICategory category){
         removeUnvalidTasks();
@@ -240,6 +245,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         swapTasks(currentCategory.getValidTasks(tmpTasks));
     }
 
+    /**
+     * updates the temporaryTaskList, is called from mainPresenter when a RequestListEvent is posted.
+     * @param tasks
+     */
     @Override
     public void updateTmpTasks(List<IAdvancedTask> tasks){
         this.tmpTasks = tasks;
@@ -264,6 +273,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
     }
 
+    /**
+     * Changes the tasks that the adapter is holding, uses DiffUtil to only update the views that has
+     * been changed.
+     * @param newTasks The new list that is going to replace the current list of tasks
+     */
     public void swapTasks(List<IAdvancedTask> newTasks){
         final TaskDiffCallback diffCallback = new TaskDiffCallback(this.mTasks, newTasks);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
@@ -273,6 +287,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         diffResult.dispatchUpdatesTo(this);
     }
 
+    /**
+     * Removes all checked tasks. Is used through removeUnvalidTasks().
+     */
     private void removeCheckedTasks(){
         //EventBus.getDefault().post(new RequestTaskListEvent(this));
         for(IAdvancedTask task: tmpTasks){
@@ -282,6 +299,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
     }
 
+    /**
+     * Removes all tasks with name == null. Is used through removeUnvalidTasks().
+     */
     private void removeNullTasks(){
         //EventBus.getDefault().post(new RequestTaskListEvent(this));
         for(IAdvancedTask task: tmpTasks){
@@ -291,12 +311,23 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
     }
 
+    /**
+     * Removes all tasks that should be deleted.
+     */
     private void removeUnvalidTasks(){
         EventBus.getDefault().post(new RequestTaskListEvent(this));
         removeCheckedTasks();
         removeNullTasks();
     }
 
+    /**
+     * @author Felix , Elias
+     * @version  1.1
+     * Responsibility: Given two lists of IAdvancedTasks, calculates the difference between them and
+     * calls the appropriate methods in the RecyclerView to update the view
+     * Uses: IAdvancedTask
+     * Used by: TaskAdapter
+     */
     private class TaskDiffCallback extends DiffUtil.Callback {
 
         private final List<IAdvancedTask> mOldTaskList;

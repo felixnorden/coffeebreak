@@ -19,6 +19,7 @@ import static cbstudios.coffeebreak.R.layout.drawer_list_item_time;
 
 /**
  * Created by elias on 21/04/2017.
+ *
  */
 
 public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
@@ -34,6 +35,9 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
         //this.mainPresenter = mainPresenter;
     }
 
+    /**
+     *{@inheritDoc}
+     */
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View rowItem = inflater.inflate(drawer_list_item_time, parent, false);
