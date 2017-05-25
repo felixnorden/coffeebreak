@@ -52,7 +52,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     MainPresenter(IMainView mainView, Model model) {
         this.model = model;
         this.mainView = mainView;
-        taskAdapter = new TaskAdapter(mainView.getAppCompatActivity(), this);
+        taskAdapter = new TaskAdapter(mainView.getAppCompatActivity(), getTasks());
 
         EventBus.getDefault().register(this);
     }
@@ -185,9 +185,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onTaskListRequest(RequestTaskListEvent event){
-
-
-
         event.adapter.updateTmpTasks(getTasks());
     }
     @Subscribe

@@ -26,14 +26,14 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
 
     private final Context context;
     private final List labelCategories;
-    private IMainPresenter mainPresenter;
+    //private IMainPresenter mainPresenter;
 
 
-    public LabelCategoryAdapter(Context context, List<ILabelCategory> categories, IMainPresenter mainPresenter) {
+    public LabelCategoryAdapter(Context context, List<ILabelCategory> categories) {
         super(context, R.layout.drawer_list_item_label, categories);
         this.context = context;
         this.labelCategories = categories;
-        this.mainPresenter = mainPresenter;
+        //this.mainPresenter = mainPresenter;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -60,7 +60,7 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
             etNameView.setText(labelCategory.getName());
             ivCategory.setColorFilter(Color.parseColor(labelCategory.getColor()), PorterDuff.Mode.MULTIPLY);
 
-            updateNumberOfTaskInCategory(labelCategory, categorySize);
+           // updateNumberOfTaskInCategory(labelCategory, categorySize);
         }
 
         return rowItem;
@@ -71,7 +71,7 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
      * @param labelCategory is the current labelCategory
      * @param categorySize is ID for a TextView field
      */
-    private void updateNumberOfTaskInCategory(ILabelCategory labelCategory, TextView categorySize) {
+    /*private void updateNumberOfTaskInCategory(ILabelCategory labelCategory, TextView categorySize) {
         List<IAdvancedTask> tasks = mainPresenter.getTasks();
 
         for (int j = 0; j < labelCategories.size(); j++) {
@@ -81,6 +81,6 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
                 }
             }
         }
-    }
+    }*/
 
 }

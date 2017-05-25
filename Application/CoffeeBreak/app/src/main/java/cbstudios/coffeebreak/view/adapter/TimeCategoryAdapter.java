@@ -25,13 +25,13 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
 
     private final Context context;
     private final List<ITimeCategory> timeCategories;
-    private IMainPresenter mainPresenter;
+    //private IMainPresenter mainPresenter;
 
-    public TimeCategoryAdapter(Context context, List<ITimeCategory> categories, IMainPresenter mainPresenter) {
+    public TimeCategoryAdapter(Context context, List<ITimeCategory> categories) {
         super(context, drawer_list_item_label, categories);
         this.context = context;
         this.timeCategories = categories;
-        this.mainPresenter = mainPresenter;
+        //this.mainPresenter = mainPresenter;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -46,7 +46,7 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
         if (timeCategory.getName() != null) {
             etNameView.setText(timeCategory.getName());
 
-            updateNumberOfTaskInCategory(timeCategory, categorySize);
+            //updateNumberOfTaskInCategory(timeCategory, categorySize);
         }
         return rowItem;
 
@@ -58,7 +58,7 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
      * @param timeCategory is the current labelCategory
      * @param categorySize is ID for a TextView field
      */
-    private void updateNumberOfTaskInCategory(ITimeCategory timeCategory, TextView categorySize) {
+    /*private void updateNumberOfTaskInCategory(ITimeCategory timeCategory, TextView categorySize) {
         List<IAdvancedTask> tasks = mainPresenter.getTasks();
 
         for (int j = 0; j < timeCategories.size(); j++) {
@@ -69,7 +69,7 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
                     //categorySize.setText((Integer.toString(mainPresenter.getModel().getToDoDataModule().getStats().getAchievementList().size())));
                 }
             }
-        }
-    }
+        }}*/
+
 }
 
