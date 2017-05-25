@@ -197,7 +197,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     @Subscribe
     public void onCreateCategoryEvent(CreateCategoryEvent event){
-        model.getToDoDataModule().addLabelCategory("mock1");
+        model.getToDoDataModule().addLabelCategory("Mock1");
 
     }
 

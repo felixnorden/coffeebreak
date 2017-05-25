@@ -45,6 +45,9 @@ public class ToDoDataModule {
     public void addLabelCategory(String name) {
         categoryList.addLabelCategory(name);
     }
+    public void addLabelCategory(){
+        categoryList.addLabelCategory();
+    }
 
     public ILabelCategory getLabelCategory(String name) {
         return categoryList.getLabelCategory(name);

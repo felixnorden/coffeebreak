@@ -3,6 +3,8 @@ package cbstudios.coffeebreak.view.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.support.v7.widget.AppCompatEditText;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +13,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
-import cbstudios.coffeebreak.controller.IMainPresenter;
+
+import cbstudios.coffeebreak.eventbus.CategoryKeyboardClosedEvent;
+import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
@@ -38,12 +44,12 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
 
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View rowItem = inflater.inflate(R.layout.drawer_list_item_label, parent, false);
+        final View rowItem = inflater.inflate(R.layout.drawer_list_item_label, parent, false);
 
 
         final ILabelCategory labelCategory = getItem(position);
         final TextView etNameView = (TextView) rowItem.findViewById(R.id.nameView);
-        if(position!=0){
+        if (position != 0) {
             LinearLayout llSeparator = (LinearLayout) rowItem.findViewById(R.id.separator);
             llSeparator.setVisibility(View.INVISIBLE);
             final float scale = getContext().getResources().getDisplayMetrics().density;
@@ -54,17 +60,18 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         TextView categorySize = (TextView) rowItem.findViewById(R.id.textViewNumber);
 
 
-
         if (labelCategory.getName() != null) {
 
             etNameView.setText(labelCategory.getName());
             ivCategory.setColorFilter(Color.parseColor(labelCategory.getColor()), PorterDuff.Mode.MULTIPLY);
 
-           // updateNumberOfTaskInCategory(labelCategory, categorySize);
+            // updateNumberOfTaskInCategory(labelCategory, categorySize);
         }
 
         return rowItem;
     }
+
+
 
     /**
      * Updates the number that represent number of task in the given category

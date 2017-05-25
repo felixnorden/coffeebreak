@@ -3,6 +3,10 @@ package cbstudios.coffeebreak.view.adapter;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import cbstudios.coffeebreak.R;
 
 /**
@@ -12,7 +16,7 @@ import cbstudios.coffeebreak.R;
 class AdvancedTaskViewHolder extends TaskAdapter.TaskViewHolder {
     public TextView tvSubTask;
 
-    public AdvancedTaskViewHolder(View itemView){
+    public AdvancedTaskViewHolder(View itemView) {
         super(itemView);
 
         tvSubTask = (TextView) itemView.findViewById(R.id.subTextView);
@@ -21,12 +25,22 @@ class AdvancedTaskViewHolder extends TaskAdapter.TaskViewHolder {
     @Override
     void setSpecificFields() {
         String information;
-        if(task.hasNote())
+        if (task.getDate() != null) {
+            Date date = task.getDate().getTime();
+            String dateTime = new SimpleDateFormat("EE", Locale.getDefault()).format(date)
+                    + " " + new SimpleDateFormat("dd", Locale.getDefault()).format(date)
+                    + " " + new SimpleDateFormat("MMM", Locale.getDefault()).format(date)
+                    + " " + new SimpleDateFormat("HH:mm", Locale.getDefault()).format(date);
+            tvSubTask.setText(dateTime);
+        } else if (task.hasNote()) {
             information = task.getNote();
-        else if(!task.getLabels().isEmpty())
+            tvSubTask.setText(information);
+        } else if (!task.getLabels().isEmpty()) {
             information = task.getLabels().get(0).getName();
-        else
+            tvSubTask.setText(information);
+        } else {
             information = "No info, add plez";
-        tvSubTask.setText(information);
+            tvSubTask.setText(information);
+        }
     }
 }
