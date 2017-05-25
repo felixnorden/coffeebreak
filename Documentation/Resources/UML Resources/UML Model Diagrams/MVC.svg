@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Genererad av Microsoft Visio, SVG-export MVC.svg Page-1 -->
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events"
+		xmlns:v="http://schemas.microsoft.com/visio/2003/SVGExtensions/" width="8.26772in" height="11.6929in"
+		viewBox="0 0 595.276 841.89" xml:space="preserve" color-interpolation-filters="sRGB" class="st12">
+	<v:documentProperties v:langID="1053" v:metric="true" v:viewMarkup="false">
+		<v:userDefs>
+			<v:ud v:nameU="msvNoAutoConnect" v:val="VT0(1):26"/>
+		</v:userDefs>
+	</v:documentProperties>
+
+	<style type="text/css">
+	<![CDATA[
+		.st1 {fill:#ffffff;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.24}
+		.st2 {fill:#000000;font-family:Calibri;font-size:1.5em}
+		.st3 {font-size:0.777771em}
+		.st4 {marker-end:url(#mrkr12-25);stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st5 {fill:#000000;fill-opacity:1;stroke:#000000;stroke-opacity:1;stroke-width:0.22935779816514}
+		.st6 {marker-end:url(#mrkr12-25);stroke:#000000;stroke-dasharray:5.25,3.75;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st7 {fill:#ffffff}
+		.st8 {stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st9 {fill:#000000;font-family:Calibri;font-size:1.00001em}
+		.st10 {font-size:1em}
+		.st11 {fill:#ffffff;stroke:#000000;stroke-linecap:round;stroke-linejoin:round;stroke-width:0.75}
+		.st12 {fill:none;fill-rule:evenodd;font-size:12px;overflow:visible;stroke-linecap:square;stroke-miterlimit:3}
+	]]>
+	</style>
+
+	<defs id="Markers">
+		<g id="lend12">
+			<path d="M 3 1 L 0 0 L 3 -1 " style="stroke-linecap:round;stroke-linejoin:round;fill:none"/>
+		</g>
+		<marker id="mrkr12-25" class="st5" v:arrowType="12" v:arrowSize="2" orient="auto" markerUnits="strokeWidth"
+				overflow="visible">
+			<use xlink:href="#lend12" transform="scale(-4.36,-4.36) "/>
+		</marker>
+	</defs>
+	<g v:mID="0" v:index="1" v:groupContext="foregroundPage">
+		<title>Sida-1</title>
+		<v:pageProperties v:drawingScale="0.0393701" v:pageScale="0.0393701" v:drawingUnits="24" v:shadowOffsetX="8.50394"
+				v:shadowOffsetY="-8.50394"/>
+		<v:layer v:name="Koppling" v:index="0"/>
+		<g id="shape1-1" v:mID="1" v:groupContext="shape" transform="translate(198.425,-651.968)">
+			<title>Rektangel</title>
+			<desc>Model Tasks Categories User data</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="99.2126" cy="799.37" width="198.43" height="85.0394"/>
+			<rect x="0" y="756.85" width="198.425" height="85.0394" class="st1"/>
+			<text x="75.5" y="777.17" class="st2" v:langID="1053"><v:paragraph v:horizAlign="1"/><v:tabList/>Model<v:newlineChar/><tspan
+						x="83.79" dy="1.286em" class="st3">Tasks<v:newlineChar/></tspan><tspan x="69.05" dy="1.2em" class="st3">Categories<v:newlineChar/></tspan><tspan
+						x="71.75" dy="1.457em" class="st3">User data</tspan></text>		</g>
+		<g id="shape2-7" v:mID="2" v:groupContext="shape" transform="translate(198.425,-455.669)">
+			<title>Rektangel.2</title>
+			<desc>Presenter Head controller</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="99.2126" cy="799.37" width="198.43" height="85.0394"/>
+			<rect x="0" y="756.85" width="198.425" height="85.0394" class="st1"/>
+			<text x="63.59" y="793.97" class="st2" v:langID="1053"><v:paragraph v:horizAlign="1"/><v:tabList/>Presenter<v:newlineChar/><tspan
+						x="54.81" dy="1.543em" class="st3">Head controller</tspan></text>		</g>
+		<g id="shape3-11" v:mID="3" v:groupContext="shape" transform="translate(198.425,-255.118)">
+			<title>Rektangel.3</title>
+			<desc>View XML-layouts Activities Fragments</desc>
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:val="VT0(15):26"/>
+			</v:userDefs>
+			<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+			<v:textRect cx="99.2126" cy="799.37" width="198.43" height="85.0394"/>
+			<rect x="0" y="756.85" width="198.425" height="85.0394" class="st1"/>
+			<text x="81.13" y="777.17" class="st2" v:langID="1053"><v:paragraph v:horizAlign="1"/><v:tabList/>View<v:newlineChar/><tspan
+						x="63.93" dy="1.286em" class="st3">XML</tspan><tspan class="st3">-</tspan><tspan class="st3">layouts<v:newlineChar/></tspan><tspan
+						x="73.31" dy="1.2em" class="st3">Activities<v:newlineChar/></tspan><tspan x="69.07" dy="1.457em"
+						class="st3">Fragments</tspan></text>		</g>
+		<g id="group4-19" transform="translate(205.512,-498.189)" v:mID="4" v:groupContext="group" v:layerMember="0">
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
+				<v:ud v:nameU="RelationshipName" v:prompt="" v:val="VT4()"/>
+				<v:ud v:nameU="ShowMulti" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="Identifying" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="DXBegin" v:prompt="" v:val="VT0(0):1"/>
+				<v:ud v:nameU="DYBegin" v:prompt="" v:val="VT0(-0.029527559055118):1"/>
+				<v:ud v:nameU="DXEnd" v:prompt="" v:val="VT0(0.029527559055118):1"/>
+				<v:ud v:nameU="DYEnd" v:prompt="" v:val="VT0(0):1"/>
+				<v:ud v:nameU="BeginAngle" v:prompt="" v:val="VT0(-1.5707963267949):32"/>
+				<v:ud v:nameU="EndAngle" v:prompt="" v:val="VT0(0):32"/>
+				<v:ud v:nameU="DXBegin" v:prompt="" v:val="VT0(-0.065403540608771):24"/>
+				<v:ud v:nameU="DYBegin" v:prompt="" v:val="VT0(-8.8817841970013E-16):24"/>
+				<v:ud v:nameU="DXEnd" v:prompt="" v:val="VT0(0.065403540608775):24"/>
+				<v:ud v:nameU="DYEnd" v:prompt="" v:val="VT0(8.8817841970013E-16):24"/>
+				<v:ud v:nameU="BeginAngle" v:prompt="" v:val="VT0(-3.1415926535898):32"/>
+			</v:userDefs>
+			<title>Riktad Association</title>
+			<g id="shape4-20" v:mID="4" v:groupContext="groupContent" v:layerMember="0">
+				<path d="M-7.09 841.89 L-63.78 841.89 L-63.78 1042.44 L-7.09 1042.44" class="st4"/>
+			</g>
+		</g>
+		<g id="group9-26" transform="translate(389.764,-297.638)" v:mID="9" v:groupContext="group" v:layerMember="0">
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
+				<v:ud v:nameU="RelationshipName" v:prompt="" v:val="VT4()"/>
+				<v:ud v:nameU="ShowMulti" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="Identifying" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="DXBegin" v:prompt="" v:val="VT0(0):1"/>
+				<v:ud v:nameU="DYBegin" v:prompt="" v:val="VT0(-0.029527559055118):1"/>
+				<v:ud v:nameU="DXEnd" v:prompt="" v:val="VT0(0.029527559055118):1"/>
+				<v:ud v:nameU="DYEnd" v:prompt="" v:val="VT0(0):1"/>
+				<v:ud v:nameU="BeginAngle" v:prompt="" v:val="VT0(-1.5707963267949):32"/>
+				<v:ud v:nameU="EndAngle" v:prompt="" v:val="VT0(0):32"/>
+				<v:ud v:nameU="DXBegin" v:prompt="" v:val="VT0(0.071309052282231):1"/>
+				<v:ud v:nameU="DYBegin" v:prompt="" v:val="VT0(0):24"/>
+				<v:ud v:nameU="DXEnd" v:prompt="" v:val="VT0(-0.071309052282231):1"/>
+				<v:ud v:nameU="DYEnd" v:prompt="" v:val="VT0(-1.7763568394003E-15):24"/>
+				<v:ud v:nameU="BeginAngle" v:prompt="" v:val="VT0(0):32"/>
+				<v:ud v:nameU="EndAngle" v:prompt="" v:val="VT0(-3.1415926535898):32"/>
+			</v:userDefs>
+			<title>Riktad Association.9</title>
+			<g id="shape9-27" v:mID="9" v:groupContext="groupContent" v:layerMember="0">
+				<path d="M7.09 841.89 L77.95 841.89 L77.95 641.34 L7.09 641.34" class="st6"/>
+			</g>
+		</g>
+		<g id="group14-32" transform="translate(290.551,-540.709)" v:mID="14" v:groupContext="group" v:layerMember="0">
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
+				<v:ud v:nameU="RelationshipName" v:prompt="" v:val="VT4()"/>
+				<v:ud v:nameU="ShowMulti" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="Identifying" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="DXBegin" v:prompt="" v:val="VT0(0):1"/>
+				<v:ud v:nameU="DYBegin" v:prompt="" v:val="VT0(-0.029527559055118):1"/>
+				<v:ud v:nameU="DXEnd" v:prompt="" v:val="VT0(0.029527559055118):1"/>
+				<v:ud v:nameU="DYEnd" v:prompt="" v:val="VT0(0):1"/>
+				<v:ud v:nameU="BeginAngle" v:prompt="" v:val="VT0(-1.5707963267949):32"/>
+				<v:ud v:nameU="EndAngle" v:prompt="" v:val="VT0(0):32"/>
+				<v:ud v:nameU="DYBegin" v:prompt="" v:val="VT0(0.023179134080445):24"/>
+				<v:ud v:nameU="DXEnd" v:prompt="" v:val="VT0(0):1"/>
+				<v:ud v:nameU="DYEnd" v:prompt="" v:val="VT0(1.5220964712829):24"/>
+				<v:ud v:nameU="BeginAngle" v:prompt="" v:val="VT0(1.5707963267949):32"/>
+				<v:ud v:nameU="EndAngle" v:prompt="" v:val="VT0(1.5707963267949):32"/>
+			</v:userDefs>
+			<title>Riktad Association.14</title>
+			<g id="shape14-33" v:mID="14" v:groupContext="groupContent" v:layerMember="0">
+				<path d="M7.09 841.89 L7.09 730.63" class="st4"/>
+			</g>
+		</g>
+		<g id="group19-38" transform="translate(311.811,-379.134)" v:mID="19" v:groupContext="group">
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
+				<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Callout)"/>
+				<v:ud v:nameU="msvSDTargetIntersection" v:prompt=""/>
+				<v:ud v:nameU="msvSDCalloutNoHighlight" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="Side" v:prompt="" v:val="VT0(4):26"/>
+				<v:ud v:nameU="LeaderEnd" v:prompt="" v:val="VT7(PNT(6.25MM,-0.28346456692913)):40"/>
+				<v:ud v:nameU="WHBoxIntersection" v:prompt="" v:val="VT7(PNT(10.096153846154MM,0)):40"/>
+				<v:ud v:nameU="FoldSize" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+				<v:ud v:nameU="Side" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="LeaderEnd" v:prompt="" v:val="VT7(PNT(2.1653547519737,0.20669319605501)):40"/>
+				<v:ud v:nameU="WHBoxIntersection" v:prompt="" v:val="VT7(PNT(1.1811027317328,0.24360246460283)):40"/>
+			</v:userDefs>
+			<title>Anteckning</title>
+			<desc>Notify of changes</desc>
+			<g id="shape19-39" v:mID="19" v:groupContext="groupContent">
+				<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+				<v:textRect cx="42.5197" cy="822.756" width="85.04" height="36.8038"/>
+				<path d="M0 841.89 L85.04 841.89 L85.04 812.13 L76.54 803.62 L0 803.62 L0 841.89 Z" class="st7"/>
+				<path d="M85.04 824.35 L155.91 827.01" class="st8"/>
+				<path d="M0 841.89 L85.04 841.89 L85.04 812.13 L76.54 803.62 L0 803.62 L0 841.89" class="st8"/>
+				<text x="21.2" y="819.16" class="st9" v:langID="1053"><v:paragraph v:horizAlign="1"/><v:tabList/>Notify of <tspan
+							x="22.65" dy="1.2em" class="st10">changes</tspan></text>			</g>
+			<g id="shape20-45" v:mID="20" v:groupContext="shape" transform="translate(76.5355,-29.7638)">
+				<title>Ark.20</title>
+				<v:userDefs>
+					<v:ud v:nameU="FoldSize" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+				</v:userDefs>
+				<path d="M0 841.89 L8.5 841.89 L8.5 842.74 L8.5 841.89 L0 833.39 L-0.85 833.39 L0 833.39 L0 841.89 Z" class="st11"/>
+			</g>
+		</g>
+		<g id="group21-47" transform="translate(198.425,-379.134)" v:mID="21" v:groupContext="group">
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
+				<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Callout)"/>
+				<v:ud v:nameU="msvSDTargetIntersection" v:prompt=""/>
+				<v:ud v:nameU="msvSDCalloutNoHighlight" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="Side" v:prompt="" v:val="VT0(4):26"/>
+				<v:ud v:nameU="LeaderEnd" v:prompt="" v:val="VT7(PNT(6.25MM,-0.28346456692913)):40"/>
+				<v:ud v:nameU="WHBoxIntersection" v:prompt="" v:val="VT7(PNT(10.096153846154MM,0)):40"/>
+				<v:ud v:nameU="FoldSize" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+				<v:ud v:nameU="Side" v:prompt="" v:val="VT0(3):26"/>
+				<v:ud v:nameU="LeaderEnd" v:prompt="" v:val="VT7(PNT(-0.78740153383595,0.29527587217507)):40"/>
+				<v:ud v:nameU="WHBoxIntersection" v:prompt="" v:val="VT7(PNT(0,0.27840282299716)):40"/>
+			</v:userDefs>
+			<title>Anteckning.21</title>
+			<desc>Request set up of view</desc>
+			<g id="shape21-48" v:mID="21" v:groupContext="groupContent">
+				<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+				<v:textRect cx="42.5197" cy="822.756" width="85.04" height="36.8038"/>
+				<path d="M0 841.89 L85.04 841.89 L85.04 812.13 L76.54 803.62 L0 803.62 L0 841.89 Z" class="st7"/>
+				<path d="M0 821.84 L-56.69 820.63" class="st8"/>
+				<path d="M0 841.89 L85.04 841.89 L85.04 812.13 L76.54 803.62 L0 803.62 L0 841.89" class="st8"/>
+				<text x="6.27" y="819.16" class="st9" v:langID="1053"><v:paragraph v:horizAlign="1"/><v:tabList/>Request set up <tspan
+							x="24.81" dy="1.2em" class="st10">of view</tspan></text>			</g>
+			<g id="shape22-54" v:mID="22" v:groupContext="shape" transform="translate(76.5355,-29.7638)">
+				<title>Ark.22</title>
+				<v:userDefs>
+					<v:ud v:nameU="FoldSize" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+				</v:userDefs>
+				<path d="M0 841.89 L8.5 841.89 L8.5 842.74 L8.5 841.89 L0 833.39 L-0.85 833.39 L0 833.39 L0 841.89 Z" class="st11"/>
+			</g>
+		</g>
+		<g id="group23-56" transform="translate(127.559,-581.102)" v:mID="23" v:groupContext="group">
+			<v:userDefs>
+				<v:ud v:nameU="visVersion" v:prompt="" v:val="VT0(15):26"/>
+				<v:ud v:nameU="msvStructureType" v:prompt="" v:val="VT4(Callout)"/>
+				<v:ud v:nameU="msvSDTargetIntersection" v:prompt=""/>
+				<v:ud v:nameU="msvSDCalloutNoHighlight" v:prompt="" v:val="VT0(0):5"/>
+				<v:ud v:nameU="msvShapeCategories" v:prompt="" v:val="VT0(0):26"/>
+				<v:ud v:nameU="Side" v:prompt="" v:val="VT0(4):26"/>
+				<v:ud v:nameU="LeaderEnd" v:prompt="" v:val="VT7(PNT(6.25MM,-0.28346456692913)):40"/>
+				<v:ud v:nameU="WHBoxIntersection" v:prompt="" v:val="VT7(PNT(10.096153846154MM,0)):40"/>
+				<v:ud v:nameU="FoldSize" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+				<v:ud v:nameU="Side" v:prompt="" v:val="VT0(1):26"/>
+				<v:ud v:nameU="LeaderEnd" v:prompt="" v:val="VT7(PNT(2.3622043427842,0.1968503913779)):40"/>
+				<v:ud v:nameU="WHBoxIntersection" v:prompt="" v:val="VT7(PNT(1.476378322284,0.18611310380324)):40"/>
+			</v:userDefs>
+			<title>Anteckning.23</title>
+			<desc>Interacts with</desc>
+			<g id="shape23-57" v:mID="23" v:groupContext="groupContent">
+				<v:textBlock v:margins="rect(4,4,4,4)" v:tabSpace="42.5197"/>
+				<v:textRect cx="53.1496" cy="829.134" width="106.3" height="22.4037"/>
+				<path d="M0 841.89 L106.3 841.89 L106.3 824.88 L97.8 816.38 L0 816.38 L0 841.89 Z" class="st7"/>
+				<path d="M106.3 828.49 L170.08 827.72" class="st8"/>
+				<path d="M0 841.89 L106.3 841.89 L106.3 824.88 L97.8 816.38 L0 816.38 L0 841.89" class="st8"/>
+				<text x="19.45" y="832.73" class="st9" v:langID="1053"><v:paragraph v:horizAlign="1"/><v:tabList/>Interacts with</text>			</g>
+			<g id="shape24-62" v:mID="24" v:groupContext="shape" transform="translate(97.7953,-17.0079)">
+				<title>Ark.24</title>
+				<v:userDefs>
+					<v:ud v:nameU="FoldSize" v:prompt="" v:val="VT0(0.11811023622047):24"/>
+				</v:userDefs>
+				<path d="M0 841.89 L8.5 841.89 L8.5 842.74 L8.5 841.89 L0 833.39 L-0.85 833.39 L0 833.39 L0 841.89 Z" class="st11"/>
+			</g>
+		</g>
+	</g>
+</svg>
