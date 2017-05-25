@@ -9,36 +9,47 @@ import cbstudios.coffeebreak.view.activity.ITaskEditView;
 
 /**
  * @author Felix, Elias
- * @version 0.1
- *
+ * @version 1.0
+ *          <p>Responsibility: Singleton Factory to create instances of presenters for their corresponding activities</br>
+ *          Uses: MainPresenter, AchievementPresenter and TaskEditPresenter.</br>
+ *          Used by: DelegatingPresenter to create presenters on activity requests.
+ *          </p>
  */
 
 public class PresenterFactory implements IPresenterFactory{
     private static IPresenterFactory INSTANCE = new PresenterFactory();
 
+    /**
+     *
+     * @return singleton instance of the factory
+     */
     public static IPresenterFactory getInstance(){
         return INSTANCE;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public IMainPresenter createMainPresenter(IMainView mainView, Model model) {
         return new MainPresenter(mainView, model);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ITaskEditPresenter createTaskDetailPresenter(IAdvancedTask task) {
         return new TaskEditPresenter(task);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public DelegatingPresenter initializeDelegatingPresenter(Context context) {
         return new DelegatingPresenter(context);
     }
-    @Override
-    public DelegatingPresenter initializeDelegatingPresenter() {
-        return new DelegatingPresenter();
-    }
-
 
     private PresenterFactory(){}
 }

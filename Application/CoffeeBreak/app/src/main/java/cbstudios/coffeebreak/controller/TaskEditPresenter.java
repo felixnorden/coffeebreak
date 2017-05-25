@@ -24,7 +24,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.view.activity.ITaskEditView;
 import cbstudios.coffeebreak.view.activity.TaskEditActivity;
 
-public class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
+class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
 
     private ITaskEditView view;
     private final IAdvancedTask task;
