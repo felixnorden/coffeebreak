@@ -76,10 +76,10 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="4dp"
         android:layout_centerVertical="true"
-        android:background="@null"
         android:contentDescription="@string/task_information"
         android:visibility="visible"
-        android:src="@drawable/ic_more_horiz_black_24dp" />
+        android:src="@drawable/ic_more_horiz_black_24dp"
+        android:background="?attr/selectableItemBackgroundBorderless"/>
 
 
 </RelativeLayout>

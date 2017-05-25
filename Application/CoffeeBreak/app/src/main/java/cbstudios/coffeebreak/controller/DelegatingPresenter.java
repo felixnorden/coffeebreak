@@ -85,6 +85,7 @@ class DelegatingPresenter {
             System.out.println("Request Recieved");
 
             IPresenter mainPresenter = factory.createMainPresenter((IMainView) mContext, model);
+            MainActivity activity = (MainActivity) mContext;
             presenters.add(mainPresenter);
         }
     }
