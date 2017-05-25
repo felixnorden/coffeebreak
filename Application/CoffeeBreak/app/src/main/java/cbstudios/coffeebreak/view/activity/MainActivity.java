@@ -37,8 +37,6 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
-import cbstudios.coffeebreak.controller.IMainPresenter;
-import cbstudios.coffeebreak.controller.IPresenter;
 import cbstudios.coffeebreak.controller.IPresenterFactory;
 import cbstudios.coffeebreak.controller.PresenterFactory;
 import cbstudios.coffeebreak.eventbus.CreateCategoryEvent;
@@ -85,7 +83,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     private Animation TxtSlideIn;
     private Animation TxtSlideOut;
 
-    public IMainPresenter mainPresenter;
     private final IPresenterFactory presenterFactory = PresenterFactory.getInstance();
     private List<ILabelCategory> labelCategories;
     private List<ITimeCategory> timeCategories;
@@ -262,10 +259,10 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.setBackgroundColor(Color.WHITE);
         mAddCategoryButton = (ImageButton) findViewById(R.id.add_category);
-        mDrawerList.setScrollContainer(false);
 
-        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories, mainPresenter);
-        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories, mainPresenter);
+
+        final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories);
+        final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories);
         final MergeAdapter mergeAdapter = new MergeAdapter();
 
 

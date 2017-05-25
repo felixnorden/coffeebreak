@@ -21,10 +21,10 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
-import cbstudios.coffeebreak.controller.IMainPresenter;
 import cbstudios.coffeebreak.eventbus.EditTaskEvent;
 import cbstudios.coffeebreak.eventbus.RemoveTaskEvent;
 import cbstudios.coffeebreak.eventbus.RequestTaskListEvent;
@@ -38,7 +38,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
  * @author Felix , Elias
  * @version  1.1
  * Responsibility: Handling the visual representation for all tasks in the Model.
- * Uses: IAdvancedTask, IListTask, ICategory and IMainPresenter interfaces for abstraction.
+ * Uses: IAdvancedTask, IListTask, ICategory and interfaces for abstraction.
  * Used by: MainActivity to represent the linear list of tasks in its viewport.
  */
 
@@ -159,13 +159,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     private List<IAdvancedTask> mTasks;
     private List<IAdvancedTask> tmpTasks;
     private Context mContext;
-    private IMainPresenter mainPresenter;
 
-    public TaskAdapter(Context context, IMainPresenter mainPresenter){
+    public TaskAdapter(Context context, List<IAdvancedTask> tasks){
         mContext = context;
-        this.mainPresenter = mainPresenter;
-        mTasks = mainPresenter.getTasks();
-        tmpTasks = mainPresenter.getTasks();
+        tmpTasks = tasks;
+        mTasks = new ArrayList<>();
     }
 
     /**
