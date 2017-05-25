@@ -2,6 +2,8 @@ package cbstudios.coffeebreak.model;
 
 import com.google.gson.JsonObject;
 
+import java.util.Calendar;
+
 import cbstudios.coffeebreak.model.tododatamodule.statistics.Statistics;
 
 /**
@@ -40,9 +42,9 @@ public class StatisticsConverter {
         statisticsObject.addProperty("TimesCategoryCreated", statistics.getTimesCategoryCreated());
         statisticsObject.addProperty("TimesSettingsChanged", statistics.getTimesSettingsChanged());
         statisticsObject.addProperty("TasksAlive", statistics.getTasksAlive());
-       // statisticsObject.addProperty("DaysInARow", statistics.getDaysInARow());
+        statisticsObject.addProperty("DaysInARow", statistics.getTasksAlive());
 
-//        statisticsObject.addProperty("LastDayCheckedTask", statistics.getLastDayCheckedTask().getTimeInMillis());
+        statisticsObject.addProperty("LastDayCheckedTask", statistics.getLastDayCheckedTask().getTimeInMillis());
         return statisticsObject;
     }
 
@@ -58,13 +60,19 @@ public class StatisticsConverter {
         statistics.setTimesCategoryCreated(object.get("TimesCategoryCreated").getAsInt());
         statistics.setTimesSettingsChanged(object.get("TimesSettingsChanged").getAsInt());
         statistics.setTasksAlive(object.get("TasksAlive").getAsInt());
-        //statistics.setDaysInARow(object.get("DaysInARow").getAsInt());
 
+        //if (!(object.get("DaysInARow") == null)) {
+            statistics.setDaysInARow(object.get("DaysInARow").getAsInt());
+          //  System.out.println("WOHOO");
+       // }
 
-        /*Calendar time = Calendar.getInstance();
-        time.setTimeInMillis(Long.valueOf(object.get("LastDayCheckedTask").getAsString()));
-        statistics.setLastDayCheckedTask(time);
-*/
+       // if(!(object.get("LastDayCheckedTask") == null)){
+            Calendar time = Calendar.getInstance();
+            time.setTimeInMillis(Long.valueOf(object.get("LastDayCheckedTask").getAsString()));
+            statistics.setLastDayCheckedTask(time);
+        //    System.out.println("YAAAAS");
+       // }
+
         return statistics;
     }
 }
