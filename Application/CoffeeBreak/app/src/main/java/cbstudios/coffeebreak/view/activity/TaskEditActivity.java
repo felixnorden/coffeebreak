@@ -73,7 +73,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     private ListView categoriesListView;
     private ImageView categoriesIcon;
     private ImageButton categoriesAddButton;
-    private AutoCompleteTextView categoriesAddText;
+    private AppCompatAutoCompleteTextView categoriesAddText;
 
     //Priority Area
     private RelativeLayout priorityLayout;
@@ -106,7 +106,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         categoriesListView = (ListView) findViewById(R.id.task_edit_categories_list);
         categoriesIcon = (ImageView) findViewById(R.id.task_edit_categories_icon);
         categoriesAddButton = (ImageButton) findViewById(R.id.task_edit_categories_add_image_button);
-        categoriesAddText = (AutoCompleteTextView) findViewById(R.id.task_edit_categories_add_text_view);
+        categoriesAddText = (AppCompatAutoCompleteTextView) findViewById(R.id.task_edit_categories_add_text_view);
 
         priorityLayout = (RelativeLayout) findViewById(R.id.task_edit_priority_layout);
         priorityIcon = (ImageView) findViewById(R.id.task_edit_priority_icon);
