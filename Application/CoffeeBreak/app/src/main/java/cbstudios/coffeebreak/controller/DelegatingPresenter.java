@@ -89,7 +89,6 @@ class DelegatingPresenter {
 
             IPresenter mainPresenter = factory.createMainPresenter((IMainView) mContext, model);
             MainActivity activity = (MainActivity) mContext;
-            activity.mainPresenter = (IMainPresenter) mainPresenter;
             presenters.add(mainPresenter);
         }
     }
