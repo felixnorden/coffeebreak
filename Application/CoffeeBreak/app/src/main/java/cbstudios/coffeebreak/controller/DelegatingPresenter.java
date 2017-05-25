@@ -14,8 +14,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cbstudios.coffeebreak.eventbus.OnCreateEvent;
-import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.RemovePresenterEvent;
 import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
 import cbstudios.coffeebreak.eventbus.SaveStateEvent;
@@ -29,7 +27,6 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchie
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IMainView;
-import cbstudios.coffeebreak.view.activity.IView;
 import cbstudios.coffeebreak.view.activity.MainActivity;
 
 /**
@@ -89,7 +86,6 @@ class DelegatingPresenter {
 
             IPresenter mainPresenter = factory.createMainPresenter((IMainView) mContext, model);
             MainActivity activity = (MainActivity) mContext;
-            activity.mainPresenter = (IMainPresenter) mainPresenter;
             presenters.add(mainPresenter);
         }
     }
