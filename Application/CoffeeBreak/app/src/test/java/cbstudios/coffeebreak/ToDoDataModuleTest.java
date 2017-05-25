@@ -160,4 +160,66 @@ public class ToDoDataModuleTest {
         assertEquals(toDoDataModule.getTask(4).getName(), "H");
         assertEquals(toDoDataModule.getTask(5).getName(), "I");
     }
+
+    @Test
+    public void testFilterTasksByCategory(){
+
+        List<IAdvancedTask> filteredList;
+        //Add different labels
+        toDoDataModule.addLabelCategory("Sample 1");
+        toDoDataModule.addLabelCategory("Sample 2");
+        toDoDataModule.addLabelCategory("Sample 3");
+
+        //Create tasks and assign them names and labels
+        for( int i = 0; i < 10; i++ ){
+            toDoDataModule.createAdvancedTask();
+            char c = (char) (65 + i);
+            IAdvancedTask task = toDoDataModule.getTask(i);
+
+            task.setName(Character.toString(c));
+
+            if(i % 1 == 0)
+                task.addLabel(toDoDataModule.getLabelCategory("Sample 1"));
+            if(i % 2 == 0)
+                task.addLabel(toDoDataModule.getLabelCategory("Sample 2"));
+            if(i % 3 == 0)
+                task.addLabel(toDoDataModule.getLabelCategory("Sample 3"));
+
+        }
+
+        assertEquals(toDoDataModule.getTasks().size(), 10);
+        assertEquals(toDoDataModule.getLabelCategories().size(), 3);
+
+        List<IAdvancedTask> label_1 = toDoDataModule.getLabelCategory("Sample 1").getValidTasks(toDoDataModule.getTasks());
+        List<IAdvancedTask> label_2 = toDoDataModule.getLabelCategory("Sample 2").getValidTasks(toDoDataModule.getTasks());
+        List<IAdvancedTask> label_3 = toDoDataModule.getLabelCategory("Sample 3").getValidTasks(toDoDataModule.getTasks());
+
+        // Make sure correct amount of tasks are filtered
+        assertEquals(label_1.size(), 10);
+        assertEquals(label_2.size(), 5);
+        assertEquals(label_3.size(), 4);
+
+        // Check the tasks in each list
+        for(int i = 0; i < label_1.size(); i++){
+            IAdvancedTask task = label_1.get(i);
+            char c = (char) (65+i);
+
+            assertEquals(task.getName(), Character.toString(c));
+        }
+        // Check the tasks in each list
+        for(int i = 0; i < label_2.size(); i++){
+            IAdvancedTask task = label_2.get(i);
+            char c = (char) (65 + 2*i);
+
+            assertEquals(task.getName(), Character.toString(c));
+        }
+        // Check the tasks in each list
+        for(int i = 0; i < label_3.size(); i++){
+            IAdvancedTask task = label_3.get(i);
+            char c = (char) (65 + 3*i);
+
+            assertEquals(task.getName(), Character.toString(c));
+        }
+
+    }
 }

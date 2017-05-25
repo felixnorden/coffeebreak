@@ -2,6 +2,8 @@ package cbstudios.coffeebreak.view.adapter;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -45,6 +48,7 @@ public class TaskEditCategoryAdapter extends ArrayAdapter<ILabelCategory> {
 
         ImageButton removeButton = (ImageButton) view.findViewById(R.id.task_edit_category_remove_button);
         TextView labelName = (TextView) view.findViewById(R.id.task_edit_category_name);
+        ImageView indicator = (ImageView) view.findViewById(R.id.task_edit_categories_item_indicator);
 
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +59,8 @@ public class TaskEditCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         });
 
         labelName.setText(category.getName());
+
+        indicator.setColorFilter(Color.parseColor(category.getColor()), PorterDuff.Mode.MULTIPLY);
 
         notifyDataSetChanged();
 

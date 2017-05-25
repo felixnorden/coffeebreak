@@ -6,9 +6,12 @@ import android.app.DialogFragment;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatAutoCompleteTextView;
+import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.format.DateFormat;
@@ -54,7 +57,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
 
     //Taskname Area
     private RelativeLayout nameLayout;
-    private EditText nameText;
+    private AppCompatEditText nameText;
     private String backupName;  //Used for when empty string is set as task name.
 
     //Notification Area
@@ -80,7 +83,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
 
     //Note Area
     private ImageView noteIcon;
-    private EditText noteText;
+    private AppCompatEditText noteText;
 
     /**
      * {@inheritDoc}
@@ -92,7 +95,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
 
         //Get elements
         nameLayout = (RelativeLayout) findViewById(R.id.task_edit_name_layout);
-        nameText = (EditText) findViewById(R.id.task_edit_name_text);
+        nameText = (AppCompatEditText) findViewById(R.id.task_edit_name_text);
 
         notificationLayout = (RelativeLayout) findViewById(R.id.task_edit_notification_layout);
         notificationIcon = (ImageView) findViewById(R.id.task_edit_notification_icon);
@@ -103,7 +106,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         categoriesListView = (ListView) findViewById(R.id.task_edit_categories_list);
         categoriesIcon = (ImageView) findViewById(R.id.task_edit_categories_icon);
         categoriesAddButton = (ImageButton) findViewById(R.id.task_edit_categories_add_image_button);
-        categoriesAddText = (AutoCompleteTextView) findViewById(R.id.task_edit_categories_add_text_view);
+        categoriesAddText = (AppCompatAutoCompleteTextView) findViewById(R.id.task_edit_categories_add_text_view);
 
         priorityLayout = (RelativeLayout) findViewById(R.id.task_edit_priority_layout);
         priorityIcon = (ImageView) findViewById(R.id.task_edit_priority_icon);
@@ -111,7 +114,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         priorityRemoveButton = (ImageButton) findViewById(R.id.task_edit_priority_remove_button);
 
         noteIcon = (ImageView) findViewById(R.id.task_edit_note_icon);
-        noteText = (EditText) findViewById(R.id.task_edit_note_text);
+        noteText = (AppCompatEditText) findViewById(R.id.task_edit_note_text);
 
         //Setup view
         setupToolbar();
@@ -204,9 +207,11 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    nameText.getBackground().setTint(getResources().getColor(R.color.colorAccent));
+                    ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{getResources().getColor(R.color.colorAccent)});
+                    nameText.setBackgroundTintList(csl);
                 } else {
-                    nameText.getBackground().setTint(Color.TRANSPARENT);
+                    ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{Color.TRANSPARENT});
+                    nameText.setBackgroundTintList(csl);
                 }
             }
         });
@@ -319,6 +324,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
                     EventBus.getDefault().post(new TaskEditedEvent());
                     setShowKeyboard(false, v);
                     noteText.clearFocus();
+                    return true;
                 }
                 return false;
             }
@@ -328,9 +334,11 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    noteText.getBackground().setTint(getResources().getColor(R.color.colorAccent));
+                    ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{getResources().getColor(R.color.colorAccent)});
+                    noteText.setBackgroundTintList(csl);
                 } else {
-                    noteText.getBackground().setTint(Color.TRANSPARENT);
+                    ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{Color.TRANSPARENT});
+                    noteText.setBackgroundTintList(csl);
                 }
             }
         });
