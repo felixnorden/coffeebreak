@@ -41,12 +41,16 @@ public interface IAchievement {
      * @param numberLimit is an int that represent how many times a specific thing must be done in
      *                    order to complete the achievement
      */
-    public void setNumberLimit(int numberLimit);
+    void setNumberLimit(int numberLimit);
 
     /**
      * sets the name of achievement
      * @param name is the name of the achievement
      */
-    public void setName(String name);
+    void setName(String name);
+
+    int getType();
+
+    void setType(int i);
 
 }

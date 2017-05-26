@@ -34,6 +34,7 @@ import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.TaskSorter;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
+import cbstudios.coffeebreak.view.activity.AchievementActivity;
 import cbstudios.coffeebreak.view.activity.IMainView;
 import cbstudios.coffeebreak.view.activity.TaskEditActivity;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
@@ -65,6 +66,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     private ITaskAdapter taskAdapter;
     // TODO: 2017-05-18 Gather presenters in List somewhere
     private ITaskEditPresenter taskEditPresenter;
+    private IAchievementPresenter achievementPresenter;
 
     MainPresenter(IMainView mainView, Model model) {
         this.model = model;
@@ -194,6 +196,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
      */
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onTaskCreationRequest(RequestTaskCreationEvent event){
+        EventBus.getDefault().post(new CreateTaskEvent());
         switch(event.type){
             case ADVANCED_TASK: createAdvancedTask();
                 break;
@@ -353,6 +356,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         this.mainView = null;
     }
 
+
     // Frees up presenter of its view and requests to be garbage collected
     private void collectDeadPresenter() {
         detachView();
@@ -361,6 +365,13 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
 
     private List<IAdvancedTask> getTasks() {
         return model.getToDoDataModule().getTasks();
+    }
+    
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void showAchievementActivity(TimesTaskDeletedEvent event){
+        achievementPresenter = new AchievementPresenter(model);
+        Intent intent = new Intent(mainView.getAppCompatActivity(), AchievementActivity.class);
+        mainView.getAppCompatActivity().startActivity(intent);
     }
 
 }
