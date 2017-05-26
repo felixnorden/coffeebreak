@@ -98,7 +98,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     private Toolbar mToolbar;
     private FloatingActionButton fabAddBtn, fabAdvBtn, fabListBtn;
     private TextView txtAdvBtn, txtListBtn;
-    //private LinearLayout fabAdvGroup, fabListGroup;
     private ImageButton mAddCategoryButton;
 
     private boolean isFabOpen = false;
@@ -265,7 +264,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
     /**
-     * TODO Vad exakt gör den??
+     * Sorts the list of tasks to the requested order
      * @param event
      */
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -294,6 +293,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     public ICategory getCurrentCategory(){
         return currentCategory;
     }
@@ -357,6 +359,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
 
+    /**
+     * {@inheritDoc}
+     */
     public void setCurrentCategory(ICategory currentCategory){
         this.currentCategory = currentCategory;
 
@@ -523,7 +528,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         System.out.println(currentCategory.getName());
 
         // Set adapter
-        //TODO UGLY AF
         TaskAdapter taskAdapter = (TaskAdapter) taskList.getAdapter();
         taskAdapter.filterTasks(currentCategory);
 

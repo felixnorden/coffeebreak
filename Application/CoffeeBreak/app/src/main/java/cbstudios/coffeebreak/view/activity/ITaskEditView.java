@@ -1,7 +1,15 @@
 package cbstudios.coffeebreak.view.activity;
 
-import android.graphics.Color;
-
+/**
+ * @author Zack
+ * @version 1.0
+ *          <p>Responsibility: Abstracting interface for {@link cbstudios.coffeebreak.controller.TaskEditPresenter}'s interaction
+ *          with its {@link cbstudios.coffeebreak.view.activity.TaskEditActivity}</br >
+ *          Used by: {@link cbstudios.coffeebreak.controller.TaskEditPresenter} </br>
+ *          Implemented by: {@link cbstudios.coffeebreak.view.activity.TaskEditActivity}
+ *          </p>
+ *
+ */
 import java.util.Calendar;
 import java.util.List;
 
