@@ -63,6 +63,33 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
 import cbstudios.coffeebreak.view.fragment.SortFragment;
 
+/**
+ * @author Felix, Elias
+ * @version 1.1
+ *          <p>Responsibility: Handles the logic of showing the main view</br >
+ *          Uses: {@link IPresenterFactory}, {@link ITaskAdapter}, {@link LabelCategoryAdapter}, {@link TimeCategoryAdapter},
+ *         {@link MergeAdapter}, </br>
+ *         Events:
+ *          <ul>
+ *              <li>{@link RequestTaskCreationEvent}</li>
+ *              <li>{@link OnStartEvent}</li>
+ *              <li>{@link OnResumeEvent}</li>
+ *              <li>{@link OnPauseEvent}</li>
+ *              <li>{@link OnStopEvent}</li>
+ *              <li>{@link OnCreateEvent}</li>
+ *              <li>{@link RequestTaskCreationEvent}</li>
+ *              <li>{@link RequestPresenterEvent}</li>
+ *              <li>{@link ShowKeyboardEvent}</li>
+ *              <li>{@link TimesNavOpenEvent}</li>
+ *              <li>{@link TimesAppStartedEvent}</li>
+ *              <li>{@link SortListEvent}</li>
+ *              <li>{@link UpdateContextReferenceEvent}</li>
+ *          </ul>
+ *          Used by:
+ *          {@link cbstudios.coffeebreak.controller.MainPresenter}
+ *          </p>
+ *
+ */
 public class MainActivity extends AppCompatActivity  implements IMainView {
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private ScrollView mDrawer;
@@ -92,6 +119,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     private static boolean initialized = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,42 +185,54 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     }
 
-    private void refreshItems() {
-        ITaskAdapter adapter = (ITaskAdapter) taskList.getAdapter();
-        adapter.refreshItems(currentCategory);
-
-        // Stop refresh animation
-        swipeRefreshLayout.setRefreshing(false);
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onStart(){
         super.onStart();
         EventBus.getDefault().post(new OnStartEvent(this));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onStop(){
         EventBus.getDefault().post(new OnStopEvent(this));
         super.onStop();
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onPause(){
         EventBus.getDefault().post(new OnPauseEvent(this));
         super.onPause();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onResume(){
         super.onResume();
         EventBus.getDefault().post(new OnResumeEvent(this));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void onDestroy(){
         EventBus.getDefault().post(new OnDestroyEvent(this));
         super.onDestroy();
     }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -199,7 +241,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         return true;
     }
 
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -220,7 +264,10 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     }
 
-
+    /**
+     * TODO
+     * @param event
+     */
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onSortingOrderChange(SortListEvent event){
         switch (event.order){
@@ -237,21 +284,34 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         }
     }
 
+    /**
+     * Sets the title of the toolbar
+     * @param title
+     */
     @Override
     public void setTitle(CharSequence title) {
         getSupportActionBar().setTitle(title);
     }
 
+
     public ICategory getCurrentCategory(){
         return currentCategory;
     }
 
+    /**
+     * Assigns both timeCategories and labelCategories
+     * @param labelCategories the models list of labelCategories
+     * @param timeCategories the models list of timeCategories
+     */
     @Override
     public void setCategories(List<ILabelCategory> labelCategories, List<ITimeCategory> timeCategories) {
         this.labelCategories = labelCategories;
         this.timeCategories = timeCategories;
     }
 
+    /**
+     * Does the necessary setup to show the navigation drawer
+     */
     @Override
     public void setNavDrawer() {
         mDrawer = (ScrollView) findViewById(R.id.left_drawer);
@@ -282,6 +342,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     }
 
+    /**
+     * Does the necessary setup to show the ToolBar
+     */
     @Override
     public void setToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -293,22 +356,29 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         setDrawerButton();
     }
 
+
     public void setCurrentCategory(ICategory currentCategory){
         this.currentCategory = currentCategory;
 
     }
+
 
     @Override
     public void setTaskAdapter(ITaskAdapter adapter) {
         taskList.setAdapter((TaskAdapter) adapter);
     }
 
+
     @Override
     public AppCompatActivity getAppCompatActivity() {
         return this;
     }
 
-
+    /**
+     * handles showing/hiding the keyboard
+     * @param event contains the view that has the focus and a boolean to
+     *              determine whether to show or hide keyboard
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void displayKeyboard(ShowKeyboardEvent event){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -320,18 +390,33 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         }
     }
 
+    /**
+     * Shows the Sorting dialog to allow the user to sort the tasks
+     */
     private void showSortingDialog() {
         DialogFragment dialog = new SortFragment();
         dialog.show(getSupportFragmentManager(), "sorting");
     }
+
 
     private void attachPresenter(){
             System.out.println("Request sent");
             EventBus.getDefault().post(new RequestPresenterEvent(this));
     }
 
+    /**
+     * 
+     */
     private void toggleFabState() {
         isFabOpen = !isFabOpen;
+    }
+
+    private void refreshItems() {
+        ITaskAdapter adapter = (ITaskAdapter) taskList.getAdapter();
+        adapter.refreshItems(currentCategory);
+
+        // Stop refresh animation
+        swipeRefreshLayout.setRefreshing(false);
     }
 
     private void startFabAnimation() {
@@ -392,6 +477,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         taskAdapter.filterTasks(currentCategory);
     }
 
+    /**
+     * Handles clicks on categories in the Navigation Drawer
+     */
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -422,7 +510,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mDrawerLayout.closeDrawer(mDrawer);
     }
 
-
+    /**
+     * Setups the Navigation drawer button
+     */
     private void setDrawerButton() {
         mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close){
 
