@@ -52,6 +52,7 @@ import cbstudios.coffeebreak.eventbus.UpdateContextReferenceEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
+import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
 import cbstudios.coffeebreak.view.adapter.LabelCategoryAdapter;
 import cbstudios.coffeebreak.view.adapter.MergeAdapter;
@@ -174,7 +175,25 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
             }
         });
 
+        // TODO: 2017-05-27 hahhahahah remove
+        enableEraseDataOnShutdown();
+
         EventBus.getDefault().post(new OnCreateEvent(this));
+    }
+
+    //Long press on nav drawer header will reset data
+    private void enableEraseDataOnShutdown() {
+        TextView header = (TextView) findViewById(R.id.drawer_header);
+
+        final Context context = this;
+
+        header.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                StorageUtil.resetData(context, "Tasks");
+                throw new RuntimeException("This crash is intended.");
+            }
+        });
     }
 
     /**
