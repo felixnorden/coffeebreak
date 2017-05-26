@@ -1,3 +1,11 @@
+<!--
+    - Author Felix, Elias, Zack
+    - Version 1.0
+    -          <p>Responsibility: Static string references for layouts in the application</br >
+    -          Used by: layout-package
+    -          </p>
+    -
+ -->
 <resources>
     <string name="app_name">Coffee Break</string>
     <string name="action_settings">Settings</string>

@@ -1,3 +1,11 @@
+<!--
+    - Author Felix
+    - Version 1.0
+    -          <p>Responsibility: Standard dimensions for layouts of different resources</br >
+    -          Used by: layout-package
+    -          </p>
+    -
+ -->
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>

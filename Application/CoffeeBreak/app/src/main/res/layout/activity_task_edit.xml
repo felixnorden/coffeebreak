@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+   - Author Zack
+   - Version 1.0
+   -          <p>Responsibility: Represent the TaskEditActivit for editing a selected task</br >
+   -          Used by: TaskEditActivity
+   -          </p>
+   -
+-->
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"

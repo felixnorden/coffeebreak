@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+    - Author Felix
+    - Version 2.0
+    -          <p>Responsibility: Color Scheme for the whole application</br >
+    -          Used by: layout-package
+    -          </p>
+    -
+ -->
 <resources>
     <color name="colorPrimary">#d6ba93</color>
     <color name="colorPrimaryDark">#a48a65</color>

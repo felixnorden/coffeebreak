@@ -1,3 +1,11 @@
+<!--
+    - Author Felix
+    - Version 1.0
+    -          <p>Responsibility: The theme for the application</br >
+    -          Used by: layout-package and their corresponding using classes
+    -          </p>
+    -
+ -->
 <resources>
 
     <!-- Base application theme. -->
