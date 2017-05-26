@@ -4,28 +4,30 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 
+/**
+ * @author Zack
+ * @version 1.0
+ *          Responsibility: Handles how the listview in TaskEditActivity should display a tasks
+ *          categories to the user.
+ *          Uses: ILabelCategory, Eventbus.
+ *          Used by: TaskEditActivity, TaskEditPresenter, ITaskEditView.
+ */
 public class TaskEditCategoryAdapter extends ArrayAdapter<ILabelCategory> {
 
     private Context context;
@@ -38,6 +40,9 @@ public class TaskEditCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         this.categories = categories;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ILabelCategory category = categories.get(position);
@@ -67,16 +72,25 @@ public class TaskEditCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         return view;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getCount() {
         return categories.size();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public ILabelCategory getItem(int position) {
         return categories.get(position);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getItemId(int position) {
         return 0;

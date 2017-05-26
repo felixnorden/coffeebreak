@@ -2,7 +2,7 @@
 <!--
    - Author Zack
    - Version 1.0
-   -          <p>Responsibility: Represent the TaskEditActivit for editing a selected task</br >
+   -          <p>Responsibility: Represent the TaskEditActivity for editing a selected task</br >
    -          Used by: TaskEditActivity
    -          </p>
    -

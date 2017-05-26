@@ -2,12 +2,14 @@ package cbstudios.coffeebreak.controller;
 
 import android.content.res.Resources;
 import android.graphics.Color;
+import android.widget.ArrayAdapter;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.List;
 
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
@@ -22,8 +24,15 @@ import cbstudios.coffeebreak.model.Priority;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.view.activity.ITaskEditView;
-import cbstudios.coffeebreak.view.activity.TaskEditActivity;
+import cbstudios.coffeebreak.view.adapter.TaskEditCategoryAdapter;
 
+/**
+ * @author Zack
+ * @version 1.0
+ *          Responsibility: Handles what the view presents to the user and the connection between the UI and model.
+ *          Uses: Eventbus, Model, ITaskEditView, IAdvancedTask, Color, Priority.
+ *          Used by: IPresenterFactory, PresenterFactory.
+ */
 class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
 
     private ITaskEditView view;
@@ -64,9 +73,12 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPause(OnPauseEvent event) {
-        if (event.object instanceof ITaskEditView) {
+        if (event.object == view) {
 
         }
     }
@@ -76,7 +88,7 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onResume(OnResumeEvent event) {
-        if (event.object instanceof ITaskEditView) {
+        if (event.object == view) {
 
         }
     }
@@ -86,7 +98,7 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDestroy(OnDestroyEvent event) {
-        if (event.object instanceof ITaskEditView) {
+        if (event.object == view) {
 
         }
     }
@@ -96,7 +108,7 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStop(OnStopEvent event) {
-        if (event.object instanceof ITaskEditView) {
+        if (event.object == view) {
             EventBus.getDefault().unregister(this);
         }
     }
@@ -106,7 +118,7 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStart(OnStartEvent event) {
-        if (event.object instanceof ITaskEditView)
+        if (event.object == view)
             EventBus.getDefault().register(this);
     }
 
@@ -117,9 +129,27 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
         view.setTitle(task.getName());
         view.setNameText(task.getName());
         view.setNotification(task.getDate());
-        view.setupCategories(task.getLabels(), model.getToDoDataModule().getLabelCategories());
+        setupCategories();
         setupPriority();
         view.setNote(task.getNote());
+    }
+
+    /**
+     * Setups the view to show categories correctly.
+     * Sets what categories to show in list and what the autocomplete field should display to the user.
+     */
+    private void setupCategories() {
+        //resource = 0 because of no need for custom layout ID.
+        TaskEditCategoryAdapter categoryAdapter = new TaskEditCategoryAdapter(view.getAppCompatActivity(), 0, task.getLabels());
+        view.setCategoriesAdapter(categoryAdapter);
+
+        //Fix autocomplete field
+        List<String> strings = new ArrayList<>();
+        for (ILabelCategory c : model.getToDoDataModule().getLabelCategories()) {
+            strings.add(c.getName());
+        }
+        ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>(view.getAppCompatActivity(), android.R.layout.simple_list_item_1, strings);
+        view.setAutoCompleteAdapter(autoCompleteAdapter);
     }
 
     /**
@@ -165,7 +195,7 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
     /**
      * Checks if note is empty. If empty, sets task's note to null.
      * Else sets task's note to text found in note-text in view.
-     *
+     * <p>
      * This works as a quick fix because of the fact that the model uses null
      * to show that the note hasn't been set yet, instead of an empty string.
      */
@@ -179,6 +209,9 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
         }
     }
 
+    /**
+     * Correctly sets tasks priority
+     */
     private void updatePriority() {
         final String current = view.getPriority();
         final String low = view.getAppCompatActivity().getResources().getString(R.string.priority_low);

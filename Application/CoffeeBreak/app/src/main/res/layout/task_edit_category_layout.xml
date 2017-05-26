@@ -2,7 +2,7 @@
 <!--
     - Author Zack
     - Version 1.0
-    -          <p>Responsibility: Represent a LabelCategory that is edited in the TaskEditCategoryAdapter</br >
+    -          <p>Responsibility: Represents a ILabelCategory</br >
     -          Used by: TaskEditCategoryAdapter
     -          </p>
     -

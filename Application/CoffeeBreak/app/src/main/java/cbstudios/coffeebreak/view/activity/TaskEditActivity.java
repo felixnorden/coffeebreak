@@ -21,9 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -34,10 +32,8 @@ import android.widget.TimePicker;
 import org.greenrobot.eventbus.EventBus;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import cbstudios.coffeebreak.R;
@@ -47,9 +43,15 @@ import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.view.adapter.TaskEditCategoryAdapter;
 
+/**
+ * @author Zack
+ * @version 1.0
+ *          Responsibility: Handles the interface for the user while editing a tasks details.
+ *          Uses: Eventbus, TaskEditCategoryAdapter.
+ *          Used by: DelegatingPresenter, ITaskEditView.
+ */
 public class TaskEditActivity extends AppCompatActivity implements ITaskEditView {
 
     private Toolbar toolbar;
@@ -477,25 +479,24 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
      * {@inheritDoc}
      */
     @Override
-    public void setupCategories(List<ILabelCategory> taskLabels, List<ILabelCategory> allLabels) {
-        //resource = 0 because of no need for custom layout ID.
-        adapter = new TaskEditCategoryAdapter(this, 0, taskLabels);
+    public void setCategoriesAdapter(TaskEditCategoryAdapter adapter) {
+        this.adapter = adapter;
         categoriesListView.setAdapter(adapter);
         updateCategoriesListHeight();
 
         //Set icon visibilty
-        if (taskLabels.size() < 1) {
+        if (adapter.getCount() < 1) {
             categoriesIcon.setAlpha(0.2f);
         } else {
             categoriesIcon.setAlpha(1.0f);
         }
+    }
 
-        //Fix autocomplete field
-        List<String> strings = new ArrayList<>();
-        for (ILabelCategory c : allLabels) {
-            strings.add(c.getName());
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, strings);
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void setAutoCompleteAdapter(ArrayAdapter<String> adapter) {
         categoriesAddText.setAdapter(adapter);
     }
 
@@ -554,7 +555,8 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     }
 
     /**
-     * Creates a proper time picker.
+     * Creates a modified time picker.
+     * After a time is set it creates a date picker and shows it to the user.
      */
     public static class TimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
@@ -613,7 +615,8 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     }
 
     /**
-     * Creates a proper date picker
+     * Creates a modified date-picker.
+     * After a date is set, it notifies presenter which updates model with new calendar.
      */
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
@@ -668,6 +671,4 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
             EventBus.getDefault().post(new TaskEditedEvent());
         }
     }
-
-
 }

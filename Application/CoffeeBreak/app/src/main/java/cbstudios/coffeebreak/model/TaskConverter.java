@@ -1,13 +1,13 @@
 package cbstudios.coffeebreak.model;
 
-import com.google.gson.*;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
@@ -16,9 +16,12 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.ITaskFactory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
 
 /**
- * Class responsible for converting tasks into different datastructures.
+ * @author Zack
+ * @version 1.0
+ *          Responsibility: Handles converting between tasks and JSON data.
+ *          Uses: IListTask, ITask, ITaskFactory, TaskFactory, IAdvancedTask, ILAbelCategory, CategoryFactory
+ *          Used by: DelegatingPresenter.
  */
-
 public class TaskConverter {
 
     private static TaskConverter INSTANCE = new TaskConverter();

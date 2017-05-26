@@ -5,7 +5,6 @@ import android.content.Context;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.view.activity.IMainView;
-import cbstudios.coffeebreak.view.activity.ITaskEditView;
 
 /**
  * @author Felix

@@ -14,8 +14,11 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * @author Zack Lundqvist
+ * @author Zacl
  * @version 1.0
+ *          Responsibility: Handles saving/loading of data to/from disk.
+ *          Uses: Gson.
+ *          Used by: DelegatingPresenter.
  */
 public class StorageUtil {
 

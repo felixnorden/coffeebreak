@@ -1,5 +1,12 @@
 package cbstudios.coffeebreak.view.activity;
 
+
+import android.widget.ArrayAdapter;
+
+import java.util.Calendar;
+
+import cbstudios.coffeebreak.view.adapter.TaskEditCategoryAdapter;
+
 /**
  * @author Zack
  * @version 1.0
@@ -8,13 +15,7 @@ package cbstudios.coffeebreak.view.activity;
  *          Used by: {@link cbstudios.coffeebreak.controller.TaskEditPresenter} </br>
  *          Implemented by: {@link cbstudios.coffeebreak.view.activity.TaskEditActivity}
  *          </p>
- *
  */
-import java.util.Calendar;
-import java.util.List;
-
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
-
 public interface ITaskEditView extends IView {
     /**
      * Returns the string in the name-field.
@@ -57,11 +58,18 @@ public interface ITaskEditView extends IView {
     String getNewLabelText();
 
     /**
-     * Setups the label list with correct data.
-     * @param taskLabels
-     * @param allLabels
+     * Setups the label list with correct adapter
+     *
+     * @param adapter The correct adapter
      */
-    void setupCategories(List<ILabelCategory> taskLabels, List<ILabelCategory> allLabels);
+    void setCategoriesAdapter(TaskEditCategoryAdapter adapter);
+
+    /**
+     * Setups the autocomplete field with correct adapter
+     *
+     * @param adapter The ArrayAdapter
+     */
+    void setAutoCompleteAdapter(ArrayAdapter<String> adapter);
 
     /**
      * Notify listview that model has changed.
