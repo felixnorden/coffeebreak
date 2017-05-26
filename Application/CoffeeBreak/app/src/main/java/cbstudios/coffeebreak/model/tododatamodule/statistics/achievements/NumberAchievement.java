@@ -6,9 +6,23 @@ package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
 
 
 public class NumberAchievement implements IAchievement {
-    String name;
-    int numberLimit;
-    Boolean isCompleted;
+
+    public static final int CREATE = 0;
+    public static final int CHECK = 1;
+    public static final int TIMESUPDATED = 2;
+    public static final int TIMESAPPSTARTED = 3;
+    public static final int TIMESNAVOPEN = 4;
+    public static final int TIMESTASKDELETED = 5;
+    public static final int TIMESCATEGORYCREATED = 6;
+    public static final int TIMESSETTINGSCHANGED = 7;
+    public static final int TASKSALIVE = 8;
+    public static final int DAYSINAROW = 9;
+
+    private int type;
+
+    private String name;
+    private int numberLimit;
+    private Boolean isCompleted;
 
     /**
      * Class constructor
@@ -16,10 +30,11 @@ public class NumberAchievement implements IAchievement {
      * @param numberLimit is the number of times a specific assigment has to done
      *                    in order to complete the achievement
      */
-    public NumberAchievement(String name, int numberLimit){
+    public NumberAchievement(String name, int numberLimit, int type){
         this.name = name;
         this.numberLimit = numberLimit;
         this.isCompleted = false;
+        this.type = type;
     }
 
 
@@ -105,5 +120,13 @@ public class NumberAchievement implements IAchievement {
     @Override
     public boolean equals(Object o){
         return false;
+    }
+
+    public int getType(){
+        return type;
+    }
+
+    public void setType(int type){
+        this.type = type;
     }
 }

@@ -22,6 +22,10 @@
             android:name=".view.activity.TaskEditActivity"
             android:screenOrientation="portrait"
             android:parentActivityName=".view.activity.MainActivity" />
+        <activity
+            android:name=".view.activity.AchievementActivity"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".view.activity.MainActivity"/>
     </application>
 
 </manifest>

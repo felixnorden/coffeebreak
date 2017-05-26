@@ -6,6 +6,7 @@ import java.util.List;
 
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.AchievementFactory;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievement;
+import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.NumberAchievement;
 
 /**
  * Created by johan on 5/8/2017.
@@ -30,8 +31,6 @@ public class Statistics {
 
     private int daysInARow;
     private Calendar lastDayCheckedTask;
-
-    private boolean created;
 
     /**
      * The class constructor that will init alla ints and call for initAchievement
@@ -151,20 +150,23 @@ public class Statistics {
      */
     public void InitAchievement(){
         //int[] array = new int[]{5,25,100,500};
-        int[] array = new int[]{2,5,20,25};
+        int[] array = new int[]{2,5,8,10};
 
-        for (int i = 0; i < array.length; i++) {
-            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("Create", array[i]));
-            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("Check", array[i]));
-            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesUpdated", array[i]));
-            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesAppStarted", array[i]));
-            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesNavOpen", array[i]));
-            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesTaskDeleted", array[i]));
-            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesCategoryCreated", array[i]));
-            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TimesSettingsChanged", array[i]));
-            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("TasksAlive", array[i]));
-            achievementList.add(AchievementFactory.getInstance().createNumberAchievements("DaysInARow", array[i]));
+        addToList("Create", array, NumberAchievement.CREATE);
+        addToList("Check", array, NumberAchievement.CHECK);
+        addToList("TimesUpdated", array, NumberAchievement.TIMESUPDATED);
+        addToList("TimesAppStarted", array, NumberAchievement.TIMESAPPSTARTED);
+        addToList("TimesNavOpen", array, NumberAchievement.TIMESNAVOPEN);
+        addToList("TimesTaskDeleted", array, NumberAchievement.TIMESTASKDELETED);
+        addToList("TimesCategoryCreated", array, NumberAchievement.TIMESCATEGORYCREATED);
+        addToList("TimesSettingsChanged", array, NumberAchievement.TIMESSETTINGSCHANGED);
+        addToList("TasksAlive", array, NumberAchievement.TASKSALIVE);
+        addToList("DaysInARow", array, NumberAchievement.DAYSINAROW);
+    }
 
+    public void addToList(String name, int[] arr, int type){
+        for (int i = 0; i < arr.length; i++) {
+            achievementList.add(AchievementFactory.getInstance().createNumberAchievements(name, arr[i], type));
         }
     }
 

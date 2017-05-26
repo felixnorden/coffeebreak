@@ -17,6 +17,6 @@ public interface IAchievementFactory {
      *                    in order to complete the achievement
      * @return a new numberAchievement
      */
-    NumberAchievement createNumberAchievements(String name, int numberLimit);
+    NumberAchievement createNumberAchievements(String name, int numberLimit, int type);
 
 }

@@ -58,6 +58,7 @@ public class AchievementConverter {
         achievementObject.addProperty("Name", achievement.getName());
         achievementObject.addProperty("NumberLimit", achievement.getNumberLimit());
         achievementObject.addProperty("IsCompleted", achievement.getIfCompleted());
+        achievementObject.addProperty("Type", achievement.getType());
 
         return achievementObject;
     }
@@ -68,6 +69,7 @@ public class AchievementConverter {
         numberAchievement.setName(object.get("Name").getAsString());
         numberAchievement.setNumberLimit(object.get("NumberLimit").getAsInt());
         numberAchievement.setIsCompleted(object.get("IsCompleted").getAsBoolean());
+        numberAchievement.setType(object.get("Type").getAsInt());
 
         return numberAchievement;
     }

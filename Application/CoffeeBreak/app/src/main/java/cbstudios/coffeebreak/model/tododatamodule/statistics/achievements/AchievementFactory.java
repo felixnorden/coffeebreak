@@ -26,7 +26,7 @@ public class AchievementFactory implements IAchievementFactory {
      * @return a new numberAchievement
      */
     @Override
-    public NumberAchievement createNumberAchievements(String name, int numberLimit) {
-        return new NumberAchievement(name, numberLimit);
+    public NumberAchievement createNumberAchievements(String name, int numberLimit, int type) {
+        return new NumberAchievement(name, numberLimit, type);
     }
 }

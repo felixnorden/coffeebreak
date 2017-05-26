@@ -1,6 +1,5 @@
 package cbstudios.coffeebreak.view.activity;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -13,9 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.ContextMenu;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -23,9 +20,7 @@ import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -52,6 +47,7 @@ import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.eventbus.SortListEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
 import cbstudios.coffeebreak.eventbus.TimesNavOpenEvent;
+import cbstudios.coffeebreak.eventbus.TimesTaskDeletedEvent;
 import cbstudios.coffeebreak.eventbus.UpdateContextReferenceEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
@@ -179,9 +175,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         });
 
         EventBus.getDefault().post(new OnCreateEvent(this));
-        if(!initialized)
-            EventBus.getDefault().post(new TimesAppStartedEvent());
-
     }
 
     /**
@@ -191,6 +184,8 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     protected void onStart(){
         super.onStart();
         EventBus.getDefault().post(new OnStartEvent(this));
+        EventBus.getDefault().post(new TimesAppStartedEvent());
+
     }
 
     /**
@@ -253,6 +248,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         //noinspection SimplifiableIfStatement
         switch(id){
             case(R.id.action_settings):
+                showAchievementActivity();
                 return true;
             case(R.id.action_sort):
                 showSortingDialog();
@@ -262,6 +258,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         }
 
     }
+
 
     /**
      * Sorts the list of tasks to the requested order
@@ -552,5 +549,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mActionBarDrawerToggle.syncState();
 
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
+    }
+
+    private void showAchievementActivity(){
+        EventBus.getDefault().post(new TimesTaskDeletedEvent());
     }
 }
