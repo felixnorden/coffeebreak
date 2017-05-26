@@ -64,8 +64,6 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 class MainPresenter extends BasePresenter implements IMainPresenter {
     private IMainView mainView;
     private ITaskAdapter taskAdapter;
-    // TODO: 2017-05-18 Gather presenters in List somewhere
-    private ITaskEditPresenter taskEditPresenter;
     private IAchievementPresenter achievementPresenter;
 
     MainPresenter(IMainView mainView, Model model) {
@@ -241,18 +239,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     public void onTaskListRequest(RequestTaskListEvent event){
         event.adapter.updateTmpTasks(getTasks());
         //taskAdapter.updateTmpTasks(getTasks());
-    }
-
-    /**
-     * Handles launching an EditTaskActivity
-     * @param event
-     */
-    @Subscribe
-    public void onEditTaskEvent(EditTaskEvent event) {
-        taskEditPresenter = PresenterFactory.getInstance().createTaskDetailPresenter(event.getTask());
-        taskEditPresenter.injectModel(this.model);
-        Intent intent = new Intent(mainView.getAppCompatActivity(), TaskEditActivity.class);
-        mainView.getAppCompatActivity().startActivity(intent);
     }
 
     /**

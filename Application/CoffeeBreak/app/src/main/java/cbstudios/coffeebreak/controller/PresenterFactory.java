@@ -39,8 +39,8 @@ public class PresenterFactory implements IPresenterFactory{
      * {@inheritDoc}
      */
     @Override
-    public ITaskEditPresenter createTaskDetailPresenter(IAdvancedTask task) {
-        return new TaskEditPresenter(task);
+    public ITaskEditPresenter createTaskDetailPresenter(IAdvancedTask task, Model model) {
+        return new TaskEditPresenter(task, model);
     }
 
     /**

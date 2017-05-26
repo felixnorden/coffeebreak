@@ -1,6 +1,7 @@
 package cbstudios.coffeebreak.controller;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -14,6 +15,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cbstudios.coffeebreak.eventbus.EditTaskEvent;
 import cbstudios.coffeebreak.eventbus.RemovePresenterEvent;
 import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
 import cbstudios.coffeebreak.eventbus.SaveStateEvent;
@@ -27,7 +29,9 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchie
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IMainView;
+import cbstudios.coffeebreak.view.activity.ITaskEditView;
 import cbstudios.coffeebreak.view.activity.MainActivity;
+import cbstudios.coffeebreak.view.activity.TaskEditActivity;
 
 /**
  * @author Felix
@@ -38,10 +42,10 @@ import cbstudios.coffeebreak.view.activity.MainActivity;
  *          Uses: {@link IMainView}, {@link Context} {@link IPresenterFactory}
  *          Events:
  *          <ul>
- *              <li>{@link UpdateContextReferenceEvent} </li>
- *              <li>{@link RemovePresenterEvent}</li>
- *              <li>{@link SaveStateEvent}</li>
- *              <li>{@link RequestPresenterEvent}</li>
+ *          <li>{@link UpdateContextReferenceEvent} </li>
+ *          <li>{@link RemovePresenterEvent}</li>
+ *          <li>{@link SaveStateEvent}</li>
+ *          <li>{@link RequestPresenterEvent}</li>
  *          </ul>
  *          </br>
  *          Used by: {@link MainActivity} during startup for initialization.
@@ -54,7 +58,7 @@ class DelegatingPresenter {
     private Context mContext;
     private IPresenterFactory factory = PresenterFactory.getInstance();
 
-    DelegatingPresenter(Context mContext){
+    DelegatingPresenter(Context mContext) {
         this.model = new Model();
         presenters = new ArrayList<>();
         this.mContext = mContext;
@@ -68,28 +72,31 @@ class DelegatingPresenter {
     /**
      * Updates the main context every time the MainActivity is being recreated,
      * to make sure of persistent data is being managed
+     *
      * @param event containing the new context
      */
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void updateMainContext(UpdateContextReferenceEvent event){
-        if(event.context instanceof IMainView)
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void updateMainContext(UpdateContextReferenceEvent event) {
+        if (event.context instanceof IMainView)
             this.mContext = event.context;
     }
 
     /**
      * Removes a presenter that has no associated view
+     *
      * @param event containing the presenter
      */
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void RemoveDeadPresenter(RemovePresenterEvent event){
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void RemoveDeadPresenter(RemovePresenterEvent event) {
         presenters.remove(event.presenter);
     }
 
     /**
      * Stores the data when request is being made from a view.
+     *
      * @param event
      */
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void saveState(SaveStateEvent event) {
         saveTasks();
         saveStatistics();
@@ -99,15 +106,28 @@ class DelegatingPresenter {
     /**
      * Handles requests for presenter creation for different
      * views
+     *
      * @param event containing context for presenter
      */
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void onPresenterRequest(RequestPresenterEvent event){
-        if(event.view == mContext){
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPresenterRequest(RequestPresenterEvent event) {
+        if (event.view == mContext) {
             IPresenter mainPresenter = factory.createMainPresenter((IMainView) mContext, model);
             presenters.add(mainPresenter);
         }
+    }
+
+    /**
+     * Handles launching an EditTaskActivity
+     *
+     * @param event
+     */
+    @Subscribe
+    public void onEditTaskEvent(EditTaskEvent event) {
+        IPresenter taskEditPresenter = PresenterFactory.getInstance().createTaskDetailPresenter(event.getTask(), model);
+        presenters.add(taskEditPresenter);
+        Intent intent = new Intent(mContext, TaskEditActivity.class);
+        mContext.startActivity(intent);
     }
 
     private void loadAchievements() {

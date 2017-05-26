@@ -33,7 +33,7 @@ public interface IPresenterFactory {
      * @param task the task that has been clicked on by the user.
      * @return  the new presenter through a {@link ITaskEditPresenter} reference
      */
-    ITaskEditPresenter createTaskDetailPresenter(IAdvancedTask task);
+    ITaskEditPresenter createTaskDetailPresenter(IAdvancedTask task, Model model);
 
     /**
      * Creates an instance of {@link DelegatingPresenter}

@@ -29,7 +29,8 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
     private ITaskEditView view;
     private final IAdvancedTask task;
 
-    TaskEditPresenter(IAdvancedTask task) {
+    TaskEditPresenter(IAdvancedTask task, Model model) {
+        this.model = model;
         this.task = task;
         EventBus.getDefault().register(this);
     }
