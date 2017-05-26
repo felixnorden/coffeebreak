@@ -44,6 +44,9 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> implements ITaskAdapter{
 
+    /**
+     *
+     */
     public abstract static class TaskViewHolder extends RecyclerView.ViewHolder{
         public IAdvancedTask task;
         public View vPriority;
@@ -92,6 +95,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             });
             addOnCheckedChangedListener();
         }
+
         void setUpTask(){
             if(task.getName() != null){
                 cbCheckBox.setChecked(false);
@@ -138,6 +142,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 }
             });
         }
+
         private void setTaskNameEnabled(boolean value){
             if(value){
                 etTaskName.getBackground().setTint(Color.parseColor("#dd2b25"));
@@ -240,6 +245,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         return mTasks.size();
     }
 
+    /**
+     *
+     * @param currentCategory
+     */
     public void filterTasks(ICategory currentCategory){
         EventBus.getDefault().post(new RequestTaskListEvent(this));
         swapTasks(currentCategory.getValidTasks(tmpTasks));
@@ -321,7 +330,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     /**
-     * @author Felix , Elias
+     * @author Elias
      * @version  1.1
      * Responsibility: Given two lists of IAdvancedTasks, calculates the difference between them and
      * calls the appropriate methods in the RecyclerView to update the view

@@ -265,7 +265,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
     /**
-     * TODO
+     * TODO Vad exakt gör den??
      * @param event
      */
     @Subscribe (threadMode = ThreadMode.MAIN)
@@ -362,7 +362,10 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     }
 
-
+    /**
+     * Assigns the adapter of the taskList
+     * @param adapter the adapter to be assigned
+     */
     @Override
     public void setTaskAdapter(ITaskAdapter adapter) {
         taskList.setAdapter((TaskAdapter) adapter);
@@ -398,19 +401,22 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         dialog.show(getSupportFragmentManager(), "sorting");
     }
 
-
+    /**
+     * Request a new presenter to be attached
+     */
     private void attachPresenter(){
             System.out.println("Request sent");
             EventBus.getDefault().post(new RequestPresenterEvent(this));
     }
 
-    /**
-     * 
-     */
+
     private void toggleFabState() {
         isFabOpen = !isFabOpen;
     }
 
+    /**
+     * Refresh the items that the taskAdapter holds
+     */
     private void refreshItems() {
         ITaskAdapter adapter = (ITaskAdapter) taskList.getAdapter();
         adapter.refreshItems(currentCategory);
@@ -419,6 +425,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         swipeRefreshLayout.setRefreshing(false);
     }
 
+    /**
+     * Initiates the animation of the FAB-button
+     */
     private void startFabAnimation() {
         if (isFabOpen) {
             fabAdvBtn.startAnimation(FabClose);
@@ -447,6 +456,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         }
     }
 
+    /**
+     * Setups the animations
+     */
     private void setAnimations() {
         FabOpen = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_open);
         FabClose = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fab_close);
@@ -456,22 +468,33 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         TxtSlideOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_out_right);
     }
 
+    /**
+     * Adds a new AdvancedTasks and updates the the items that the TaskAdapter holds
+     */
     private void addAdvTask() {
         EventBus.getDefault().post(new RequestTaskCreationEvent(RequestTaskCreationEvent.ADVANCED_TASK));
         updateAdapter();
     }
 
-
+    /**
+     * Adds a new ListTask and updates the the items that the TaskAdapter holds
+     */
     private void addListTask() {
         EventBus.getDefault().post(new RequestTaskCreationEvent(RequestTaskCreationEvent.LIST_TASK));
         updateAdapter();
     }
 
+    /**
+     * Shows the keyboard and makes it focus on the RecyclerView holding the tasjs
+     */
     private void displayKeyboard(){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(taskList, InputMethodManager.SHOW_IMPLICIT);
     }
 
+    /**
+     * Updates the tasks that the TaskAdapter
+     */
     private void updateAdapter(){
         TaskAdapter taskAdapter = (TaskAdapter) taskList.getAdapter();
         taskAdapter.filterTasks(currentCategory);
@@ -484,8 +507,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectItem(position);
-
-
         }
     }
 
