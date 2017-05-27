@@ -63,6 +63,6 @@ public interface ICategoryList {
      * Getter for the Label Categories list
      * @return the list with all Label Categories
      */
-    List<ILabelCategory> getILabelCategories();
+    List<ILabelCategory> getLabelCategories();
 
 }

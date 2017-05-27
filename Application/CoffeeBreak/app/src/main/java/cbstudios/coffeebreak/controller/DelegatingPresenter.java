@@ -219,7 +219,7 @@ class DelegatingPresenter {
     }
 
     private void saveCategories() {
-        JsonArray array = categoryConverter.toJson(model.getToDoDataModule().getILabelCategories());
+        JsonArray array = categoryConverter.toJson(model.getToDoDataModule().getLabelCategories());
         StorageUtil.save(mContext.getApplicationContext(), "Categories", array);
     }
 

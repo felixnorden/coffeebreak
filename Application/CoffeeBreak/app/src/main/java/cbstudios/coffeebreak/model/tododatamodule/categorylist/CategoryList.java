@@ -132,7 +132,7 @@ public class CategoryList implements ICategoryList {
     /**
      * @return the labelCategories list.
      */
-    public List<ILabelCategory> getILabelCategories() {
+    public List<ILabelCategory> getLabelCategories() {
         return labelCategories;
     }
 
@@ -149,7 +149,7 @@ public class CategoryList implements ICategoryList {
 
         CategoryList that = (CategoryList) o;
 
-        if (labelCategories != null ? !labelCategories.equals(that.getILabelCategories()) : that.getILabelCategories() != null)
+        if (labelCategories != null ? !labelCategories.equals(that.getLabelCategories()) : that.getLabelCategories() != null)
             return false;
         return timeCategories != null ? timeCategories.equals(that.getTimeCategories()) : that.getTimeCategories() == null;
 

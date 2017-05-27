@@ -35,7 +35,7 @@ public class ToDoDataModule {
      * @return List of all {@link ILabelCategory} in the model.
      */
     public List<ILabelCategory> getLabelCategories() {
-        return categoryList.getILabelCategories();
+        return categoryList.getLabelCategories();
     }
 
     /**
