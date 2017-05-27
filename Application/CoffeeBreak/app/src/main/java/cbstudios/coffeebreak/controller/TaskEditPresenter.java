@@ -145,7 +145,7 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
 
         //Fix autocomplete field
         List<String> strings = new ArrayList<>();
-        for (ILabelCategory c : model.getToDoDataModule().getILabelCategories()) {
+        for (ILabelCategory c : model.getToDoDataModule().getLabelCategories()) {
             strings.add(c.getName());
         }
         ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>(view.getAppCompatActivity(), android.R.layout.simple_list_item_1, strings);
