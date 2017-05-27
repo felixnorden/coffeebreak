@@ -45,7 +45,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> implements ITaskAdapter{
 
     /**
-     *
+     *TODO
      */
     public abstract static class TaskViewHolder extends RecyclerView.ViewHolder{
         public IAdvancedTask task;
@@ -96,6 +96,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             addOnCheckedChangedListener();
         }
 
+        /**
+         * Setups the appropriate visual representation of a task depending on if the task is finished
+         * or if it has just been created.
+         */
         void setUpTask(){
             if(task.getName() != null){
                 cbCheckBox.setChecked(false);
@@ -143,6 +147,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             });
         }
 
+        /**
+         * Setups the EditText to display the name of the task if the task has a name.
+         * If the Tasks name doesn't exist it makes the EditText editable and focusable.
+         * @param value true if the EditText should be enabled, false otherwise
+         */
         private void setTaskNameEnabled(boolean value){
             if(value){
                 etTaskName.getBackground().setTint(Color.parseColor("#dd2b25"));
@@ -154,6 +163,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             etTaskName.setFocusableInTouchMode(value);
         }
 
+        /**
+         * Sets the unique fields for the different concrete implementations
+         */
         abstract void setSpecificFields();
     }
 
