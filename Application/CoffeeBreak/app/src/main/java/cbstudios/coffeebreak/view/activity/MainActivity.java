@@ -88,6 +88,8 @@ import cbstudios.coffeebreak.view.fragment.SortFragment;
  *
  */
 public class MainActivity extends AppCompatActivity  implements IMainView {
+    
+    // Layout elements
     private ActionBarDrawerToggle mActionBarDrawerToggle;
     private ScrollView mDrawer;
     private DrawerLayout mDrawerLayout;
@@ -96,21 +98,26 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     private FloatingActionButton fabAddBtn, fabAdvBtn, fabListBtn;
     private TextView txtAdvBtn, txtListBtn;
     private ImageButton mAddCategoryButton;
+    private RecyclerView taskList;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
-    private boolean isFabOpen = false;
+    
 
+    // Animations
     private Animation FabOpen;
     private Animation FabClose;
     private Animation FabRClockwise;
     private Animation FabRAnticlockwise;
     private Animation TxtSlideIn;
     private Animation TxtSlideOut;
-
+    
+    // Control for animations
+    private boolean isFabOpen = false;
+    
+    // Model data
     private final IPresenterFactory presenterFactory = PresenterFactory.getInstance();
     private List<ILabelCategory> labelCategories;
     private List<ITimeCategory> timeCategories;
-    private RecyclerView taskList;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private ICategory currentCategory;
 
     private static boolean initialized = false;
@@ -176,6 +183,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         });
 
         // TODO: 2017-05-27 hahhahahah remove
+        // TODO: 2017-05-27 HAHAHA NEVAAHH!! 
         enableEraseDataOnShutdown();
 
         EventBus.getDefault().post(new OnCreateEvent(this));
