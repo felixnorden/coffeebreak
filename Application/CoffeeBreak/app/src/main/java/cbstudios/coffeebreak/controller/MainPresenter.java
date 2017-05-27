@@ -21,6 +21,7 @@ import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.RemovePresenterEvent;
 import cbstudios.coffeebreak.eventbus.RemoveTaskEvent;
+import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
 import cbstudios.coffeebreak.eventbus.RequestTaskCreationEvent;
 import cbstudios.coffeebreak.eventbus.RequestTaskListEvent;
 import cbstudios.coffeebreak.eventbus.SaveStateEvent;
@@ -38,6 +39,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 import cbstudios.coffeebreak.view.activity.AchievementActivity;
 import cbstudios.coffeebreak.view.activity.IMainView;
+import cbstudios.coffeebreak.view.activity.TaskEditActivity;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 
@@ -99,7 +101,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Override
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onPause(OnPauseEvent event) {
-        //TODO Fix shiet
         if(event.object == mainView) {
             taskAdapter.refreshItems(mainView.getCurrentCategory());
 
@@ -190,6 +191,13 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         categoryList.remove(event.position);
         }
         mainView.updateNavDrawerList();
+    }
+
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void onEditTaskEvent(EditTaskEvent event) {
+        EventBus.getDefault().post(new RequestPresenterEvent(event.task));
+        Intent intent = new Intent(mainView.getAppCompatActivity(), TaskEditActivity.class);
+        mainView.getAppCompatActivity().startActivity(intent);
     }
 
     /**

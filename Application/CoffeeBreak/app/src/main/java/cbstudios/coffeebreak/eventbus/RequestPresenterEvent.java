@@ -8,9 +8,10 @@ import cbstudios.coffeebreak.view.activity.IView;
  */
 
 public class RequestPresenterEvent {
-    public final IView view;
+    public final Object data;
 
-    public RequestPresenterEvent(IView view){
-        this.view = view;
+    public RequestPresenterEvent(Object data){
+        this.data = data;
     }
+
 }

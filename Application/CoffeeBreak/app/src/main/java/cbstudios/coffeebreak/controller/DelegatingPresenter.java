@@ -32,6 +32,7 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchie
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IMainView;
+import cbstudios.coffeebreak.view.activity.ITaskEditView;
 import cbstudios.coffeebreak.view.activity.MainActivity;
 import cbstudios.coffeebreak.view.activity.TaskEditActivity;
 
@@ -117,24 +118,16 @@ class DelegatingPresenter {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPresenterRequest(RequestPresenterEvent event) {
-        if (event.view == mContext) {
-            IPresenter mainPresenter = factory.createMainPresenter((IMainView) mContext, model);
-            presenters.add(mainPresenter);
+        IPresenter presenter = null;
+        if (event.data == mContext) {
+            presenter = factory.createMainPresenter((IMainView) mContext, model);
+
+        } else if (event.data instanceof IAdvancedTask) {
+            presenter = factory.createTaskDetailPresenter((IAdvancedTask) event.data, model);
         }
+        presenters.add(presenter);
     }
 
-    /**
-     * Handles launching an EditTaskActivity
-     *
-     * @param event
-     */
-    @Subscribe
-    public void onEditTaskEvent(EditTaskEvent event) {
-        IPresenter taskEditPresenter = PresenterFactory.getInstance().createTaskDetailPresenter(event.getTask(), model);
-        presenters.add(taskEditPresenter);
-        Intent intent = new Intent(mContext, TaskEditActivity.class);
-        mContext.startActivity(intent);
-    }
 
     private void loadAchievements() {
         JsonElement element = null;
@@ -205,7 +198,6 @@ class DelegatingPresenter {
                 model.getToDoDataModule().addTask(task);
             }
         } catch (IllegalStateException e) {
-            // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
             StorageUtil.resetData(mContext.getApplicationContext(), "Tasks");
             e.printStackTrace();
         } catch (FileNotFoundException e) {
@@ -239,7 +231,6 @@ class DelegatingPresenter {
                 model.getToDoDataModule().addILabelCategory(category);
             }
         } catch (IllegalStateException e) {
-            // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
             StorageUtil.resetData(mContext.getApplicationContext(), "Categories");
             e.printStackTrace();
         } catch (FileNotFoundException e) {

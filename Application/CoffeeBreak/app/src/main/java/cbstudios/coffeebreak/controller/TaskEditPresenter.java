@@ -36,7 +36,7 @@ import cbstudios.coffeebreak.view.adapter.TaskEditCategoryAdapter;
 class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
 
     private ITaskEditView view;
-    private final IAdvancedTask task;
+    private IAdvancedTask task;
 
     TaskEditPresenter(IAdvancedTask task, Model model) {
         this.model = model;
@@ -55,7 +55,7 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
     /**
      * Method that gets executed when task has been edited in view.
      *
-     * @param event Specific object for this eveent.
+     * @param event Specific object for this event.
      */
     @Subscribe
     public void onTaskEdited(TaskEditedEvent event) {

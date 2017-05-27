@@ -42,6 +42,7 @@ import cbstudios.coffeebreak.eventbus.OnDestroyEvent;
 import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
+import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
 import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
 import cbstudios.coffeebreak.view.adapter.TaskEditCategoryAdapter;
 
@@ -125,7 +126,6 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         setupCategoriesLayout();
         setupPriorityLayout();
         setupNoteLayout();
-
         EventBus.getDefault().post(new OnCreateEvent(this));
     }
 

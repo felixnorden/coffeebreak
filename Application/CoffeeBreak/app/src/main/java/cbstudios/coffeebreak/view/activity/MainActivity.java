@@ -536,7 +536,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
     /**
-     * Shows the keyboard and makes it focus on the RecyclerView holding the tasjs
+     * Shows the keyboard and makes it focus on the RecyclerView holding the tasks
      */
     private void displayKeyboard(){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
