@@ -3,6 +3,9 @@ package cbstudios.coffeebreak.model.tododatamodule.todolist;
 import java.util.ArrayList;
 import java.util.List;
 
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
+
 /**
  * @author Zack, Felix
  * @version 1.0
@@ -104,6 +107,19 @@ public class ToDoList {
         }
         return match;
     }
+
+    public void removeCategoryFromTasks(ILabelCategory category){
+        for(IAdvancedTask task: tasks){
+                if(task.getLabels().contains(category)){
+                    task.removeLabel(category);
+                }
+            }
+
+        }
+
+
+
+
 
     /**
      * Creates a Task and adds it to the references ListTask
