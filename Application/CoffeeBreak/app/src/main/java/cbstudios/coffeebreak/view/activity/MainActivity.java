@@ -188,7 +188,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
         // TODO: 2017-05-27 hahhahahah remove
         // TODO: 2017-05-27 HAHAHA NEVAAHH!! 
-        enableEraseDataOnShutdown();
+        //enableEraseDataOnShutdown();
 
         EventBus.getDefault().post(new OnCreateEvent(this));
         EventBus.getDefault().post(new TimesAppStartedEvent());
@@ -367,8 +367,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mDrawerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position > 4) {
-                    showCategoryDeleteDialog(position - timeCategoryAdapter.getCount());
+                if (position > 6) {
+                    int labelIndex = mergeAdapter.getCount() - labelCategoryAdapter.getCount();
+                    showCategoryDeleteDialog(position - labelIndex);
                 }
                 return true;
             }
@@ -382,6 +383,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
             public void onClick(View v) {
                 EventBus.getDefault().post(new CreateCategoryEvent());
                 ((MergeAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
+                displayKeyboard();
 
             }
         });
@@ -436,10 +438,10 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     public void displayKeyboard(ShowKeyboardEvent event){
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         if(event.showKeyboard){
-            imm.hideSoftInputFromWindow(event.view.getWindowToken(), 0);
+            imm.showSoftInput(event.view, InputMethodManager.SHOW_IMPLICIT);
         }
         else{
-            imm.showSoftInput(event.view, InputMethodManager.SHOW_IMPLICIT);
+            imm.hideSoftInputFromWindow(event.view.getWindowToken(), 0);
         }
     }
 
@@ -571,6 +573,8 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
      */
     private void selectItem(int position) {
 
+        if(position == 0 || position == 6)
+            return;
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
         ICategory category = (ICategory) mDrawerList.getAdapter().getItem(position);

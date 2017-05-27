@@ -23,7 +23,6 @@ public class MergeAdapter extends BaseAdapter implements SectionIndexer {
     protected ArrayList<ListAdapter> pieces = new ArrayList<ListAdapter>();
     protected String noItemsText;
 
-
     public MergeAdapter() {
         super();
     }

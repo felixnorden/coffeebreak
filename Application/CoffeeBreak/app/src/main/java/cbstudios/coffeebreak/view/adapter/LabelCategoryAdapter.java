@@ -79,7 +79,7 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
             // updateNumberOfTaskInCategory(labelCategory, categorySize);
         }else{
             EventBus.getDefault().post(new ShowKeyboardEvent(true, etNameView));
-            //etNameView.requestFocus();
+            etNameView.requestFocus();
             etNameView.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {

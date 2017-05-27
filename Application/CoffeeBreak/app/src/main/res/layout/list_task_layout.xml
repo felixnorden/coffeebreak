@@ -13,7 +13,7 @@
     android:layout_height="88dp"
     android:orientation="horizontal"
     app:elevation="2dp"
-    app:translationZ="4dp">
+    android:translationZ="4dp">
 
     <View
         android:id="@+id/viewTaskType"
