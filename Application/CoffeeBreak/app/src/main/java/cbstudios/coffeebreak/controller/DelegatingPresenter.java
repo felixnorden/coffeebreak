@@ -21,6 +21,9 @@ import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
 import cbstudios.coffeebreak.eventbus.SaveStateEvent;
 import cbstudios.coffeebreak.eventbus.UpdateContextReferenceEvent;
 import cbstudios.coffeebreak.model.AchievementConverter;
+import cbstudios.coffeebreak.model.CategoryConverter;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
+import cbstudios.coffeebreak.util.IListConverter;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.StatisticsConverter;
 import cbstudios.coffeebreak.model.TaskConverter;
@@ -29,7 +32,6 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchie
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IMainView;
-import cbstudios.coffeebreak.view.activity.ITaskEditView;
 import cbstudios.coffeebreak.view.activity.MainActivity;
 import cbstudios.coffeebreak.view.activity.TaskEditActivity;
 
@@ -57,6 +59,8 @@ class DelegatingPresenter {
     private List<IPresenter> presenters;
     private Context mContext;
     private IPresenterFactory factory = PresenterFactory.getInstance();
+    private IListConverter<IAdvancedTask> taskConverter = TaskConverter.getInstance();
+    private IListConverter<ILabelCategory> categoryConverter = CategoryConverter.getInstance();
 
     DelegatingPresenter(Context mContext) {
         this.model = new Model();
@@ -65,6 +69,7 @@ class DelegatingPresenter {
 
         EventBus.getDefault().register(this);
         loadTasks();
+        loadCategories();
         loadStatistics();
         loadAchievements();
     }
@@ -99,6 +104,7 @@ class DelegatingPresenter {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void saveState(SaveStateEvent event) {
         saveTasks();
+        saveCategories();
         saveStatistics();
         saveAchievements();
     }
@@ -157,7 +163,7 @@ class DelegatingPresenter {
     }
 
     private void saveStatistics() {
-        JsonObject object = StatisticsConverter.getInstance().toJsonObject(model.getToDoDataModule().getStats());
+        JsonObject object = StatisticsConverter.getInstance().toJson(model.getToDoDataModule().getStats());
         StorageUtil.save(mContext.getApplicationContext(), "Statistics", object);
     }
 
@@ -178,7 +184,7 @@ class DelegatingPresenter {
         }
         JsonObject object = element.getAsJsonObject();
 
-        Statistics statistics = StatisticsConverter.getInstance().toStatistics(object);
+        Statistics statistics = StatisticsConverter.getInstance().toObject(object);
 
         model.getToDoDataModule().setStatistic(statistics);
     }
@@ -193,7 +199,7 @@ class DelegatingPresenter {
                 return;
 
             JsonArray array = element.getAsJsonArray();
-            List<IAdvancedTask> tasks = TaskConverter.getInstance().toList(array);
+            List<IAdvancedTask> tasks = taskConverter.toObject(array);
 
             for (IAdvancedTask task : tasks) {
                 model.getToDoDataModule().addTask(task);
@@ -208,7 +214,36 @@ class DelegatingPresenter {
     }
 
     private void saveTasks() {
-        JsonArray array = TaskConverter.getInstance().toJsonArray(model.getToDoDataModule().getTasks());
+        JsonArray array = taskConverter.toJson(model.getToDoDataModule().getTasks());
         StorageUtil.save(mContext.getApplicationContext(), "Tasks", array);
+    }
+
+    private void saveCategories() {
+        JsonArray array = categoryConverter.toJson(model.getToDoDataModule().getILabelCategories());
+        StorageUtil.save(mContext.getApplicationContext(), "Categories", array);
+    }
+
+    private void loadCategories() {
+        JsonElement element;
+
+        try {
+            element = StorageUtil.load(mContext.getApplicationContext(), "Categories");
+
+            if (element == null || !element.isJsonArray())
+                return;
+
+            JsonArray array = element.getAsJsonArray();
+            List<ILabelCategory> labels = categoryConverter.toObject(array);
+
+            for (ILabelCategory category : labels) {
+                model.getToDoDataModule().addILabelCategory(category);
+            }
+        } catch (IllegalStateException e) {
+            // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
+            StorageUtil.resetData(mContext.getApplicationContext(), "Categories");
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

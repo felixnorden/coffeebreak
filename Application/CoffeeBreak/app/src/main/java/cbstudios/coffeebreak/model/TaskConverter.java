@@ -2,6 +2,7 @@ package cbstudios.coffeebreak.model;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -14,6 +15,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.ITaskFactory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
+import cbstudios.coffeebreak.util.IListConverter;
 
 /**
  * @author Zack
@@ -22,7 +24,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.TaskFactory;
  *          Uses: IListTask, ITask, ITaskFactory, TaskFactory, IAdvancedTask, ILAbelCategory, CategoryFactory
  *          Used by: DelegatingPresenter.
  */
-public class TaskConverter {
+public class TaskConverter implements IListConverter<IAdvancedTask> {
 
     private static TaskConverter INSTANCE = new TaskConverter();
     private ITaskFactory factory = TaskFactory.getInstance();
@@ -40,12 +42,10 @@ public class TaskConverter {
     }
 
     /**
-     * Converts a list of tasks into a JsonArray.
-     *
-     * @param tasks The list of tasks to be converted.
-     * @return The JsonArray containing the data of the tasks in the list.
+     * {@inheritDoc}
      */
-    public JsonArray toJsonArray(List<IAdvancedTask> tasks) {
+    @Override
+    public JsonArray toJson(List<IAdvancedTask> tasks) {
         JsonArray array = new JsonArray();
 
         for (IAdvancedTask task : tasks) {
@@ -60,12 +60,10 @@ public class TaskConverter {
     }
 
     /**
-     * Converts a task into a JsonObject
-     *
-     * @param task The task to be converted.
-     * @return The JsonObject containing the data of the task.
+     * {@inheritDoc}
      */
-    public JsonObject toJsonObject(IAdvancedTask task) {
+    @Override
+    public JsonObject toJson(IAdvancedTask task) {
         if (task instanceof IListTask) {
             return listTaskToJsonObject((IListTask) task);
         } else {
@@ -74,12 +72,31 @@ public class TaskConverter {
     }
 
     /**
-     * Converts a JsonArray into a List<IAdvancedTask>
-     *
-     * @param array The JsonArray to be converted.
-     * @return The List of IAdvancedTasks.
+     * {@inheritDoc}
      */
-    public List<IAdvancedTask> toList(JsonArray array) {
+    @Override
+    public IAdvancedTask toObject(JsonObject object) {
+        if (object.has("Type")) {
+            String type = object.get("Type").getAsString();
+
+            switch (type) {
+                case "ListTask":
+                    return jsonObjectToListTask(object);
+                case "AdvancedTask":
+                    return jsonObjectToAdvancedTask(object);
+                default:
+                    throw new JsonParseException("This type is not supported by this converter.");
+            }
+        } else {
+            throw new JsonParseException("Object is not a IAdvancedTask. Cannot find String-member 'Type' in object");
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<IAdvancedTask> toObject(JsonArray array) {
         List<IAdvancedTask> list = new ArrayList<>();
 
         for (int i = 0; i < array.size(); i++) {
@@ -148,10 +165,14 @@ public class TaskConverter {
         taskObject.addProperty("Created", advancedTask.getCreationCalendar().getTimeInMillis());
 
         for (ILabelCategory label : advancedTask.getLabels()) {
-            labelArray.add(label.getName());
+            JsonObject categoryObject = new JsonObject();
+            categoryObject.addProperty("Name", label.getName());
+            categoryObject.addProperty("Color", label.getColor());
+
+            labelArray.add(categoryObject);
         }
 
-        taskObject.add("Labels", labelArray);
+        taskObject.add("Categories", labelArray);
 
         return taskObject;
     }
@@ -188,10 +209,13 @@ public class TaskConverter {
         cal.setTimeInMillis(Long.valueOf(object.get("Created").getAsString()));
         task.setCreationCalendar(cal);
 
-        JsonArray labels = object.getAsJsonArray("Labels");
+        JsonArray categories = object.getAsJsonArray("Categories");
 
-        for (int i = 0; i < labels.size(); i++) {
-            ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(labels.get(i).getAsString());
+        for (int i = 0; i < categories.size(); i++) {
+            JsonObject jsonCategory = categories.get(i).getAsJsonObject();
+            String name = jsonCategory.get("Name").getAsString();
+            String color = jsonCategory.get("Color").getAsString();
+            ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(name, color);
             task.addLabel(category);
         }
 
@@ -244,10 +268,13 @@ public class TaskConverter {
         cal.setTimeInMillis(Long.valueOf(object.get("Created").getAsString()));
         task.setCreationCalendar(cal);
 
-        JsonArray labels = object.getAsJsonArray("Labels");
+        JsonArray categories = object.getAsJsonArray("Categories");
 
-        for (int i = 0; i < labels.size(); i++) {
-            ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(labels.get(i).getAsString());
+        for (int i = 0; i < categories.size(); i++) {
+            JsonObject jsonCategory = categories.get(i).getAsJsonObject();
+            String name = jsonCategory.get("Name").getAsString();
+            String color = jsonCategory.get("Color").getAsString();
+            ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(name, color);
             task.addLabel(category);
         }
 

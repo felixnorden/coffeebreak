@@ -28,6 +28,12 @@ public interface ICategoryList {
     void addLabelCategory(String name);
 
     /**
+     * Adds the category to the model.
+     * @param category The category to be added.
+     */
+    void addLabelCategory(ILabelCategory category);
+
+    /**
      * Remove an existing Label Category with labelCategory object
      * @param labelCategory is the Label category that will be removed
      */

@@ -186,7 +186,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onCategoryDeleted(CategoryDeletedEvent event){
         if(event.which == 0){
-        List<ILabelCategory> categoryList = model.getToDoDataModule().getLabelCategories();
+        List<ILabelCategory> categoryList = model.getToDoDataModule().getILabelCategories();
         categoryList.remove(event.position);
         }
         mainView.updateNavDrawer();

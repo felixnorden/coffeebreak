@@ -2,15 +2,13 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;//
 
 import java.util.Calendar;
 
-//  @ Project : CoffeeBreak
-//  @ File Name : ITimeCategory.java
-//  @ Date : 03/04/2017
-//  @ Author : 
-//
-//
-
 /**
- * A interface for the two timeCategories
+ * @author Elias, Johan
+ * @version 1.0
+ *          Responsibility: Abstracting interface for categories using time to filter tasks
+ *          Uses:
+ *          Used by: AllCategory, AchievementActivity, CategoryFactory, CategoryList, IAchievementView,
+ *          ICategoryFactory, ICategoryList, IMainView, MainActivity, MultipleDayTimeCategory.
  */
 public interface ITimeCategory extends ICategory {
     /**

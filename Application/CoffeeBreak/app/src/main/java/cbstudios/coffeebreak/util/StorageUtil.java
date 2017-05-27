@@ -14,10 +14,10 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * @author Zacl
+ * @author Zack
  * @version 1.0
  *          Responsibility: Handles saving/loading of data to/from disk.
- *          Uses: Gson.
+ *          Uses: Gson, IConverter.
  *          Used by: DelegatingPresenter.
  */
 public class StorageUtil {
