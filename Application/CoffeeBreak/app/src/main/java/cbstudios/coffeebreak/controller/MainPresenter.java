@@ -8,6 +8,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
+import cbstudios.coffeebreak.eventbus.CategoryDeletedEvent;
 import cbstudios.coffeebreak.eventbus.CheckTaskEvent;
 import cbstudios.coffeebreak.eventbus.CreateCategoryEvent;
 import cbstudios.coffeebreak.eventbus.CreateTaskEvent;
@@ -32,6 +33,7 @@ import cbstudios.coffeebreak.eventbus.TimesTaskDeletedEvent;
 import cbstudios.coffeebreak.eventbus.TimesUpdatedEvent;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.TaskSorter;
+import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 import cbstudios.coffeebreak.view.activity.AchievementActivity;
@@ -175,6 +177,19 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
                 break;
             default: return;
         }
+    }
+
+    /**
+     * Sorts the tasks in a specific order
+     * @param event containing sorting order
+     */
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    public void onCategoryDeleted(CategoryDeletedEvent event){
+        if(event.which == 0){
+        List<ILabelCategory> categoryList = model.getToDoDataModule().getLabelCategories();
+        categoryList.remove(event.position);
+        }
+        mainView.updateNavDrawer();
     }
 
     /**
