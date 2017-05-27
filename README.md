@@ -23,7 +23,7 @@ and add
 to it.
 
 3. Connect an android device to the system. 
-   Can be both an emulator or a hardware device.
+   Can be both an emulator or a hardware device. Make sure debugging is enabled.
    
 4. Run Compile_and_install.bat located in the root folder
 
