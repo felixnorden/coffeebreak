@@ -18,10 +18,7 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
  */
 
 public class CategoryDeleteFragment extends DialogFragment {
-    public interface DeleteCategoryListener {
-        void onDelete();
-        void onCancel();
-    }
+
     int position;
     public void setPosition(int position){
         this.position = position;
@@ -30,7 +27,15 @@ public class CategoryDeleteFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.delete_category).setItems(R.array.delete_category_array, new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.delete_category);
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                EventBus.getDefault().post(new CategoryDeletedEvent(which, position));
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
             public void onClick(DialogInterface dialog, int which) {
                 EventBus.getDefault().post(new CategoryDeletedEvent(which, position));
             }

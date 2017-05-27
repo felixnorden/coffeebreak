@@ -11,7 +11,7 @@ public class CategoryDeletedEvent implements IEvent {
     public int position;
 
     public CategoryDeletedEvent(int which, int position){
-        this.which=which;
+        this.which = which;
         this.position = position;
 
     }
