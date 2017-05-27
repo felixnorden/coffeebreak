@@ -1,4 +1,7 @@
-## coffeebreak
+## CoffeeBreak
+The application that boosts **YOUR** productivity!
+> CoffeeBreak is the app of the century
+- Abraham Lincoln
 
 ## Installation
 Provide code examples and explanations of how to get the project.
@@ -10,4 +13,5 @@ Provide code examples and explanations of how to get the project.
 
 3. Your connected device should now have Coffeebreak installed.
 
+## Unrelated art
 ![Alt text](http://i.imgur.com/BPyU7hB.jpg "Copyright Landsfadern")
