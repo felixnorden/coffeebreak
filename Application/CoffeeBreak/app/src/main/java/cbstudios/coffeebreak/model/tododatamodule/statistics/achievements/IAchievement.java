@@ -4,10 +4,14 @@ package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
  * Created by johan on 5/6/2017.
  */
 
+import cbstudios.coffeebreak.model.tododatamodule.statistics.IAchievementStatistics;
+
 /**
  * Interface for all achievements
  */
 public interface IAchievement {
+
+    void update(IAchievementStatistics stats);
 
     /**
      *

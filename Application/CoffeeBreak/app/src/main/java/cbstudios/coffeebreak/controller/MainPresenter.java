@@ -270,7 +270,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Subscribe
     public void onCreateCategoryEvent(CreateCategoryEvent event){
         model.getToDoDataModule().addLabelCategory();
-
+        EventBus.getDefault().post(new TimesCategoryCreatedEvent());
     }
 
     /**
