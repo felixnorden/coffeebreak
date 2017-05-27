@@ -14,10 +14,13 @@ If not, download [here](https://developer.android.com/studio/index.html) (Androi
 
 Make sure **Android SDK** is checked while installing.
 
-2. Check that the file 
+2. Create file
 >Application\CoffeeBreak\local.properties
 
-contains the correct path to the sdk.
+and add 
+>sdk.dir=**PATH_TO_SDK**
+
+to it.
 
 3. Connect an android device to the system. 
    Can be both an emulator or a hardware device.
