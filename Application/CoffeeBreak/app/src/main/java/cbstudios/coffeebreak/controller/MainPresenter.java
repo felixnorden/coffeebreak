@@ -81,7 +81,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     public void onCreate(OnCreateEvent event) {
         if(event.object instanceof IMainView) {
             mainView = (IMainView) event.object;
-            mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
+            mainView.setCategories(model.getToDoDataModule().getILabelCategories(), model.getToDoDataModule().getTimeCategories());
             mainView.setTaskAdapter(taskAdapter);
             mainView.setCurrentCategory(model.getToDoDataModule().getTimeCategories().get(0));
             taskAdapter.refreshItems(mainView.getCurrentCategory());
@@ -160,17 +160,17 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         switch (event.order){
             case SortListEvent.ORDERING_ALPHABETICAL:
                 sorter.sortAlphabetically(tasks);
-                model.getToDoDataModule().sortTasks(tasks);
+                model.getToDoDataModule().setTasks(tasks);
                 taskAdapter.swapTasks(mainView.getCurrentCategory().getValidTasks(tasks));
                 break;
             case SortListEvent.ORDERING_CHRONOLOGICAL:
                 sorter.sortChronologically(tasks);
-                model.getToDoDataModule().sortTasks(tasks);
+                model.getToDoDataModule().setTasks(tasks);
                 taskAdapter.swapTasks(mainView.getCurrentCategory().getValidTasks(tasks));
                 break;
             case SortListEvent.ORDERING_PRIORITY:
                 sorter.sortPriorities(tasks);
-                model.getToDoDataModule().sortTasks(tasks);
+                model.getToDoDataModule().setTasks(tasks);
                 taskAdapter.swapTasks(mainView.getCurrentCategory().getValidTasks(tasks));
                 break;
             default: return;

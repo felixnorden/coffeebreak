@@ -33,7 +33,7 @@ public class AchievementPresenter implements IAchievementPresenter {
     public void onCreate(OnCreateEvent event) {
         if (event.object instanceof IAchievementView) {
             achievementView = (IAchievementView) event.object;
-            achievementView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
+            achievementView.setCategories(model.getToDoDataModule().getILabelCategories(), model.getToDoDataModule().getTimeCategories());
             achievementView.setNavDrawer();
             achievementView.setToolbar();
             achievementAdapter = new AchievementAdapter(achievementView.getAppCompatActivity() , model.getToDoDataModule().getStats().getAchievementList(), model);

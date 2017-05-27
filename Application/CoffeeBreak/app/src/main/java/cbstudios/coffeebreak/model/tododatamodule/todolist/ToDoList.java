@@ -1,15 +1,16 @@
 package cbstudios.coffeebreak.model.tododatamodule.todolist;
-//  @ Project : Untitled
-//  @ File Name : cbstudios.coffeebreak.model.tododatamodule.todolist.ToDoList.java
-//  @ cbstudios.coffeebreak.model.toDoDataModule.categoryList.Date : 03/04/2017
-//  @ Author : 
-//
-//
-
 
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Zack, Felix
+ * @version 1.0
+ *          <p>Responsibility: Represents the data in  the ToDo list</br >
+ *          Uses: IAdvancedTask, ITaskFactory, TaskFactory, IListTask</br>
+ *          Used by:
+ *          </p>
+ */
 public class ToDoList {
     private ITaskFactory taskFactory;
     private List<IAdvancedTask> tasks;
@@ -71,14 +72,12 @@ public class ToDoList {
         return advancedTask instanceof IListTask;
     }
 
+    /**
+     * Initiates the instance.
+     */
     private void initComponents() {
         taskFactory = TaskFactory.getInstance();
         tasks = new ArrayList<>();
-        loadSavedData();
-    }
-
-    private void loadSavedData() {
-
     }
 
     /**
@@ -90,6 +89,7 @@ public class ToDoList {
 
     /**
      * Searches for a task with the given hashcode in the database.
+     *
      * @param hashCode The hashcode of the task.
      * @return The task with matching hashcode if it exists, null otherwise.
      */
@@ -107,20 +107,26 @@ public class ToDoList {
 
     /**
      * Creates a Task and adds it to the references ListTask
+     *
      * @param listTask ListTask to hold the task
      */
-    public void createTask(IListTask listTask){
+    public void createTask(IListTask listTask) {
         listTask.add(taskFactory.createTask());
     }
 
     /**
      * Creates a ListTask and adds it to the list.
      */
-    public void createListTask(){
+    public void createListTask() {
         add(taskFactory.createListTask());
     }
 
-    public void setTasks(List<IAdvancedTask> tasks){
+    /**
+     * Overrides the current list of tasks with a new one.
+     *
+     * @param tasks The new list of tasks.
+     */
+    public void setTasks(List<IAdvancedTask> tasks) {
         this.tasks = tasks;
     }
 }

@@ -36,20 +36,20 @@ public class CategoryListTest {
     }
 
     /**
-     * Test the add method, remove method, getName method, getLabelCategories method,
+     * Test the add method, remove method, getName method, getILabelCategories method,
      * initTimeCategories method, initLabelCategories method
      */
 
     @Test
     public void testAddAndRemoveLabelCategories () {
-        assertFalse(categoryList.getLabelCategories().isEmpty());
-        assertTrue(categoryList.getLabelCategories().get(0).getName() =="Work");
+        assertFalse(categoryList.getILabelCategories().isEmpty());
+        assertTrue(categoryList.getILabelCategories().get(0).getName() =="Work");
         categoryList.addLabelCategory();
-        assertTrue(categoryList.getLabelCategories().get(1).getName() == "");
+        assertTrue(categoryList.getILabelCategories().get(1).getName() == "");
         categoryList.removeLabelCategory("Work");
-        assertTrue(categoryList.getLabelCategories().get(0).getName() =="");
-        categoryList.removeLabelCategory(categoryList.getLabelCategories().get(0));
-        assertTrue(categoryList.getLabelCategories().isEmpty());
+        assertTrue(categoryList.getILabelCategories().get(0).getName() =="");
+        categoryList.removeLabelCategory(categoryList.getILabelCategories().get(0));
+        assertTrue(categoryList.getILabelCategories().isEmpty());
         assertFalse(categoryList.getTimeCategories().isEmpty());
     }
     @Test

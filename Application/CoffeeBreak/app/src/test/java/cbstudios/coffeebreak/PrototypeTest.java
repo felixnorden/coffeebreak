@@ -23,7 +23,7 @@ public class PrototypeTest {
 
     @Test
     public void initializeTest(){
-        assertTrue(model.getToDoDataModule().getLabelCategories().size() == 3 );
+        assertTrue(model.getToDoDataModule().getILabelCategories().size() == 3 );
         assertTrue(model.getToDoDataModule().getTimeCategories().size() == 4);
     }
 

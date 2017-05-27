@@ -12,28 +12,15 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;////
 /**
  * An interface for the labelCategory
  */
-public interface ILabelCategory extends ICategory{
-
+public interface ILabelCategory extends ICategory {
     /**
-     *
-     * @return the name of the labelCategory
-     */
-    String getName();
-
-    /**
-     * Set a new name to a labelCategory
-     * @param name is the new name of a labelCategory
-     */
-    void setName(String name);
-
-    /**
-     *
      * @return the color of the labelCategory
      */
     String getColor();
 
     /**
      * Sets a new Color to a labelCategory
+     *
      * @param color is the new color of a labelCategory
      */
     void setColor(String color);

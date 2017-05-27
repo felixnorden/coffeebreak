@@ -51,6 +51,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getName() {
         return task.getName();
     }
@@ -58,6 +59,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setName(String name) {
         task.setName(name);
     }
@@ -65,6 +67,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public List<ILabelCategory> getLabels() {
         return labels;
     }
@@ -72,6 +75,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void addLabel(ILabelCategory label) {
         labels.add(label);
     }
@@ -79,6 +83,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void removeLabel(ILabelCategory label) {
         if (labels.contains(label)) {
             labels.remove(label);
@@ -88,20 +93,23 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
-    public Calendar getDate() {
+    @Override
+    public Calendar getNotification() {
         return date;
     }
 
     /**
      * {@inheritDoc}
      */
-    public void setDate(Calendar date) {
+    @Override
+    public void getNotification(Calendar date) {
         this.date = date;
     }
 
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean hasNote() {
         return note != null;
     }
@@ -109,6 +117,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getNote() {
         return note;
     }
@@ -116,6 +125,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setNote(String note) {
         this.note = note;
     }
@@ -123,6 +133,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Priority getPriority() {
         return priority;
     }
@@ -130,6 +141,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setPriority(Priority priority) {
         this.priority = priority;
     }
@@ -137,6 +149,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isChecked() {
         return task.isChecked();
     }
@@ -144,6 +157,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void toggleChecked() {
         task.setChecked(!task.isChecked());
     }
@@ -151,6 +165,7 @@ class AdvancedTask implements IAdvancedTask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setChecked(boolean value) {
         task.setChecked(value);
     }
@@ -164,11 +179,17 @@ class AdvancedTask implements IAdvancedTask {
         return task.getCreationCalendar();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setCreationCalendar(Calendar calendar) {
         task.setCreationCalendar(calendar);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean hasILabelCategory(String name) {
         for (ILabelCategory label : labels) {

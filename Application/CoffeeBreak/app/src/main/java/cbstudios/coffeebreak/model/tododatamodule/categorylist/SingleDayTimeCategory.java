@@ -15,70 +15,99 @@ import java.util.List;
 
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
+
 /**
- * The main usage of this class is to check if a task is due on/before
- * the date given to the instance.
- * Used primarily for the "Tomorrow" instance
+ * @author Elias
+ * @version 1.0
+ *          <p>Responsibility: The main usage of this class is to check if a task is due on/before
+ *          the date given to the instance.
+ *          Used primarily for the "Tomorrow" instance</br >
+ *          Uses: IAdvancedTask </br>
+ *          Used by: CategoryFactory
+ *          </p>
  */
 class SingleDayTimeCategory implements ITimeCategory {
     private String name;
     private Calendar time;
 
-     SingleDayTimeCategory(String name, Calendar time ){
+    SingleDayTimeCategory(String name, Calendar time) {
         this.name = name;
         this.time = time;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getTaskCount (List<IAdvancedTask> tasks) {
+    public int getTaskCount(List<IAdvancedTask> tasks) {
         int num = 0;
         for (IAdvancedTask task : tasks) {
-            if (task.getName() == null || task.getDate() == null || isInIntervall(task.getDate())){
+            if (task.getName() == null || task.getNotification() == null || isInIntervall(task.getNotification())) {
                 num++;
             }
         }
         return num;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<IAdvancedTask> getValidTasks(List<IAdvancedTask> tasks) {
         List<IAdvancedTask> validTasks = new ArrayList<>();
-        for(IAdvancedTask task: tasks){
-            if(task.getDate() != null) {
+        for (IAdvancedTask task : tasks) {
+            if (task.getNotification() != null) {
             }
 
-            if (task.getName() == null || task.getDate() == null || isInIntervall(task.getDate())){
+            if (task.getName() == null || task.getNotification() == null || isInIntervall(task.getNotification())) {
                 validTasks.add(task);
             }
         }
         return validTasks;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public Calendar getTime() {
         return time;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void setTime(Calendar time) {
         this.time = time;
     }
 
     /**
      * Checks if the tasks day, year and month is the same as the date of the category
+     *
      * @param date the tasks date
      * @return True if the dates occur on the same day.
      */
     @Override
     public boolean isInIntervall(Calendar date) {
-        return (((date.get(Calendar.YEAR) ==time.get(Calendar.YEAR))&&
-                (date.get(Calendar.DAY_OF_YEAR) ==time.get(Calendar.DAY_OF_YEAR))));
+        return (((date.get(Calendar.YEAR) == time.get(Calendar.YEAR)) &&
+                (date.get(Calendar.DAY_OF_YEAR) == time.get(Calendar.DAY_OF_YEAR))));
     }
 
     @Override
@@ -88,7 +117,7 @@ class SingleDayTimeCategory implements ITimeCategory {
 
         SingleDayTimeCategory that = (SingleDayTimeCategory) o;
 
-        if (name != null ? !name.equals(that.getName()): that.name != null ) return false;
+        if (name != null ? !name.equals(that.getName()) : that.name != null) return false;
         return time != null ? time.equals(that.time) : that.time == null;
 
     }

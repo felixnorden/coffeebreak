@@ -27,15 +27,15 @@ public class ToDoDataModuleTest {
     @Test
     public void testAddLabelCategory() {
         // Make sure there are no Label categories
-        assertTrue(toDoDataModule.getLabelCategories().isEmpty());
+        assertTrue(toDoDataModule.getILabelCategories().isEmpty());
 
         toDoDataModule.addLabelCategory("Sample 1");
         toDoDataModule.addLabelCategory("Sample 2");
 
         // Check that categories have been stored and in correct order
-        assertEquals(toDoDataModule.getLabelCategories().size(), 2);
-        assertEquals(toDoDataModule.getLabelCategories().get(0).getName(), "Sample 1");
-        assertEquals(toDoDataModule.getLabelCategories().get(1).getName(), "Sample 2");
+        assertEquals(toDoDataModule.getILabelCategories().size(), 2);
+        assertEquals(toDoDataModule.getILabelCategories().get(0).getName(), "Sample 1");
+        assertEquals(toDoDataModule.getILabelCategories().get(1).getName(), "Sample 2");
 
         // Check that colors have been set correctly
         assertTrue(!toDoDataModule.getLabelCategory("Sample 1").getColor().equalsIgnoreCase(""));
@@ -55,23 +55,23 @@ public class ToDoDataModuleTest {
         toDoDataModule.addLabelCategory("Sample 2");
         toDoDataModule.addLabelCategory("Sample 3");
 
-        assertEquals(toDoDataModule.getLabelCategories().size(), 3);
+        assertEquals(toDoDataModule.getILabelCategories().size(), 3);
 
         //Remove a category and make sure the correct categories remain
         toDoDataModule.removeLabelCategory("Sample 2");
 
-        assertEquals(toDoDataModule.getLabelCategories().size(), 2);
-        assertTrue(toDoDataModule.getLabelCategories().get(0).getName().contentEquals("Sample 1"));
-        assertTrue(toDoDataModule.getLabelCategories().get(1).getName().contentEquals("Sample 3"));
+        assertEquals(toDoDataModule.getILabelCategories().size(), 2);
+        assertTrue(toDoDataModule.getILabelCategories().get(0).getName().contentEquals("Sample 1"));
+        assertTrue(toDoDataModule.getILabelCategories().get(1).getName().contentEquals("Sample 3"));
 
         toDoDataModule.removeLabelCategory("Sample 1");
 
-        assertEquals(toDoDataModule.getLabelCategories().size(), 1);
-        assertTrue(toDoDataModule.getLabelCategories().get(0).getName().contentEquals("Sample 3"));
+        assertEquals(toDoDataModule.getILabelCategories().size(), 1);
+        assertTrue(toDoDataModule.getILabelCategories().get(0).getName().contentEquals("Sample 3"));
 
         toDoDataModule.removeLabelCategory("Sample 3");
 
-        assertTrue(toDoDataModule.getLabelCategories().isEmpty());
+        assertTrue(toDoDataModule.getILabelCategories().isEmpty());
     }
 
     @Test
@@ -188,7 +188,7 @@ public class ToDoDataModuleTest {
         }
 
         assertEquals(toDoDataModule.getTasks().size(), 10);
-        assertEquals(toDoDataModule.getLabelCategories().size(), 3);
+        assertEquals(toDoDataModule.getILabelCategories().size(), 3);
 
         List<IAdvancedTask> label_1 = toDoDataModule.getLabelCategory("Sample 1").getValidTasks(toDoDataModule.getTasks());
         List<IAdvancedTask> label_2 = toDoDataModule.getLabelCategory("Sample 2").getValidTasks(toDoDataModule.getTasks());

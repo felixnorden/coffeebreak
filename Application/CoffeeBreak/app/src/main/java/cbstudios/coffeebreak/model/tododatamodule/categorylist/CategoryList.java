@@ -11,8 +11,6 @@ package cbstudios.coffeebreak.model.tododatamodule.categorylist;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Locale;
-import java.util.Objects;
 
 /**
  * A class that holds both Lists of Categories
@@ -127,7 +125,7 @@ public class CategoryList implements ICategoryList {
     /**
      * @return the labelCategories list.
      */
-    public List<ILabelCategory> getLabelCategories() {
+    public List<ILabelCategory> getILabelCategories() {
         return labelCategories;
     }
 
@@ -144,7 +142,7 @@ public class CategoryList implements ICategoryList {
 
         CategoryList that = (CategoryList) o;
 
-        if (labelCategories != null ? !labelCategories.equals(that.getLabelCategories()) : that.getLabelCategories() != null)
+        if (labelCategories != null ? !labelCategories.equals(that.getILabelCategories()) : that.getILabelCategories() != null)
             return false;
         return timeCategories != null ? timeCategories.equals(that.getTimeCategories()) : that.getTimeCategories() == null;
 

@@ -59,7 +59,7 @@ public class TaskConverterTest {
         subtasks.add(subTask2);
 
         IAdvancedTask at1 = factory.createAdvancedTask("AdvancedTask1");
-        at1.setDate(currentCal);
+        at1.getNotification(currentCal);
         at1.addLabel(labelCategories.get(0));
         at1.setChecked(true);
         at1.setNote("Exempel");
@@ -73,7 +73,7 @@ public class TaskConverterTest {
         at2.setPriority(Priority.TWO);
 
         IListTask lt1 = factory.createListTask("ListTask1");
-        lt1.setDate(threeMonthCal);
+        lt1.getNotification(threeMonthCal);
         lt1.addLabel(labelCategories.get(1));
         lt1.setChecked(true);
         lt1.setNote("Lorem ipsum");

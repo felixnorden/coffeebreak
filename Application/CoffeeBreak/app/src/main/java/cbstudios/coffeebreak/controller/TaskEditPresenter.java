@@ -128,7 +128,7 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
     private void setupView() {
         view.setTitle(task.getName());
         view.setNameText(task.getName());
-        view.setNotification(task.getDate());
+        view.setNotification(task.getNotification());
         setupCategories();
         setupPriority();
         view.setNote(task.getNote());
@@ -145,7 +145,7 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
 
         //Fix autocomplete field
         List<String> strings = new ArrayList<>();
-        for (ILabelCategory c : model.getToDoDataModule().getLabelCategories()) {
+        for (ILabelCategory c : model.getToDoDataModule().getILabelCategories()) {
             strings.add(c.getName());
         }
         ArrayAdapter<String> autoCompleteAdapter = new ArrayAdapter<>(view.getAppCompatActivity(), android.R.layout.simple_list_item_1, strings);
@@ -184,7 +184,7 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
      */
     private void updateModel() {
         task.setName(view.getNameText());
-        task.setDate(view.getNotification());
+        task.getNotification(view.getNotification());
         updateNote();
         updateLabels();
         updatePriority();

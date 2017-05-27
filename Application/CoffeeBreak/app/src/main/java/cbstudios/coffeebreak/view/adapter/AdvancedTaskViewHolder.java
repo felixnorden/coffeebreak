@@ -25,8 +25,8 @@ class AdvancedTaskViewHolder extends TaskAdapter.TaskViewHolder {
     @Override
     void setSpecificFields() {
         String information;
-        if (task.getDate() != null) {
-            Date date = task.getDate().getTime();
+        if (task.getNotification() != null) {
+            Date date = task.getNotification().getTime();
             String dateTime = new SimpleDateFormat("EE", Locale.getDefault()).format(date)
                     + " " + new SimpleDateFormat("dd", Locale.getDefault()).format(date)
                     + " " + new SimpleDateFormat("MMM", Locale.getDefault()).format(date)

@@ -29,12 +29,12 @@ public interface IAdvancedTask {
     /**
      * @return the date for when the task is due
      */
-    Calendar getDate();
+    Calendar getNotification();
 
     /**
      * @param date the date to set for the task
      */
-    void setDate(Calendar date);
+    void getNotification(Calendar date);
 
     /**
      * @return the labels which the task is assigned
@@ -94,12 +94,12 @@ public interface IAdvancedTask {
     void setChecked(boolean value);
 
     /**
-     * @return creation date and time for the task
+     * @return Creation date and time for the task
      */
     Calendar getCreationCalendar();
 
     /**
-     * @param calendar creation date to set for the task
+     * @param calendar Creation date to set for the task
      */
     void setCreationCalendar(Calendar calendar);
 

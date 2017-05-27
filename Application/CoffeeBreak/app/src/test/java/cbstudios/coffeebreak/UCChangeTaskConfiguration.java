@@ -34,14 +34,14 @@ public class UCChangeTaskConfiguration {
 
     @Test
     public void testNotificationChange() {
-        assertTrue(task.getDate() == null);
+        assertTrue(task.getNotification() == null);
 
         Calendar cal = Calendar.getInstance();
-        task.setDate(cal);
-        assertTrue(task.getDate().equals(cal));
+        task.getNotification(cal);
+        assertTrue(task.getNotification().equals(cal));
 
-        task.setDate(null);
-        assertTrue(task.getDate() == null);
+        task.getNotification(null);
+        assertTrue(task.getNotification() == null);
     }
 
     @Test

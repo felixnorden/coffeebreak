@@ -12,31 +12,23 @@ import java.util.Calendar;
 /**
  * A interface for the two timeCategories
  */
-public interface ITimeCategory extends ICategory{
-
-    String getName();
-
-    /**
-     * Sets a new name to a timeCategory
-     * @param name is the new name to a timeCategory
-     */
-    void setName(String name);
-
+public interface ITimeCategory extends ICategory {
     /**
      * A method that checks if a specific date is within the intervall of the timeCategory
+     *
      * @param date is the date that is checked if it is within the intervall
      * @return true if it is within the intervall, false if it is not
      */
     boolean isInIntervall(Calendar date);
 
     /**
-     *
      * @return the date that a timeCategory holds
      */
     Calendar getTime();
 
     /**
      * Will never be used?
+     *
      * @param time
      */
     void setTime(Calendar time);
@@ -44,13 +36,13 @@ public interface ITimeCategory extends ICategory{
     /**
      * An equals method that compares a timeCategory with another object to check if they are
      * the same
+     *
      * @param o is the object the timeCategory will compare with
      * @return true if equal, false if not equal
      */
     boolean equals(Object o);
 
     /**
-     *
      * @return an int that is unique from different objects
      */
     int hashCode();

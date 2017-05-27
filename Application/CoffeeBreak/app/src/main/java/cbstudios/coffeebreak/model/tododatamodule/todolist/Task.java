@@ -39,6 +39,7 @@ class Task implements ITask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public String getName() {
         return name;
     }
@@ -46,6 +47,7 @@ class Task implements ITask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setName(String name) {
         this.name = name;
     }
@@ -53,6 +55,7 @@ class Task implements ITask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public boolean isChecked() {
         return checked;
     }
@@ -60,6 +63,7 @@ class Task implements ITask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void toggleChecked() {
         setChecked(!isChecked());
     }
@@ -67,6 +71,7 @@ class Task implements ITask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void setChecked(boolean value) {
         checked = value;
     }
@@ -74,10 +79,14 @@ class Task implements ITask {
     /**
      * {@inheritDoc}
      */
+    @Override
     public Calendar getCreationCalendar() {
         return creationCalendar;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setCreationCalendar(Calendar calendar) {
         creationCalendar = calendar;

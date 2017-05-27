@@ -142,8 +142,8 @@ public class TaskConverter {
         taskObject.addProperty("Note", advancedTask.getNote());
         taskObject.addProperty("IsChecked", advancedTask.isChecked());
         taskObject.addProperty("Priority", advancedTask.getPriority().toString());
-        if (advancedTask.getDate() != null) {
-            taskObject.addProperty("Date", advancedTask.getDate().getTimeInMillis());
+        if (advancedTask.getNotification() != null) {
+            taskObject.addProperty("Date", advancedTask.getNotification().getTimeInMillis());
         }
         taskObject.addProperty("Created", advancedTask.getCreationCalendar().getTimeInMillis());
 
@@ -181,7 +181,7 @@ public class TaskConverter {
         if (object.has("Date")) {
             Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(Long.valueOf(object.get("Date").getAsString()));
-            task.setDate(cal);
+            task.getNotification(cal);
         }
 
         Calendar cal = Calendar.getInstance();
@@ -237,7 +237,7 @@ public class TaskConverter {
         if (object.has("Date")) {
             Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(Long.valueOf(object.get("Date").getAsString()));
-            task.setDate(cal);
+            task.getNotification(cal);
         }
 
         Calendar cal = Calendar.getInstance();

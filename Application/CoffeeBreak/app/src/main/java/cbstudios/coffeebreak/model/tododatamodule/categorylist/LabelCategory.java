@@ -31,7 +31,8 @@ class LabelCategory implements ILabelCategory {
     }
 
     /**
-     * Creating a labelCateogory with a name and a color
+     * Creating a labelCateogory with a name and a random color
+     *
      * @param name of the labelCategory
      */
     LabelCategory(String name) {
@@ -40,15 +41,29 @@ class LabelCategory implements ILabelCategory {
     }
 
     /**
+     * Creates a LabelCategory with the given name and color.
      *
-     * @return the name of the labelCategory
+     * @param name  Name of the category
+     * @param color Color in hex
      */
+    LabelCategory(String name, String color) {
+        this.name = name;
+        this.color = color;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String getName() {
         return name;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public int getTaskCount (List<IAdvancedTask> tasks) {
+    public int getTaskCount(List<IAdvancedTask> tasks) {
         int num = 0;
         for (IAdvancedTask task : tasks) {
             for (int i = 0; i < task.getLabels().size(); i++) {
@@ -60,13 +75,18 @@ class LabelCategory implements ILabelCategory {
         return num;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public List<IAdvancedTask> getValidTasks(List<IAdvancedTask> tasks) {
         List<IAdvancedTask> validTasks = new ArrayList<>();
-        for(IAdvancedTask task: tasks){
-            if (task.getName() == null){task.addLabel(this);}
-            for(ILabelCategory labelCategory: task.getLabels()){
-                if(labelCategory.getName().equals(this.getName())) {
+        for (IAdvancedTask task : tasks) {
+            if (task.getName() == null) {
+                task.addLabel(this);
+            }
+            for (ILabelCategory labelCategory : task.getLabels()) {
+                if (labelCategory.getName().equals(this.getName())) {
                     validTasks.add(task);
                 }
             }
@@ -76,31 +96,32 @@ class LabelCategory implements ILabelCategory {
     }
 
     /**
-     * Sets a new name for a labelCategory
-     * @param name is the new name of the labelCategory
+     * {@inheritDoc}
      */
+    @Override
     public void setName(String name) {
         this.name = name;
     }
 
     /**
-     *
-     * @return the color of the labelCategory
+     * {@inheritDoc}
      */
+    @Override
     public String getColor() {
         return color;
     }
 
     /**
-     * sets a new color for the labelCategory
-     * @param color is the new color for the labelCategory
+     * {@inheritDoc}
      */
+    @Override
     public void setColor(String color) {
         this.color = color;
     }
 
     /**
      * An equals method for the class
+     *
      * @param o is the object that the method will compare to
      * @return True if equal, false if not equal
      */
@@ -115,7 +136,6 @@ class LabelCategory implements ILabelCategory {
     }
 
     /**
-     *
      * @return an int that is unique from different objects
      */
     @Override
@@ -127,10 +147,9 @@ class LabelCategory implements ILabelCategory {
     }
 
     /**
-     *
      * @return a random Color
      */
-    private String getRandomColor(){
+    private String getRandomColor() {
         Random rand = new Random();
 
         // Create RGB values
