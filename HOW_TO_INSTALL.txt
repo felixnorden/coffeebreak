@@ -1,9 +1,0 @@
-HOW TO INSTALL COFFEEBREAK
-------------
-
-1. Connect an android device to the system. 
-   Can be both an emulator or a hardware device.
-   
-2. Run Compile_and_install.bat
-
-3. Your connected device should now have Coffeebreak installed.
