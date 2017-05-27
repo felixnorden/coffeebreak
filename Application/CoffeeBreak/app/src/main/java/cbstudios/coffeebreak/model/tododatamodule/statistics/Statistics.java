@@ -15,7 +15,7 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.Number
 /**
  * A class that holds all statistic in the app
  */
-public class Statistics {
+public class Statistics implements IAchievementStatistics {
 
     private List<IAchievement> achievementList;
 
@@ -53,12 +53,30 @@ public class Statistics {
         InitAchievement();
     }
 
+    public void notifyAllObservers(){
+        System.out.println("create" + createdTasks);
+        System.out.println("check" +checkOffTasks);
+        System.out.println("alive" +tasksAlive);
+        System.out.println("started" + timesAppStarted);
+        System.out.println("cate" +timesCategoryCreated);
+        System.out.println("nav" +timesNavOpen);
+        System.out.println("days" +daysInARow);
+        System.out.println("set" +timesSettingsChanged);
+        System.out.println("del" +timesTaskDeleted);
+        System.out.println("upd" +timesUpdated);
+
+        for (IAchievement achievement : achievementList) {
+            achievement.update(this);
+        }
+    }
+
     /**
      * Adds 1 to createdTask and adds 1 to tasksAlive
      */
     public void onCreateTaskEvent() {
         createdTasks++;
         tasksAlive++;
+        notifyAllObservers();
     }
 
     /**

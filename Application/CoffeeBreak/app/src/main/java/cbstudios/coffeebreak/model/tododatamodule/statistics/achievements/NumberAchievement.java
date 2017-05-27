@@ -1,5 +1,7 @@
 package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
 
+import cbstudios.coffeebreak.model.tododatamodule.statistics.IAchievementStatistics;
+
 /**
  * Created by johan on 5/6/2017.
  */
@@ -37,6 +39,43 @@ public class NumberAchievement implements IAchievement {
         this.type = type;
     }
 
+    public void update(IAchievementStatistics stats){
+        switch (this.getType()){
+            case(NumberAchievement.CREATE):
+                checkIfCompleted(stats.getCreatedTasks());
+                break;
+            case(NumberAchievement.CHECK):
+                checkIfCompleted(stats.getCheckOffTasks());
+                break;
+            case(NumberAchievement.DAYSINAROW):
+                checkIfCompleted(stats.getDaysInARow());
+                break;
+            case(NumberAchievement.TASKSALIVE):
+                checkIfCompleted(stats.getTasksAlive());
+                break;
+            case(NumberAchievement.TIMESAPPSTARTED):
+                checkIfCompleted(stats.getTimesAppStarted());
+                break;
+            case(NumberAchievement.TIMESCATEGORYCREATED):
+                checkIfCompleted(stats.getTimesCategoryCreated());
+                break;
+            case(NumberAchievement.TIMESNAVOPEN):
+                checkIfCompleted(stats.getTimesNavOpen());
+                break;
+            case(NumberAchievement.TIMESSETTINGSCHANGED):
+                checkIfCompleted(stats.getTimesSettingsChanged());
+                break;
+            case(NumberAchievement.TIMESTASKDELETED):
+                checkIfCompleted(stats.getTimesTaskDeleted());
+                break;
+            case(NumberAchievement.TIMESUPDATED):
+                checkIfCompleted(stats.getTimesUpdated());
+                break;
+            default:
+                break;
+        }
+        ;
+    }
 
     public NumberAchievement(){
 

@@ -48,6 +48,7 @@ import cbstudios.coffeebreak.eventbus.SortListEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
 import cbstudios.coffeebreak.eventbus.TimesNavOpenEvent;
 import cbstudios.coffeebreak.eventbus.TimesTaskDeletedEvent;
+import cbstudios.coffeebreak.eventbus.TimesUpdatedEvent;
 import cbstudios.coffeebreak.eventbus.UpdateContextReferenceEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
@@ -180,6 +181,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
             @Override
             public void onRefresh() {
                 refreshItems();
+                EventBus.getDefault().post(new TimesUpdatedEvent());
             }
         });
 
@@ -188,6 +190,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         enableEraseDataOnShutdown();
 
         EventBus.getDefault().post(new OnCreateEvent(this));
+        EventBus.getDefault().post(new TimesAppStartedEvent());
     }
 
     //Long press on nav drawer header will reset data
@@ -212,8 +215,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     protected void onStart(){
         super.onStart();
         EventBus.getDefault().post(new OnStartEvent(this));
-        EventBus.getDefault().post(new TimesAppStartedEvent());
-
     }
 
     /**
@@ -586,16 +587,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
      * Setups the Navigation drawer button
      */
     private void setDrawerButton() {
-        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close){
-
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                if (slideOffset != 0){
-                    EventBus.getDefault().post(new TimesNavOpenEvent());
-                }
-                super.onDrawerSlide(drawerView, slideOffset);
-            }
-        };
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mActionBarDrawerToggle.syncState();
 
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);

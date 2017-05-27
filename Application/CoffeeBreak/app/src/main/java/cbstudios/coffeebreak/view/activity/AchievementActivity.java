@@ -22,7 +22,6 @@ import java.util.List;
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.eventbus.CreateCategoryEvent;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
-import cbstudios.coffeebreak.eventbus.TimesNavOpenEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
@@ -150,16 +149,7 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
     }
 
     private void setDrawerButton() {
-        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close){
-
-            @Override
-            public void onDrawerSlide(View drawerView, float slideOffset) {
-                if (slideOffset != 0){
-                    EventBus.getDefault().post(new TimesNavOpenEvent());
-                }
-                super.onDrawerSlide(drawerView, slideOffset);
-            }
-        };
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mActionBarDrawerToggle.syncState();
 
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
