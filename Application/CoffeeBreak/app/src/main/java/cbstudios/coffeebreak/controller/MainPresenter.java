@@ -83,7 +83,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     public void onCreate(OnCreateEvent event) {
         if(event.object instanceof IMainView) {
             mainView = (IMainView) event.object;
-            mainView.setCategories(model.getToDoDataModule().getILabelCategories(), model.getToDoDataModule().getTimeCategories());
+            mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
             mainView.setTaskAdapter(taskAdapter);
             mainView.setCurrentCategory(model.getToDoDataModule().getTimeCategories().get(0));
             taskAdapter.refreshItems(mainView.getCurrentCategory());
@@ -186,7 +186,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onCategoryDeleted(CategoryDeletedEvent event){
         if(event.which == 0){
-        List<ILabelCategory> categoryList = model.getToDoDataModule().getLabelCategories();
+        List<ILabelCategory> categoryList = model.getToDoDataModule().getILabelCategories();
         categoryList.remove(event.position);
         }
         mainView.updateNavDrawer();

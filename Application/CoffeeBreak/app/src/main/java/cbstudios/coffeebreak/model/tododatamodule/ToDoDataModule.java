@@ -15,7 +15,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.ToDoList;
 
 /**
  * @author Zack
- * @version x.x
+ * @version 1.0
  *          Responsibility: The facade for the ToDo-list model.
  *          Uses: CategoryList, ICategoryList, ILabelCategory, ITimeCategory, Statistics, IAdvancedTask, IListTask, ToDoList.
  *          Used by: Model
@@ -34,7 +34,7 @@ public class ToDoDataModule {
     /**
      * @return List of all {@link ILabelCategory} in the model.
      */
-    public List<ILabelCategory> getILabelCategories() {
+    public List<ILabelCategory> getLabelCategories() {
         return categoryList.getILabelCategories();
     }
 
@@ -45,6 +45,15 @@ public class ToDoDataModule {
      */
     public void addLabelCategory(String name) {
         categoryList.addLabelCategory(name);
+    }
+
+    /**
+     * Adds a category to the model.
+     *
+     * @param category The category to be added.
+     */
+    public void addILabelCategory(ILabelCategory category) {
+        categoryList.addLabelCategory(category);
     }
 
     /**

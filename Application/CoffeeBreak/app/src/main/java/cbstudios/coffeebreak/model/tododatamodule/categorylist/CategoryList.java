@@ -42,6 +42,14 @@ public class CategoryList implements ICategoryList {
     /**
      * {@inheritDoc}
      */
+    @Override
+    public void addLabelCategory(ILabelCategory category) {
+        labelCategories.add(category);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public ILabelCategory getLabelCategory(String name) {
         for (ILabelCategory category : labelCategories) {
             if (category.getName().equals(name)) {
@@ -80,18 +88,17 @@ public class CategoryList implements ICategoryList {
         List<Integer> indexList = new ArrayList<>();
 
         // Find all equal labels and store their corresponding index
-        for(int i = 0; i < labelCategories.size(); i++){
-            if(labelCategories.get(i).getName().contentEquals(name)) {
+        for (int i = 0; i < labelCategories.size(); i++) {
+            if (labelCategories.get(i).getName().contentEquals(name)) {
                 indexList.add(i);
             }
         }
 
         // Remove all labels in the list, one by one
-        if(indexList.size() == 1) {
+        if (indexList.size() == 1) {
             labelCategories.remove((int) indexList.get(0));
-        }
-        else{
-            for (int i = 0; i < indexList.size(); i++){
+        } else {
+            for (int i = 0; i < indexList.size(); i++) {
                 labelCategories.remove(indexList.get(i) - i);
             }
         }

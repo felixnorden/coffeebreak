@@ -5,12 +5,13 @@ import com.google.gson.JsonObject;
 import java.util.Calendar;
 
 import cbstudios.coffeebreak.model.tododatamodule.statistics.Statistics;
+import cbstudios.coffeebreak.util.IConverter;
 
 /**
  * Created by johan on 5/9/2017.
  */
 
-public class StatisticsConverter {
+public class StatisticsConverter implements IConverter<Statistics> {
 
     private static StatisticsConverter INSTANCE = new StatisticsConverter();
 
@@ -18,19 +19,27 @@ public class StatisticsConverter {
         return INSTANCE;
     }
 
-    StatisticsConverter(){
+    private StatisticsConverter() {
 
     }
 
-    public JsonObject toJsonObject(Statistics statistics){
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public JsonObject toJson(Statistics statistics) {
         return statisticsToJsonObject(statistics);
     }
 
-    public Statistics toStatistics(JsonObject object){
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Statistics toObject(JsonObject object) {
         return jsonObjectToStatistics(object);
     }
 
-    private JsonObject statisticsToJsonObject(Statistics statistics){
+    private JsonObject statisticsToJsonObject(Statistics statistics) {
         JsonObject statisticsObject = new JsonObject();
 
         statisticsObject.addProperty("CreatedTasks", statistics.getCreatedTasks());
@@ -48,7 +57,7 @@ public class StatisticsConverter {
         return statisticsObject;
     }
 
-    private Statistics jsonObjectToStatistics(JsonObject object){
+    private Statistics jsonObjectToStatistics(JsonObject object) {
         Statistics statistics = new Statistics();
 
         statistics.setCreatedTasks(object.get("CreatedTasks").getAsInt());
@@ -66,7 +75,7 @@ public class StatisticsConverter {
             System.out.println("WOHOO");
         }
 
-        if(!(object.get("LastDayCheckedTask") == null)){
+        if (!(object.get("LastDayCheckedTask") == null)) {
             Calendar time = Calendar.getInstance();
             time.setTimeInMillis(Long.valueOf(object.get("LastDayCheckedTask").getAsString()));
             statistics.setLastDayCheckedTask(time);
