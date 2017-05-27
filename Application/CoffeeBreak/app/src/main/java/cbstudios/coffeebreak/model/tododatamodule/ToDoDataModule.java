@@ -95,6 +95,12 @@ public class ToDoDataModule {
         getTasks().removeAll(toBeRemoved);
     }
 
+    public void removeCategoryFromTasks(int position) {
+
+      ILabelCategory category = categoryList.getLabelCategories().get(position);
+    todoList.removeCategoryFromTasks(category);
+}
+
     /**
      * Removes a specific category from the model. If the category doesn't exist, nothing happens.
      *

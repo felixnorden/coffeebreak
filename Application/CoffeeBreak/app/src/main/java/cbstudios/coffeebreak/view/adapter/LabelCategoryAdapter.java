@@ -21,7 +21,9 @@ import java.util.List;
 
 import cbstudios.coffeebreak.R;
 
+import cbstudios.coffeebreak.eventbus.CategoryDeletedEvent;
 import cbstudios.coffeebreak.eventbus.CategoryKeyboardClosedEvent;
+import cbstudios.coffeebreak.eventbus.RemoveCategoryFromTaskEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;

@@ -186,6 +186,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
      */
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onCategoryDeleted(CategoryDeletedEvent event){
+        model.getToDoDataModule().removeCategoryFromTasks(event.position);
         if(event.which == 0){
         List<ILabelCategory> categoryList = model.getToDoDataModule().getLabelCategories();
         categoryList.remove(event.position);
