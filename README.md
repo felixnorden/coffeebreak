@@ -1,7 +1,7 @@
-## CoffeeBreak
+# CoffeeBreak
 The application that boosts **YOUR** productivity!
-> CoffeeBreak is the app of the century
-- Abraham Lincoln
+> "CoffeeBreak is the app of the century"
+\- Abraham Lincoln
 
 ## Installation
 Provide code examples and explanations of how to get the project.
