@@ -1,6 +1,7 @@
 # CoffeeBreak
 The application that boosts **YOUR** productivity!
-> "CoffeeBreak is the app of the century"
+>CoffeeBreak is the app of the century
+
 \- Abraham Lincoln
 
 ## Installation
