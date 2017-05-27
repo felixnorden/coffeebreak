@@ -48,6 +48,13 @@ public class ToDoDataModule {
     }
 
     /**
+     * Creates a new nameless category
+     */
+    public void addLabelCategory() {
+        categoryList.addLabelCategory();
+    }
+
+    /**
      * Adds a category to the model.
      *
      * @param category The category to be added.
