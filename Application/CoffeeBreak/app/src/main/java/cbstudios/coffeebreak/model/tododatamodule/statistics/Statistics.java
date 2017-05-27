@@ -86,16 +86,15 @@ public class Statistics implements IAchievementStatistics {
     public void onCheckTaskEvent(){
         checkOffTasks++;
         tasksAlive--;
-
+        notifyAllObservers();
         if(lastDayCheckedTask == null) {
             lastDayCheckedTask = Calendar.getInstance();
             daysInARow++;
             return;
         }
         Calendar now = Calendar.getInstance();
-
-        if((now.get(Calendar.YEAR) == lastDayCheckedTask.get(Calendar.YEAR))){
-            if((now.get(Calendar.DAY_OF_YEAR))-(lastDayCheckedTask.get(Calendar.DAY_OF_YEAR)) ==1){
+        if(now.YEAR == lastDayCheckedTask.YEAR){
+            if((now.get(Calendar.DAY_OF_YEAR))-(lastDayCheckedTask.get(Calendar.DAY_OF_YEAR)) == 1){
                 lastDayCheckedTask = now;
                 daysInARow++;
             } else if ((now.get(Calendar.DAY_OF_YEAR))-(lastDayCheckedTask.get(Calendar.DAY_OF_YEAR)) > 1){
@@ -103,7 +102,6 @@ public class Statistics implements IAchievementStatistics {
                 daysInARow = 0;
             }
         }
-
     }
 
     /**
@@ -111,6 +109,7 @@ public class Statistics implements IAchievementStatistics {
      */
     public void onTimesAppStartedEvent() {
         timesAppStarted++;
+        notifyAllObservers();
     }
 
     /**
@@ -118,6 +117,7 @@ public class Statistics implements IAchievementStatistics {
      */
     public void onTimesCategoryCreated() {
         timesCategoryCreated++;
+        notifyAllObservers();
     }
 
     /**
@@ -125,6 +125,7 @@ public class Statistics implements IAchievementStatistics {
      */
     public void onTimesNavOpenEvent() {
         timesNavOpen++;
+        notifyAllObservers();
     }
 
     /**
@@ -132,6 +133,7 @@ public class Statistics implements IAchievementStatistics {
      */
     public void onTimesSettingsChangedEvent() {
         timesSettingsChanged++;
+        notifyAllObservers();
     }
 
     /**
@@ -139,6 +141,8 @@ public class Statistics implements IAchievementStatistics {
      */
     public void onTimesTaskDeletedEvent(){
         timesTaskDeleted++;
+        tasksAlive--;
+        notifyAllObservers();
     }
 
     /**
@@ -146,6 +150,7 @@ public class Statistics implements IAchievementStatistics {
      */
     public void onTimesUpdatedEvent(){
         timesUpdated++;
+        notifyAllObservers();
     }
 
     /**
@@ -274,6 +279,7 @@ public class Statistics implements IAchievementStatistics {
 
     public void setLastDayCheckedTask(Calendar lastDayCheckedTask){
         this.lastDayCheckedTask = lastDayCheckedTask;
+        System.out.println("okajjjj");
     }
 
     public void setAchievementList(List<IAchievement> achievementList) {
