@@ -38,6 +38,7 @@
     <string name="action_abort">Cancel</string>
     <string name="edit_task_notification">Set a notification</string>
     <string name="sorting_order">Sort tasks</string>
+    <string name="delete_category">Delete Category</string>
     <string name="task_name">Task Name</string>
     <string name="task_edit_priority_hint">Set a priority</string>
     <string name="task_edit_note_hint">Add a note</string>

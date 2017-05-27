@@ -58,6 +58,7 @@ import cbstudios.coffeebreak.view.adapter.LabelCategoryAdapter;
 import cbstudios.coffeebreak.view.adapter.MergeAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
+import cbstudios.coffeebreak.view.fragment.CategoryDeleteFragment;
 import cbstudios.coffeebreak.view.fragment.SortFragment;
 
 /**
@@ -324,6 +325,10 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         return currentCategory;
     }
 
+    public void updateNavDrawer(){
+        mDrawerList.invalidateViews();
+    }
+
     /**
      * Assigns both timeCategories and labelCategories
      * @param labelCategories the models list of labelCategories
@@ -354,6 +359,14 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
         mergeAdapter.addAdapter(timeCategoryAdapter);
         mergeAdapter.addAdapter(labelCategoryAdapter);
+        mDrawerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                showCategoryDeleteDialog(position-timeCategoryAdapter.getCount());
+                return true;
+            }
+        });
+
 
         mDrawerList.setAdapter(mergeAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -362,6 +375,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
             public void onClick(View v) {
                 EventBus.getDefault().post(new CreateCategoryEvent());
                 ((MergeAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
+
             }
         });
 
@@ -428,6 +442,12 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     private void showSortingDialog() {
         DialogFragment dialog = new SortFragment();
         dialog.show(getSupportFragmentManager(), "sorting");
+    }
+
+    private void showCategoryDeleteDialog(int position) {
+        CategoryDeleteFragment dialog = new CategoryDeleteFragment();
+        dialog.setPosition(position);
+        dialog.show(getSupportFragmentManager(), "category");
     }
 
     /**
@@ -558,6 +578,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         // Close drawer
         mDrawerLayout.closeDrawer(mDrawer);
     }
+
 
     /**
      * Setups the Navigation drawer button
