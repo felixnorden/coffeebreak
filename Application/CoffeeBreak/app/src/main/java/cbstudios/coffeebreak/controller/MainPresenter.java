@@ -189,7 +189,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         List<ILabelCategory> categoryList = model.getToDoDataModule().getILabelCategories();
         categoryList.remove(event.position);
         }
-        mainView.updateNavDrawer();
+        mainView.updateNavDrawerList();
     }
 
     /**
@@ -261,7 +261,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
      */
     @Subscribe
     public void onCreateCategoryEvent(CreateCategoryEvent event){
-        model.getToDoDataModule().addLabelCategory("Mock1");
+        model.getToDoDataModule().addLabelCategory();
 
     }
 

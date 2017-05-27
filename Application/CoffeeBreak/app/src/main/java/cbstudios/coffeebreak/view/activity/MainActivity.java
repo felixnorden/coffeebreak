@@ -325,7 +325,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         return currentCategory;
     }
 
-    public void updateNavDrawer(){
+    public void updateNavDrawerList(){
         mDrawerList.invalidateViews();
     }
 
@@ -362,7 +362,9 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mDrawerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                showCategoryDeleteDialog(position-timeCategoryAdapter.getCount());
+                if (position>4) {
+                    showCategoryDeleteDialog(position - timeCategoryAdapter.getCount());
+                }
                 return true;
             }
         });
