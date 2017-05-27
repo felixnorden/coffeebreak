@@ -9,6 +9,7 @@ Provide code examples and explanations of how to get the project.
 
 1.Make sure Android SDK tools are installed. This should be located in 
 >%localappdata%/Android/sdk
+
 If not, download [here](https://developer.android.com/studio/index.html) (Android Studio)
 
 Make sure **Android SDK** is checked while installing.
