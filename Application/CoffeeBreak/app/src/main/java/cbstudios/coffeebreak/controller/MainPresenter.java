@@ -1,5 +1,6 @@
 package cbstudios.coffeebreak.controller;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -187,7 +188,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onCategoryDeleted(CategoryDeletedEvent event){
         model.getToDoDataModule().removeCategoryFromTasks(event.position);
-        if(event.which == 0){
+        if(event.which == DialogInterface.BUTTON_POSITIVE){
         List<ILabelCategory> categoryList = model.getToDoDataModule().getLabelCategories();
         categoryList.remove(event.position);
         }

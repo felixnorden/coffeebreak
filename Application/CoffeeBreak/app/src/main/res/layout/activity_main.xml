@@ -155,21 +155,6 @@
                 android:textAlignment="center"
                 android:textSize="56dp" />
 
-            <ImageView
-                android:id="@+id/time_separator"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_below="@id/drawer_header"
-                android:layout_marginLeft="8dp"
-                app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
-
-            <TextView
-                android:layout_width="208dp"
-                android:layout_height="24dp"
-                android:layout_below="@id/drawer_header"
-                android:layout_toEndOf="@id/time_separator"
-                android:text="   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _" />
-
             <cbstudios.coffeebreak.view.activity.NonScrollListView
                 android:id="@+id/drawer_list"
                 android:layout_width="240dp"

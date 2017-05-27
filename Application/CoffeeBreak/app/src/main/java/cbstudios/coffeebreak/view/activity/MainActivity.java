@@ -57,6 +57,7 @@ import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
 import cbstudios.coffeebreak.view.adapter.LabelCategoryAdapter;
 import cbstudios.coffeebreak.view.adapter.MergeAdapter;
+import cbstudios.coffeebreak.view.adapter.SeparatorAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
 import cbstudios.coffeebreak.view.fragment.CategoryDeleteFragment;
@@ -353,17 +354,20 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mAddCategoryButton = (ImageButton) findViewById(R.id.add_category);
 
 
+        final SeparatorAdapter timeSeparator = new SeparatorAdapter(this, SeparatorAdapter.TIME_CATEGORY);
+        final SeparatorAdapter labelSeparator = new SeparatorAdapter(this, SeparatorAdapter.LABEL_CATEGORY);
         final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories);
         final TimeCategoryAdapter timeCategoryAdapter = new TimeCategoryAdapter(this, timeCategories);
         final MergeAdapter mergeAdapter = new MergeAdapter();
 
-
+        mergeAdapter.addAdapter(timeSeparator);
         mergeAdapter.addAdapter(timeCategoryAdapter);
+        mergeAdapter.addAdapter(labelSeparator);
         mergeAdapter.addAdapter(labelCategoryAdapter);
         mDrawerList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position>4) {
+                if (position > 4) {
                     showCategoryDeleteDialog(position - timeCategoryAdapter.getCount());
                 }
                 return true;

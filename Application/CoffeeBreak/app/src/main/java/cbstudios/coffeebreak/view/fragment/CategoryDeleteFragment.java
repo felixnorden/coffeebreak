@@ -27,14 +27,14 @@ public class CategoryDeleteFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.delete_category);
-        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.delete_category)
+        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 EventBus.getDefault().post(new CategoryDeletedEvent(which, position));
             }
-        });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        })
+        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 EventBus.getDefault().post(new CategoryDeletedEvent(which, position));

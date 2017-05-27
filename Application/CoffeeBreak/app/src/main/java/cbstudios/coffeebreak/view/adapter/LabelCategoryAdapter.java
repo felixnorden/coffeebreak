@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
@@ -36,15 +35,13 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
 
     private final Context context;
-    private final List labelCategories;
-    //private IMainPresenter mainPresenter;
+    private final List<ILabelCategory> labelCategories;
 
 
     public LabelCategoryAdapter(Context context, List<ILabelCategory> categories) {
         super(context, R.layout.drawer_list_item_label, categories);
         this.context = context;
         this.labelCategories = categories;
-        //this.mainPresenter = mainPresenter;
     }
 
     /**
@@ -61,8 +58,8 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         final AppCompatEditText etNameView = (AppCompatEditText) rowItem.findViewById(R.id.name_view_edit);
         final TextView tvNameView = (TextView) rowItem.findViewById(R.id.name_view_uneditable);
         if (position != 0) {
-            LinearLayout llSeparator = (LinearLayout) rowItem.findViewById(R.id.separator);
-            llSeparator.setVisibility(View.INVISIBLE);
+            //LinearLayout llSeparator = (LinearLayout) rowItem.findViewById(R.id.separator);
+            //llSeparator.setVisibility(View.INVISIBLE);
             final float scale = getContext().getResources().getDisplayMetrics().density;
             int px = (int) (48 * scale + 0.5f);
             rowItem.getLayoutParams().height = px;

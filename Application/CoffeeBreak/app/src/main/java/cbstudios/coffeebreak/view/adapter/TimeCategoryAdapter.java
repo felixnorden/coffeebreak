@@ -26,13 +26,11 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
 
     private final Context context;
     private final List<ITimeCategory> timeCategories;
-    //private IMainPresenter mainPresenter;
 
     public TimeCategoryAdapter(Context context, List<ITimeCategory> categories) {
         super(context, drawer_list_item_label, categories);
         this.context = context;
         this.timeCategories = categories;
-        //this.mainPresenter = mainPresenter;
     }
 
     /**
