@@ -26,6 +26,7 @@ import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
 import cbstudios.coffeebreak.eventbus.RequestTaskCreationEvent;
 import cbstudios.coffeebreak.eventbus.RequestTaskListEvent;
 import cbstudios.coffeebreak.eventbus.SaveStateEvent;
+import cbstudios.coffeebreak.eventbus.ShowAchievementEvent;
 import cbstudios.coffeebreak.eventbus.SortListEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
 import cbstudios.coffeebreak.eventbus.TimesCategoryCreatedEvent;
@@ -378,8 +379,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     }
     
     @Subscribe (threadMode = ThreadMode.MAIN)
-    public void showAchievementActivity(TimesTaskDeletedEvent event){
-        IAchievementPresenter achievementPresenter = new AchievementPresenter(model);
+    public void showAchievementActivity(ShowAchievementEvent event){
         Intent intent = new Intent(mainView.getAppCompatActivity(), AchievementActivity.class);
         mainView.getAppCompatActivity().startActivity(intent);
     }

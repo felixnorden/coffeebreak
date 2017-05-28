@@ -32,7 +32,7 @@ public interface IPresenterFactory {
      * @param task the task that has been clicked on by the user.
      * @return  the new presenter through a {@link ITaskEditPresenter} reference
      */
-    ITaskEditPresenter createTaskDetailPresenter(IAdvancedTask task, Model model);
+    ITaskEditPresenter createTaskEditPresenter(IAdvancedTask task, Model model);
 
     /**
      * Creates an instance of {@link DelegatingPresenter}
@@ -40,4 +40,11 @@ public interface IPresenterFactory {
      * @return  the new presenter through a {@link DelegatingPresenter} reference
      */
     DelegatingPresenter initializeDelegatingPresenter(Context context);
+
+    /**
+     * Creates an instance of {@link AchievementPresenter}
+     * @param model the model keeping all the data
+     * @return the new presenter through a {@link IAchievementPresenter} reference
+     */
+    public IAchievementPresenter createAchievementPresenter(Model model);
 }

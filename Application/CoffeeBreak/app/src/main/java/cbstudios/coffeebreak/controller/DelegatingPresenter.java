@@ -31,6 +31,7 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.Statistics;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievement;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.util.StorageUtil;
+import cbstudios.coffeebreak.view.activity.IAchievementView;
 import cbstudios.coffeebreak.view.activity.IMainView;
 import cbstudios.coffeebreak.view.activity.ITaskEditView;
 import cbstudios.coffeebreak.view.activity.MainActivity;
@@ -124,7 +125,9 @@ class DelegatingPresenter {
             presenter = factory.createMainPresenter((IMainView) mContext, model);
 
         } else if (event.data instanceof IAdvancedTask) {
-            presenter = factory.createTaskDetailPresenter((IAdvancedTask) event.data, model);
+            presenter = factory.createTaskEditPresenter((IAdvancedTask) event.data, model);
+        }else if(event.data instanceof IAchievementView){
+            presenter = factory.createAchievementPresenter(model);
         }
         presenters.add(presenter);
     }
@@ -135,7 +138,6 @@ class DelegatingPresenter {
         try {
             element = StorageUtil.load(mContext.getApplicationContext(), "Achievement");
         } catch (IllegalStateException e) {
-            // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
             StorageUtil.resetData(mContext.getApplicationContext(), "Tasks");
             e.printStackTrace();
         } catch (FileNotFoundException e) {

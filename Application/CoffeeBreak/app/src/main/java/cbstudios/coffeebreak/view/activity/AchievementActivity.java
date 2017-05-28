@@ -22,6 +22,7 @@ import java.util.List;
 import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.eventbus.CreateCategoryEvent;
 import cbstudios.coffeebreak.eventbus.OnCreateEvent;
+import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
@@ -38,29 +39,28 @@ import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
 public class AchievementActivity extends AppCompatActivity implements IAchievementView {
 
     private RecyclerView achievementGrid;
-    private SwipeRefreshLayout swipeRefreshLayout;
     private List<ILabelCategory> labelCategories;
     private List<ITimeCategory> timeCategories;
     private ScrollView mDrawer;
     private NonScrollListView mDrawerList;
     private DrawerLayout mDrawerLayout;
-    private ImageButton mAddCategoryButton;
     private ICategory currentCategory;
     private Toolbar mToolbar;
-    private ActionBarDrawerToggle mActionBarDrawerToggle;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.achievement_activity_layout);
 
         achievementGrid = (RecyclerView) findViewById(R.id.achievementGrid);
-        swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
+        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         achievementGrid.setLayoutManager(new GridLayoutManager(this, 4));
-
+        EventBus.getDefault().post(new RequestPresenterEvent(this));
         EventBus.getDefault().post(new OnCreateEvent(this));
+
     }
 
     @Override
@@ -85,7 +85,7 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
         mDrawerList = (NonScrollListView) findViewById(R.id.drawer_list);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.setBackgroundColor(Color.WHITE);
-        mAddCategoryButton = (ImageButton) findViewById(R.id.add_category);
+        ImageButton mAddCategoryButton = (ImageButton) findViewById(R.id.add_category);
 
 
         final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories);
@@ -147,7 +147,7 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
     }
 
     private void setDrawerButton() {
-        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+        ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mActionBarDrawerToggle.syncState();
 
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);

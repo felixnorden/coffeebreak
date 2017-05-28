@@ -4,6 +4,7 @@ import android.content.Context;
 
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
+import cbstudios.coffeebreak.view.activity.IAchievementView;
 import cbstudios.coffeebreak.view.activity.IMainView;
 import cbstudios.coffeebreak.view.activity.ITaskEditView;
 
@@ -39,7 +40,7 @@ public class PresenterFactory implements IPresenterFactory{
      * {@inheritDoc}
      */
     @Override
-    public ITaskEditPresenter createTaskDetailPresenter(IAdvancedTask task, Model model) {
+    public ITaskEditPresenter createTaskEditPresenter(IAdvancedTask task, Model model) {
         return new TaskEditPresenter(task, model);
     }
 
@@ -49,6 +50,10 @@ public class PresenterFactory implements IPresenterFactory{
     @Override
     public DelegatingPresenter initializeDelegatingPresenter(Context context) {
         return new DelegatingPresenter(context);
+    }
+
+    public IAchievementPresenter createAchievementPresenter(Model model){
+        return new AchievementPresenter(model);
     }
 
     private PresenterFactory(){}
