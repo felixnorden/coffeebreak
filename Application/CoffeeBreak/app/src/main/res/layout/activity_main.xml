@@ -150,6 +150,7 @@
                 android:id="@+id/drawer_header"
                 android:layout_width="240dp"
                 android:layout_height="160dp"
+                app:srcCompat="@mipmap/ic_material_product_icon"
                 />
 
             <cbstudios.coffeebreak.view.NonScrollListView
