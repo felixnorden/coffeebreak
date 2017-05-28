@@ -46,7 +46,7 @@ public class ToDoDataModuleTest {
     @Test
     public void testGetTimeCategories() {
         assertTrue(toDoDataModule.getTimeCategories() != null);
-        assertTrue(toDoDataModule.getTimeCategories().size() == 4);
+        assertTrue(toDoDataModule.getTimeCategories().size() == 5);
     }
 
     @Test
