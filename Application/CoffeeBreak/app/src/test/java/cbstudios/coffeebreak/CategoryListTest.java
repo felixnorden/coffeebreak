@@ -7,7 +7,6 @@ import java.util.Calendar;
 
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.CategoryList;
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategoryFactory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 
 import static org.junit.Assert.assertFalse;
@@ -25,7 +24,6 @@ import static org.junit.Assert.assertTrue;
 
 public class CategoryListTest {
     CategoryList categoryList = new CategoryList();
-    ICategoryFactory factory = CategoryFactory.getInstance();
 
     /**
      * Add a first label before the test
