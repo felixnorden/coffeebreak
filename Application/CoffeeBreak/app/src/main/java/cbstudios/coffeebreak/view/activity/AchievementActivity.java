@@ -80,7 +80,6 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
         mDrawerList = (NonScrollListView) findViewById(R.id.drawer_list);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.setBackgroundColor(Color.WHITE);
-        ImageButton mAddCategoryButton = (ImageButton) findViewById(R.id.add_category);
 
 
         final LabelCategoryAdapter labelCategoryAdapter = new LabelCategoryAdapter(this, labelCategories);
@@ -93,14 +92,6 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
 
         mDrawerList.setAdapter(mergeAdapter);
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        mAddCategoryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getDefault().post(new CreateCategoryEvent());
-                ((MergeAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
-            }
-        });
-
 
     }
 

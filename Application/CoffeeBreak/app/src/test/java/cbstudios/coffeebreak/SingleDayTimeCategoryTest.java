@@ -30,7 +30,6 @@ public class SingleDayTimeCategoryTest {
         assertFalse(singleDayTimeCategory.isInIntervall(new GregorianCalendar(2016,4,4)));
         assertFalse(singleDayTimeCategory.isInIntervall(new GregorianCalendar(1916,4,4)));
         assertTrue(singleDayTimeCategory.isInIntervall(new GregorianCalendar(2016,4,5,8,2,1)));
-        singleDayTimeCategory.setTime(new GregorianCalendar(2016,2,2,2,2,2));
         assertTrue(singleDayTimeCategory.isInIntervall(new GregorianCalendar(2016,2,2)));
     }
 

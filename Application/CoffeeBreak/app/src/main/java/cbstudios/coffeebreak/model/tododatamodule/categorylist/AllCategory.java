@@ -36,11 +36,6 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
     }
 
     @Override
-    public void setTime(Calendar time) {
-
-    }
-
-    @Override
     public List<IAdvancedTask> getValidTasks(List<IAdvancedTask> tasks) {
         return tasks;
     }

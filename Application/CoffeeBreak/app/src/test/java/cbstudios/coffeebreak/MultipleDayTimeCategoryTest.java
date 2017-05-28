@@ -27,7 +27,6 @@ public class MultipleDayTimeCategoryTest {
         assertFalse(multipleDayTimeCategory.isInIntervall(new GregorianCalendar(2016,6,5)));
         assertTrue(multipleDayTimeCategory.isInIntervall(new GregorianCalendar(1916,4,6)));
         assertTrue(multipleDayTimeCategory.isInIntervall(new GregorianCalendar(2016,4,5,8,2,1)));
-        multipleDayTimeCategory.setTime(new GregorianCalendar(2016,2,2));
         assertTrue(multipleDayTimeCategory.isInIntervall(new GregorianCalendar(16,2,2)));
     }
 

@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <android.support.design.widget.CoordinatorLayout
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/achievement_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,64 +47,3 @@
                 />
         </android.support.v4.widget.SwipeRefreshLayout>
     </android.support.design.widget.CoordinatorLayout>
-
-    <ScrollView
-        android:id="@+id/left_drawer"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
-        android:layout_gravity="start">
-
-        <RelativeLayout
-            android:layout_width="240dp"
-            android:layout_height="match_parent"
-            android:elevation="16dp">
-
-            <TextView
-                android:id="@+id/drawer_header"
-                android:layout_width="240dp"
-                android:layout_height="160dp"
-                android:background="@android:color/white"
-                android:text="COOL HEADER"
-                android:textAlignment="center"
-                android:textSize="56dp" />
-
-            <ImageView
-                android:id="@+id/time_separator"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_below="@id/drawer_header"
-                android:layout_marginLeft="8dp"
-                app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
-
-            <TextView
-                android:layout_width="208dp"
-                android:layout_height="24dp"
-                android:layout_below="@id/drawer_header"
-                android:layout_toEndOf="@id/time_separator"
-                android:text="   _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _" />
-
-            <cbstudios.coffeebreak.view.NonScrollListView
-                android:id="@+id/drawer_list"
-                android:layout_width="240dp"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/time_separator"
-                android:background="@android:color/white"
-                android:choiceMode="singleChoice"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="2dp"
-                android:drawSelectorOnTop="false" />
-
-
-            <ImageButton
-                android:id="@+id/add_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/drawer_list"
-                android:backgroundTint="@android:color/background_light"
-                app:srcCompat="@android:drawable/ic_input_add" />
-
-
-        </RelativeLayout>
-    </ScrollView>
-</android.support.v4.widget.DrawerLayout>
