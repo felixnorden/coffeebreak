@@ -191,7 +191,7 @@
                 <RelativeLayout
                     android:id="@+id/relativeLayout"
                     android:layout_width="wrap_content"
-                    android:layout_height="45dp"
+                    android:layout_height="48dp"
                     android:layout_alignEnd="@+id/task_edit_categories_list"
                     android:layout_alignParentBottom="true"
                     android:layout_alignStart="@+id/task_edit_categories_list"
@@ -215,6 +215,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:inputType="textCapSentences|textAutoComplete"
                         android:layout_marginStart="25dp"
                         android:layout_toEndOf="@+id/task_edit_categories_add_image_button"
                         android:background="@null"

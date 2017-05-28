@@ -99,9 +99,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                         }
 
                         task.setName(input);
+                        tvTaskName.setText(input);
+                        viewSwitcher.showNext();
                         EventBus.getDefault().post(new TaskKeyboardClosedEvent(itemView, getAdapterPosition(), false, task));
                         EventBus.getDefault().post(new ShowKeyboardEvent(false, etTaskName));
-                        //etTaskName.clearFocus();
                     }
                     return false;
                 }
@@ -270,7 +271,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     public void onBindViewHolder(TaskAdapter.TaskViewHolder viewHolder, final int position) {
         //IAdvancedTask task = mTasks.get(position);
         viewHolder.task = mTasks.get(position);
-
         // Set up task layout based on whether the task has data or not.
         viewHolder.setUpTask();
     }
