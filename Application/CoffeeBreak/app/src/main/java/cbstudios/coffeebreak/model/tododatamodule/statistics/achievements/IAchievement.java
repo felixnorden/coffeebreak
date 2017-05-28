@@ -7,7 +7,12 @@ package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.IAchievementStatistics;
 
 /**
- * Interface for all achievements
+ * @author Johan
+ * @version 1.1
+ *          <p>Responsibility: Abstraction interface for numberAchievement </br >
+ *          Used by: Statistics
+ *          </p>
+ *
  */
 public interface IAchievement {
 

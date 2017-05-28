@@ -11,7 +11,12 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * Created by johan on 5/27/2017.
+ * @author Johan
+ * @version 1.0
+ *          <p>Responsibility: To test the statistic class </br >
+ *          Uses: Statistics </br>
+ *          </p>
+ *
  */
 
 public class StatisticTest {
@@ -22,6 +27,9 @@ public class StatisticTest {
         statistics = new Statistics();
     }
 
+    /**
+     * Test the CreatedTask stats
+     */
     @Test
     public void testCreateTaskStatistic(){
         assertTrue(statistics.getCreatedTasks() == 0);
@@ -30,6 +38,9 @@ public class StatisticTest {
         assertFalse(statistics.getCreatedTasks() == 0);
     }
 
+    /**
+     * Test the CheckTask stats
+     */
     @Test
     public void testCheckTaskStatistic(){
         assertTrue(statistics.getCheckOffTasks() == 0);
@@ -38,6 +49,9 @@ public class StatisticTest {
         assertFalse(statistics.getCheckOffTasks() == 0);
     }
 
+    /**
+     * Test the timesAppStarted stats
+     */
     @Test
     public void testTimesAppStartedStatistic(){
         assertTrue(statistics.getTimesAppStarted() == 0);
@@ -46,6 +60,9 @@ public class StatisticTest {
         assertFalse(statistics.getTimesAppStarted() == 0);
     }
 
+    /**
+     * Test the timesCategoryCreated stats
+     */
     @Test
     public void testTimesCategoryCreatedStatistic(){
         assertTrue(statistics.getTimesCategoryCreated() == 0);
@@ -54,6 +71,9 @@ public class StatisticTest {
         assertFalse(statistics.getTimesCategoryCreated() == 0);
     }
 
+    /**
+     * Test the timesNavOpen stats
+     */
     @Test
     public void testTimesNavOpenStatistic(){
         assertTrue(statistics.getTimesNavOpen() == 0);
@@ -62,6 +82,9 @@ public class StatisticTest {
         assertFalse(statistics.getTimesNavOpen() == 0);
     }
 
+    /**
+     * Test the timesSettingsChangedStatistic
+     */
     @Test
     public void testTimesSettingsChangedStatistic(){
         assertTrue(statistics.getTimesSettingsChanged() == 0);
@@ -69,6 +92,10 @@ public class StatisticTest {
         assertTrue(statistics.getTimesSettingsChanged() == 1);
         assertFalse(statistics.getTimesSettingsChanged() == 0);
     }
+
+    /**
+     * Test the timesTaskDeleted stats
+     */
     @Test
     public void testTimesTaskDeletedStatistic(){
         assertTrue(statistics.getTimesTaskDeleted() == 0);
@@ -76,6 +103,10 @@ public class StatisticTest {
         assertTrue(statistics.getTimesTaskDeleted() == 1);
         assertFalse(statistics.getTimesTaskDeleted() == 0);
     }
+
+    /**
+     * Test the timesUpdated stats
+     */
     @Test
     public void testTimesUpdatedStatistic(){
         assertTrue(statistics.getTimesUpdated() == 0);
@@ -84,6 +115,9 @@ public class StatisticTest {
         assertFalse(statistics.getTimesUpdated() == 0);
     }
 
+    /**
+     * Test the tasksAlive stats
+     */
     @Test
     public void testTasksAliveStatistic(){
         assertTrue(statistics.getTasksAlive() == 0);
@@ -97,6 +131,9 @@ public class StatisticTest {
         assertTrue(statistics.getTasksAlive() == 0);
     }
 
+    /**
+     * Test the daysInARow stats
+     */
     @Test
     public void testDaysInARowStatistic(){
         statistics.setLastDayCheckedTask(null);

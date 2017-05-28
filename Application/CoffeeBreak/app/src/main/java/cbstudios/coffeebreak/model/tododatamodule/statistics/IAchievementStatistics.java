@@ -1,9 +1,13 @@
 package cbstudios.coffeebreak.model.tododatamodule.statistics;
 
 /**
- * Created by johan on 5/27/2017.
+ * @author Johan
+ * @version 1.1
+ *          <p>Responsibility: Abstraction for the Statistic class </br >
+ *          Used by: Statistics
+ *          </p>
+ *
  */
-
  public interface IAchievementStatistics {
     int getCreatedTasks();
 

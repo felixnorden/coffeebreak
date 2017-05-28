@@ -3,10 +3,15 @@ package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.IAchievementStatistics;
 
 /**
- * Created by johan on 5/6/2017.
+ * @author Johan
+ * @version 1.2
+ *          <p>Responsibility: To check if the int NumberLimit is reached
+ *          and set itself as completed</br >
+ *          Uses: IAchievement </br>
+ *          Used by: Statistics
+ *          </p>
+ *
  */
-
-
 public class NumberAchievement implements IAchievement {
 
     public static final int TASK_CREATED = 0;
@@ -40,6 +45,10 @@ public class NumberAchievement implements IAchievement {
         this.type = type;
     }
 
+    /**
+     * Check which achievement should be checked if completed
+     * @param stats is the apps statistics
+     */
     public void update(IAchievementStatistics stats) {
         switch (this.getType()) {
             case (TASK_CREATED):

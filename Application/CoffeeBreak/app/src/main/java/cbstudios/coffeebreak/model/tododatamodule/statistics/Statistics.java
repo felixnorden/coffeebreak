@@ -9,11 +9,13 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchie
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.NumberAchievement;
 
 /**
- * Created by johan on 5/8/2017.
- */
-
-/**
- * A class that holds all statistic in the app
+ * @author Johan
+ * @version 1.2
+ *          <p>Responsibility: To hold the apps statistic and achievements </br >
+ *          Uses: IAchievement, IAchievementStatistics </br>
+ *          Used by: ToDoDataModule
+ *          </p>
+ *
  */
 public class Statistics implements IAchievementStatistics {
 

@@ -12,14 +12,14 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-//import cbstudios.coffeebreak.model.tododatamodule.categorylist.LabelCategory;
 
 /**
- * Created by johan on 4/5/2017.
- */
-
-/**
- * Test class for the CategoryList class
+ * @author Johan
+ * @version 1.0
+ *          <p>Responsibility: To test categoryList class </br >
+ *          Uses: CategoryList </br>
+ *          </p>
+ *
  */
 
 public class CategoryListTest {
@@ -50,6 +50,10 @@ public class CategoryListTest {
         assertTrue(categoryList.getLabelCategories().isEmpty());
         assertFalse(categoryList.getTimeCategories().isEmpty());
     }
+
+    /**
+     * Test the equals method
+     */
     @Test
     public void testLabelEquals(){
         CategoryList mockTrue = new CategoryList();

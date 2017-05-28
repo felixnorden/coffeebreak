@@ -15,7 +15,12 @@ import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
- * Created by johan on 5/28/2017.
+ * @author Johan
+ * @version 1.0
+ *          <p>Responsibility: To test the Achievements </br >
+ *          Uses: IAcvhievement and Statistis</br>
+ *          </p>
+ *
  */
 
 public class AchievementTest {
@@ -28,6 +33,9 @@ public class AchievementTest {
         statistics = new Statistics();
     }
 
+    /**
+     * Test the create task achievement
+     */
     @Test
     public void createAchievementTest(){
         achievements.add(AchievementFactory.getInstance().createNumberAchievements("Create", 1, NumberAchievement.TASK_CREATED));
@@ -37,6 +45,9 @@ public class AchievementTest {
         assertTrue(achievements.get(0).getIfCompleted());
     }
 
+    /**
+     * Test the check off task achievement
+     */
     @Test
     public void checkAchievementTest(){
         achievements.add(AchievementFactory.getInstance().createNumberAchievements("Check", 1, NumberAchievement.TASK_CHECKED));
@@ -46,6 +57,9 @@ public class AchievementTest {
         assertTrue(achievements.get(0).getIfCompleted());
     }
 
+    /**
+     * Test the times updated achievement
+     */
     @Test
     public void timesUpdatedAchievementTest(){
         achievements.add(AchievementFactory.getInstance().createNumberAchievements("TimesUpdated", 1, NumberAchievement.TIMES_UPDATED));
@@ -55,6 +69,9 @@ public class AchievementTest {
         assertTrue(achievements.get(0).getIfCompleted());
     }
 
+    /**
+     * Test the times app started achievement
+     */
     @Test
     public void timesAppStartedAchievementTest(){
         achievements.add(AchievementFactory.getInstance().createNumberAchievements("TimesAppStarted", 1, NumberAchievement.TIMES_APP_STARTED));
@@ -64,6 +81,9 @@ public class AchievementTest {
         assertTrue(achievements.get(0).getIfCompleted());
     }
 
+    /**
+     * Test the times navigationdrawer open achievement
+     */
     @Test
     public void timesNavOpenAchievementTest(){
         achievements.add(AchievementFactory.getInstance().createNumberAchievements("TimesNavOpen", 1, NumberAchievement.TIMES_NAV_OPEN));
@@ -73,6 +93,9 @@ public class AchievementTest {
         assertTrue(achievements.get(0).getIfCompleted());
     }
 
+    /**
+     * Test the times task deleted achievement
+     */
     @Test
     public void timesTaskDeletedAchievementTest(){
         achievements.add(AchievementFactory.getInstance().createNumberAchievements("TimesTaskDeleted", 1, NumberAchievement.TIMES_TASK_DELETED));
@@ -82,6 +105,9 @@ public class AchievementTest {
         assertTrue(achievements.get(0).getIfCompleted());
     }
 
+    /**
+     * Test the times category created achievement
+     */
     @Test
     public void timesCategoryCreatedAchievementTest(){
         achievements.add(AchievementFactory.getInstance().createNumberAchievements("TimesCategoryCreated", 1, NumberAchievement.TIMES_CATEGORY_CREATED));
@@ -91,6 +117,9 @@ public class AchievementTest {
         assertTrue(achievements.get(0).getIfCompleted());
     }
 
+    /**
+     * Test the times settings changed achievement
+     */
     @Test
     public void timesSettingsChangedAchievementTest(){
         achievements.add(AchievementFactory.getInstance().createNumberAchievements("TimesSettingsChanged", 1, NumberAchievement.TIMES_SETTINGS_CHANGED));
@@ -100,6 +129,9 @@ public class AchievementTest {
         assertTrue(achievements.get(0).getIfCompleted());
     }
 
+    /**
+     * Test the tasks alive achievement
+     */
     @Test
     public void tasksAliveAchievementTest(){
         achievements.add(AchievementFactory.getInstance().createNumberAchievements("TasksAlive", 1, NumberAchievement.TASKS_ALIVE));
@@ -109,6 +141,9 @@ public class AchievementTest {
         assertTrue(achievements.get(0).getIfCompleted());
     }
 
+    /**
+     * Test the days in a row achievement
+     */
     @Test
     public void daysInARowAchievementTest(){
         achievements.add(AchievementFactory.getInstance().createNumberAchievements("DaysInARow", 1, NumberAchievement.DAYS_IN_A_ROW));

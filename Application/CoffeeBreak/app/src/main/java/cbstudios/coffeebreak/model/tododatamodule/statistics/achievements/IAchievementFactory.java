@@ -1,12 +1,12 @@
 package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
 
 /**
- * Created by johan on 5/6/2017.
- */
-
-
-/**
- * Interface for the achievement factory class
+ * @author Johan
+ * @version 1.0
+ *          <p>Responsibility: Abstraction interface for achievementFactory</br >
+ *          Used by: Statistics
+ *          </p>
+ *
  */
 public interface IAchievementFactory {
 

@@ -1,11 +1,13 @@
 package cbstudios.coffeebreak.model.tododatamodule.statistics.achievements;
 
 /**
- * Created by johan on 5/6/2017.
- */
-
-/**
- * A factory class for achievements that will create all new achievements
+ * @author Johan
+ * @version 1.0
+ *          <p>Responsibility: Creation of all achievements </br >
+ *          Uses: NumberAchievement </br>
+ *          Used by: Statistics
+ *          </p>
+ *
  */
 public class AchievementFactory implements IAchievementFactory {
     private static final IAchievementFactory achievementsFactory = new AchievementFactory();
