@@ -7,7 +7,11 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.view.adapter.AchievementAdapter;
 
 /**
- * Created by johan on 5/25/2017.
+ * @author Johan
+ * @version 1.0
+ *          <p> Abstraction interface of the AchievementActivity </br >
+ *          Used by: AchievementActivity, AchievementPresenter, DelegatingPresenter, PresenterFactory
+ *          </p>
  */
 
 public interface IAchievementView extends IView {

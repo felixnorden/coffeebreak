@@ -178,8 +178,8 @@ class MainPresenter extends BasePresenter implements IPresenter {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCategoryDeleted(CategoryDeletedEvent event) {
-        model.getToDoDataModule().removeLabelCategoryFromTasks(event.position);
         if (event.which == DialogInterface.BUTTON_POSITIVE) {
+            model.getToDoDataModule().removeLabelCategoryFromTasks(event.position);
             List<ILabelCategory> categoryList = model.getToDoDataModule().getLabelCategories();
             categoryList.remove(event.position);
         }

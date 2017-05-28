@@ -34,7 +34,14 @@ import cbstudios.coffeebreak.view.adapter.LabelCategoryAdapter;
 import cbstudios.coffeebreak.view.adapter.MergeAdapter;
 import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
 
-
+/**
+ * @author Johan
+ * @version 1.0
+ *          <p>Responsibility: The representation of achievement </br >
+ *          Uses: ILabelCategory, ITimeCategory, LabelCategory, TimeCategory,
+ *          Used by: MainPresenter
+ *          </p>
+ */
 public class AchievementActivity extends AppCompatActivity implements IAchievementView {
 
     private RecyclerView achievementGrid;
@@ -74,7 +81,7 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
     public void setAchievementAdapter(AchievementAdapter adapter) {
         achievementGrid.setAdapter(adapter);
     }
-
+    
     public void setToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -86,6 +93,7 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
     }
 
     /**
+<<<<<<< HEAD
      * Refresh the items that the taskAdapter holds
      */
     private void refreshItems() {
