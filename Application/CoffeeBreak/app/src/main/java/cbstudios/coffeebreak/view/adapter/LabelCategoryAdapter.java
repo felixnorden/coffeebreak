@@ -30,7 +30,6 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
  *          Uses: {@link Context}, {@link ILabelCategory}</br>
  *          Used by: {@link MergeAdapter}
  *          </p>
- *
  */
 
 public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
@@ -39,15 +38,16 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
     private final List<ILabelCategory> labelCategories;
 
 
+    /**
+     * @param context    The context in which the adapter is used
+     * @param categories The list of categories to show.
+     */
     public LabelCategoryAdapter(Context context, List<ILabelCategory> categories) {
         super(context, R.layout.drawer_list_item_label, categories);
         this.context = context;
         this.labelCategories = categories;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public View getView(int position, View convertView, final ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -69,16 +69,14 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         //TextView categorySize = (TextView) rowItem.findViewById(R.id.textViewNumber);
 
 
-
         if (!labelCategory.getName().equalsIgnoreCase("")) {
             tvNameView.setText(labelCategory.getName());
             ivCategory.setColorFilter(Color.parseColor(labelCategory.getColor()), PorterDuff.Mode.MULTIPLY);
             switcher.showNext();
 
 
-
             // updateNumberOfTaskInCategory(labelCategory, categorySize);
-        }else{
+        } else {
             EventBus.getDefault().post(new ShowKeyboardEvent(true, etNameView));
             etNameView.requestFocus();
             etNameView.setOnKeyListener(new View.OnKeyListener() {

@@ -17,44 +17,38 @@ import cbstudios.coffeebreak.view.activity.ITaskEditView;
  *          </p>
  */
 
-public class PresenterFactory implements IPresenterFactory{
+public class PresenterFactory implements IPresenterFactory {
     private final static IPresenterFactory INSTANCE = new PresenterFactory();
 
     /**
-     *
      * @return singleton instance of the factory
      */
-    public static IPresenterFactory getInstance(){
+    public static IPresenterFactory getInstance() {
         return INSTANCE;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public MainPresenter createMainPresenter(IMainView mainView, Model model) {
         return new MainPresenter(mainView, model);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public TaskEditPresenter createTaskEditPresenter(IAdvancedTask task, Model model) {
         return new TaskEditPresenter(task, model);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public DelegatingPresenter initializeDelegatingPresenter(Context context) {
         return new DelegatingPresenter(context);
     }
 
-    public AchievementPresenter createAchievementPresenter(Model model){
+    public AchievementPresenter createAchievementPresenter(Model model) {
         return new AchievementPresenter(model);
     }
 
-    private PresenterFactory(){}
+    /**
+     * Hidden constructor because singleton.
+     */
+    private PresenterFactory() {
+    }
 }

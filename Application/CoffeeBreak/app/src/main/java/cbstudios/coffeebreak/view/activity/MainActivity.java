@@ -69,30 +69,29 @@ import cbstudios.coffeebreak.view.fragment.SortFragment;
  * @version 1.1
  *          <p>Responsibility: Handles the logic of showing the main view</br >
  *          Uses: {@link IPresenterFactory}, {@link ITaskAdapter}, {@link LabelCategoryAdapter}, {@link TimeCategoryAdapter},
- *         {@link MergeAdapter}, </br>
- *         Events:
+ *          {@link MergeAdapter}, </br>
+ *          Events:
  *          <ul>
- *              <li>{@link RequestTaskCreationEvent}</li>
- *              <li>{@link OnStartEvent}</li>
- *              <li>{@link OnResumeEvent}</li>
- *              <li>{@link OnPauseEvent}</li>
- *              <li>{@link OnStopEvent}</li>
- *              <li>{@link OnCreateEvent}</li>
- *              <li>{@link RequestTaskCreationEvent}</li>
- *              <li>{@link RequestPresenterEvent}</li>
- *              <li>{@link ShowKeyboardEvent}</li>
- *              <li>{@link TimesNavOpenEvent}</li>
- *              <li>{@link TimesAppStartedEvent}</li>
- *              <li>{@link SortListEvent}</li>
- *              <li>{@link UpdateContextReferenceEvent}</li>
+ *          <li>{@link RequestTaskCreationEvent}</li>
+ *          <li>{@link OnStartEvent}</li>
+ *          <li>{@link OnResumeEvent}</li>
+ *          <li>{@link OnPauseEvent}</li>
+ *          <li>{@link OnStopEvent}</li>
+ *          <li>{@link OnCreateEvent}</li>
+ *          <li>{@link RequestTaskCreationEvent}</li>
+ *          <li>{@link RequestPresenterEvent}</li>
+ *          <li>{@link ShowKeyboardEvent}</li>
+ *          <li>{@link TimesNavOpenEvent}</li>
+ *          <li>{@link TimesAppStartedEvent}</li>
+ *          <li>{@link SortListEvent}</li>
+ *          <li>{@link UpdateContextReferenceEvent}</li>
  *          </ul>
  *          Used by:
  *          {@link cbstudios.coffeebreak.controller.MainPresenter}
  *          </p>
- *
  */
-public class MainActivity extends AppCompatActivity  implements IMainView {
-    
+public class MainActivity extends AppCompatActivity implements IMainView {
+
     // Layout elements
     private ScrollView mDrawer;
     private DrawerLayout mDrawerLayout;
@@ -103,7 +102,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     private RecyclerView taskList;
     private SwipeRefreshLayout swipeRefreshLayout;
 
-    
 
     // Animations
     private Animation FabOpen;
@@ -112,10 +110,10 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     private Animation FabRAnticlockwise;
     private Animation TxtSlideIn;
     private Animation TxtSlideOut;
-    
+
     // Control for animations
     private boolean isFabOpen = false;
-    
+
     // Model data
     private final IPresenterFactory presenterFactory = PresenterFactory.getInstance();
     private List<ILabelCategory> labelCategories;
@@ -124,9 +122,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     private static boolean initialized = false;
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,11 +132,10 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         taskList.setLayoutManager(new LinearLayoutManager(this));
-        if(!initialized) {
+        if (!initialized) {
             presenterFactory.initializeDelegatingPresenter(this);
             initialized = true;
-        }
-        else{
+        } else {
             EventBus.getDefault().post(new UpdateContextReferenceEvent(this));
         }
         attachPresenter();
@@ -208,54 +203,42 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         });
     }*/
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
-    protected void onStart(){
+    protected void onStart() {
         super.onStart();
         EventBus.getDefault().post(new OnStartEvent(this));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
-    protected void onStop(){
+    protected void onStop() {
         EventBus.getDefault().post(new OnStopEvent(this));
         super.onStop();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
-    protected void onPause(){
+    protected void onPause() {
         EventBus.getDefault().post(new OnPauseEvent(this));
         super.onPause();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         EventBus.getDefault().post(new OnResumeEvent(this));
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
-    protected void onDestroy(){
+    protected void onDestroy() {
         EventBus.getDefault().post(new OnDestroyEvent(this));
         super.onDestroy();
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -264,9 +247,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         return true;
     }
 
-    /**
-     * {@inheritDoc}
-     */
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -275,11 +256,11 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        switch(id){
-            case(R.id.action_settings):
+        switch (id) {
+            case (R.id.action_settings):
                 refreshItems();
                 return true;
-            case(R.id.action_sort):
+            case (R.id.action_sort):
                 showSortingDialog();
                 return true;
             default:
@@ -291,11 +272,12 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     /**
      * Sorts the list of tasks to the requested order
-     * @param event
+     *
+     * @param event The posted event
      */
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void onSortingOrderChange(SortListEvent event){
-        switch (event.order){
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSortingOrderChange(SortListEvent event) {
+        switch (event.order) {
             case SortListEvent.ORDERING_ALPHABETICAL:
                 Toast.makeText(this, "Alphabetical order", Toast.LENGTH_SHORT).show();
                 break;
@@ -305,13 +287,15 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
             case SortListEvent.ORDERING_PRIORITY:
                 Toast.makeText(this, "Priority order", Toast.LENGTH_SHORT).show();
                 break;
-            default: return;
+            default:
+                return;
         }
     }
 
     /**
      * Sets the title of the toolbar
-     * @param title
+     *
+     * @param title CharSequence
      */
     @Override
     public void setTitle(CharSequence title) {
@@ -319,21 +303,19 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
-    public ICategory getCurrentCategory(){
+    public ICategory getCurrentCategory() {
         return currentCategory;
     }
 
-    public void updateNavDrawerList(){
+    public void updateNavDrawerList() {
         mDrawerList.invalidateViews();
     }
 
     /**
      * Assigns both timeCategories and labelCategories
+     *
      * @param labelCategories the models list of labelCategories
-     * @param timeCategories the models list of timeCategories
+     * @param timeCategories  the models list of timeCategories
      */
     @Override
     public void setCategories(List<ILabelCategory> labelCategories, List<ITimeCategory> timeCategories) {
@@ -386,7 +368,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
             }
         });
-        mAchievementTextView.setOnClickListener(new View.OnClickListener(){
+        mAchievementTextView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -412,16 +394,14 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setCurrentCategory(ICategory currentCategory){
+    public void setCurrentCategory(ICategory currentCategory) {
         this.currentCategory = currentCategory;
 
     }
 
     /**
      * Assigns the adapter of the taskList
+     *
      * @param adapter the adapter to be assigned
      */
     @Override
@@ -437,16 +417,16 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     /**
      * Handles showing/hiding the keyboard
+     *
      * @param event contains the view that has the focus and a boolean to
      *              determine whether to show or hide keyboard
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void displayKeyboard(ShowKeyboardEvent event){
+    public void displayKeyboard(ShowKeyboardEvent event) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if(event.showKeyboard){
+        if (event.showKeyboard) {
             imm.showSoftInput(event.view, InputMethodManager.SHOW_IMPLICIT);
-        }
-        else{
+        } else {
             imm.hideSoftInputFromWindow(event.view.getWindowToken(), 0);
         }
     }
@@ -459,6 +439,11 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         dialog.show(getSupportFragmentManager(), "sorting");
     }
 
+    /**
+     * Shows a category delete-confirm dialog.
+     *
+     * @param position THe position of the category in the list where 0 is top.
+     */
     private void showCategoryDeleteDialog(int position) {
         DeleteFragment dialog = new DeleteFragment();
         dialog.setPosition(position);
@@ -468,11 +453,14 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     /**
      * Request a new presenter to be attached
      */
-    private void attachPresenter(){
-            EventBus.getDefault().post(new RequestPresenterEvent(this));
+    private void attachPresenter() {
+        EventBus.getDefault().post(new RequestPresenterEvent(this));
     }
 
 
+    /**
+     * Toggles between open and closed state of the big red button in the down right corner.
+     */
     private void toggleFabState() {
         isFabOpen = !isFabOpen;
     }
@@ -550,7 +538,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     /**
      * Shows the keyboard and makes it focus on the RecyclerView holding the tasks
      */
-    private void displayKeyboard(){
+    private void displayKeyboard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(taskList, InputMethodManager.SHOW_IMPLICIT);
     }
@@ -558,7 +546,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     /**
      * Updates the tasks that the TaskAdapter
      */
-    private void updateAdapter(){
+    private void updateAdapter() {
         TaskAdapter taskAdapter = (TaskAdapter) taskList.getAdapter();
         taskAdapter.filterTasks(currentCategory);
     }
@@ -575,10 +563,12 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
 
     /**
      * Swaps fragments in the main content view
+     *
+     * @param position The position of the category selected in the nav drawer.
      */
     private void selectItem(int position) {
 
-        if(position == 0 || position == 6) {
+        if (position == 0 || position == 6) {
             return;
         }
         // Highlight the selected item, update the title, and close the drawer
@@ -606,7 +596,10 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);
     }
 
-    private void showAchievementActivity(){
+    /**
+     * Posts a ShowAchievementEvent to the EventBus.
+     */
+    private void showAchievementActivity() {
         EventBus.getDefault().post(new ShowAchievementEvent());
     }
 }

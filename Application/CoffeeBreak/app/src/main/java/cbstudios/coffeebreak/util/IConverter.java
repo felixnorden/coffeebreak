@@ -8,6 +8,7 @@ import com.google.gson.JsonObject;
  *          Responsibility: Abstracting interface for converters
  *          Uses:
  *          Used by: IListConverter, StatisticsConverter, DelegatingPresenter
+ * @param <T> The type of objects the converter converts.
  */
 
 public interface IConverter<T> {

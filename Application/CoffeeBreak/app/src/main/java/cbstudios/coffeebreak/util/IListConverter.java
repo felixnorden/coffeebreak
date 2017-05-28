@@ -11,6 +11,7 @@ import java.util.List;
  *          objects as well.
  *          Uses:
  *          Used by: DelegatingPresenter,
+ * @param <T> The type of object the converter converts.
  */
 
 public interface IListConverter<T> extends IConverter<T> {

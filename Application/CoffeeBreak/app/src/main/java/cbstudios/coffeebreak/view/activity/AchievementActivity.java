@@ -27,14 +27,10 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.view.NonScrollListView;
 import cbstudios.coffeebreak.view.adapter.AchievementAdapter;
-import cbstudios.coffeebreak.view.adapter.IAchievementAdapter;
 import cbstudios.coffeebreak.view.adapter.LabelCategoryAdapter;
 import cbstudios.coffeebreak.view.adapter.MergeAdapter;
 import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
 
-/**
- * Created by johan on 5/25/2017.
- */
 
 public class AchievementActivity extends AppCompatActivity implements IAchievementView {
 
@@ -74,8 +70,8 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
     }
 
     @Override
-    public void setAchievementAdapter(IAchievementAdapter adapter) {
-        achievementGrid.setAdapter((AchievementAdapter)adapter);
+    public void setAchievementAdapter(AchievementAdapter adapter) {
+        achievementGrid.setAdapter(adapter);
     }
 
     @Override
@@ -106,7 +102,6 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
         });
 
 
-
     }
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
@@ -127,7 +122,6 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
         mDrawerList.setItemChecked(position, true);
         ICategory category = (ICategory) mDrawerList.getAdapter().getItem(position);
         setTitle(category.getName());
-
 
 
         // Close drawer

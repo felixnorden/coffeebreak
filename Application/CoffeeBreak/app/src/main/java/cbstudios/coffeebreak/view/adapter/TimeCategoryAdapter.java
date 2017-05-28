@@ -29,14 +29,15 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
 
     private final Context context;
 
+    /**
+     * @param context    The context in which the adapter is used.
+     * @param categories The list of categories the adapter should display.
+     */
     public TimeCategoryAdapter(Context context, List<ITimeCategory> categories) {
         super(context, drawer_list_item_label, categories);
         this.context = context;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);
         View rowItem = inflater.inflate(drawer_list_item_time, parent, false);

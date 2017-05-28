@@ -38,15 +38,16 @@ class TaskEditPresenter extends BasePresenter implements IPresenter {
     private ITaskEditView view;
     private IAdvancedTask task;
 
+    /**
+     * @param task  The task to start editing of.
+     * @param model The model the task is contained in.
+     */
     TaskEditPresenter(IAdvancedTask task, Model model) {
         this.model = model;
         this.task = task;
         EventBus.getDefault().register(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void injectModel(Model model) {
         this.model = model;
@@ -62,9 +63,6 @@ class TaskEditPresenter extends BasePresenter implements IPresenter {
         updateModel();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCreate(OnCreateEvent event) {
         if (event.object instanceof ITaskEditView) {
@@ -73,30 +71,18 @@ class TaskEditPresenter extends BasePresenter implements IPresenter {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPause(OnPauseEvent event) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onResume(OnResumeEvent event) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDestroy(OnDestroyEvent event) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStop(OnStopEvent event) {
         if (event.object == view) {
@@ -104,9 +90,6 @@ class TaskEditPresenter extends BasePresenter implements IPresenter {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStart(OnStartEvent event) {
         if (event.object == view) {

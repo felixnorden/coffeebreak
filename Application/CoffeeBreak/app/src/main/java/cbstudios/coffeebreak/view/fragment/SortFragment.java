@@ -18,19 +18,15 @@ import cbstudios.coffeebreak.eventbus.SortListEvent;
  *          Uses: sorting_array</br>
  *          Used by: {@link cbstudios.coffeebreak.view.activity.MainActivity}
  *          </p>
- *
  */
 
 public class SortFragment extends DialogFragment {
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState){
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(R.string.sorting_order).setItems(R.array.sorting_array, new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int which){
+        builder.setTitle(R.string.sorting_order).setItems(R.array.sorting_array, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
                 EventBus.getDefault().post(new SortListEvent(which));
             }
         });

@@ -51,7 +51,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      *          Uses: {@link IAdvancedTask}</br>
      *          Extended by: {@link AdvancedTaskViewHolder} and {@link ListTaskViewHolder}
      *          </p>
-     *
      */
     public abstract static class TaskViewHolder extends RecyclerView.ViewHolder {
         public IAdvancedTask task;
@@ -63,6 +62,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public Drawable etBackgroundDrawable;
 
 
+        /**
+         * Represents a task in the list.
+         *
+         * @param itemView The view in which this item is shown.
+         */
         public TaskViewHolder(final View itemView) {
             super(itemView);
 
@@ -142,6 +146,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             }
         }
 
+        /**
+         *
+         */
         private void addOnCheckedChangedListener() {
             cbCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -150,8 +157,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     etTaskName.setEnabled(!isChecked);
                     if (isChecked) {
                         etTaskName.setPaintFlags(etTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    }
-                    else {
+                    } else {
                         etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                     }
                 }
@@ -190,6 +196,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     private Context mContext;
 
+    /**
+     * @param context The context in which this adapter is used
+     * @param tasks   The list of task to display
+     */
     public TaskAdapter(Context context, List<IAdvancedTask> tasks) {
         mContext = context;
         tmpTasks = tasks;
@@ -203,9 +213,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         return mContext;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public TaskAdapter.TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
@@ -227,15 +234,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getItemViewType(int position) {
         if (mTasks.get(position) instanceof IListTask) {
             return LIST_TASK;
-        }
-        else {
+        } else {
             return ADVANCED_TASK;
         }
     }
@@ -252,9 +255,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         filterTasks(category);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onBindViewHolder(TaskAdapter.TaskViewHolder viewHolder, final int position) {
         //IAdvancedTask task = mTasks.get(position);
@@ -264,25 +264,16 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         viewHolder.setUpTask();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getItemCount() {
         return mTasks.size();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public void filterTasks(ICategory currentCategory) {
         EventBus.getDefault().post(new RequestTaskListEvent(this));
         swapTasks(currentCategory.getValidTasks(tmpTasks));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void updateTmpTasks(List<IAdvancedTask> tasks) {
         this.tmpTasks = tasks;
@@ -369,9 +360,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         private final List<IAdvancedTask> mOldTaskList;
         private final List<IAdvancedTask> mNewTaskList;
 
-        public TaskDiffCallback(List<IAdvancedTask> oldEmployeeList, List<IAdvancedTask> newEmployeeList) {
-            this.mOldTaskList = oldEmployeeList;
-            this.mNewTaskList = newEmployeeList;
+        /**
+         * @param oldTaskList Current list of tasks
+         * @param newTaskList The new list of tasks to be shown.
+         */
+        public TaskDiffCallback(List<IAdvancedTask> oldTaskList, List<IAdvancedTask> newTaskList) {
+            this.mOldTaskList = oldTaskList;
+            this.mNewTaskList = newTaskList;
         }
 
         @Override

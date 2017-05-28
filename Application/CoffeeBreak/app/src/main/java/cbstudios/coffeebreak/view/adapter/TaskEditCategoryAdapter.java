@@ -33,6 +33,11 @@ public class TaskEditCategoryAdapter extends ArrayAdapter<ILabelCategory> {
     private Context context;
     private List<ILabelCategory> categories;
 
+    /**
+     * @param context    Context in which the adapter is used.
+     * @param resource   Dunno
+     * @param categories The list of categories to show.
+     */
     public TaskEditCategoryAdapter(Context context, int resource, List<ILabelCategory> categories) {
         super(context, resource, categories);
 
@@ -40,9 +45,6 @@ public class TaskEditCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         this.categories = categories;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         final ILabelCategory category = categories.get(position);
@@ -72,25 +74,16 @@ public class TaskEditCategoryAdapter extends ArrayAdapter<ILabelCategory> {
         return view;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int getCount() {
         return categories.size();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public ILabelCategory getItem(int position) {
         return categories.get(position);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public long getItemId(int position) {
         return 0;

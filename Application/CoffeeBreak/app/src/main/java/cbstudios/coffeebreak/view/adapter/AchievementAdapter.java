@@ -12,17 +12,23 @@ import android.widget.TextView;
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
-import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievement;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.NumberAchievement;
 
 /**
- * Created by johan on 5/25/2017.
+ * @author Johan
+ * @version 1.0
+ *          <p>Responsibility: Adapter to properly display data from achievements.</br >
+ *          Used by: AchievementActivity.
+ *          </p>
  */
-
-public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.AchievementViewHolder> implements IAchievementAdapter {
+public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.AchievementViewHolder> {
 
     private List<IAchievement> achievementList;
+
+    /**
+     * @param achievementList The list of achievement to show.
+     */
     public AchievementAdapter(List<IAchievement> achievementList) {
         this.achievementList = achievementList;
     }
@@ -52,6 +58,9 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         return achievementList.size();
     }
 
+    /**
+     *
+     */
     public static class AchievementViewHolder extends RecyclerView.ViewHolder {
 
         public IAchievement achievement;
@@ -62,6 +71,9 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         public TextView achievementNumber;
 
 
+        /**
+         * @param itemView The view in which the viewholder will be shown.
+         */
         public AchievementViewHolder(View itemView) {
             super(itemView);
             achievementBackground = (ImageView) itemView.findViewById(R.id.achievementBackground);
@@ -71,6 +83,9 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
             achievementNumber = (TextView) itemView.findViewById(R.id.achievementNumber);
         }
 
+        /**
+         * Setups the achievement.
+         */
         public void setUpAchievement() {
             switch (achievement.getType()) {
                 case (NumberAchievement.TASK_CREATED):
@@ -130,7 +145,10 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         }
 
 
-        public  void checkWhichDifficultyCompleted(){
+        /**
+         * Checks if achievement is completed and sets color accordingly
+         */
+        public void checkWhichDifficultyCompleted() {
             if (achievement.getNumberLimit() == 2 || achievement.getNumberLimit() == 1 || achievement.getNumberLimit() == 5) {
                 achievementBackground.setColorFilter(Color.rgb(205, 127, 50));
             } else if (achievement.getNumberLimit() == 3 || achievement.getNumberLimit() == 14 || achievement.getNumberLimit() == 25) {
@@ -143,7 +161,10 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         }
 
 
-        public void checkWhichDifficulty(){
+        /**
+         * Sets the color of the task according to what difficulty currently resides.
+         */
+        public void checkWhichDifficulty() {
             if (achievement.getNumberLimit() == 2 || achievement.getNumberLimit() == 1 || achievement.getNumberLimit() == 5) {
                 achievementBackground.setColorFilter(Color.rgb(80, 50, 20));
             } else if (achievement.getNumberLimit() == 3 || achievement.getNumberLimit() == 14 || achievement.getNumberLimit() == 25) {

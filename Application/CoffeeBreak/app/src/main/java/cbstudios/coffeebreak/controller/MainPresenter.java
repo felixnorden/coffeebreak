@@ -54,23 +54,28 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
  *          </br>
  *          Events:
  *          <ul>
- *              Activity Events
- *              <li>{@link RequestTaskCreationEvent}</li>
- *              <li>{@link RemoveTaskEvent}</li>
- *              <li>{@link RequestTaskListEvent}</li>
- *              <li>{@link EditTaskEvent}</li>
- *              <li>{@link }</li>
- *              <li>{@link SortListEvent}</li>
+ *          Activity Events
+ *          <li>{@link RequestTaskCreationEvent}</li>
+ *          <li>{@link RemoveTaskEvent}</li>
+ *          <li>{@link RequestTaskListEvent}</li>
+ *          <li>{@link EditTaskEvent}</li>
+ *          <li>{@link }</li>
+ *          <li>{@link SortListEvent}</li>
  *          </ul>
  *          Used by:
  *          </p>
- *
  */
 class MainPresenter extends BasePresenter implements IPresenter {
     private IMainView mainView;
     private ITaskAdapter taskAdapter;
 
 
+    /**
+     * Default constructor. Creates a presenter for the MainActivity.
+     *
+     * @param mainView The abstracting interface for the mainview.
+     * @param model    The model.
+     */
     MainPresenter(IMainView mainView, Model model) {
         this.model = model;
         this.mainView = mainView;
@@ -79,13 +84,10 @@ class MainPresenter extends BasePresenter implements IPresenter {
         EventBus.getDefault().register(this);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCreate(OnCreateEvent event) {
-        if(event.object instanceof IMainView) {
+        if (event.object instanceof IMainView) {
             mainView = (IMainView) event.object;
             mainView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
             mainView.setTaskAdapter(taskAdapter);
@@ -97,58 +99,43 @@ class MainPresenter extends BasePresenter implements IPresenter {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPause(OnPauseEvent event) {
-        if(event.object == mainView) {
+        if (event.object == mainView) {
             taskAdapter.refreshItems(mainView.getCurrentCategory());
 
             EventBus.getDefault().post(new SaveStateEvent());
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onResume(OnResumeEvent event) {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDestroy(OnDestroyEvent event) {
-        if(event.object == mainView) {
+        if (event.object == mainView) {
             EventBus.getDefault().unregister(this);
             collectDeadPresenter();
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStop(OnStopEvent event) {
-        if(event.object == mainView) {
+        if (event.object == mainView) {
             registerViewComponents(false);
 //            System.out.println("Unregister");
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStart(OnStartEvent event) {
-        if(event.object == mainView) {
+        if (event.object == mainView) {
             registerViewComponents(true);
 //            System.out.println("Register");
         }
@@ -156,13 +143,14 @@ class MainPresenter extends BasePresenter implements IPresenter {
 
     /**
      * Sorts the tasks in a specific order
+     *
      * @param event containing sorting order
      */
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void onSortingOrderChange(SortListEvent event){
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onSortingOrderChange(SortListEvent event) {
         TaskSorter sorter = TaskSorter.getInstance();
         List<IAdvancedTask> tasks = getTasks();
-        switch (event.order){
+        switch (event.order) {
             case SortListEvent.ORDERING_ALPHABETICAL:
                 sorter.sortAlphabetically(tasks);
                 model.getToDoDataModule().setTasks(tasks);
@@ -178,25 +166,32 @@ class MainPresenter extends BasePresenter implements IPresenter {
                 model.getToDoDataModule().setTasks(tasks);
                 taskAdapter.swapTasks(mainView.getCurrentCategory().getValidTasks(tasks));
                 break;
-            default: return;
+            default:
+                return;
         }
     }
 
     /**
      * Sorts the tasks in a specific order
+     *
      * @param event containing sorting order
      */
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void onCategoryDeleted(CategoryDeletedEvent event){
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onCategoryDeleted(CategoryDeletedEvent event) {
         model.getToDoDataModule().removeLabelCategoryFromTasks(event.position);
-        if(event.which == DialogInterface.BUTTON_POSITIVE){
-        List<ILabelCategory> categoryList = model.getToDoDataModule().getLabelCategories();
-        categoryList.remove(event.position);
+        if (event.which == DialogInterface.BUTTON_POSITIVE) {
+            List<ILabelCategory> categoryList = model.getToDoDataModule().getLabelCategories();
+            categoryList.remove(event.position);
         }
         mainView.updateNavDrawerList();
     }
 
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    /**
+     * Creates a TaskEditActivty with the cast contained in the event
+     *
+     * @param event The event posted.
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEditTaskEvent(EditTaskEvent event) {
         EventBus.getDefault().post(new RequestPresenterEvent(event.task));
         Intent intent = new Intent(mainView.getAppCompatActivity(), TaskEditActivity.class);
@@ -205,7 +200,8 @@ class MainPresenter extends BasePresenter implements IPresenter {
 
     /**
      * Injects the dependant model
-     * @param model
+     *
+     * @param model The model to inject.
      */
     @Override
     public void injectModel(Model model) {
@@ -215,66 +211,84 @@ class MainPresenter extends BasePresenter implements IPresenter {
     /**
      * Creates either an AdvancedTask or a ListTask
      * depending on the requested type
+     *
      * @param event holding the type-id for the task to be created
      */
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void onTaskCreationRequest(RequestTaskCreationEvent event){
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTaskCreationRequest(RequestTaskCreationEvent event) {
         EventBus.getDefault().post(new CreateTaskEvent());
-        switch(event.type){
-            case ADVANCED_TASK: createAdvancedTask();
+        switch (event.type) {
+            case ADVANCED_TASK:
+                createAdvancedTask();
                 break;
-            case LIST_TASK: createListTask();
+            case LIST_TASK:
+                createListTask();
                 break;
-            default: break;
+            default:
+                break;
         }
     }
 
+    /**
+     * Creates a AdvancedTask in the model.
+     */
     public void createAdvancedTask() {
         model.getToDoDataModule().createAdvancedTask();
     }
 
-
+    /**
+     * Creates a ListTask in the model.
+     */
     public void createListTask() {
         model.getToDoDataModule().createListTask();
     }
 
+    /**
+     * Create a task in a ListTask in the model.
+     *
+     * @param listTask The ListTask to be injected with the new task.
+     */
     public void createTask(IListTask listTask) {
         model.getToDoDataModule().createTask(listTask);
     }
 
     /**
      * Removes the requested task from the list
+     *
      * @param event contains the task to remove
      */
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void removeTask(RemoveTaskEvent event) {
         model.getToDoDataModule().removeTask(event.task);
-        if(event.checked){
+        if (event.checked) {
             EventBus.getDefault().post(new CheckTaskEvent());
         }
     }
 
     /**
      * Updates the temporary list of tasks in the {@link TaskAdapter}
-     * @param event
+     *
+     * @param event The event posted
      */
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void onTaskListRequest(RequestTaskListEvent event){
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onTaskListRequest(RequestTaskListEvent event) {
         event.adapter.updateTmpTasks(getTasks());
     }
 
     /**
      * Requests a new LabelCategory to be created with the containing string.
+     *
      * @param event holding the name of the {@link cbstudios.coffeebreak.model.tododatamodule.categorylist.LabelCategory}
      */
     @Subscribe
-    public void onCreateCategoryEvent(CreateCategoryEvent event){
+    public void onCreateCategoryEvent(CreateCategoryEvent event) {
         model.getToDoDataModule().addLabelCategory();
         EventBus.getDefault().post(new TimesCategoryCreatedEvent());
     }
 
     /**
      * Notifies model's statistics of an update request
+     *
      * @param event the type of update to be made
      */
     @Subscribe
@@ -284,15 +298,17 @@ class MainPresenter extends BasePresenter implements IPresenter {
 
     /**
      * Notifies model's statistics of an update request
+     *
      * @param event the type of update to be made
      */
     @Subscribe
-    public void onCheckTaskEvent(CheckTaskEvent event){
+    public void onCheckTaskEvent(CheckTaskEvent event) {
         model.getToDoDataModule().getStats().onCheckTaskEvent();
     }
 
     /**
      * Notifies model's statistics of an update request
+     *
      * @param event the type of update to be made
      */
     @Subscribe
@@ -302,6 +318,7 @@ class MainPresenter extends BasePresenter implements IPresenter {
 
     /**
      * Notifies model's statistics of an update request
+     *
      * @param event the type of update to be made
      */
     @Subscribe
@@ -311,6 +328,7 @@ class MainPresenter extends BasePresenter implements IPresenter {
 
     /**
      * Notifies model's statistics of an update request
+     *
      * @param event the type of update to be made
      */
     @Subscribe
@@ -320,6 +338,7 @@ class MainPresenter extends BasePresenter implements IPresenter {
 
     /**
      * Notifies model's statistics of an update request
+     *
      * @param event the type of update to be made
      */
     @Subscribe
@@ -329,54 +348,76 @@ class MainPresenter extends BasePresenter implements IPresenter {
 
     /**
      * Notifies model's statistics of an update request
+     *
      * @param event the type of update to be made
      */
     @Subscribe
-    public void onTimesTaskDeletedEvent(TimesTaskDeletedEvent event){
+    public void onTimesTaskDeletedEvent(TimesTaskDeletedEvent event) {
         model.getToDoDataModule().getStats().onTimesTaskDeletedEvent();
     }
 
     /**
      * Notifies model's statistics of an update request
+     *
      * @param event the type of update to be made
      */
     @Subscribe
-    public void onTimesUpdatedEvent(TimesUpdatedEvent event){
+    public void onTimesUpdatedEvent(TimesUpdatedEvent event) {
         model.getToDoDataModule().getStats().onTimesUpdatedEvent();
     }
 
-    public Model getModel(){
+    /**
+     * @return The model of this presenter
+     */
+    public Model getModel() {
         return model;
     }
 
-    private void registerViewComponents(boolean value){
-        if(value) {
+    /**
+     * Registers/unregisters components to the EventBus.
+     *
+     * @param value True to register, false to unregister.
+     */
+    private void registerViewComponents(boolean value) {
+        if (value) {
             EventBus.getDefault().register(mainView);
             EventBus.getDefault().register(taskAdapter);
-        }
-        else{
+        } else {
             EventBus.getDefault().unregister(mainView);
             EventBus.getDefault().unregister(taskAdapter);
         }
     }
 
+    /**
+     * Removes the IMainView from this presenter.
+     */
     private void detachView() {
         this.mainView = null;
     }
 
 
-    // Frees up presenter of its view and requests to be garbage collected
+    /**
+     * Frees up presenter of its view and requests to be garbage collected
+     */
     private void collectDeadPresenter() {
         detachView();
         EventBus.getDefault().post(new RemovePresenterEvent(this));
     }
 
+    /**
+     * @return The list of tasks in the model.
+     */
     private List<IAdvancedTask> getTasks() {
         return model.getToDoDataModule().getTasks();
     }
-    
-    @Subscribe (threadMode = ThreadMode.MAIN)
-    public void showAchievementActivity(ShowAchievementEvent event){
+
+    /**
+     * Starts a AchievementActivity to show the user achievements.
+     *
+     * @param event The event posted.
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void showAchievementActivity(ShowAchievementEvent event) {
         Intent intent = new Intent(mainView.getAppCompatActivity(), AchievementActivity.class);
         mainView.getAppCompatActivity().startActivity(intent);
     }

@@ -46,6 +46,7 @@ public class StorageUtil {
             output.write(gson.toJson(element).getBytes());
             output.close();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

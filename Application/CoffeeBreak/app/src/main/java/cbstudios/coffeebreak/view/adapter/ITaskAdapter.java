@@ -20,6 +20,7 @@ public interface ITaskAdapter {
     /**
      * Filter the list of tasks to the specific {@link ICategory}
      * and updates the view
+     *
      * @param category the specific category
      */
     void filterTasks(ICategory category);
@@ -27,19 +28,22 @@ public interface ITaskAdapter {
     /**
      * Update the list of temporary tasks in the adapter for
      * efficient update of {@link android.support.v7.widget.RecyclerView}
+     *
      * @param tasks the current list of tasks in {@link cbstudios.coffeebreak.model.Model}
      */
     void updateTmpTasks(List<IAdvancedTask> tasks);
 
     /**
      * Update the list of tasks for removing checked off tasks
+     *
      * @param currentCategory the category for displaying the correct items
      */
     void refreshItems(ICategory currentCategory);
 
     /**
-     * Update the list of tasks by analyzing and removing the unvalid views of the adapater
-     * @param tasks
+     * Update the list of tasks by analyzing and removing the invalid views of the adapter
+     *
+     * @param tasks The list of tasks to be checked.
      */
     void swapTasks(List<IAdvancedTask> tasks);
 }

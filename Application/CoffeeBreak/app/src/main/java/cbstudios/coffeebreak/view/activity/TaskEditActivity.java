@@ -85,9 +85,6 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     private ImageView noteIcon;
     private AppCompatEditText noteText;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,36 +120,24 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         EventBus.getDefault().post(new OnCreateEvent(this));
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void onPause() {
         EventBus.getDefault().post(new OnPauseEvent(this));
         super.onPause();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void onDestroy() {
         EventBus.getDefault().post(new OnDestroyEvent(this));
         super.onDestroy();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     protected void onStop() {
         EventBus.getDefault().post(new OnStopEvent(this));
         super.onStop();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void onResume() {
         super.onResume();
@@ -340,34 +325,22 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         });
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public AppCompatActivity getAppCompatActivity() {
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getNameText() {
         return nameText.getText().toString();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setNameText(String text) {
         nameText.setText(text);
         backupName = text;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setNotification(Calendar cal) {
         this.cal = cal;
@@ -388,25 +361,16 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Calendar getNotification() {
         return this.cal;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setTitle(String title) {
         getSupportActionBar().setTitle(title);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getNewLabelText() {
         String text = categoriesAddText.getText().toString();
@@ -415,26 +379,17 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         return text;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void notifyCategoriesChanged() {
         adapter.notifyDataSetChanged();
         updateCategoriesListHeight();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getPriority() {
         return priorityText.getText().toString();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setPriority(String priority, int color) {
         priorityText.setText(priority);
@@ -447,17 +402,11 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getNote() {
         return noteText.getText().toString();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setNote(String note) {
         noteText.setText(note);
@@ -469,9 +418,6 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setCategoriesAdapter(TaskEditCategoryAdapter adapter) {
         this.adapter = adapter;
@@ -486,9 +432,6 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setAutoCompleteAdapter(ArrayAdapter<String> adapter) {
         categoriesAddText.setAdapter(adapter);
@@ -558,10 +501,20 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         private Calendar cal;
         private DialogInterface.OnCancelListener cancelListener;
 
+        /**
+         * Sets the calendar of the timepicker.
+         *
+         * @param cal The calendar.
+         */
         public void setCalendar(Calendar cal) {
             this.cal = cal;
         }
 
+        /**
+         * Sets a listener for if/when the fragment is cancelled.
+         *
+         * @param cancelListener The listener.
+         */
         public void setCancelListener(DialogInterface.OnCancelListener cancelListener) {
             this.cancelListener = cancelListener;
         }
@@ -619,10 +572,20 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
 
         private DialogInterface.OnCancelListener cancelListener;
 
+        /**
+         * Sets the calendar of the timepicker.
+         *
+         * @param cal The calendar.
+         */
         public void setCalendar(Calendar cal) {
             this.cal = cal;
         }
 
+        /**
+         * Sets a listener for if/when the fragment is cancelled.
+         *
+         * @param cancelListener The listener.
+         */
         public void setCancelListener(DialogInterface.OnCancelListener cancelListener) {
             this.cancelListener = cancelListener;
         }

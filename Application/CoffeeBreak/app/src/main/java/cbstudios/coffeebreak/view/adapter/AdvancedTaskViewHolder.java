@@ -16,21 +16,20 @@ import cbstudios.coffeebreak.R;
  *          graphical representation in {@link TaskAdapter}</br >
  *          Used by: {@link TaskAdapter}
  *          </p>
- *
  */
 
 class AdvancedTaskViewHolder extends TaskAdapter.TaskViewHolder {
     public TextView tvSubTask;
 
+    /**
+     * @param itemView The view in which the task is to be shown in.
+     */
     public AdvancedTaskViewHolder(View itemView) {
         super(itemView);
 
         tvSubTask = (TextView) itemView.findViewById(R.id.subTextView);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     void setSpecificFields() {
         String information;

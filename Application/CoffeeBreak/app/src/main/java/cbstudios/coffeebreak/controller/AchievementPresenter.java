@@ -13,24 +13,33 @@ import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.view.activity.IAchievementView;
 import cbstudios.coffeebreak.view.adapter.AchievementAdapter;
-import cbstudios.coffeebreak.view.adapter.IAchievementAdapter;
 
 /**
- * Created by johan on 5/25/2017.
+ * @author Johan
+ * @version 2.0
+ *          <p>Responsibility: Handling all communication between the AchievementActivity and
+ *          and the {@link Model}.
+ *          Uses: Model, Events, IAchievementView, AchievementAdapter, IAchievementAdapter.
+ *          Used by: BasePresenter, IPresenterFactory, PresenterFactory.
  */
 
 public class AchievementPresenter implements IPresenter {
     private IAchievementView achievementView;
     private Model model;
-    private IAchievementAdapter achievementAdapter;
+    private AchievementAdapter achievementAdapter;
 
-    public AchievementPresenter(Model model){
+    /**
+     * Default constructor which needs a model to communicate with.
+     *
+     * @param model The model to communicate with.
+     */
+    public AchievementPresenter(Model model) {
         this.model = model;
         EventBus.getDefault().register(this);
 
     }
 
-    @Subscribe (threadMode = ThreadMode.MAIN)
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onCreate(OnCreateEvent event) {
         if (event.object instanceof IAchievementView) {
             achievementView = (IAchievementView) event.object;

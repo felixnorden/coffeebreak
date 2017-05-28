@@ -1,14 +1,5 @@
 package cbstudios.coffeebreak.view.activity;
 
-/**
- * @author Felix, Elias
- * @version 1.0
- * <p>Responsibility: Abstracting interface for {@link cbstudios.coffeebreak.controller.MainPresenter}
- * when it interacts with its {@link cbstudios.coffeebreak.view.activity.MainActivity}</br >
- * Used by: {@link cbstudios.coffeebreak.controller.MainPresenter} </br>
- * Implemented by: {@link cbstudios.coffeebreak.view.activity.MainActivity}
- * </p>
- */
 
 import java.util.List;
 
@@ -17,6 +8,15 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
 import cbstudios.coffeebreak.view.adapter.ITaskAdapter;
 
+/**
+ * @author Felix, Elias
+ * @version 1.0
+ *          <p>Responsibility: Abstracting interface for {@link cbstudios.coffeebreak.controller.MainPresenter}
+ *          when it interacts with its {@link cbstudios.coffeebreak.view.activity.MainActivity}</br >
+ *          Used by: {@link cbstudios.coffeebreak.controller.MainPresenter} </br>
+ *          Implemented by: {@link cbstudios.coffeebreak.view.activity.MainActivity}
+ *          </p>
+ */
 public interface IMainView extends IView {
 
     /**

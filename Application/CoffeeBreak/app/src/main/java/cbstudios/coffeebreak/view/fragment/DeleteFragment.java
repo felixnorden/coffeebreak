@@ -20,35 +20,37 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
  *          Used by: {@link android.support.v7.widget.RecyclerView.ViewHolder and {@link android.widget.ListView}}
  *          when binding onLongClick
  *          </p>
- *
  */
 
 public class DeleteFragment extends DialogFragment {
 
     int position;
-    public void setPosition(int position){
+
+    /**
+     * Set the position of the category which to delete.
+     *
+     * @param position Position of the category in the list. 0 is top category.
+     */
+    public void setPosition(int position) {
         this.position = position;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(R.string.delete_category)
-        .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                EventBus.getDefault().post(new CategoryDeletedEvent(which, position));
-            }
-        })
-        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                EventBus.getDefault().post(new CategoryDeletedEvent(which, position));
-            }
-        });
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EventBus.getDefault().post(new CategoryDeletedEvent(which, position));
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EventBus.getDefault().post(new CategoryDeletedEvent(which, position));
+                    }
+                });
         return builder.create();
     }
 }

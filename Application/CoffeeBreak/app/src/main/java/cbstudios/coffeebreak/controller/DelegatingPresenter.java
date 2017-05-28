@@ -1,7 +1,6 @@
 package cbstudios.coffeebreak.controller;
 
 import android.content.Context;
-import android.content.Intent;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -15,7 +14,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cbstudios.coffeebreak.eventbus.EditTaskEvent;
 import cbstudios.coffeebreak.eventbus.RemovePresenterEvent;
 import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
 import cbstudios.coffeebreak.eventbus.SaveStateEvent;
@@ -33,9 +31,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.util.StorageUtil;
 import cbstudios.coffeebreak.view.activity.IAchievementView;
 import cbstudios.coffeebreak.view.activity.IMainView;
-import cbstudios.coffeebreak.view.activity.ITaskEditView;
 import cbstudios.coffeebreak.view.activity.MainActivity;
-import cbstudios.coffeebreak.view.activity.TaskEditActivity;
 
 /**
  * @author Felix
@@ -64,6 +60,11 @@ class DelegatingPresenter {
     private IListConverter<IAdvancedTask> taskConverter = TaskConverter.getInstance();
     private IListConverter<ILabelCategory> categoryConverter = CategoryConverter.getInstance();
 
+    /**
+     * Default constructor
+     *
+     * @param mContext The context of the main activity.
+     */
     DelegatingPresenter(Context mContext) {
         this.model = new Model();
         presenters = new ArrayList<>();
@@ -102,7 +103,7 @@ class DelegatingPresenter {
     /**
      * Stores the data when request is being made from a view.
      *
-     * @param event
+     * @param event The event sent
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void saveState(SaveStateEvent event) {
@@ -126,13 +127,16 @@ class DelegatingPresenter {
 
         } else if (event.data instanceof IAdvancedTask) {
             presenter = factory.createTaskEditPresenter((IAdvancedTask) event.data, model);
-        }else if(event.data instanceof IAchievementView){
+        } else if (event.data instanceof IAchievementView) {
             presenter = factory.createAchievementPresenter(model);
         }
         presenters.add(presenter);
     }
 
 
+    /**
+     * Loads achievements from previously saved data.
+     */
     private void loadAchievements() {
         JsonElement element = null;
         try {
@@ -147,29 +151,38 @@ class DelegatingPresenter {
         }
         JsonArray array = element.getAsJsonArray();
 
-        List<IAchievement> achievements = AchievementConverter.getInstance().toAchievementList(array);
+        List<IAchievement> achievements = AchievementConverter.getInstance().toObject(array);
         model.getToDoDataModule().getStats().setAchievementList(achievements);
     }
 
+    /**
+     * Saves achievements.
+     */
     private void saveAchievements() {
-        JsonArray array = AchievementConverter.getInstance().toJsonArray(model.getToDoDataModule().getStats().getAchievementList());
+        JsonArray array = AchievementConverter.getInstance().toJson(model.getToDoDataModule().getStats().getAchievementList());
         StorageUtil.save(mContext.getApplicationContext(), "Achievement", array);
     }
 
+    /**
+     * Saves statistics.
+     */
     private void saveStatistics() {
         JsonObject object = StatisticsConverter.getInstance().toJson(model.getToDoDataModule().getStats());
         StorageUtil.save(mContext.getApplicationContext(), "Statistics", object);
     }
 
+    /**
+     * Loads statistics from previously saved data.
+     */
     private void loadStatistics() {
         JsonElement element = null;
         try {
             element = StorageUtil.load(mContext.getApplicationContext(), "Statistics");
         } catch (IllegalStateException e) {
-            // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
+            // TODO: 2017-05-11 Maybe notify user of corrupt data?
             StorageUtil.resetData(mContext.getApplicationContext(), "Statistics");
 
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException ignored) {
         }
 
         if (element == null || !element.isJsonObject()) {
@@ -182,6 +195,9 @@ class DelegatingPresenter {
         model.getToDoDataModule().setStatistic(statistics);
     }
 
+    /**
+     * Loads statistics from previously saved data.
+     */
     private void loadTasks() {
         JsonElement element;
 
@@ -200,20 +216,29 @@ class DelegatingPresenter {
             }
         } catch (IllegalStateException e) {
             StorageUtil.resetData(mContext.getApplicationContext(), "Tasks");
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException ignored) {
         }
     }
 
+    /**
+     * Saves tasks.
+     */
     private void saveTasks() {
         JsonArray array = taskConverter.toJson(model.getToDoDataModule().getTasks());
         StorageUtil.save(mContext.getApplicationContext(), "Tasks", array);
     }
 
+    /**
+     * Saves categories.
+     */
     private void saveCategories() {
         JsonArray array = categoryConverter.toJson(model.getToDoDataModule().getLabelCategories());
         StorageUtil.save(mContext.getApplicationContext(), "Categories", array);
     }
 
+    /**
+     * Loads categories.
+     */
     private void loadCategories() {
         JsonElement element;
 
@@ -231,7 +256,7 @@ class DelegatingPresenter {
             }
         } catch (IllegalStateException e) {
             StorageUtil.resetData(mContext.getApplicationContext(), "Categories");
-        } catch (FileNotFoundException e) {
+        } catch (FileNotFoundException ignored) {
         }
     }
 }

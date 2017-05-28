@@ -4,7 +4,7 @@ import java.util.List;
 
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ITimeCategory;
-import cbstudios.coffeebreak.view.adapter.IAchievementAdapter;
+import cbstudios.coffeebreak.view.adapter.AchievementAdapter;
 
 /**
  * Created by johan on 5/25/2017.
@@ -13,7 +13,7 @@ import cbstudios.coffeebreak.view.adapter.IAchievementAdapter;
 public interface IAchievementView extends IView {
     void setCategories(List<ILabelCategory> labelCategories, List<ITimeCategory> timeCategories);
 
-    void setAchievementAdapter(IAchievementAdapter adapter);
+    void setAchievementAdapter(AchievementAdapter adapter);
 
     void setNavDrawer();
 

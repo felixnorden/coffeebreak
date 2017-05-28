@@ -28,9 +28,6 @@ class ListTaskViewHolder extends TaskAdapter.TaskViewHolder {
 
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     void setSpecificFields() {
 

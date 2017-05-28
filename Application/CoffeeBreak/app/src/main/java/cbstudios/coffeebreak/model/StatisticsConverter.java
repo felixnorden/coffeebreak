@@ -7,10 +7,14 @@ import java.util.Calendar;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.Statistics;
 import cbstudios.coffeebreak.util.IConverter;
 
-/**
- * Created by johan on 5/9/2017.
- */
 
+/**
+ * @author Johan
+ * @version 1.0
+ *          Responsibility: Handles converting between statistics and JSON data.
+ *          Uses: Statistics
+ *          Used by: DelegatingPresenter.
+ */
 public class StatisticsConverter implements IConverter<Statistics> {
 
     private final static StatisticsConverter INSTANCE = new StatisticsConverter();
@@ -28,10 +32,16 @@ public class StatisticsConverter implements IConverter<Statistics> {
     private static final String DAYS_IN_A_ROW = "DaysInARow";
     private static final String LAST_DAY_CHECKED_TASK = "LastDayCheckedTask";
 
+    /**
+     * @return The singleton instance of the class
+     */
     public static StatisticsConverter getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Hidden constructor because singleton.
+     */
     private StatisticsConverter() {
 
     }
@@ -46,6 +56,12 @@ public class StatisticsConverter implements IConverter<Statistics> {
         return jsonObjectToStatistics(object);
     }
 
+    /**
+     * Converts a Statistics object into a JsonObject.
+     *
+     * @param statistics The statistics object to be converted
+     * @return The created JsonObject.
+     */
     private JsonObject statisticsToJsonObject(Statistics statistics) {
         JsonObject statisticsObject = new JsonObject();
 
@@ -64,6 +80,12 @@ public class StatisticsConverter implements IConverter<Statistics> {
         return statisticsObject;
     }
 
+    /**
+     * Converts a JsonObject into a Statistics object.
+     *
+     * @param object The JsonObject to be converted
+     * @return The create Statistics object.
+     */
     private Statistics jsonObjectToStatistics(JsonObject object) {
         Statistics statistics = new Statistics();
 

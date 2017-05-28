@@ -19,13 +19,15 @@ import java.util.List;
  *          Uses: {@link ListAdapter}</br>
  *          Used by: {@link cbstudios.coffeebreak.view.activity.MainActivity}
  *          </p>
- *
  */
 
 public class MergeAdapter extends BaseAdapter implements SectionIndexer {
     protected List<ListAdapter> pieces = new ArrayList<>();
     protected String noItemsText;
 
+    /**
+     * Default constructor.
+     */
     public MergeAdapter() {
         super();
     }
@@ -34,8 +36,7 @@ public class MergeAdapter extends BaseAdapter implements SectionIndexer {
      * Adds a new adapter to the roster of things to appear in the aggregate
      * list.
      *
-     * @param adapter
-     *            Source for row views for this section
+     * @param adapter Source for row views for this section
      */
     public void addAdapter(ListAdapter adapter) {
         pieces.add(adapter);
@@ -45,8 +46,7 @@ public class MergeAdapter extends BaseAdapter implements SectionIndexer {
     /**
      * Get the data item associated with the specified position in the data set.
      *
-     * @param position
-     *            Position of the item whose data we want
+     * @param position Position of the item whose data we want
      */
     public Object getItem(int position) {
         for (ListAdapter piece : pieces) {
@@ -65,8 +65,8 @@ public class MergeAdapter extends BaseAdapter implements SectionIndexer {
     /**
      * Get the adapter associated with the specified position in the data set.
      *
-     * @param position
-     *            Position of the item whose adapter we want
+     * @param position Position of the item whose adapter we want
+     * @return The adapter of the item in the position.
      */
     public ListAdapter getAdapter(int position) {
         for (ListAdapter piece : pieces) {
@@ -92,7 +92,7 @@ public class MergeAdapter extends BaseAdapter implements SectionIndexer {
             total += piece.getCount();
         }
 
-        if(total == 0 && noItemsText != null){
+        if (total == 0 && noItemsText != null) {
             total = 1;
         }
 
@@ -118,8 +118,7 @@ public class MergeAdapter extends BaseAdapter implements SectionIndexer {
      * Get the type of View that will be created by getView() for the specified
      * item.
      *
-     * @param position
-     *            Position of the item whose data we want
+     * @param position Position of the item whose data we want
      */
     @Override
     public int getItemViewType(int position) {
@@ -153,8 +152,7 @@ public class MergeAdapter extends BaseAdapter implements SectionIndexer {
     /**
      * Returns true if the item at the specified position is not a separator.
      *
-     * @param position
-     *            Position of the item whose data we want
+     * @param position Position of the item whose data we want
      */
     @Override
     public boolean isEnabled(int position) {
@@ -184,7 +182,7 @@ public class MergeAdapter extends BaseAdapter implements SectionIndexer {
             position -= size;
         }
 
-        if(noItemsText != null){
+        if (noItemsText != null) {
             TextView text = new TextView(parent.getContext());
             text.setText(noItemsText);
             return text;
@@ -196,8 +194,7 @@ public class MergeAdapter extends BaseAdapter implements SectionIndexer {
     /**
      * Get the row id associated with the specified position in the list.
      *
-     * @param position
-     *            Position of the item whose data we want
+     * @param position Position of the item whose data we want
      */
     public long getItemId(int position) {
         for (ListAdapter piece : pieces) {
@@ -290,6 +287,10 @@ public class MergeAdapter extends BaseAdapter implements SectionIndexer {
         return (sections.toArray(new Object[0]));
     }
 
+    /**
+     * Elias skrev denna, vid fråga av vad den gör gavs svaret: "Jag vet inte, men det funka inte
+     * utan den".
+     */
     private class CascadeDataSetObserver extends DataSetObserver {
         @Override
         public void onChanged() {

@@ -8,12 +8,17 @@ import java.util.List;
 
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievement;
 import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.NumberAchievement;
+import cbstudios.coffeebreak.util.IListConverter;
 
 /**
- * Created by johan on 5/8/2017.
+ * @author Johan
+ * @version 1.0
+ *          Responsibility: Handles converting between Achievements and JSON data.
+ *          Uses: IAchievement, NumberAchievement
+ *          Used by: DelegatingPresenter.
  */
 
-public class AchievementConverter {
+public class AchievementConverter implements IListConverter<IAchievement> {
 
     private final static AchievementConverter INSTANCE = new AchievementConverter();
 
@@ -24,15 +29,21 @@ public class AchievementConverter {
     private static final String TYPE = "Type";
 
 
+    /**
+     * @return Returns the only instance of this class
+     */
     public static AchievementConverter getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Hidden constructor because of singleton
+     */
     private AchievementConverter() {
-
     }
 
-    public JsonArray toJsonArray(List<IAchievement> achievements) {
+    @Override
+    public JsonArray toJson(List<IAchievement> achievements) {
         JsonArray array = new JsonArray();
 
         for (IAchievement achievement : achievements) {
@@ -43,7 +54,8 @@ public class AchievementConverter {
         return array;
     }
 
-    public JsonObject toJsonObject(IAchievement achievement) {
+    @Override
+    public JsonObject toJson(IAchievement achievement) {
         if (achievement instanceof NumberAchievement) {
             return numberAchievementToJsonObject(achievement);
         } else {
@@ -51,7 +63,13 @@ public class AchievementConverter {
         }
     }
 
-    public List<IAchievement> toAchievementList(JsonArray array) {
+    @Override
+    public IAchievement toObject(JsonObject object) {
+        return jsonObjectToNumberAchievement(object);
+    }
+
+    @Override
+    public List<IAchievement> toObject(JsonArray array) {
         List<IAchievement> list = new ArrayList<>();
         for (int i = 0; i < array.size(); i++) {
             JsonObject object = array.get(i).getAsJsonObject();
@@ -61,6 +79,12 @@ public class AchievementConverter {
         return list;
     }
 
+    /**
+     * Converts a IAchievement into a JsonObject
+     *
+     * @param achievement The achiv to be converted.
+     * @return The new JsonObject.
+     */
     private JsonObject numberAchievementToJsonObject(IAchievement achievement) {
         JsonObject achievementObject = new JsonObject();
 
@@ -72,6 +96,12 @@ public class AchievementConverter {
         return achievementObject;
     }
 
+    /**
+     * Converts a JsonObject into a IAchievement
+     *
+     * @param object The JsonObject to be converted.
+     * @return The new IAchievement.
+     */
     private IAchievement jsonObjectToNumberAchievement(JsonObject object) {
         IAchievement numberAchievement = new NumberAchievement();
 
