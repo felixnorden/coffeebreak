@@ -48,41 +48,26 @@ class AdvancedTask implements IAdvancedTask {
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getName() {
         return task.getName();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setName(String name) {
         task.setName(name);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ILabelCategory> getLabels() {
         return labels;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void addLabel(ILabelCategory label) {
         labels.add(label);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void removeLabel(ILabelCategory label) {
         if (labels.contains(label)) {
@@ -90,110 +75,71 @@ class AdvancedTask implements IAdvancedTask {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Calendar getNotification() {
         return date;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void getNotification(Calendar date) {
         this.date = date;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean hasNote() {
         return note != null;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getNote() {
         return note;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setNote(String note) {
         this.note = note;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Priority getPriority() {
         return priority;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isChecked() {
         return task.isChecked();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void toggleChecked() {
         task.setChecked(!task.isChecked());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setChecked(boolean value) {
         task.setChecked(value);
     }
 
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Calendar getCreationCalendar() {
         return task.getCreationCalendar();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setCreationCalendar(Calendar calendar) {
         task.setCreationCalendar(calendar);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean hasILabelCategory(String name) {
         for (ILabelCategory label : labels) {
-            if (label.getName().equals(name)){
+            if (label.getName().equals(name)) {
                 return true;
             }
         }
@@ -209,14 +155,22 @@ class AdvancedTask implements IAdvancedTask {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o){ return true;}
-        if (o == null || getClass() != o.getClass()){ return false;}
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         AdvancedTask that = (AdvancedTask) o;
 
 
-        if (!task.equals(that.task)){ return false;}
-        if (!labels.equals(that.labels)){ return false;}
+        if (!task.equals(that.task)) {
+            return false;
+        }
+        if (!labels.equals(that.labels)) {
+            return false;
+        }
         return date != null ? date.equals(that.date) : that.date == null && (note != null ? note.equals(that.note) : that.note == null && priority == that.priority);
     }
 

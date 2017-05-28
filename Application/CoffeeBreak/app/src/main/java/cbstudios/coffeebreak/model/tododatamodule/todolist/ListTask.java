@@ -20,34 +20,33 @@ import java.util.List;
 class ListTask extends AdvancedTask implements IListTask {
     private final List<ITask> subtasks;
 
+    /**
+     * Default constructor creating a ListTask with no name.
+     */
     ListTask() {
         subtasks = new ArrayList<>();
     }
 
+    /**
+     * Creates a ListTask with the given name.
+     *
+     * @param name The name assigned to the task.
+     */
     ListTask(String name) {
         super(name);
         subtasks = new ArrayList<>();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<ITask> getSubtasks() {
         return subtasks;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void add(ITask subtask) {
         subtasks.add(subtask);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void remove(ITask subtask) {
         int index = 0;
@@ -60,23 +59,23 @@ class ListTask extends AdvancedTask implements IListTask {
         subtasks.remove(index);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean equals(Object o) {
-        if (this == o){ return true;}
-        if (o == null || getClass() != o.getClass()){ return false;}
-        if (!super.equals(o)){ return false;}
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        if (!super.equals(o)) {
+            return false;
+        }
 
         ListTask listTask = (ListTask) o;
 
         return subtasks.equals(listTask.subtasks);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public int hashCode() {
         int result = super.hashCode();

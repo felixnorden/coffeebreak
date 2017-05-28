@@ -25,6 +25,9 @@ public class ToDoDataModule {
     private ToDoList todoList;
     private Statistics stats;
 
+    /**
+     * Default constructor. Initialises the module.
+     */
     public ToDoDataModule() {
         categoryList = new CategoryList();
         todoList = new ToDoList();
@@ -96,11 +99,15 @@ public class ToDoDataModule {
         getTasks().removeAll(toBeRemoved);
     }
 
-    public void removeCategoryFromTasks(int position) {
-
-      ILabelCategory category = categoryList.getLabelCategories().get(position);
-    todoList.removeCategoryFromTasks(category);
-}
+    /**
+     * Removes the category with the specified position in the list.
+     *
+     * @param position The position of the category to be removed.
+     */
+    public void removeLabelCategoryFromTasks(int position) {
+        ILabelCategory category = categoryList.getLabelCategories().get(position);
+        todoList.removeLabelCategoryFromTasks(category);
+    }
 
     /**
      * Removes a specific category from the model. If the category doesn't exist, nothing happens.
@@ -184,16 +191,6 @@ public class ToDoDataModule {
      */
     public IAdvancedTask getTask(int index) {
         return todoList.getTasks().get(index);
-    }
-
-    /**
-     * Searches for a task with the given hashCode in the database.
-     *
-     * @param hashCode The hashCode of the task.
-     * @return The task with matching hashCode if it exists, null otherwise.
-     */
-    public IAdvancedTask findTask(int hashCode) {
-        return todoList.findTask(hashCode);
     }
 
     /**

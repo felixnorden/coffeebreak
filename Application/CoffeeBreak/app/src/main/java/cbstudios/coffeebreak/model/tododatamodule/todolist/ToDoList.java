@@ -109,18 +109,20 @@ public class ToDoList {
         return match;
     }
 
-    public void removeCategoryFromTasks(ILabelCategory category){
-        for(IAdvancedTask task: tasks){
-                if(task.getLabels().contains(category)){
-                    task.removeLabel(category);
-                }
+    /**
+     * Removes a LabelCategory from all tasks. The category only gets removed if it equals to
+     * the category given.
+     *
+     * @param category The category to be removed.
+     */
+    public void removeLabelCategoryFromTasks(ILabelCategory category) {
+        for (IAdvancedTask task : tasks) {
+            if (task.getLabels().contains(category)) {
+                task.removeLabel(category);
             }
-
         }
 
-
-
-
+    }
 
     /**
      * Creates a Task and adds it to the references ListTask

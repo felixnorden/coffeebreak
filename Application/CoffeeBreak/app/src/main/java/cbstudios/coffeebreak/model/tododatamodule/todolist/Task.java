@@ -36,57 +36,36 @@ class Task implements ITask {
         creationCalendar = Calendar.getInstance();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String getName() {
         return name;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public boolean isChecked() {
         return checked;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void toggleChecked() {
         setChecked(!isChecked());
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setChecked(boolean value) {
         checked = value;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public Calendar getCreationCalendar() {
         return creationCalendar;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void setCreationCalendar(Calendar calendar) {
         creationCalendar = calendar;
@@ -101,8 +80,12 @@ class Task implements ITask {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o){ return true;}
-        if (o == null || getClass() != o.getClass()){return false;}
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
 
         Task task = (Task) o;
 
