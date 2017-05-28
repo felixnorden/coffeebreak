@@ -22,11 +22,8 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.Number
 
 public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.AchievementViewHolder> implements IAchievementAdapter {
 
-    private Context context;
     private List<IAchievement> achievementList;
-
-    public AchievementAdapter(Context context, List<IAchievement> achievementList) {
-        this.context = context;
+    public AchievementAdapter(List<IAchievement> achievementList) {
         this.achievementList = achievementList;
     }
 

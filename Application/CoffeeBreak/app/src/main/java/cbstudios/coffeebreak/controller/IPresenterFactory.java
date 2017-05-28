@@ -46,5 +46,5 @@ public interface IPresenterFactory {
      * @param model the model keeping all the data
      * @return the new presenter through a {@link IAchievementPresenter} reference
      */
-    public IAchievementPresenter createAchievementPresenter(Model model);
+    IAchievementPresenter createAchievementPresenter(Model model);
 }

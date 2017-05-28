@@ -44,7 +44,7 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
     private ScrollView mDrawer;
     private NonScrollListView mDrawerList;
     private DrawerLayout mDrawerLayout;
-    private ICategory currentCategory;
+
     private Toolbar mToolbar;
 
 
@@ -55,7 +55,6 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
         setContentView(R.layout.achievement_activity_layout);
 
         achievementGrid = (RecyclerView) findViewById(R.id.achievementGrid);
-        SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         achievementGrid.setLayoutManager(new GridLayoutManager(this, 4));
         EventBus.getDefault().post(new RequestPresenterEvent(this));
@@ -128,7 +127,7 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
         mDrawerList.setItemChecked(position, true);
         ICategory category = (ICategory) mDrawerList.getAdapter().getItem(position);
         setTitle(category.getName());
-        currentCategory = category;
+
 
 
         // Close drawer

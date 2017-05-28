@@ -94,7 +94,6 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         setContentView(R.layout.activity_task_edit);
 
         //Get elements
-        RelativeLayout nameLayout = (RelativeLayout) findViewById(R.id.task_edit_name_layout);
         nameText = (AppCompatEditText) findViewById(R.id.task_edit_name_text);
 
         notificationLayout = (RelativeLayout) findViewById(R.id.task_edit_notification_layout);
@@ -102,10 +101,8 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         notificationText = (TextView) findViewById(R.id.task_edit_notification_text);
         notificationRemoveButton = (ImageButton) findViewById(R.id.task_edit_notification_remove_button);
 
-        RelativeLayout categoriesLayout = (RelativeLayout) findViewById(R.id.task_edit_categories_layout);
         categoriesListView = (ListView) findViewById(R.id.task_edit_categories_list);
         categoriesIcon = (ImageView) findViewById(R.id.task_edit_categories_icon);
-        ImageButton categoriesAddButton = (ImageButton) findViewById(R.id.task_edit_categories_add_image_button);
         categoriesAddText = (AppCompatAutoCompleteTextView) findViewById(R.id.task_edit_categories_add_text_view);
 
         priorityLayout = (RelativeLayout) findViewById(R.id.task_edit_priority_layout);

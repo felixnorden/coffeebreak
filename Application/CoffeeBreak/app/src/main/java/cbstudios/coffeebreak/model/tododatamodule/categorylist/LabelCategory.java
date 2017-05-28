@@ -142,7 +142,6 @@ class LabelCategory implements ILabelCategory {
     public int hashCode() {
         int result = 13;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-
         return result;
     }
 

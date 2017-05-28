@@ -148,10 +148,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     task.setChecked(isChecked);
                     etTaskName.setEnabled(!isChecked);
-                    if (isChecked)
+                    if (isChecked) {
                         etTaskName.setPaintFlags(etTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    else
+                    }
+                    else {
                         etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                    }
                 }
             });
         }
@@ -230,10 +232,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      */
     @Override
     public int getItemViewType(int position) {
-        if (mTasks.get(position) instanceof IListTask)
+        if (mTasks.get(position) instanceof IListTask) {
             return LIST_TASK;
-        else
+        }
+        else {
             return ADVANCED_TASK;
+        }
     }
 
     /**

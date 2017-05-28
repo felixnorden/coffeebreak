@@ -139,9 +139,7 @@ class DelegatingPresenter {
             element = StorageUtil.load(mContext.getApplicationContext(), "Achievement");
         } catch (IllegalStateException e) {
             StorageUtil.resetData(mContext.getApplicationContext(), "Achievement");
-            e.printStackTrace();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
 
         if (element == null || !element.isJsonArray()) {
@@ -170,9 +168,8 @@ class DelegatingPresenter {
         } catch (IllegalStateException e) {
             // TODO: 2017-05-11 Proper error handling. Notify user of corrupt data somehow?
             StorageUtil.resetData(mContext.getApplicationContext(), "Statistics");
-            e.printStackTrace();
+
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
 
         if (element == null || !element.isJsonObject()) {
@@ -203,9 +200,7 @@ class DelegatingPresenter {
             }
         } catch (IllegalStateException e) {
             StorageUtil.resetData(mContext.getApplicationContext(), "Tasks");
-            e.printStackTrace();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 
@@ -236,9 +231,7 @@ class DelegatingPresenter {
             }
         } catch (IllegalStateException e) {
             StorageUtil.resetData(mContext.getApplicationContext(), "Categories");
-            e.printStackTrace();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
     }
 }
