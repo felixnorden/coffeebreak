@@ -270,14 +270,15 @@ public class TaskConverter implements IListConverter<IAdvancedTask> {
 
         JsonArray categories = object.getAsJsonArray("Categories");
 
-        for (int i = 0; i < categories.size(); i++) {
-            JsonObject jsonCategory = categories.get(i).getAsJsonObject();
-            String name = jsonCategory.get("Name").getAsString();
-            String color = jsonCategory.get("Color").getAsString();
-            ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(name, color);
-            task.addLabel(category);
+        if (!categories.isJsonNull()) {
+            for (int i = 0; i < categories.size(); i++) {
+                JsonObject jsonCategory = categories.get(i).getAsJsonObject();
+                String name = jsonCategory.get("Name").getAsString();
+                String color = jsonCategory.get("Color").getAsString();
+                ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(name, color);
+                task.addLabel(category);
+            }
         }
-
         return task;
     }
 }
