@@ -262,6 +262,8 @@ class MainPresenter extends BasePresenter implements IPresenter {
         model.getToDoDataModule().removeTask(event.task);
         if (event.checked) {
             EventBus.getDefault().post(new CheckTaskEvent());
+        } else {
+            EventBus.getDefault().post(new TimesTaskDeletedEvent());
         }
     }
 
