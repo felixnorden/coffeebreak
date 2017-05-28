@@ -6,7 +6,11 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 /**
- * Created by elias on 24/05/2017.
+ * @author Elias
+ * @version 1.1
+ *          Responsibility: A subclass of listView that is not scrollable
+ *          Uses: Context
+ *          Used by: MainActivity to show the categories in the navigationDrawer
  */
 
 public class NonScrollListView extends ListView {
@@ -20,6 +24,10 @@ public class NonScrollListView extends ListView {
     public NonScrollListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
+
+    /**
+     *{@inheritDoc}
+     */
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int heightMeasureSpec_custom = MeasureSpec.makeMeasureSpec(
