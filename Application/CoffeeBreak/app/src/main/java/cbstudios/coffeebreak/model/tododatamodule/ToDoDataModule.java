@@ -87,19 +87,6 @@ public class ToDoDataModule {
     }
 
     /**
-     * Removes all the checked Tasks from the TodoList
-     */
-    public void removeChecked() {
-        List<IAdvancedTask> toBeRemoved = new ArrayList<>();
-        for (IAdvancedTask advancedTask : getTasks()) {
-            if (advancedTask.isChecked()) {
-                toBeRemoved.add(advancedTask);
-            }
-        }
-        getTasks().removeAll(toBeRemoved);
-    }
-
-    /**
      * Removes the category with the specified position in the list.
      *
      * @param position The position of the category to be removed.

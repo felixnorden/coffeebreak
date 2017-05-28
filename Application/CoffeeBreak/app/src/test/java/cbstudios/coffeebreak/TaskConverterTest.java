@@ -139,13 +139,13 @@ public class TaskConverterTest {
         assertTrue(three.get("Created").getAsString().equals(String.valueOf(list.get(2).getCreationCalendar().getTimeInMillis())));
 
         //Labels
-        assertTrue(one.get("Labels").getAsJsonArray().size() == 1);
-        assertTrue(one.get("Labels").getAsJsonArray().get(0).getAsString().equals("Label"));
-        assertTrue(two.get("Labels").getAsJsonArray().size() == 2);
-        assertTrue(two.get("Labels").getAsJsonArray().get(0).getAsString().equals("Label"));
-        assertTrue(two.get("Labels").getAsJsonArray().get(1).getAsString().equals("Label2"));
-        assertTrue(three.get("Labels").getAsJsonArray().size() == 1);
-        assertTrue(three.get("Labels").getAsJsonArray().get(0).getAsString().equals("Label2"));
+        assertTrue(one.get("Categories").getAsJsonArray().size() == 1);
+        assertTrue(one.get("Categories").getAsJsonArray().get(0).getAsJsonObject().get("Name").getAsString().equals("Label"));
+        assertTrue(two.get("Categories").getAsJsonArray().size() == 2);
+        assertTrue(two.get("Categories").getAsJsonArray().get(0).getAsJsonObject().get("Name").getAsString().equals("Label"));
+        assertTrue(two.get("Categories").getAsJsonArray().get(1).getAsJsonObject().get("Name").getAsString().equals("Label2"));
+        assertTrue(three.get("Categories").getAsJsonArray().size() == 1);
+        assertTrue(three.get("Categories").getAsJsonArray().get(0).getAsJsonObject().get("Name").getAsString().equals("Label2"));
 
         //SubTasks
         assertFalse(one.has("Subtasks"));
@@ -206,10 +206,10 @@ public class TaskConverterTest {
         assertTrue(listTaskObj.get("Created").getAsString().equals(String.valueOf(list.get(2).getCreationCalendar().getTimeInMillis())));
 
         //Labels
-        assertTrue(advancedTaskObj.get("Labels").getAsJsonArray().size() == 1);
-        assertTrue(advancedTaskObj.get("Labels").getAsJsonArray().get(0).getAsString().equals("Label"));
-        assertTrue(listTaskObj.get("Labels").getAsJsonArray().size() == 1);
-        assertTrue(listTaskObj.get("Labels").getAsJsonArray().get(0).getAsString().equals("Label2"));
+        assertTrue(advancedTaskObj.get("Categories").getAsJsonArray().size() == 1);
+        assertTrue(advancedTaskObj.get("Categories").getAsJsonArray().get(0).getAsJsonObject().get("Name").getAsString().equals("Label"));
+        assertTrue(listTaskObj.get("Categories").getAsJsonArray().size() == 1);
+        assertTrue(listTaskObj.get("Categories").getAsJsonArray().get(0).getAsJsonObject().get("Name").getAsString().equals("Label2"));
 
         //SubTasks
         assertFalse(advancedTaskObj.has("Subtasks"));
