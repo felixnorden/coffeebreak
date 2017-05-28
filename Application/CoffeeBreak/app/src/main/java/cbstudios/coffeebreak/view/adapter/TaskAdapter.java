@@ -1,6 +1,8 @@
 package cbstudios.coffeebreak.view.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
@@ -32,10 +34,13 @@ import cbstudios.coffeebreak.eventbus.EditTaskEvent;
 import cbstudios.coffeebreak.eventbus.RemoveTaskEvent;
 import cbstudios.coffeebreak.eventbus.RequestTaskListEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
+import cbstudios.coffeebreak.eventbus.TaskDeletedEvent;
 import cbstudios.coffeebreak.eventbus.TaskKeyboardClosedEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
+import cbstudios.coffeebreak.view.activity.IMainView;
+import cbstudios.coffeebreak.view.fragment.DeleteFragment;
 
 /**
  * @author Felix , Elias
@@ -56,6 +61,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      *          </p>
      */
     public abstract static class TaskViewHolder extends RecyclerView.ViewHolder {
+        Context mContext;
         public IAdvancedTask task;
         public View vPriority;
         public CheckBox cbCheckBox;
@@ -72,8 +78,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
          *
          * @param itemView The view in which this item is shown.
          */
-        public TaskViewHolder(final View itemView) {
+        public TaskViewHolder(final View itemView, Context mContext) {
             super(itemView);
+            this.mContext = mContext;
 
             // Layout references
             vPriority = itemView.findViewById(R.id.viewPriority);
@@ -114,6 +121,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 }
             });
             addOnCheckedChangedListener();
+            setClickListeners();
         }
 
         /**
@@ -121,6 +129,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
          * or if it has just been created.
          */
         void setUpTask() {
+
             if (task.getName() != null) {
                 tvTaskName.setText(task.getName());
                 tvTaskName.setPaintFlags(tvTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
@@ -141,11 +150,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 } else {
                     ivCategory.setVisibility(View.INVISIBLE);
                 }
+                setClickListeners();
                 setSpecificFields();
             } else {
                 etTaskName.setText("");
                 tvTaskName.setText("");
-                if(viewSwitcher.getDisplayedChild() == 1){
+                if (viewSwitcher.getDisplayedChild() == 1) {
                     viewSwitcher.showNext();
                 }
 
@@ -159,9 +169,19 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             }
         }
 
-        /**
-         *
-         */
+        private void setClickListeners() {
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    DeleteFragment dialog = new DeleteFragment();
+                    dialog.setType(DeleteFragment.TASK_TYPE);
+                    dialog.setPosition(getAdapterPosition());
+                    dialog.show(((IMainView) mContext).getAppCompatActivity().getSupportFragmentManager(), "task");
+                    return true;
+                }
+            });
+        }
+
         private void addOnCheckedChangedListener() {
             cbCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -174,22 +194,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     }
                 }
             });
-        }
-
-        /**
-         * Setups the EditText to display the name of the task if the task has a name.
-         * If the Tasks name doesn't exist it makes the EditText editable and focusable.
-         *
-         * @param value true if the EditText should be enabled, false otherwise
-         */
-        private void setTaskNameEnabled(boolean value) {
-            if (value) {
-                etTaskName.getBackground().setTint(Color.parseColor("#dd2b25"));
-            } else {
-                etTaskName.getBackground().setTint(Color.TRANSPARENT);
-            }
-            etTaskName.setFocusable(value);
-            etTaskName.setFocusableInTouchMode(value);
         }
 
         /**
@@ -234,12 +238,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         if (viewType == ADVANCED_TASK) {
             taskView = inflater.inflate(R.layout.advanced_task_layout, parent, false);
-            viewHolder = new AdvancedTaskViewHolder(taskView);
+            viewHolder = new AdvancedTaskViewHolder(taskView, mContext);
         }
         // If not an AdvancedTask, then it must be a ListTask
         else {
             taskView = inflater.inflate(R.layout.list_task_layout, parent, false);
-            viewHolder = new ListTaskViewHolder(taskView);
+            viewHolder = new ListTaskViewHolder(taskView, mContext);
         }
 
         return viewHolder;
@@ -269,7 +273,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     @Override
     public void onBindViewHolder(TaskAdapter.TaskViewHolder viewHolder, final int position) {
-        //IAdvancedTask task = mTasks.get(position);
         viewHolder.task = mTasks.get(position);
         // Set up task layout based on whether the task has data or not.
         viewHolder.setUpTask();
@@ -311,6 +314,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     }
 
     /**
+     * Handles deletion of a task when it is requested by a {@link DeleteFragment}
+     *
+     * @param event The object containing necessary task information
+     */
+    @Subscribe (threadMode = ThreadMode.MAIN)
+    void deleteTask(TaskDeletedEvent event){
+        if(event.which == DialogInterface.BUTTON_POSITIVE){
+            EventBus.getDefault().post(new RemoveTaskEvent(mTasks.get(event.position), false));
+            mTasks.remove(event.position);
+            notifyItemRemoved(event.position);
+            notifyItemRangeChanged(event.position, mTasks.size());
+        }
+    }
+    /**
      * Changes the tasks that the adapter is holding, uses DiffUtil to only update the views that has
      * been changed.
      *
@@ -329,7 +346,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      * Removes all checked tasks. Is used through removeUnvalidTasks().
      */
     private void removeCheckedTasks() {
-        //EventBus.getDefault().post(new RequestTaskListEvent(this));
         for (IAdvancedTask task : tmpTasks) {
             if (task.isChecked()) {
                 EventBus.getDefault().post(new RemoveTaskEvent(task, true));
@@ -341,7 +357,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      * Removes all tasks with name == null. Is used through removeUnvalidTasks().
      */
     private void removeNullTasks() {
-        //EventBus.getDefault().post(new RequestTaskListEvent(this));
         for (IAdvancedTask task : tmpTasks) {
             if (task.getName() == null) {
                 EventBus.getDefault().post(new RemoveTaskEvent(task, false));

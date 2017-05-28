@@ -133,7 +133,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         swipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefreshLayout);
 
         taskList.setLayoutManager(new LinearLayoutManager(this));
-        if (!initialized) {
+        if(!initialized) {
             presenterFactory.initializeDelegatingPresenter(this);
             initialized = true;
         } else {
@@ -183,7 +183,6 @@ public class MainActivity extends AppCompatActivity implements IMainView {
         EventBus.getDefault().post(new OnCreateEvent(this));
         EventBus.getDefault().post(new TimesAppStartedEvent());
     }
-
 
 
     @Override

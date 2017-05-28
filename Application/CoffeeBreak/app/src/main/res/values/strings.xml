@@ -50,5 +50,6 @@
     <string name="update">Update</string>
     <string name="refresh">Refresh</string>
     <string name="achievements">Achievements</string>
+    <string name="delete_task">Delete Task</string>
 </resources>
 

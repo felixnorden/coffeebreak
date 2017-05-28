@@ -1,5 +1,6 @@
 package cbstudios.coffeebreak.view.adapter;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.TextView;
 
@@ -23,9 +24,11 @@ class AdvancedTaskViewHolder extends TaskAdapter.TaskViewHolder {
 
     /**
      * @param itemView The view in which the task is to be shown in.
+     * @param context The context of the managing activity
      */
-    public AdvancedTaskViewHolder(View itemView) {
-        super(itemView);
+
+    public AdvancedTaskViewHolder(View itemView, Context context) {
+        super(itemView, context);
 
         tvSubTask = (TextView) itemView.findViewById(R.id.subTextView);
     }

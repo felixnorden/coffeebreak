@@ -1,5 +1,6 @@
 package cbstudios.coffeebreak.view.adapter;
 
+import android.content.Context;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,8 +21,8 @@ class ListTaskViewHolder extends TaskAdapter.TaskViewHolder {
     public TextView tvSubTask;
     public ImageView ivSubTask;
 
-    public ListTaskViewHolder(View itemView){
-        super(itemView);
+    public ListTaskViewHolder(View itemView, Context context){
+        super(itemView, context);
 
         tvSubTask = (TextView) itemView.findViewById(R.id.subTextView);
         ivSubTask = (ImageView) itemView.findViewById(R.id.imageViewSubTask);

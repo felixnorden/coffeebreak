@@ -55,7 +55,7 @@ class AchievementPresenter implements IPresenter{
 
     @Override
     public void onResume(OnResumeEvent event) {
-        
+
     }
 
     @Override
