@@ -14,6 +14,8 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
+ * .
+ *
  * @author Zack
  * @version 1.0
  *          Responsibility: Handles saving/loading of data to/from disk.
@@ -22,6 +24,9 @@ import java.io.IOException;
  */
 public class StorageUtil {
 
+    /**
+     * Private constructor because of utility-class.
+     */
     private StorageUtil() {
     }
 

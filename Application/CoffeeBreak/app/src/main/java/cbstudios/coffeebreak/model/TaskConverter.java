@@ -29,6 +29,20 @@ public class TaskConverter implements IListConverter<IAdvancedTask> {
     private final static TaskConverter INSTANCE = new TaskConverter();
     private ITaskFactory factory = TaskFactory.getInstance();
 
+    //List of names for properties in Json objects.
+    private static final String TYPE = "Type";
+    private static final String NAME = "Name";
+    private static final String SUB_TASKS = "Subtasks";
+    private static final String IS_CHECKED = "IsChecked";
+    private static final String CREATED = "Created";
+    private static final String NOTE = "Note";
+    private static final String PRIORITY = "Priority";
+    private static final String DATE = "Date";
+    private static final String CATEGORIES = "Categories";
+    private static final String COLOR = "Color";
+
+
+
     /**
      * Fetches the singleton instance of the TaskConverter
      *
@@ -38,12 +52,12 @@ public class TaskConverter implements IListConverter<IAdvancedTask> {
         return INSTANCE;
     }
 
+    /**
+     * Hidden constructor because of singleton.
+     */
     private TaskConverter() {
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public JsonArray toJson(List<IAdvancedTask> tasks) {
         JsonArray array = new JsonArray();
@@ -59,9 +73,6 @@ public class TaskConverter implements IListConverter<IAdvancedTask> {
         return array;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public JsonObject toJson(IAdvancedTask task) {
         if (task instanceof IListTask) {
@@ -71,13 +82,10 @@ public class TaskConverter implements IListConverter<IAdvancedTask> {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public IAdvancedTask toObject(JsonObject object) {
-        if (object.has("Type")) {
-            String type = object.get("Type").getAsString();
+        if (object.has(TYPE)) {
+            String type = object.get(TYPE).getAsString();
 
             switch (type) {
                 case "ListTask":
@@ -92,16 +100,13 @@ public class TaskConverter implements IListConverter<IAdvancedTask> {
         }
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public List<IAdvancedTask> toObject(JsonArray array) {
         List<IAdvancedTask> list = new ArrayList<>();
 
         for (int i = 0; i < array.size(); i++) {
             JsonObject object = array.get(i).getAsJsonObject();
-            String type = object.get("Type").getAsString();
+            String type = object.get(TYPE).getAsString();
 
             switch (type) {
                 case "ListTask":
@@ -128,13 +133,13 @@ public class TaskConverter implements IListConverter<IAdvancedTask> {
 
         for (ITask subTask : listTask.getSubtasks()) {
             JsonObject subTaskObject = new JsonObject();
-            subTaskObject.addProperty("Name", subTask.getName());
-            subTaskObject.addProperty("IsChecked", subTask.isChecked());
-            subTaskObject.addProperty("Created", subTask.getCreationCalendar().getTimeInMillis());
+            subTaskObject.addProperty(NAME, subTask.getName());
+            subTaskObject.addProperty(IS_CHECKED, subTask.isChecked());
+            subTaskObject.addProperty(CREATED, subTask.getCreationCalendar().getTimeInMillis());
             subTaskArray.add(subTaskObject);
         }
 
-        listTaskObject.add("Subtasks", subTaskArray);
+        listTaskObject.add(SUB_TASKS, subTaskArray);
 
         return listTaskObject;
     }
@@ -150,29 +155,29 @@ public class TaskConverter implements IListConverter<IAdvancedTask> {
         JsonArray labelArray = new JsonArray();
 
         if (advancedTask instanceof IListTask) {
-            taskObject.addProperty("Type", "ListTask");
+            taskObject.addProperty(TYPE, "ListTask");
         } else {
-            taskObject.addProperty("Type", "AdvancedTask");
+            taskObject.addProperty(TYPE, "AdvancedTask");
         }
 
-        taskObject.addProperty("Name", advancedTask.getName());
-        taskObject.addProperty("Note", advancedTask.getNote());
-        taskObject.addProperty("IsChecked", advancedTask.isChecked());
-        taskObject.addProperty("Priority", advancedTask.getPriority().toString());
+        taskObject.addProperty(NAME, advancedTask.getName());
+        taskObject.addProperty(NOTE, advancedTask.getNote());
+        taskObject.addProperty(IS_CHECKED, advancedTask.isChecked());
+        taskObject.addProperty(PRIORITY, advancedTask.getPriority().toString());
         if (advancedTask.getNotification() != null) {
-            taskObject.addProperty("Date", advancedTask.getNotification().getTimeInMillis());
+            taskObject.addProperty(DATE, advancedTask.getNotification().getTimeInMillis());
         }
-        taskObject.addProperty("Created", advancedTask.getCreationCalendar().getTimeInMillis());
+        taskObject.addProperty(CREATED, advancedTask.getCreationCalendar().getTimeInMillis());
 
         for (ILabelCategory label : advancedTask.getLabels()) {
             JsonObject categoryObject = new JsonObject();
-            categoryObject.addProperty("Name", label.getName());
-            categoryObject.addProperty("Color", label.getColor());
+            categoryObject.addProperty(NAME, label.getName());
+            categoryObject.addProperty(COLOR, label.getColor());
 
             labelArray.add(categoryObject);
         }
 
-        taskObject.add("Categories", labelArray);
+        taskObject.add(CATEGORIES, labelArray);
 
         return taskObject;
     }
@@ -188,47 +193,47 @@ public class TaskConverter implements IListConverter<IAdvancedTask> {
     private IListTask jsonObjectToListTask(JsonObject object) {
         IListTask task = factory.createListTask();
 
-        task.setName(object.get("Name").getAsString());
-        task.setChecked(object.get("IsChecked").getAsBoolean());
+        task.setName(object.get(NAME).getAsString());
+        task.setChecked(object.get(IS_CHECKED).getAsBoolean());
 
-        if (object.has("Priority")) {
-            task.setPriority(Priority.valueOf(object.get("Priority").getAsString()));
+        if (object.has(PRIORITY)) {
+            task.setPriority(Priority.valueOf(object.get(PRIORITY).getAsString()));
         }
 
-        if (object.has("Note")) {
-            task.setNote(object.get("Note").getAsString());
+        if (object.has(NOTE)) {
+            task.setNote(object.get(NOTE).getAsString());
         }
 
-        if (object.has("Date")) {
+        if (object.has(DATE)) {
             Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(Long.valueOf(object.get("Date").getAsString()));
+            cal.setTimeInMillis(Long.valueOf(object.get(DATE).getAsString()));
             task.getNotification(cal);
         }
 
         Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(Long.valueOf(object.get("Created").getAsString()));
+        cal.setTimeInMillis(Long.valueOf(object.get(CREATED).getAsString()));
         task.setCreationCalendar(cal);
 
-        JsonArray categories = object.getAsJsonArray("Categories");
+        JsonArray categories = object.getAsJsonArray(CATEGORIES);
 
         for (int i = 0; i < categories.size(); i++) {
             JsonObject jsonCategory = categories.get(i).getAsJsonObject();
-            String name = jsonCategory.get("Name").getAsString();
-            String color = jsonCategory.get("Color").getAsString();
+            String name = jsonCategory.get(NAME).getAsString();
+            String color = jsonCategory.get(COLOR).getAsString();
             ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(name, color);
             task.addLabel(category);
         }
 
-        JsonArray subTasks = object.getAsJsonArray("Subtasks");
+        JsonArray subTasks = object.getAsJsonArray(SUB_TASKS);
 
         for (int i = 0; i < subTasks.size(); i++) {
             ITask subTask = TaskFactory.getInstance().createTask();
             JsonObject subTaskObject = subTasks.get(i).getAsJsonObject();
-            subTask.setName(subTaskObject.get("Name").getAsString());
-            subTask.setChecked(subTaskObject.get("IsChecked").getAsBoolean());
+            subTask.setName(subTaskObject.get(NAME).getAsString());
+            subTask.setChecked(subTaskObject.get(IS_CHECKED).getAsBoolean());
 
             Calendar subTaskCal = Calendar.getInstance();
-            subTaskCal.setTimeInMillis(Long.valueOf(subTaskObject.get("Created").getAsString()));
+            subTaskCal.setTimeInMillis(Long.valueOf(subTaskObject.get(CREATED).getAsString()));
             subTask.setCreationCalendar(subTaskCal);
 
             task.add(subTask);
@@ -247,34 +252,34 @@ public class TaskConverter implements IListConverter<IAdvancedTask> {
      */
     private IAdvancedTask jsonObjectToAdvancedTask(JsonObject object) {
         IAdvancedTask task = factory.createAdvancedTask();
-        task.setName(object.get("Name").getAsString());
-        task.setChecked(object.get("IsChecked").getAsBoolean());
+        task.setName(object.get(NAME).getAsString());
+        task.setChecked(object.get(IS_CHECKED).getAsBoolean());
 
-        if (object.has("Priority")) {
-            task.setPriority(Priority.valueOf(object.get("Priority").getAsString()));
+        if (object.has(PRIORITY)) {
+            task.setPriority(Priority.valueOf(object.get(PRIORITY).getAsString()));
         }
 
-        if (object.has("Note")) {
-            task.setNote(object.get("Note").getAsString());
+        if (object.has(NOTE)) {
+            task.setNote(object.get(NOTE).getAsString());
         }
 
-        if (object.has("Date")) {
+        if (object.has(DATE)) {
             Calendar cal = Calendar.getInstance();
-            cal.setTimeInMillis(Long.valueOf(object.get("Date").getAsString()));
+            cal.setTimeInMillis(Long.valueOf(object.get(DATE).getAsString()));
             task.getNotification(cal);
         }
 
         Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(Long.valueOf(object.get("Created").getAsString()));
+        cal.setTimeInMillis(Long.valueOf(object.get(CREATED).getAsString()));
         task.setCreationCalendar(cal);
 
-        JsonArray categories = object.getAsJsonArray("Categories");
+        JsonArray categories = object.getAsJsonArray(CATEGORIES);
 
         if (categories != null) {
             for (int i = 0; i < categories.size(); i++) {
                 JsonObject jsonCategory = categories.get(i).getAsJsonObject();
-                String name = jsonCategory.get("Name").getAsString();
-                String color = jsonCategory.get("Color").getAsString();
+                String name = jsonCategory.get(NAME).getAsString();
+                String color = jsonCategory.get(COLOR).getAsString();
                 ILabelCategory category = CategoryFactory.getInstance().createLabelCategory(name, color);
                 task.addLabel(category);
             }

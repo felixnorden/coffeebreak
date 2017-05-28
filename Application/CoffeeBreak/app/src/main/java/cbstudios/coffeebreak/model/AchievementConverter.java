@@ -17,16 +17,25 @@ public class AchievementConverter {
 
     private final static AchievementConverter INSTANCE = new AchievementConverter();
 
-    public static AchievementConverter getInstance() { return  INSTANCE;}
+    //List of names for properties in Json objects.
+    private static final String NAME = "Name";
+    private static final String NUMBER_LIMIT = "NumberLimit";
+    private static final String IS_COMPLETED = "IsCompleted";
+    private static final String TYPE = "Type";
 
-    private AchievementConverter(){
+
+    public static AchievementConverter getInstance() {
+        return INSTANCE;
+    }
+
+    private AchievementConverter() {
 
     }
 
     public JsonArray toJsonArray(List<IAchievement> achievements) {
         JsonArray array = new JsonArray();
 
-        for (IAchievement achievement : achievements){
+        for (IAchievement achievement : achievements) {
             if (achievement instanceof NumberAchievement) {
                 array.add(numberAchievementToJsonObject(achievement));
             }
@@ -34,17 +43,17 @@ public class AchievementConverter {
         return array;
     }
 
-    public JsonObject toJsonObject(IAchievement achievement){
-        if (achievement instanceof NumberAchievement){
+    public JsonObject toJsonObject(IAchievement achievement) {
+        if (achievement instanceof NumberAchievement) {
             return numberAchievementToJsonObject(achievement);
         } else {
             return null;
         }
     }
 
-    public List<IAchievement> toAchievementList(JsonArray array){
+    public List<IAchievement> toAchievementList(JsonArray array) {
         List<IAchievement> list = new ArrayList<>();
-        for (int i = 0; i < array.size(); i++){
+        for (int i = 0; i < array.size(); i++) {
             JsonObject object = array.get(i).getAsJsonObject();
 
             list.add(jsonObjectToNumberAchievement(object));
@@ -52,24 +61,24 @@ public class AchievementConverter {
         return list;
     }
 
-    private JsonObject numberAchievementToJsonObject(IAchievement achievement){
+    private JsonObject numberAchievementToJsonObject(IAchievement achievement) {
         JsonObject achievementObject = new JsonObject();
 
-        achievementObject.addProperty("Name", achievement.getName());
-        achievementObject.addProperty("NumberLimit", achievement.getNumberLimit());
-        achievementObject.addProperty("IsCompleted", achievement.getIfCompleted());
-        achievementObject.addProperty("Type", achievement.getType());
+        achievementObject.addProperty(NAME, achievement.getName());
+        achievementObject.addProperty(NUMBER_LIMIT, achievement.getNumberLimit());
+        achievementObject.addProperty(IS_COMPLETED, achievement.getIfCompleted());
+        achievementObject.addProperty(TYPE, achievement.getType());
 
         return achievementObject;
     }
 
-    private IAchievement jsonObjectToNumberAchievement(JsonObject object){
+    private IAchievement jsonObjectToNumberAchievement(JsonObject object) {
         IAchievement numberAchievement = new NumberAchievement();
 
-        numberAchievement.setName(object.get("Name").getAsString());
-        numberAchievement.setNumberLimit(object.get("NumberLimit").getAsInt());
-        numberAchievement.setIsCompleted(object.get("IsCompleted").getAsBoolean());
-        numberAchievement.setType(object.get("Type").getAsInt());
+        numberAchievement.setName(object.get(NAME).getAsString());
+        numberAchievement.setNumberLimit(object.get(NUMBER_LIMIT).getAsInt());
+        numberAchievement.setIsCompleted(object.get(IS_COMPLETED).getAsBoolean());
+        numberAchievement.setType(object.get(TYPE).getAsInt());
 
         return numberAchievement;
     }

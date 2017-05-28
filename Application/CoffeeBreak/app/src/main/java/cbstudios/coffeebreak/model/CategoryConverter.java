@@ -24,11 +24,20 @@ public class CategoryConverter implements IListConverter<ILabelCategory> {
     private final static CategoryConverter INSTANCE = new CategoryConverter();
     private ICategoryFactory factory = CategoryFactory.getInstance();
 
+    //List of names for properties in Json objects.
+    private static final String NAME = "Name";
+    private static final String COLOR = "Color";
 
+    /**
+     * @return The only instance of the class
+     */
     public static IListConverter<ILabelCategory> getInstance() {
         return INSTANCE;
     }
 
+    /**
+     * Hidden constructor because of singleton.
+     */
     private CategoryConverter() {
     }
 
@@ -39,8 +48,8 @@ public class CategoryConverter implements IListConverter<ILabelCategory> {
 
     @Override
     public ILabelCategory toObject(JsonObject object) {
-        String name = object.get("Name").getAsString();
-        String color = object.get("Color").getAsString();
+        String name = object.get(NAME).getAsString();
+        String color = object.get(COLOR).getAsString();
 
         return factory.createLabelCategory(name, color);
     }
@@ -69,10 +78,16 @@ public class CategoryConverter implements IListConverter<ILabelCategory> {
         return list;
     }
 
+    /**
+     * Converts a ILabelCategory
+     *
+     * @param category The category to be converted
+     * @return The converted category in a JsonObject.
+     */
     private JsonObject iLabelCategoryToJsonObject(ILabelCategory category) {
         JsonObject object = new JsonObject();
-        object.addProperty("Name", category.getName());
-        object.addProperty("Color", category.getColor());
+        object.addProperty(NAME, category.getName());
+        object.addProperty(COLOR, category.getColor());
 
         return object;
     }
