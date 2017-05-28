@@ -43,6 +43,7 @@ import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.eventbus.RequestPresenterEvent;
 import cbstudios.coffeebreak.eventbus.RequestTaskCreationEvent;
+import cbstudios.coffeebreak.eventbus.ShowAchievementEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.eventbus.SortListEvent;
 import cbstudios.coffeebreak.eventbus.TimesAppStartedEvent;
@@ -599,6 +600,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
     private void showAchievementActivity(){
-        EventBus.getDefault().post(new TimesTaskDeletedEvent());
+        EventBus.getDefault().post(new ShowAchievementEvent());
     }
 }
