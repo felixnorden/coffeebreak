@@ -138,7 +138,7 @@ class DelegatingPresenter {
         try {
             element = StorageUtil.load(mContext.getApplicationContext(), "Achievement");
         } catch (IllegalStateException e) {
-            StorageUtil.resetData(mContext.getApplicationContext(), "Tasks");
+            StorageUtil.resetData(mContext.getApplicationContext(), "Achievement");
             e.printStackTrace();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
