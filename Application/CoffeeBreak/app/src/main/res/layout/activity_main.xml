@@ -146,14 +146,13 @@
             android:layout_height="match_parent"
             android:elevation="16dp">
 
-            <TextView
+            <android.support.v7.widget.AppCompatImageView
                 android:id="@+id/drawer_header"
                 android:layout_width="240dp"
                 android:layout_height="160dp"
                 android:background="@android:color/white"
-                android:text="COOL HEADER"
                 android:textAlignment="center"
-                android:textSize="56dp" />
+                android:textSize="56sp" />
 
             <cbstudios.coffeebreak.view.activity.NonScrollListView
                 android:id="@+id/drawer_list"
@@ -167,14 +166,31 @@
                 android:drawSelectorOnTop="false" />
 
 
-            <ImageButton
-                android:id="@+id/add_category"
+            <android.support.v7.widget.AppCompatImageView
+                android:id="@+id/add_category_image_view"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_below="@id/drawer_list"
                 android:backgroundTint="@android:color/white"
                 app:srcCompat="@drawable/ic_add_white_24dp"
                 android:tint="@color/colorAccent"
+                app:rippleColor="@color/colorPrimaryLight"
+                android:background="?attr/selectableItemBackground"
+                />
+
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/achievement_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_below="@id/add_category_image_view"
+                android:backgroundTint="@android:color/white"
+                android:textAlignment="center"
+                android:text="@string/achievements"
+                android:textSize="14sp"
+                android:textColor="@color/textPrimaryColor"
+                android:elevation="2dp"
+                app:rippleColor="@color/colorAccentLight"
+                android:background="?attr/selectableItemBackground"
                 />
 
 

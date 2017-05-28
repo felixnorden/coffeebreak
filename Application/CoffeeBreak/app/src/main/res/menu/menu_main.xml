@@ -13,8 +13,7 @@
     tools:context=".view.activity.MainActivity">
     <item
         android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
+        android:title="@string/refresh"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_sort"

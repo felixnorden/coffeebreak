@@ -9,6 +9,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatButton;
+import android.support.v7.widget.AppCompatImageButton;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -277,7 +281,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         //noinspection SimplifiableIfStatement
         switch(id){
             case(R.id.action_settings):
-                showAchievementActivity();
+                refreshItems();
                 return true;
             case(R.id.action_sort):
                 showSortingDialog();
@@ -350,8 +354,8 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mDrawerList = (NonScrollListView) findViewById(R.id.drawer_list);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.setBackgroundColor(Color.WHITE);
-        ImageButton mAddCategoryButton = (ImageButton) findViewById(R.id.add_category);
-
+        AppCompatImageView mAddCategoryButton = (AppCompatImageView) findViewById(R.id.add_category_image_view);
+        AppCompatTextView mAchievementTextView = (AppCompatTextView) findViewById(R.id.achievement_text_view);
 
         final SeparatorAdapter timeSeparator = new SeparatorAdapter(this, SeparatorAdapter.TIME_CATEGORY);
         final SeparatorAdapter labelSeparator = new SeparatorAdapter(this, SeparatorAdapter.LABEL_CATEGORY);
@@ -384,6 +388,13 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
                 ((MergeAdapter) mDrawerList.getAdapter()).notifyDataSetChanged();
                 displayKeyboard();
 
+            }
+        });
+        mAchievementTextView.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                showAchievementActivity();
             }
         });
 
@@ -429,7 +440,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
     /**
-     * handles showing/hiding the keyboard
+     * Handles showing/hiding the keyboard
      * @param event contains the view that has the focus and a boolean to
      *              determine whether to show or hide keyboard
      */

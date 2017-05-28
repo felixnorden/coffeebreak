@@ -47,5 +47,8 @@
     <string name="priority_high">!!! High</string>
     <string name="categories">Categories</string>
     <string name="task">Task</string>
+    <string name="update">Update</string>
+    <string name="refresh">Refresh</string>
+    <string name="achievements">Achievements</string>
 </resources>
 

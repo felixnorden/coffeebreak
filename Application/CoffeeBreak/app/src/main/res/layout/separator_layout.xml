@@ -14,7 +14,8 @@
     android:orientation="horizontal"
     android:clickable="false"
     android:focusable="false"
-    android:focusableInTouchMode="false">
+    android:focusableInTouchMode="false"
+    app:rippleColor="@android:color/transparent">
 
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/separator_image"
