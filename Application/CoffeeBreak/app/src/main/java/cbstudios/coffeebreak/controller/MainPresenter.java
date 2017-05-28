@@ -263,7 +263,6 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void onTaskListRequest(RequestTaskListEvent event){
         event.adapter.updateTmpTasks(getTasks());
-        //taskAdapter.updateTmpTasks(getTasks());
     }
 
     /**
