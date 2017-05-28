@@ -60,7 +60,7 @@ import cbstudios.coffeebreak.view.adapter.MergeAdapter;
 import cbstudios.coffeebreak.view.adapter.SeparatorAdapter;
 import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 import cbstudios.coffeebreak.view.adapter.TimeCategoryAdapter;
-import cbstudios.coffeebreak.view.fragment.CategoryDeleteFragment;
+import cbstudios.coffeebreak.view.fragment.DeleteFragment;
 import cbstudios.coffeebreak.view.fragment.SortFragment;
 
 /**
@@ -454,7 +454,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
     private void showCategoryDeleteDialog(int position) {
-        CategoryDeleteFragment dialog = new CategoryDeleteFragment();
+        DeleteFragment dialog = new DeleteFragment();
         dialog.setPosition(position);
         dialog.show(getSupportFragmentManager(), "category");
     }

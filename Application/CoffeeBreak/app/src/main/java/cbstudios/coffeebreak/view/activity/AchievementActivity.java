@@ -39,7 +39,6 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
 
     private RecyclerView achievementGrid;
     private SwipeRefreshLayout swipeRefreshLayout;
-    private AchievementAdapter achievementAdapter;
     private List<ILabelCategory> labelCategories;
     private List<ITimeCategory> timeCategories;
     private ScrollView mDrawer;

@@ -10,7 +10,13 @@ import java.util.Locale;
 import cbstudios.coffeebreak.R;
 
 /**
- * Created by Felix on 2017-05-20.
+ * @author Felix
+ * @version 1.0
+ *          <p>Responsibility: Template-method implementing class for handling {@link cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask}
+ *          graphical representation in {@link TaskAdapter}</br >
+ *          Used by: {@link TaskAdapter}
+ *          </p>
+ *
  */
 
 class AdvancedTaskViewHolder extends TaskAdapter.TaskViewHolder {
@@ -22,6 +28,9 @@ class AdvancedTaskViewHolder extends TaskAdapter.TaskViewHolder {
         tvSubTask = (TextView) itemView.findViewById(R.id.subTextView);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     void setSpecificFields() {
         String information;

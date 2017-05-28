@@ -14,16 +14,25 @@ import cbstudios.coffeebreak.eventbus.SortListEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 
 /**
- * Created by elias on 26/05/2017.
+ * @author Felix, Elias
+ * @version 2.0
+ *          <p>Responsibility: Display deletion option for a selected list item</br >
+ *          Used by: {@link android.support.v7.widget.RecyclerView.ViewHolder and {@link android.widget.ListView}}
+ *          when binding onLongClick
+ *          </p>
+ *
  */
 
-public class CategoryDeleteFragment extends DialogFragment {
+public class DeleteFragment extends DialogFragment {
 
     int position;
     public void setPosition(int position){
         this.position = position;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

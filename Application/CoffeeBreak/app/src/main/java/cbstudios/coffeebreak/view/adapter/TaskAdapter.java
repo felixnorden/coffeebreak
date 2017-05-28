@@ -36,18 +36,24 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask;
 
 /**
  * @author Felix , Elias
- * @version  1.1
- * Responsibility: Handling the visual representation for all tasks in the Model.
- * Uses: IAdvancedTask, IListTask, ICategory and interfaces for abstraction.
- * Used by: MainActivity to represent the linear list of tasks in its viewport.
+ * @version 1.1
+ *          Responsibility: Handling the visual representation for all tasks in the Model.
+ *          Uses: IAdvancedTask, IListTask, ICategory and interfaces for abstraction.
+ *          Used by: MainActivity to represent the linear list of tasks in its viewport.
  */
 
-public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> implements ITaskAdapter{
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> implements ITaskAdapter {
 
     /**
-     *TODO
+     * @author Felix, Elias
+     * @version 3.0
+     *          <p>Responsibility: Base class for representing different types of tasks</br >
+     *          Uses: {@link IAdvancedTask}</br>
+     *          Extended by: {@link AdvancedTaskViewHolder} and {@link ListTaskViewHolder}
+     *          </p>
+     *
      */
-    public abstract static class TaskViewHolder extends RecyclerView.ViewHolder{
+    public abstract static class TaskViewHolder extends RecyclerView.ViewHolder {
         public IAdvancedTask task;
         public View vPriority;
         public CheckBox cbCheckBox;
@@ -60,6 +66,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public TaskViewHolder(final View itemView) {
             super(itemView);
 
+            // Layout references
             vPriority = itemView.findViewById(R.id.viewPriority);
             cbCheckBox = (CheckBox) itemView.findViewById(R.id.checkBox);
             etTaskName = (EditText) itemView.findViewById(R.id.editTextField);
@@ -67,11 +74,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             ibMore = (ImageButton) itemView.findViewById(R.id.imageButtonMore);
             etBackgroundDrawable = etTaskName.getBackground();
 
+            // Set the text field listener for checking on  depending on if the task is being created or not
             etTaskName.setOnKeyListener(new View.OnKeyListener() {
                 @Override
                 public boolean onKey(View v, int keyCode, KeyEvent event) {
                     if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() != KeyEvent.ACTION_DOWN) {
                         String input = etTaskName.getText().toString();
+
                         // Check if input is empty, if so, remove task from database
                         // and update adapter of removal
                         if (input.equalsIgnoreCase("") || input.equalsIgnoreCase(null)) {
@@ -97,11 +106,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         }
 
         /**
-         * Setups the appropriate visual representation of a task depending on if the task is finished
+         * Sets up the appropriate visual representation of a task depending on if the task is finished
          * or if it has just been created.
          */
-        void setUpTask(){
-            if(task.getName() != null){
+        void setUpTask() {
+            if (task.getName() != null) {
                 cbCheckBox.setChecked(false);
                 cbCheckBox.setVisibility(View.VISIBLE);
                 ivCategory.setVisibility(View.VISIBLE);
@@ -112,14 +121,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
 
                 // Set Category-color if only one category is specified.
-                if(task.getLabels().size() >= 1) {
+                if (task.getLabels().size() >= 1) {
                     ivCategory.setColorFilter(Color.parseColor(task.getLabels().get(0).getColor()), PorterDuff.Mode.MULTIPLY);
                 } else {
                     ivCategory.setVisibility(View.INVISIBLE);
                 }
                 setTaskNameEnabled(false);
                 setSpecificFields();
-            }else{
+            } else {
                 etTaskName.setEnabled(true);
                 cbCheckBox.setChecked(false);
                 cbCheckBox.setVisibility(View.INVISIBLE);
@@ -133,13 +142,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             }
         }
 
-        private void addOnCheckedChangedListener(){
+        private void addOnCheckedChangedListener() {
             cbCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     task.setChecked(isChecked);
                     etTaskName.setEnabled(!isChecked);
-                    if(isChecked)
+                    if (isChecked)
                         etTaskName.setPaintFlags(etTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     else
                         etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
@@ -150,13 +159,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         /**
          * Setups the EditText to display the name of the task if the task has a name.
          * If the Tasks name doesn't exist it makes the EditText editable and focusable.
+         *
          * @param value true if the EditText should be enabled, false otherwise
          */
-        private void setTaskNameEnabled(boolean value){
-            if(value){
+        private void setTaskNameEnabled(boolean value) {
+            if (value) {
                 etTaskName.getBackground().setTint(Color.parseColor("#dd2b25"));
-            }
-            else {
+            } else {
                 etTaskName.getBackground().setTint(Color.TRANSPARENT);
             }
             etTaskName.setFocusable(value);
@@ -173,21 +182,22 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     private static final int ADVANCED_TASK = 0;
     private static final int LIST_TASK = 1;
 
+    // Data from the model
     private List<IAdvancedTask> mTasks;
     private List<IAdvancedTask> tmpTasks;
+
     private Context mContext;
 
-    public TaskAdapter(Context context, List<IAdvancedTask> tasks){
+    public TaskAdapter(Context context, List<IAdvancedTask> tasks) {
         mContext = context;
         tmpTasks = tasks;
         mTasks = new ArrayList<>();
     }
 
     /**
-     *
      * @return Main context for the adapter
      */
-    public Context getContext(){
+    public Context getContext() {
         return mContext;
     }
 
@@ -195,18 +205,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      * {@inheritDoc}
      */
     @Override
-    public TaskAdapter.TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public TaskAdapter.TaskViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View taskView;
         TaskViewHolder viewHolder;
 
-        if(viewType == ADVANCED_TASK) {
+        if (viewType == ADVANCED_TASK) {
             taskView = inflater.inflate(R.layout.advanced_task_layout, parent, false);
             viewHolder = new AdvancedTaskViewHolder(taskView);
         }
         // If not an AdvancedTask, then it must be a ListTask
-        else{
+        else {
             taskView = inflater.inflate(R.layout.list_task_layout, parent, false);
             viewHolder = new ListTaskViewHolder(taskView);
         }
@@ -219,8 +229,8 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      * {@inheritDoc}
      */
     @Override
-    public int getItemViewType(int position){
-        if(mTasks.get(position) instanceof IListTask)
+    public int getItemViewType(int position) {
+        if (mTasks.get(position) instanceof IListTask)
             return LIST_TASK;
         else
             return ADVANCED_TASK;
@@ -229,10 +239,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     /**
      * Removes all the tasks that is checked or that has a name == null.
      * Updates the view if any changes was made.
+     *
      * @param category the category that the user is in right now
      */
     @Override
-    public void refreshItems(ICategory category){
+    public void refreshItems(ICategory category) {
         removeUnvalidTasks();
         filterTasks(category);
     }
@@ -241,7 +252,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      * {@inheritDoc}
      */
     @Override
-    public void onBindViewHolder(TaskAdapter.TaskViewHolder viewHolder, final int position){
+    public void onBindViewHolder(TaskAdapter.TaskViewHolder viewHolder, final int position) {
         //IAdvancedTask task = mTasks.get(position);
         viewHolder.task = mTasks.get(position);
 
@@ -253,25 +264,23 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
      * {@inheritDoc}
      */
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
         return mTasks.size();
     }
 
     /**
-     *
-     * @param currentCategory
+     * {@inheritDoc}
      */
-    public void filterTasks(ICategory currentCategory){
+    public void filterTasks(ICategory currentCategory) {
         EventBus.getDefault().post(new RequestTaskListEvent(this));
         swapTasks(currentCategory.getValidTasks(tmpTasks));
     }
 
     /**
-     * updates the temporaryTaskList, is called from mainPresenter when a RequestListEvent is posted.
-     * @param tasks
+     * {@inheritDoc}
      */
     @Override
-    public void updateTmpTasks(List<IAdvancedTask> tasks){
+    public void updateTmpTasks(List<IAdvancedTask> tasks) {
         this.tmpTasks = tasks;
     }
 
@@ -279,17 +288,18 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     /**
      * Handles the update of a task when the name is supposed to have been given to
      * the task in the holding {@link TaskViewHolder} representation
+     *
      * @param event The object containing necessary update information.
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void handleKeyboardClosed(TaskKeyboardClosedEvent event){
-        if(event.removeTask){
+    public void handleKeyboardClosed(TaskKeyboardClosedEvent event) {
+        if (event.removeTask) {
             int rangeStart = mTasks.indexOf(event.task);
             EventBus.getDefault().post(new RemoveTaskEvent(event.task, false));
             mTasks.remove(event.task);
             notifyItemRemoved(event.position);
             notifyItemRangeChanged(rangeStart, mTasks.size());
-        }else {
+        } else {
             notifyItemChanged(event.position);
         }
     }
@@ -297,9 +307,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     /**
      * Changes the tasks that the adapter is holding, uses DiffUtil to only update the views that has
      * been changed.
+     *
      * @param newTasks The new list that is going to replace the current list of tasks
      */
-    public void swapTasks(List<IAdvancedTask> newTasks){
+    public void swapTasks(List<IAdvancedTask> newTasks) {
         final TaskDiffCallback diffCallback = new TaskDiffCallback(this.mTasks, newTasks);
         final DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffCallback);
 
@@ -311,10 +322,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     /**
      * Removes all checked tasks. Is used through removeUnvalidTasks().
      */
-    private void removeCheckedTasks(){
+    private void removeCheckedTasks() {
         //EventBus.getDefault().post(new RequestTaskListEvent(this));
-        for(IAdvancedTask task: tmpTasks){
-            if(task.isChecked()){
+        for (IAdvancedTask task : tmpTasks) {
+            if (task.isChecked()) {
                 EventBus.getDefault().post(new RemoveTaskEvent(task, true));
             }
         }
@@ -323,10 +334,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     /**
      * Removes all tasks with name == null. Is used through removeUnvalidTasks().
      */
-    private void removeNullTasks(){
+    private void removeNullTasks() {
         //EventBus.getDefault().post(new RequestTaskListEvent(this));
-        for(IAdvancedTask task: tmpTasks){
-            if(task.getName()== null){
+        for (IAdvancedTask task : tmpTasks) {
+            if (task.getName() == null) {
                 EventBus.getDefault().post(new RemoveTaskEvent(task, false));
             }
         }
@@ -335,7 +346,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     /**
      * Removes all tasks that should be deleted.
      */
-    private void removeUnvalidTasks(){
+    private void removeUnvalidTasks() {
         EventBus.getDefault().post(new RequestTaskListEvent(this));
         removeCheckedTasks();
         removeNullTasks();
@@ -343,11 +354,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     /**
      * @author Elias
-     * @version  1.1
-     * Responsibility: Given two lists of IAdvancedTasks, calculates the difference between them and
-     * calls the appropriate methods in the RecyclerView to update the view
-     * Uses: IAdvancedTask
-     * Used by: TaskAdapter
+     * @version 1.1
+     *          Responsibility: Given two lists of IAdvancedTasks, calculates the difference between them and
+     *          calls the appropriate methods in the RecyclerView to update the view
+     *          Uses: IAdvancedTask
+     *          Used by: TaskAdapter
      */
     private class TaskDiffCallback extends DiffUtil.Callback {
 
@@ -387,7 +398,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         @Override
         public Object getChangePayload(int oldItemPosition, int newItemPosition) {
 
-        return super.getChangePayload(oldItemPosition, newItemPosition);
+            return super.getChangePayload(oldItemPosition, newItemPosition);
         }
     }
 }

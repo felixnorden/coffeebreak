@@ -1,7 +1,5 @@
 package cbstudios.coffeebreak.eventbus;
 
-import cbstudios.coffeebreak.view.fragment.CategoryDeleteFragment;
-
 /**
  * Created by elias on 26/05/2017.
  */

@@ -46,5 +46,6 @@
     <string name="priority_medium">!! Medium</string>
     <string name="priority_high">!!! High</string>
     <string name="categories">Categories</string>
+    <string name="task">Task</string>
 </resources>
 

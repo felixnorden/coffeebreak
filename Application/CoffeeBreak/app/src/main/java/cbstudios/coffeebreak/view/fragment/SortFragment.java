@@ -12,16 +12,20 @@ import cbstudios.coffeebreak.R;
 import cbstudios.coffeebreak.eventbus.SortListEvent;
 
 /**
- * Created by Felix on 2017-05-23.
+ * @author Felix
+ * @version 1.0
+ *          <p>Responsibility: Show a dialog of sorting options when sorting the list of tasks</br >
+ *          Uses: sorting_array</br>
+ *          Used by: {@link cbstudios.coffeebreak.view.activity.MainActivity}
+ *          </p>
+ *
  */
 
 public class SortFragment extends DialogFragment {
-    public interface ListSortingListener {
-        void onAlphabetical();
-        void onChronological();
-        void onPriority();
-    }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

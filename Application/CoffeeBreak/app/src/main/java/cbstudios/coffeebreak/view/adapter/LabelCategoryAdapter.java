@@ -14,21 +14,22 @@ import android.widget.TextView;
 import android.widget.ViewSwitcher;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
 import cbstudios.coffeebreak.R;
 
-import cbstudios.coffeebreak.eventbus.CategoryDeletedEvent;
-import cbstudios.coffeebreak.eventbus.CategoryKeyboardClosedEvent;
-import cbstudios.coffeebreak.eventbus.RemoveCategoryFromTaskEvent;
 import cbstudios.coffeebreak.eventbus.ShowKeyboardEvent;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
-import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 /**
- * Created by elias on 20/04/2017.
+ * @author Elias, Felix
+ * @version 2.0
+ *          <p>Responsibility: Handle all {@link ILabelCategory} instances
+ *          and allow for sorting of tasks into the specific category</br >
+ *          Uses: {@link Context}, {@link ILabelCategory}</br>
+ *          Used by: {@link MergeAdapter}
+ *          </p>
  *
  */
 
@@ -106,27 +107,4 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
 
         return rowItem;
     }
-
-
-
-
-
-
-    /**
-     * Updates the number that represent number of task in the given category
-     * @param labelCategory is the current labelCategory
-     * @param categorySize is ID for a TextView field
-     */
-    /*private void updateNumberOfTaskInCategory(ILabelCategory labelCategory, TextView categorySize) {
-        List<IAdvancedTask> tasks = mainPresenter.getTasks();
-
-        for (int j = 0; j < labelCategories.size(); j++) {
-            if (labelCategory.equals(labelCategories.get(j))) {
-                if (labelCategory.getTaskCount(tasks) != 0) {
-                    categorySize.setText(Integer.toString(labelCategory.getTaskCount(tasks)));
-                }
-            }
-        }
-    }*/
-
 }

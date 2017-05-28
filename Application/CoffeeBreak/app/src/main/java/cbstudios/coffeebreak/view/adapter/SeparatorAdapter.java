@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 
 import cbstudios.coffeebreak.R;
 
@@ -15,7 +14,7 @@ import cbstudios.coffeebreak.R;
  * @author Felix
  * @version 1.0
  *          <p>Responsibility: Create separators to include into MergeAdapters in lists</br >
- *          Uses: separator_layout</br>
+ *          Uses: separator_layout, {@link Context}</br>
  *          Used by: {@link MergeAdapter}
  *          </p>
  *
@@ -33,21 +32,33 @@ public class SeparatorAdapter extends BaseAdapter{
         this.type = type;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getCount() {
         return 1;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Object getItem(int position) {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public long getItemId(int position) {
         return 0;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = LayoutInflater.from(context);

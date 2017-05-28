@@ -13,6 +13,7 @@ import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.view.activity.IAchievementView;
 import cbstudios.coffeebreak.view.adapter.AchievementAdapter;
+import cbstudios.coffeebreak.view.adapter.IAchievementAdapter;
 
 /**
  * Created by johan on 5/25/2017.
@@ -21,7 +22,7 @@ import cbstudios.coffeebreak.view.adapter.AchievementAdapter;
 public class AchievementPresenter implements IAchievementPresenter {
     private IAchievementView achievementView;
     private Model model;
-    private AchievementAdapter achievementAdapter;
+    private IAchievementAdapter achievementAdapter;
 
     public AchievementPresenter(Model model){
         this.model = model;
@@ -36,7 +37,7 @@ public class AchievementPresenter implements IAchievementPresenter {
             achievementView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
             achievementView.setNavDrawer();
             achievementView.setToolbar();
-            achievementAdapter = new AchievementAdapter(achievementView.getAppCompatActivity() , model.getToDoDataModule().getStats().getAchievementList(), model);
+            achievementAdapter = new AchievementAdapter(achievementView.getAppCompatActivity() , model.getToDoDataModule().getStats().getAchievementList());
             achievementView.setAchievementAdapter(achievementAdapter);
 
         }

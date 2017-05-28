@@ -20,16 +20,14 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.Number
  * Created by johan on 5/25/2017.
  */
 
-public class AchievementAdapter  extends RecyclerView.Adapter<AchievementAdapter.AchievementViewHolder> implements IAchievementAdapter {
+public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.AchievementViewHolder> implements IAchievementAdapter {
 
     private Context context;
     private List<IAchievement> achievementList;
-    private Model model;
 
-    public AchievementAdapter(Context context, List<IAchievement> achievementList, Model model){
+    public AchievementAdapter(Context context, List<IAchievement> achievementList) {
         this.context = context;
         this.achievementList = achievementList;
-        this.model = model;
     }
 
 
@@ -69,52 +67,52 @@ public class AchievementAdapter  extends RecyclerView.Adapter<AchievementAdapter
 
         public AchievementViewHolder(View itemView) {
             super(itemView);
-            achievementBackground =(ImageView) itemView.findViewById(R.id.achievementBackground);
+            achievementBackground = (ImageView) itemView.findViewById(R.id.achievementBackground);
             achievementSymbol = (ImageView) itemView.findViewById(R.id.achievementSymbol);
             achievementText = (TextView) itemView.findViewById(R.id.achievementText);
-            back = (ImageView)  itemView.findViewById(R.id.back);
+            back = (ImageView) itemView.findViewById(R.id.back);
             achievementNumber = (TextView) itemView.findViewById(R.id.achievementNumber);
         }
 
-        public void setUpAchievement(){
-            switch (achievement.getType()){
-                case(NumberAchievement.CREATE):
+        public void setUpAchievement() {
+            switch (achievement.getType()) {
+                case (NumberAchievement.TASK_CREATED):
                     achievementSymbol.setImageResource(R.drawable.ic_edit_black_24dp);
                     achievementText.setText("Tasks Created");
                     break;
-                case(NumberAchievement.CHECK):
+                case (NumberAchievement.TASK_CHECKED):
                     achievementSymbol.setImageResource(R.drawable.ic_done_black_24dp);
                     achievementText.setText("Tasks done");
                     break;
-                case(NumberAchievement.DAYSINAROW):
+                case (NumberAchievement.DAYS_IN_A_ROW):
                     achievementSymbol.setImageResource(R.drawable.ic_date_range_black_24dp);
                     achievementText.setText("Days in a row");
                     break;
-                case(NumberAchievement.TASKSALIVE):
+                case (NumberAchievement.TASKS_ALIVE):
                     achievementSymbol.setImageResource(R.drawable.ic_favorite_border_black_24dp);
                     achievementText.setText("Tasks alive");
                     break;
-                case(NumberAchievement.TIMESAPPSTARTED):
+                case (NumberAchievement.TIMES_APP_STARTED):
                     achievementSymbol.setImageResource(R.drawable.ic_free_breakfast_black_24dp);
                     achievementText.setText("Addicted");
                     break;
-                case(NumberAchievement.TIMESCATEGORYCREATED):
+                case (NumberAchievement.TIMES_CATEGORY_CREATED):
                     achievementSymbol.setImageResource(R.drawable.ic_create_new_folder_black_24dp);
                     achievementText.setText("Fine order");
                     break;
-                case(NumberAchievement.TIMESNAVOPEN):
+                case (NumberAchievement.TIMES_NAV_OPEN):
                     achievementSymbol.setImageResource(R.drawable.ic_menu_black_24dp);
                     achievementText.setText("Switcher");
                     break;
-                case(NumberAchievement.TIMESSETTINGSCHANGED):
+                case (NumberAchievement.TIMES_SETTINGS_CHANGED):
                     achievementSymbol.setImageResource(R.drawable.ic_build_black_24dp);
                     achievementText.setText("Changer");
                     break;
-                case(NumberAchievement.TIMESTASKDELETED):
+                case (NumberAchievement.TIMES_TASK_DELETED):
                     achievementSymbol.setImageResource(R.drawable.ic_sentiment_very_dissatisfied_black_24dp);
                     achievementText.setText("Tasks deleted");
                     break;
-                case(NumberAchievement.TIMESUPDATED):
+                case (NumberAchievement.TIMES_UPDATED):
                     achievementSymbol.setImageResource(R.drawable.ic_refresh_black_24dp);
                     achievementText.setText("Updater");
                     break;
@@ -127,14 +125,14 @@ public class AchievementAdapter  extends RecyclerView.Adapter<AchievementAdapter
             back.setBackgroundColor(Color.WHITE);
             achievementNumber.setText(Integer.toString(achievement.getNumberLimit()));
 
-            if (achievement.getIfCompleted()){
+            if (achievement.getIfCompleted()) {
                 checkWhichDifficultyCompleted();
             } else {
                 checkWhichDifficulty();
             }
         }
 
-        public  void checkWhichDifficultyCompleted(){
+        public void checkWhichDifficultyCompleted() {
             if (achievement.getNumberLimit() == 2) {
                 achievementBackground.setColorFilter(Color.rgb(205, 127, 50));
             } else if (achievement.getNumberLimit() == 5) {
@@ -146,7 +144,7 @@ public class AchievementAdapter  extends RecyclerView.Adapter<AchievementAdapter
             }
         }
 
-        public void checkWhichDifficulty(){
+        public void checkWhichDifficulty() {
             if (achievement.getNumberLimit() == 2) {
                 achievementBackground.setColorFilter(Color.rgb(80, 50, 20));
             } else if (achievement.getNumberLimit() == 5) {

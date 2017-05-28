@@ -1,9 +1,5 @@
 package cbstudios.coffeebreak.view.adapter;
 
-/**
- * Created by elias on 21/04/2017.
- */
-
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,10 +11,16 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Adapter that merges multiple  adapters and views into a single
- * adapter, lets you use multiple adapter in e.g a ListVIew.
+ * @author Elias, Felix
+ * @version 2.0
+ *          <p>Responsibility: Adapter that merges multiple adapters and views into a single
+ *          adapter, allows usage of multiple adapters in e.g a ListVIew.</br >
+ *          Uses: {@link ListAdapter}</br>
+ *          Used by: {@link cbstudios.coffeebreak.view.activity.MainActivity}
+ *          </p>
  *
  */
+
 public class MergeAdapter extends BaseAdapter implements SectionIndexer {
     protected ArrayList<ListAdapter> pieces = new ArrayList<ListAdapter>();
     protected String noItemsText;

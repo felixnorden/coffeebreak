@@ -7,7 +7,13 @@ import android.widget.TextView;
 import cbstudios.coffeebreak.R;
 
 /**
- * Created by Felix on 2017-05-20.
+ * @author Felix
+ * @version 1.0
+ *          <p>Responsibility: Template-method implementing class for handling {@link cbstudios.coffeebreak.model.tododatamodule.todolist.IListTask}
+ *          graphical representation in {@link TaskAdapter}</br >
+ *          Used by: {@link TaskAdapter}
+ *          </p>
+ *
  */
 
 class ListTaskViewHolder extends TaskAdapter.TaskViewHolder {
@@ -22,6 +28,9 @@ class ListTaskViewHolder extends TaskAdapter.TaskViewHolder {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     void setSpecificFields() {
 
