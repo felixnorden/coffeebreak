@@ -156,7 +156,7 @@ public class Statistics implements IAchievementStatistics {
     /**
      * Initialise all the achievements
      */
-    public void InitAchievement(){
+    public final void InitAchievement(){
         int[] array = new int[]{5,25,100,500};
         int[] array2 = new int[]{1,3,7,10};
         int[] array3 = new int[]{2,14,30,90};
