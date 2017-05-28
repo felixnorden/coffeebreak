@@ -6,6 +6,8 @@ import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.support.v7.util.DiffUtil;
+import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,6 +18,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ViewSwitcher;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -56,7 +59,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         public IAdvancedTask task;
         public View vPriority;
         public CheckBox cbCheckBox;
-        public EditText etTaskName;
+        public ViewSwitcher viewSwitcher;
+        public AppCompatEditText etTaskName;
+        public AppCompatTextView tvTaskName;
         public ImageView ivCategory;
         public ImageButton ibMore;
         public Drawable etBackgroundDrawable;
@@ -73,10 +78,11 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             // Layout references
             vPriority = itemView.findViewById(R.id.viewPriority);
             cbCheckBox = (CheckBox) itemView.findViewById(R.id.checkBox);
-            etTaskName = (EditText) itemView.findViewById(R.id.editTextField);
+            viewSwitcher = (ViewSwitcher) itemView.findViewById(R.id.view_switcher);
+            etTaskName = (AppCompatEditText) itemView.findViewById(R.id.editTextField);
+            tvTaskName = (AppCompatTextView) itemView.findViewById(R.id.textViewField);
             ivCategory = (ImageView) itemView.findViewById(R.id.imageViewCategory);
             ibMore = (ImageButton) itemView.findViewById(R.id.imageButtonMore);
-            etBackgroundDrawable = etTaskName.getBackground();
 
             // Set the text field listener for checking on  depending on if the task is being created or not
             etTaskName.setOnKeyListener(new View.OnKeyListener() {
@@ -95,7 +101,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                         task.setName(input);
                         EventBus.getDefault().post(new TaskKeyboardClosedEvent(itemView, getAdapterPosition(), false, task));
                         EventBus.getDefault().post(new ShowKeyboardEvent(false, etTaskName));
-                        etTaskName.clearFocus();
+                        //etTaskName.clearFocus();
                     }
                     return false;
                 }
@@ -115,13 +121,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
          */
         void setUpTask() {
             if (task.getName() != null) {
+                tvTaskName.setText(task.getName());
+                tvTaskName.setPaintFlags(tvTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                if (viewSwitcher.getDisplayedChild() == 0) {
+                    viewSwitcher.showNext();
+                }
                 cbCheckBox.setChecked(false);
                 cbCheckBox.setVisibility(View.VISIBLE);
                 ivCategory.setVisibility(View.VISIBLE);
                 ibMore.setVisibility(View.VISIBLE);
+
                 vPriority.setVisibility(View.VISIBLE);
-                etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
-                etTaskName.setText(task.getName());
                 vPriority.setBackgroundColor(Color.parseColor(task.getPriority().getColor()));
 
                 // Set Category-color if only one category is specified.
@@ -130,18 +140,20 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 } else {
                     ivCategory.setVisibility(View.INVISIBLE);
                 }
-                setTaskNameEnabled(false);
                 setSpecificFields();
             } else {
-                etTaskName.setEnabled(true);
+                etTaskName.setText("");
+                tvTaskName.setText("");
+                if(viewSwitcher.getDisplayedChild() == 1){
+                    viewSwitcher.showNext();
+                }
+
                 cbCheckBox.setChecked(false);
                 cbCheckBox.setVisibility(View.INVISIBLE);
                 ivCategory.setVisibility(View.INVISIBLE);
                 ibMore.setVisibility(View.INVISIBLE);
                 vPriority.setVisibility(View.INVISIBLE);
-                etTaskName.setText("");
 
-                setTaskNameEnabled(true);
                 etTaskName.requestFocus();
             }
         }
@@ -154,11 +166,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     task.setChecked(isChecked);
-                    etTaskName.setEnabled(!isChecked);
                     if (isChecked) {
-                        etTaskName.setPaintFlags(etTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                        tvTaskName.setPaintFlags(tvTaskName.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     } else {
-                        etTaskName.setPaintFlags(etTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+                        tvTaskName.setPaintFlags(tvTaskName.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                     }
                 }
             });

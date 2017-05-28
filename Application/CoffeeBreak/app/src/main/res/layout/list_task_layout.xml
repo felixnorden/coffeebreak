@@ -42,38 +42,58 @@
         android:layout_toEndOf="@+id/viewPriority"
         android:visibility="visible" />
 
-    <EditText
-        android:id="@+id/editTextField"
+    <ViewSwitcher
+        android:id="@id/view_switcher"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="69dp"
-        android:layout_marginTop="20dp"
-        android:layout_toStartOf="@+id/imageViewCategory"
-        android:backgroundTint="@color/colorAccent"
-        android:hint="@string/create_task_hint"
-        android:inputType="textCapSentences"
-        android:maxLines="1"
-        android:paddingTop="0dp"
-        android:textSize="16sp" />
+        android:layout_height="match_parent"
+        android:layout_marginStart="68dp"
+        android:layout_toStartOf="@id/imageViewCategory"
+        >
 
-    <TextView
-        android:id="@+id/textViewSubTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextField"
-        android:layout_marginStart="4dp"
-        android:layout_toEndOf="@+id/imageViewSubTask"
-        android:paddingTop="1dp"
-        android:text="Hello world" />
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/editTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/colorAccent"
+            android:hint="@string/create_task_hint"
+            android:textColor="@color/textAccentColor"
+            android:inputType="textCapSentences"
+            android:maxLines="1"
+            android:textSize="16sp"
+            />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textViewField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:textSize="16sp"
+            android:paddingLeft="4dp"
+            android:textColor="@color/textAccentColor"
+            />
+
+    </ViewSwitcher>
 
     <ImageView
         android:id="@+id/imageViewSubTask"
         android:layout_width="18dp"
         android:layout_height="18dp"
-        android:layout_below="@+id/editTextField"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
         android:layout_marginLeft="72dp"
         android:src="@drawable/ic_check_box_outline_blank_black_24dp"
         android:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textViewSubTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/imageViewSubTask"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="4dp"
+        android:layout_marginBottom="16dp"
+        android:paddingTop="1dp"
+        />
 
     <ImageView
         android:id="@+id/imageViewCategory"

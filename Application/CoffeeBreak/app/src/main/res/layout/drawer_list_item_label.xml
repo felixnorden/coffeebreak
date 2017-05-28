@@ -28,7 +28,7 @@
             android:layout_marginTop="4dp"
             android:inputType="textCapSentences"
             android:textAppearance="@style/CoffeeBreakTheme"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/name_view_uneditable"
@@ -37,7 +37,7 @@
             android:layout_marginTop="14dp"
             android:paddingLeft="4dp"
             android:textAlignment="viewStart"
-            android:textSize="14sp" />
+            android:textSize="16sp" />
 
 
     </ViewSwitcher>

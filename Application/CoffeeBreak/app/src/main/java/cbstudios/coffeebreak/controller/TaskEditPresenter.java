@@ -18,6 +18,7 @@ import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
+import cbstudios.coffeebreak.eventbus.SaveStateEvent;
 import cbstudios.coffeebreak.eventbus.TaskEditedEvent;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.model.Priority;
@@ -73,6 +74,7 @@ class TaskEditPresenter extends BasePresenter implements IPresenter {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPause(OnPauseEvent event) {
+        EventBus.getDefault().post(new SaveStateEvent());
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

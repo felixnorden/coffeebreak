@@ -177,32 +177,13 @@ public class MainActivity extends AppCompatActivity implements IMainView {
             @Override
             public void onRefresh() {
                 refreshItems();
-                EventBus.getDefault().post(new TimesUpdatedEvent());
             }
         });
-
-        // TODO: 2017-05-27 hahhahahah remove
-        // TODO: 2017-05-27 HAHAHA NEVAAHH!! 
-        //enableEraseDataOnShutdown();
 
         EventBus.getDefault().post(new OnCreateEvent(this));
         EventBus.getDefault().post(new TimesAppStartedEvent());
     }
 
-    //Long press on nav drawer header will reset data
-    /*private void enableEraseDataOnShutdown() {
-        TextView header = (TextView) findViewById(R.id.drawer_header);
-
-        final Context context = this;
-
-        header.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                StorageUtil.resetData(context, "Tasks");
-                throw new RuntimeException("This crash is intended.");
-            }
-        });
-    }*/
 
 
     @Override
@@ -472,6 +453,7 @@ public class MainActivity extends AppCompatActivity implements IMainView {
     private void refreshItems() {
         ITaskAdapter adapter = (ITaskAdapter) taskList.getAdapter();
         adapter.refreshItems(currentCategory);
+        EventBus.getDefault().post(new TimesUpdatedEvent());
 
         // Stop refresh animation
         swipeRefreshLayout.setRefreshing(false);

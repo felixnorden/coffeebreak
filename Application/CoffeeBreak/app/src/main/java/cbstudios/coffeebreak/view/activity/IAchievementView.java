@@ -11,11 +11,8 @@ import cbstudios.coffeebreak.view.adapter.AchievementAdapter;
  */
 
 public interface IAchievementView extends IView {
-    void setCategories(List<ILabelCategory> labelCategories, List<ITimeCategory> timeCategories);
 
     void setAchievementAdapter(AchievementAdapter adapter);
-
-    void setNavDrawer();
 
     void setToolbar();
 

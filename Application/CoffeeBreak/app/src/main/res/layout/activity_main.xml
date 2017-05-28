@@ -2,7 +2,7 @@
  <!--
     - Author Felix
     - Version 2.0
-    -          <p>Responsibility: Represent the MainActivity and its inherent componentents</br >
+    -          <p>Responsibility: Represent the MainActivity and its inherent components</br >
     -          Used by: MainActivity
     -          </p>
     -
@@ -150,9 +150,7 @@
                 android:id="@+id/drawer_header"
                 android:layout_width="240dp"
                 android:layout_height="160dp"
-                android:background="@android:color/white"
-                android:textAlignment="center"
-                android:textSize="56sp" />
+                />
 
             <cbstudios.coffeebreak.view.NonScrollListView
                 android:id="@+id/drawer_list"
@@ -186,7 +184,7 @@
                 android:backgroundTint="@android:color/white"
                 android:textAlignment="center"
                 android:text="@string/achievements"
-                android:textSize="14sp"
+                android:textSize="16sp"
                 android:textColor="@color/textPrimaryColor"
                 android:elevation="2dp"
                 app:rippleColor="@color/colorAccentLight"

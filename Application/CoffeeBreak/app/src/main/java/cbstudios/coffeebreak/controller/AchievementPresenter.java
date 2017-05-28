@@ -10,9 +10,11 @@ import cbstudios.coffeebreak.eventbus.OnPauseEvent;
 import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
+import cbstudios.coffeebreak.eventbus.SaveStateEvent;
 import cbstudios.coffeebreak.model.Model;
 import cbstudios.coffeebreak.view.activity.IAchievementView;
 import cbstudios.coffeebreak.view.adapter.AchievementAdapter;
+import cbstudios.coffeebreak.view.adapter.IAchievementAdapter;
 
 /**
  * @author Johan
@@ -23,16 +25,11 @@ import cbstudios.coffeebreak.view.adapter.AchievementAdapter;
  *          Used by: BasePresenter, IPresenterFactory, PresenterFactory.
  */
 
-public class AchievementPresenter implements IPresenter {
+class AchievementPresenter implements IPresenter{
     private IAchievementView achievementView;
     private Model model;
-    private AchievementAdapter achievementAdapter;
+    private IAchievementAdapter achievementAdapter;
 
-    /**
-     * Default constructor which needs a model to communicate with.
-     *
-     * @param model The model to communicate with.
-     */
     public AchievementPresenter(Model model) {
         this.model = model;
         EventBus.getDefault().register(this);
@@ -43,23 +40,22 @@ public class AchievementPresenter implements IPresenter {
     public void onCreate(OnCreateEvent event) {
         if (event.object instanceof IAchievementView) {
             achievementView = (IAchievementView) event.object;
-            achievementView.setCategories(model.getToDoDataModule().getLabelCategories(), model.getToDoDataModule().getTimeCategories());
-            achievementView.setNavDrawer();
             achievementView.setToolbar();
             achievementAdapter = new AchievementAdapter(model.getToDoDataModule().getStats().getAchievementList());
-            achievementView.setAchievementAdapter(achievementAdapter);
+            achievementView.setAchievementAdapter((AchievementAdapter) achievementAdapter);
 
         }
     }
 
-    @Override
+    @Subscribe (threadMode = ThreadMode.MAIN)
     public void onPause(OnPauseEvent event) {
-
+        if(event.object instanceof IAchievementView)
+            EventBus.getDefault().post(new SaveStateEvent());
     }
 
     @Override
     public void onResume(OnResumeEvent event) {
-
+        
     }
 
     @Override

@@ -22,7 +22,7 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.Number
  *          Used by: AchievementActivity.
  *          </p>
  */
-public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.AchievementViewHolder> {
+public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.AchievementViewHolder> implements IAchievementAdapter {
 
     private List<IAchievement> achievementList;
 
@@ -58,9 +58,11 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         return achievementList.size();
     }
 
-    /**
-     *
-     */
+    @Override
+    public void refreshItems() {
+        return;
+    }
+
     public static class AchievementViewHolder extends RecyclerView.ViewHolder {
 
         public IAchievement achievement;

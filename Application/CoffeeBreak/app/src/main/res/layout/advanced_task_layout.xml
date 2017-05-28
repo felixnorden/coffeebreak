@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
     - Author Felix
     - Version 2.0
     -          <p>Responsibility: Represent a AdvancedTask in the RecyclerView of the activity_main-layout</br >
@@ -11,29 +10,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="88dp"
-    android:orientation="horizontal"
     android:background="?attr/selectableItemBackgroundBorderless"
-    app:elevation="2dp"
-    android:translationZ="4dp">
+    android:orientation="horizontal"
+    android:translationZ="4dp"
+    app:elevation="2dp">
 
     <View
         android:id="@+id/viewTaskType"
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_alignParentBottom="true"
-        android:background="@color/colorPrimary"
-        />
+        android:background="@color/colorPrimary" />
 
     <View
         android:id="@+id/viewPriority"
         android:layout_width="8dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
         android:background="@color/colorAccent"
         android:visibility="visible" />
-
 
 
     <CheckBox
@@ -45,51 +42,70 @@
         android:layout_toEndOf="@+id/viewPriority"
         android:visibility="visible" />
 
-    <EditText
-        android:id="@+id/editTextField"
+    <ViewSwitcher
+        android:id="@+id/view_switcher"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_toStartOf="@+id/imageViewCategory"
-        android:hint="@string/create_task_hint"
-        android:inputType="textCapSentences"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="69dp"
-        android:paddingTop="0dp"
-        android:maxLines="1"
-        android:textSize="16sp"
-        android:backgroundTint="@color/colorAccent"/>
+        android:layout_height="match_parent"
+        android:layout_marginStart="68dp"
+        android:layout_marginEnd="76dp"
+        >
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/editTextField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/colorAccent"
+            android:hint="@string/create_task_hint"
+            android:textColor="@color/textAccentColor"
+            android:inputType="textCapSentences"
+            android:maxLines="1"
+            android:textSize="16sp"
+            />
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/textViewField"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:textSize="16sp"
+            android:paddingLeft="4dp"
+            android:textColor="@color/textAccentColor"
+            />
+
+    </ViewSwitcher>
 
     <TextView
         android:id="@+id/subTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="1dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="72dp"
-        android:text="Hello world"
-        android:layout_below="@+id/editTextField"/>
+        android:layout_marginBottom="16dp"
+        android:paddingTop="1dp"
+        />
 
     <ImageView
         android:id="@+id/imageViewCategory"
-        android:contentDescription="@string/description_category"
-        app:srcCompat="@drawable/ic_dot_white_24dp"
-        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toStartOf="@+id/imageButtonMore"/>
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/imageButtonMore"
+        android:contentDescription="@string/description_category"
+        app:srcCompat="@drawable/ic_dot_white_24dp" />
 
 
     <ImageButton
         android:id="@+id/imageButtonMore"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:padding="12dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="4dp"
         android:layout_centerVertical="true"
+        android:layout_marginEnd="4dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/task_information"
-        android:visibility="visible"
+        android:padding="12dp"
         android:src="@drawable/ic_more_horiz_black_24dp"
-        android:background="?attr/selectableItemBackgroundBorderless"/>
+        android:visibility="visible" />
 
 
 </RelativeLayout>
