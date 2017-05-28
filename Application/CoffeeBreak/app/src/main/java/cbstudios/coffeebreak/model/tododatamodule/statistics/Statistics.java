@@ -153,21 +153,13 @@ public class Statistics implements IAchievementStatistics {
         notifyAllObservers();
     }
 
-
-    /*private void checkAchievement(String name, int stats) {
-        for (int i = 0; i < achievementList.size(); i++){
-            if(achievementList.get(i).getName().equals(name) && !(achievementList.get(i).getIfCompleted())){
-                    achievementList.get(i).checkIfCompleted(stats);
-            }
-        }
-    }*/
-
     /**
      * Initialise all the achievements
      */
-    public final void InitAchievement(){
-        //int[] array = new int[]{5,25,100,500};
-        int[] array = new int[]{2,5,8,10};
+    public void InitAchievement(){
+        int[] array = new int[]{5,25,100,500};
+        int[] array2 = new int[]{1,3,7,10};
+        int[] array3 = new int[]{2,14,30,90};
 
         addToList("Create", array, NumberAchievement.TASK_CREATED);
         addToList("Check", array, NumberAchievement.TASK_CHECKED);
@@ -175,10 +167,10 @@ public class Statistics implements IAchievementStatistics {
         addToList("TimesAppStarted", array, NumberAchievement.TIMES_APP_STARTED);
         addToList("TimesNavOpen", array, NumberAchievement.TIMES_NAV_OPEN);
         addToList("TimesTaskDeleted", array, NumberAchievement.TIMES_TASK_DELETED);
-        addToList("TimesCategoryCreated", array, NumberAchievement.TIMES_CATEGORY_CREATED);
-        addToList("TimesSettingsChanged", array, NumberAchievement.TIMES_CATEGORY_CREATED);
+        addToList("TimesCategoryCreated", array2, NumberAchievement.TIMES_CATEGORY_CREATED);
+        addToList("TimesSettingsChanged", array2, NumberAchievement.TIMES_SETTINGS_CHANGED);
         addToList("TasksAlive", array, NumberAchievement.TASKS_ALIVE);
-        addToList("DaysInARow", array, NumberAchievement.DAYS_IN_A_ROW);
+        addToList("DaysInARow", array3, NumberAchievement.DAYS_IN_A_ROW);
     }
 
     public void addToList(String name, int[] arr, int type){

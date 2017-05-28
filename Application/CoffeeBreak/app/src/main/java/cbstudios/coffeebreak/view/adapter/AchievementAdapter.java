@@ -132,26 +132,28 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
             }
         }
 
-        public void checkWhichDifficultyCompleted() {
-            if (achievement.getNumberLimit() == 2) {
+
+        public  void checkWhichDifficultyCompleted(){
+            if (achievement.getNumberLimit() == 2 || achievement.getNumberLimit() == 1 || achievement.getNumberLimit() == 5) {
                 achievementBackground.setColorFilter(Color.rgb(205, 127, 50));
-            } else if (achievement.getNumberLimit() == 5) {
+            } else if (achievement.getNumberLimit() == 3 || achievement.getNumberLimit() == 14 || achievement.getNumberLimit() == 25) {
                 achievementBackground.setColorFilter(Color.rgb(192, 192, 192));
-            } else if (achievement.getNumberLimit() == 8) {
+            } else if (achievement.getNumberLimit() == 7 || achievement.getNumberLimit() == 30 || achievement.getNumberLimit() == 100) {
                 achievementBackground.setColorFilter(Color.rgb(255, 215, 0));
-            } else if (achievement.getNumberLimit() == 10) {
+            } else if (achievement.getNumberLimit() == 10 || achievement.getNumberLimit() == 90 || achievement.getNumberLimit() == 500) {
                 achievementBackground.setColorFilter(Color.rgb(185, 242, 255));
             }
         }
 
-        public void checkWhichDifficulty() {
-            if (achievement.getNumberLimit() == 2) {
+
+        public void checkWhichDifficulty(){
+            if (achievement.getNumberLimit() == 2 || achievement.getNumberLimit() == 1 || achievement.getNumberLimit() == 5) {
                 achievementBackground.setColorFilter(Color.rgb(80, 50, 20));
-            } else if (achievement.getNumberLimit() == 5) {
+            } else if (achievement.getNumberLimit() == 3 || achievement.getNumberLimit() == 14 || achievement.getNumberLimit() == 25) {
                 achievementBackground.setColorFilter(Color.rgb(75, 75, 75));
-            } else if (achievement.getNumberLimit() == 8) {
+            } else if (achievement.getNumberLimit() == 7 || achievement.getNumberLimit() == 30 || achievement.getNumberLimit() == 100) {
                 achievementBackground.setColorFilter(Color.rgb(100, 84, 0));
-            } else if (achievement.getNumberLimit() == 10) {
+            } else if (achievement.getNumberLimit() == 10 || achievement.getNumberLimit() == 90 || achievement.getNumberLimit() == 500) {
                 achievementBackground.setColorFilter(Color.rgb(0, 90, 110));
             }
         }

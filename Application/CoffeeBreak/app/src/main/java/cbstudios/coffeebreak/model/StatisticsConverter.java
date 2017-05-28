@@ -51,9 +51,9 @@ public class StatisticsConverter implements IConverter<Statistics> {
         statisticsObject.addProperty("TimesCategoryCreated", statistics.getTimesCategoryCreated());
         statisticsObject.addProperty("TimesSettingsChanged", statistics.getTimesSettingsChanged());
         statisticsObject.addProperty("TasksAlive", statistics.getTasksAlive());
-        //statisticsObject.addProperty("DaysInARow", statistics.getTasksAlive());
+        statisticsObject.addProperty("DaysInARow", statistics.getTasksAlive());
 
-        //statisticsObject.addProperty("LastDayCheckedTask", statistics.getLastDayCheckedTask().getTimeInMillis());
+        statisticsObject.addProperty("LastDayCheckedTask", statistics.getLastDayCheckedTask().getTimeInMillis());
         return statisticsObject;
     }
 
