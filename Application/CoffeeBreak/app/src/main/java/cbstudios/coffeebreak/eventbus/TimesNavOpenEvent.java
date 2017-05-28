@@ -1,8 +1,13 @@
 package cbstudios.coffeebreak.eventbus;
 
 /**
- * Created by johan on 5/21/2017.
+ * @author Johan
+ * @version 1.0
+ *          <p>Responsibility: Send event navDrawer is opened </br >
+ *          Used by: MainPresenter
+ *          </p>
  */
+
 
 public class TimesNavOpenEvent implements IEvent {
 }

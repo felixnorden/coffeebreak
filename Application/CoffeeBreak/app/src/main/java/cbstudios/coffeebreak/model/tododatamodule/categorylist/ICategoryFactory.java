@@ -45,5 +45,9 @@ public interface ICategoryFactory {
      */
     ITimeCategory createSingleDayCategory(String name, Calendar date);
 
+    /**
+     *
+     * @return a category that will represent all tasks
+     */
     ITimeCategory createAllCategory();
 }

@@ -12,6 +12,10 @@ package cbstudios.coffeebreak.eventbus;
 public class OnDestroyEvent implements IActivityEvent {
     public final Object object;
 
+    /**
+     *
+     * @param o is the current object
+     */
     public OnDestroyEvent(Object o) {
         this.object = o;
     }

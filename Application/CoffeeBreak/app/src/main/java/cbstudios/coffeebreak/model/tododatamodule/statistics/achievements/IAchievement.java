@@ -10,12 +10,16 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.IAchievementStatist
  * @author Johan
  * @version 1.1
  *          <p>Responsibility: Abstraction interface for numberAchievement </br >
- *          Used by: Statistics
+ *          Used by: Statistics, AchievementAdapter, AchievementConverter, DelegatingPresenter, NumberAchievement
  *          </p>
  *
  */
 public interface IAchievement {
 
+    /**
+     * Updates all achievement to see if they are completed
+     * @param stats is all the statistics
+     */
     void update(IAchievementStatistics stats);
 
     /**
@@ -26,6 +30,7 @@ public interface IAchievement {
 
     /**
      * Set the achievement to completed by changing a boolean to true
+     * @param isCompleted is true if the achievement will be set completed, false if not
      */
     void setIsCompleted(boolean isCompleted);
 
@@ -36,7 +41,7 @@ public interface IAchievement {
 
     /**
      * Checks if the achievement is completed and sets the boolean true if it is, false if not
-     * @param number
+     * @param number is the number representing the achievements statistic
      */
     void checkIfCompleted(int number);
 

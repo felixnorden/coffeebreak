@@ -30,6 +30,11 @@ class SingleDayTimeCategory implements ITimeCategory {
     private String name;
     private Calendar time;
 
+    /**
+     *
+     * @param name is the name of the category
+     * @param time is which day the category represents
+     */
     SingleDayTimeCategory(String name, Calendar time) {
         this.name = name;
         this.time = time;
@@ -85,14 +90,6 @@ class SingleDayTimeCategory implements ITimeCategory {
     @Override
     public Calendar getTime() {
         return time;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void setTime(Calendar time) {
-        this.time = time;
     }
 
     /**

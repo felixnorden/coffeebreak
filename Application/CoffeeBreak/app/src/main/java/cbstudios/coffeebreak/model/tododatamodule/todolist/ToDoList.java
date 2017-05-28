@@ -3,7 +3,6 @@ package cbstudios.coffeebreak.model.tododatamodule.todolist;
 import java.util.ArrayList;
 import java.util.List;
 
-import cbstudios.coffeebreak.model.tododatamodule.categorylist.ICategory;
 import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
 
 /**
@@ -11,7 +10,7 @@ import cbstudios.coffeebreak.model.tododatamodule.categorylist.ILabelCategory;
  * @version 1.0
  *          <p>Responsibility: Represents the data in  the ToDo list</br >
  *          Uses: IAdvancedTask, ITaskFactory, TaskFactory, IListTask</br>
- *          Used by:
+ *          Used by: ToDoDataModule
  *          </p>
  */
 public class ToDoList {

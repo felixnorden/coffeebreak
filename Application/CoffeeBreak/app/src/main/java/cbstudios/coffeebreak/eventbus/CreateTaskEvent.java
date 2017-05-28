@@ -1,7 +1,11 @@
 package cbstudios.coffeebreak.eventbus;
 
 /**
- * Created by johan on 5/21/2017.
+ * @author Johan
+ * @version 1.0
+ *          <p>Responsibility: Send event when Task is created </br >
+ *          Used by: MainPresenter
+ *          </p>
  */
 
 public class CreateTaskEvent implements IEvent{

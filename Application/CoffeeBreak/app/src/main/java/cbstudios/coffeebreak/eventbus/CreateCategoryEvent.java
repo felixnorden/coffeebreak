@@ -1,7 +1,11 @@
 package cbstudios.coffeebreak.eventbus;
 
 /**
- * Created by elias on 23/05/2017.
+ * @author Elias
+ * @version 1.0
+ *          <p>Responsibility: Send event when category is created </br >
+ *          Used by: MainPresenter, MainActivity, AchievementActivity
+ *          </p>
  */
 
 public class CreateCategoryEvent {

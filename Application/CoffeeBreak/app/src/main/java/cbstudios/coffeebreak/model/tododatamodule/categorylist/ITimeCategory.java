@@ -25,13 +25,6 @@ public interface ITimeCategory extends ICategory {
     Calendar getTime();
 
     /**
-     * Will never be used?
-     *
-     * @param time
-     */
-    void setTime(Calendar time);
-
-    /**
      * An equals method that compares a timeCategory with another object to check if they are
      * the same
      *

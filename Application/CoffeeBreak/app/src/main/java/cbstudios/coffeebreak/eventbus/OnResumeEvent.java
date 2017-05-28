@@ -12,6 +12,10 @@ package cbstudios.coffeebreak.eventbus;
 public class OnResumeEvent implements IActivityEvent {
     public final Object object;
 
+    /**
+     *
+     * @param o is the current object
+     */
     public OnResumeEvent(Object o) {
         this.object = o;
     }

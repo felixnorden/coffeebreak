@@ -8,7 +8,7 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.IAchievementStatist
  *          <p>Responsibility: To check if the int NumberLimit is reached
  *          and set itself as completed</br >
  *          Uses: IAchievement </br>
- *          Used by: Statistics
+ *          Used by: Statistics, AchievementAdapter, AchievementConverter, AchievementFactory
  *          </p>
  *
  */
@@ -37,6 +37,7 @@ public class NumberAchievement implements IAchievement {
      * @param name        is the name of the achievement
      * @param numberLimit is the number of times a specific assigment has to done
      *                    in order to complete the achievement
+     * @param type is a int needed for a switch case
      */
     public NumberAchievement(String name, int numberLimit, int type) {
         this.name = name;
@@ -87,6 +88,9 @@ public class NumberAchievement implements IAchievement {
         ;
     }
 
+    /**
+     * Constructor used by achievementConverter when loading from Json
+     */
     public NumberAchievement() {
 
     }

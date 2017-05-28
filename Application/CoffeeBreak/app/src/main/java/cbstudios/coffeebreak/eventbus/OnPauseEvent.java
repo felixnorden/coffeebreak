@@ -14,6 +14,10 @@ package cbstudios.coffeebreak.eventbus;
 public class OnPauseEvent implements IActivityEvent {
     public final Object object;
 
+    /**
+     *
+     * @param o is the current object
+     */
     public OnPauseEvent(Object o) {
         this.object = o;
     }

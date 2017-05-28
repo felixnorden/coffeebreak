@@ -12,6 +12,10 @@ package cbstudios.coffeebreak.eventbus;
 public class OnCreateEvent implements IActivityEvent {
     public final Object object;
 
+    /**
+     *
+     * @param o is the current object
+     */
     public OnCreateEvent(Object o) {
         this.object = o;
     }

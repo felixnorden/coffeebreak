@@ -1,8 +1,13 @@
 package cbstudios.coffeebreak.eventbus;
 
 /**
- * Created by Felix on 2017-05-22.
+ * @author Felix
+ * @version 1.0
+ *          <p>Responsibility: Send event when state needs to be saved </br >
+ *          Used by: MainPresenter, DelegatingPresenter
+ *          </p>
  */
+
 
 public class SaveStateEvent {
 }

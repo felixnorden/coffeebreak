@@ -4,7 +4,7 @@ package cbstudios.coffeebreak.model.tododatamodule.statistics;
  * @author Johan
  * @version 1.1
  *          <p>Responsibility: Abstraction for the Statistic class </br >
- *          Used by: Statistics
+ *          Used by: Statistics, IAchievement, NumberAchievement
  *          </p>
  *
  */

@@ -10,6 +10,10 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 public class EditTaskEvent implements IEvent {
     public final IAdvancedTask task;
 
+    /**
+     *
+     * @param task is the task that will be edited
+     */
     public EditTaskEvent(IAdvancedTask task) {
         this.task = task;
     }

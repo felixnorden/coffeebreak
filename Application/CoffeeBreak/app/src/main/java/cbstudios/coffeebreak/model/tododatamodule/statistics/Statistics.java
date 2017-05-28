@@ -13,7 +13,7 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.Number
  * @version 1.2
  *          <p>Responsibility: To hold the apps statistic and achievements </br >
  *          Uses: IAchievement, IAchievementStatistics </br>
- *          Used by: ToDoDataModule
+ *          Used by: ToDoDataModule, StatisticConverter, DelegatingPresenter
  *          </p>
  *
  */
@@ -55,18 +55,10 @@ public class Statistics implements IAchievementStatistics {
         InitAchievement();
     }
 
+    /**
+     * Will update the whole achievementList if they are completed
+     */
     public void notifyAllObservers(){
-        /*System.out.println("create" + createdTasks);
-        System.out.println("check" +checkOffTasks);
-        System.out.println("alive" +tasksAlive);
-        System.out.println("started" + timesAppStarted);
-        System.out.println("cate" +timesCategoryCreated);
-        System.out.println("nav" +timesNavOpen);
-        System.out.println("days" +daysInARow);
-        System.out.println("set" +timesSettingsChanged);
-        System.out.println("del" +timesTaskDeleted);
-        System.out.println("upd" +timesUpdated);*/
-
         for (IAchievement achievement : achievementList) {
             achievement.update(this);
         }
@@ -175,6 +167,12 @@ public class Statistics implements IAchievementStatistics {
         addToList("DaysInARow", array3, NumberAchievement.DAYS_IN_A_ROW);
     }
 
+    /**
+     *
+     * @param name is the name of the achievement
+     * @param arr is the array that holds the achievements numberLimit
+     * @param type is the type of the achievement used for a switch case
+     */
     public void addToList(String name, int[] arr, int type){
         for (int i = 0; i < arr.length; i++) {
             achievementList.add(AchievementFactory.getInstance().createNumberAchievements(name, arr[i], type));
