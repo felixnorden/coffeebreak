@@ -1,13 +1,15 @@
 package cbstudios.coffeebreak.model.tododatamodule.categorylist;//
-//  @ Project : Untitled
-//  @ File Name : cbstudios.coffeebreak.model.toDoDataModule.categoryList.ICategoryFactory.java
-//  @ cbstudios.coffeebreak.model.toDoDataModule.categoryList.Date : 03/04/2017
-//  @ Author :
+
 
 import java.util.Calendar;
 
 /**
- * The interface for the CategoryFactory
+ * @author Elias
+ * @version 1.0
+ *          <p>Responsibility: Abstraction interface for categoryFactory </br >
+ *          Used by: CategoryList
+ *          </p>
+ *
  */
 public interface ICategoryFactory {
 

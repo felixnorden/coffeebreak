@@ -1,19 +1,17 @@
 package cbstudios.coffeebreak.model.tododatamodule.categorylist;
-//
-
-//  @ Project : Untitled
-//  @ File Name : cbstudios.coffeebreak.model.toDoDataModule.categoryList.CategoryList.java
-//  @ cbstudios.coffeebreak.model.toDoDataModule.categoryList.Date : 03/04/2017
-//  @ Author : 
-//
-//
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 /**
- * A class that holds both Lists of Categories
+ * @author Johan
+ * @version 1.0
+ *          <p>Responsibility: Holds all categories</br >
+ *          Uses: ILabelCategory, ITimeCategory, LabelCategory, TimeCategory </br>
+ *          Used by: ToDoDataModule
+ *          </p>
+ *
  */
 
 public class CategoryList implements ICategoryList {

@@ -13,7 +13,13 @@ import java.util.Random;
 import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 /**
- * A class that is responsibly for creating and changing the LabelCategories
+ * @author Johan, Felix
+ * @version 1.1
+ *          <p>Responsibility: The main usage is to filter tasks by using different labelCategories </br >
+ *          Uses: ILabelCategory, IAdvancedTask </br>
+ *          Used by: CategoryList, CategoryFactory
+ *          </p>
+ *
  */
 class LabelCategory implements ILabelCategory {
     // Max integer for random interval for color generation
