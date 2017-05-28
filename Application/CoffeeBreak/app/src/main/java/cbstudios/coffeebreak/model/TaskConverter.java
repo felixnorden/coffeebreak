@@ -270,7 +270,7 @@ public class TaskConverter implements IListConverter<IAdvancedTask> {
 
         JsonArray categories = object.getAsJsonArray("Categories");
 
-        if (!categories.isJsonNull()) {
+        if (categories == null) {
             for (int i = 0; i < categories.size(); i++) {
                 JsonObject jsonCategory = categories.get(i).getAsJsonObject();
                 String name = jsonCategory.get("Name").getAsString();
