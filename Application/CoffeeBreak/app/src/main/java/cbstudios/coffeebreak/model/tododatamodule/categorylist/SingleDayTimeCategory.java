@@ -64,9 +64,6 @@ class SingleDayTimeCategory implements ITimeCategory {
     public List<IAdvancedTask> getValidTasks(List<IAdvancedTask> tasks) {
         List<IAdvancedTask> validTasks = new ArrayList<>();
         for (IAdvancedTask task : tasks) {
-            if (task.getNotification() != null) {
-            }
-
             if (task.getName() == null || task.getNotification() == null || isInIntervall(task.getNotification())) {
                 validTasks.add(task);
             }
@@ -112,12 +109,12 @@ class SingleDayTimeCategory implements ITimeCategory {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o){ return true;}
+        if (o == null || getClass() != o.getClass()){ return false;}
 
         SingleDayTimeCategory that = (SingleDayTimeCategory) o;
 
-        if (name != null ? !name.equals(that.getName()) : that.name != null) return false;
+        if (name != null ? !name.equals(that.getName()) : that.name != null){ return false;}
         return time != null ? time.equals(that.time) : that.time == null;
 
     }

@@ -93,14 +93,12 @@ import cbstudios.coffeebreak.view.fragment.SortFragment;
 public class MainActivity extends AppCompatActivity  implements IMainView {
     
     // Layout elements
-    private ActionBarDrawerToggle mActionBarDrawerToggle;
     private ScrollView mDrawer;
     private DrawerLayout mDrawerLayout;
     private NonScrollListView mDrawerList;
     private Toolbar mToolbar;
     private FloatingActionButton fabAddBtn, fabAdvBtn, fabListBtn;
     private TextView txtAdvBtn, txtListBtn;
-    private ImageButton mAddCategoryButton;
     private RecyclerView taskList;
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -195,7 +193,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
     }
 
     //Long press on nav drawer header will reset data
-    private void enableEraseDataOnShutdown() {
+    /*private void enableEraseDataOnShutdown() {
         TextView header = (TextView) findViewById(R.id.drawer_header);
 
         final Context context = this;
@@ -207,7 +205,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
                 throw new RuntimeException("This crash is intended.");
             }
         });
-    }
+    }*/
 
     /**
      * {@inheritDoc}
@@ -351,7 +349,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
         mDrawerList = (NonScrollListView) findViewById(R.id.drawer_list);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawer.setBackgroundColor(Color.WHITE);
-        mAddCategoryButton = (ImageButton) findViewById(R.id.add_category);
+        ImageButton mAddCategoryButton = (ImageButton) findViewById(R.id.add_category);
 
 
         final SeparatorAdapter timeSeparator = new SeparatorAdapter(this, SeparatorAdapter.TIME_CATEGORY);
@@ -463,7 +461,6 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
      * Request a new presenter to be attached
      */
     private void attachPresenter(){
-            System.out.println("Request sent");
             EventBus.getDefault().post(new RequestPresenterEvent(this));
     }
 
@@ -573,14 +570,14 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
      */
     private void selectItem(int position) {
 
-        if(position == 0 || position == 6)
+        if(position == 0 || position == 6) {
             return;
+        }
         // Highlight the selected item, update the title, and close the drawer
         mDrawerList.setItemChecked(position, true);
         ICategory category = (ICategory) mDrawerList.getAdapter().getItem(position);
         setTitle(category.getName());
         currentCategory = category;
-        System.out.println(currentCategory.getName());
 
         // Set adapter
         TaskAdapter taskAdapter = (TaskAdapter) taskList.getAdapter();
@@ -595,7 +592,7 @@ public class MainActivity extends AppCompatActivity  implements IMainView {
      * Setups the Navigation drawer button
      */
     private void setDrawerButton() {
-        mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
+        ActionBarDrawerToggle mActionBarDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, mToolbar, R.string.drawer_open, R.string.drawer_close);
         mActionBarDrawerToggle.syncState();
 
         mDrawerLayout.addDrawerListener(mActionBarDrawerToggle);

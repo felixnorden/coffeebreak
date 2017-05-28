@@ -17,7 +17,7 @@ import cbstudios.coffeebreak.model.tododatamodule.todolist.IAdvancedTask;
 
 public class TaskSorter{
 
-    private static TaskSorter INSTANCE = new TaskSorter();
+    private final static TaskSorter INSTANCE = new TaskSorter();
 
     /**
      * Fetches the singleton instance of the TaskSorter
@@ -65,8 +65,9 @@ public class TaskSorter{
     private class ChronologicalComparator implements Comparator<IAdvancedTask>{
         @Override
         public int compare(IAdvancedTask t1, IAdvancedTask t2) {
-            if(t1.getCreationCalendar().compareTo(t2.getCreationCalendar()) == 0)
+            if(t1.getCreationCalendar().compareTo(t2.getCreationCalendar()) == 0) {
                 return t1.getName().compareTo(t2.getName());
+            }
             return t1.getCreationCalendar().getTime().compareTo(t2.getCreationCalendar().getTime());
         }
     }
@@ -74,8 +75,9 @@ public class TaskSorter{
     private class PriorityComparator implements Comparator<IAdvancedTask>{
         @Override
         public int compare(IAdvancedTask t1, IAdvancedTask t2) {
-            if(t1.getPriority().compareTo(t2.getPriority()) == 0)
+            if(t1.getPriority().compareTo(t2.getPriority()) == 0) {
                 return t1.getName().compareTo(t2.getName());
+            }
             return t1.getPriority().compareTo(t2.getPriority());
         }
     }

@@ -78,9 +78,6 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onPause(OnPauseEvent event) {
-        if (event.object == view) {
-
-        }
     }
 
     /**
@@ -88,9 +85,6 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onResume(OnResumeEvent event) {
-        if (event.object == view) {
-
-        }
     }
 
     /**
@@ -98,9 +92,6 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDestroy(OnDestroyEvent event) {
-        if (event.object == view) {
-
-        }
     }
 
     /**
@@ -118,8 +109,9 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onStart(OnStartEvent event) {
-        if (event.object == view)
+        if (event.object == view) {
             EventBus.getDefault().register(this);
+        }
     }
 
     /**
@@ -235,8 +227,9 @@ class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
     private void updateLabels() {
         String newName = view.getNewLabelText();
 
-        if (newName == null || newName.equals(""))
+        if (newName == null || newName.equals("")) {
             return;
+        }
 
         if (!task.hasILabelCategory(newName)) {
             task.addLabel(model.getToDoDataModule().getLabelCategory(newName));

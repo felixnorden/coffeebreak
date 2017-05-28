@@ -51,5 +51,9 @@ public interface IMainView extends IView {
      * @param category category to be set
      */
     void setCurrentCategory(ICategory category);
+
+    /**
+     * updates the view of the navigation drawer
+     */
     void updateNavDrawerList();
 }

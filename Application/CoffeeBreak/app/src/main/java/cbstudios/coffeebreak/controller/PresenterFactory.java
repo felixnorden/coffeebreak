@@ -17,7 +17,7 @@ import cbstudios.coffeebreak.view.activity.ITaskEditView;
  */
 
 public class PresenterFactory implements IPresenterFactory{
-    private static IPresenterFactory INSTANCE = new PresenterFactory();
+    private final static IPresenterFactory INSTANCE = new PresenterFactory();
 
     /**
      *

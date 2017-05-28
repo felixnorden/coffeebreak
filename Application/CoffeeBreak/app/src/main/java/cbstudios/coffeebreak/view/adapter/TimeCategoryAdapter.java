@@ -43,7 +43,7 @@ public class TimeCategoryAdapter extends ArrayAdapter<ITimeCategory> {
 
         final ITimeCategory timeCategory = getItem(position);
         final TextView etNameView = (TextView) rowItem.findViewById(R.id.nameView);
-        TextView categorySize = (TextView) rowItem.findViewById(R.id.textViewNumber);
+        //TextView categorySize = (TextView) rowItem.findViewById(R.id.textViewNumber);
 
 
         if (timeCategory.getName() != null) {

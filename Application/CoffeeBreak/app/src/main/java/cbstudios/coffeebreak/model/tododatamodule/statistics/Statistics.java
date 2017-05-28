@@ -54,7 +54,7 @@ public class Statistics implements IAchievementStatistics {
     }
 
     public void notifyAllObservers(){
-        System.out.println("create" + createdTasks);
+        /*System.out.println("create" + createdTasks);
         System.out.println("check" +checkOffTasks);
         System.out.println("alive" +tasksAlive);
         System.out.println("started" + timesAppStarted);
@@ -63,7 +63,7 @@ public class Statistics implements IAchievementStatistics {
         System.out.println("days" +daysInARow);
         System.out.println("set" +timesSettingsChanged);
         System.out.println("del" +timesTaskDeleted);
-        System.out.println("upd" +timesUpdated);
+        System.out.println("upd" +timesUpdated);*/
 
         for (IAchievement achievement : achievementList) {
             achievement.update(this);
@@ -153,25 +153,19 @@ public class Statistics implements IAchievementStatistics {
         notifyAllObservers();
     }
 
-    /**
-     * Loop through the list and checks if a new achievement is completed
-     * @param name is the name of the wanted achievement
-     * @param stats is the stats achieved and compared to the achievement
-     */
-    private void checkAchievement(String name, int stats) {
+
+    /*private void checkAchievement(String name, int stats) {
         for (int i = 0; i < achievementList.size(); i++){
-            if(achievementList.get(i).getName().equals(name)){
-                if(!(achievementList.get(i).getIfCompleted())){
+            if(achievementList.get(i).getName().equals(name) && !(achievementList.get(i).getIfCompleted())){
                     achievementList.get(i).checkIfCompleted(stats);
-                }
             }
         }
-    }
+    }*/
 
     /**
      * Initialise all the achievements
      */
-    public void InitAchievement(){
+    public final void InitAchievement(){
         //int[] array = new int[]{5,25,100,500};
         int[] array = new int[]{2,5,8,10};
 
@@ -279,7 +273,6 @@ public class Statistics implements IAchievementStatistics {
 
     public void setLastDayCheckedTask(Calendar lastDayCheckedTask){
         this.lastDayCheckedTask = lastDayCheckedTask;
-        System.out.println("okajjjj");
     }
 
     public void setAchievementList(List<IAchievement> achievementList) {

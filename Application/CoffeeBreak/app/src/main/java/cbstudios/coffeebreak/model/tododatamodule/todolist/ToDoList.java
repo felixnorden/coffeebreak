@@ -51,8 +51,9 @@ public class ToDoList {
                 break;
             }
         }
-        if (found)
+        if (found) {
             tasks.remove(index);
+        }
     }
 
     /**

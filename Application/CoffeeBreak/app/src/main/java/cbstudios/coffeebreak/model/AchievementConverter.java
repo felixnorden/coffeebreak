@@ -15,7 +15,7 @@ import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.Number
 
 public class AchievementConverter {
 
-    private static AchievementConverter INSTANCE = new AchievementConverter();
+    private final static AchievementConverter INSTANCE = new AchievementConverter();
 
     public static AchievementConverter getInstance() { return  INSTANCE;}
 

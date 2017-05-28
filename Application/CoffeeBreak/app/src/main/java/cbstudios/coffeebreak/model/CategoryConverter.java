@@ -21,7 +21,7 @@ import cbstudios.coffeebreak.util.IListConverter;
  */
 public class CategoryConverter implements IListConverter<ILabelCategory> {
 
-    private static CategoryConverter INSTANCE = new CategoryConverter();
+    private final static CategoryConverter INSTANCE = new CategoryConverter();
     private ICategoryFactory factory = CategoryFactory.getInstance();
 
 

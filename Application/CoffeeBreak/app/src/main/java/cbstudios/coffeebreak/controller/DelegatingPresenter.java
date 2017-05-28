@@ -83,8 +83,9 @@ class DelegatingPresenter {
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void updateMainContext(UpdateContextReferenceEvent event) {
-        if (event.context instanceof IMainView)
+        if (event.context instanceof IMainView) {
             this.mContext = event.context;
+        }
     }
 
     /**
@@ -188,8 +189,9 @@ class DelegatingPresenter {
         try {
             element = StorageUtil.load(mContext.getApplicationContext(), "Tasks");
 
-            if (element == null || !element.isJsonArray())
+            if (element == null || !element.isJsonArray()) {
                 return;
+            }
 
             JsonArray array = element.getAsJsonArray();
             List<IAdvancedTask> tasks = taskConverter.toObject(array);
@@ -221,9 +223,9 @@ class DelegatingPresenter {
         try {
             element = StorageUtil.load(mContext.getApplicationContext(), "Categories");
 
-            if (element == null || !element.isJsonArray())
+            if (element == null || !element.isJsonArray()) {
                 return;
-
+            }
             JsonArray array = element.getAsJsonArray();
             List<ILabelCategory> labels = categoryConverter.toObject(array);
 

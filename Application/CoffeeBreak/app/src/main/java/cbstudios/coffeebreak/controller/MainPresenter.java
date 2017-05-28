@@ -68,7 +68,7 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
 class MainPresenter extends BasePresenter implements IMainPresenter {
     private IMainView mainView;
     private ITaskAdapter taskAdapter;
-    private IAchievementPresenter achievementPresenter;
+
 
     MainPresenter(IMainView mainView, Model model) {
         this.model = model;
@@ -379,7 +379,7 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
     
     @Subscribe (threadMode = ThreadMode.MAIN)
     public void showAchievementActivity(TimesTaskDeletedEvent event){
-        achievementPresenter = new AchievementPresenter(model);
+        IAchievementPresenter achievementPresenter = new AchievementPresenter(model);
         Intent intent = new Intent(mainView.getAppCompatActivity(), AchievementActivity.class);
         mainView.getAppCompatActivity().startActivity(intent);
     }

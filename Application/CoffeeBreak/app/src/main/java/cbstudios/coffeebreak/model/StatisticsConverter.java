@@ -13,7 +13,7 @@ import cbstudios.coffeebreak.util.IConverter;
 
 public class StatisticsConverter implements IConverter<Statistics> {
 
-    private static StatisticsConverter INSTANCE = new StatisticsConverter();
+    private final static StatisticsConverter INSTANCE = new StatisticsConverter();
 
     public static StatisticsConverter getInstance() {
         return INSTANCE;
@@ -72,14 +72,12 @@ public class StatisticsConverter implements IConverter<Statistics> {
 
         if (!(object.get("DaysInARow") == null)) {
             statistics.setDaysInARow(object.get("DaysInARow").getAsInt());
-            System.out.println("WOHOO");
         }
 
         if (!(object.get("LastDayCheckedTask") == null)) {
             Calendar time = Calendar.getInstance();
             time.setTimeInMillis(Long.valueOf(object.get("LastDayCheckedTask").getAsString()));
             statistics.setLastDayCheckedTask(time);
-            System.out.println("YAAAAS");
         }
 
         return statistics;

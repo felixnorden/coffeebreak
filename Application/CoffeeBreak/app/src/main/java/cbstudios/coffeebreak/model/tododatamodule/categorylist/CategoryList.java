@@ -18,7 +18,6 @@ import java.util.List;
 
 public class CategoryList implements ICategoryList {
 
-    private final ICategory AllCategory;
     private final List<ILabelCategory> labelCategories;
     private final List<ITimeCategory> timeCategories;
 
@@ -26,7 +25,6 @@ public class CategoryList implements ICategoryList {
      * The constructor that will create two lists.
      */
     public CategoryList() {
-        AllCategory = new AllCategory();
         labelCategories = new ArrayList<>();
         timeCategories = new ArrayList<>();
         initTimeCategories();
@@ -144,13 +142,13 @@ public class CategoryList implements ICategoryList {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o){ return true;}
+        if (o == null || getClass() != o.getClass()){ return false;}
 
         CategoryList that = (CategoryList) o;
 
-        if (labelCategories != null ? !labelCategories.equals(that.getLabelCategories()) : that.getLabelCategories() != null)
-            return false;
+        if (labelCategories != null ? !labelCategories.equals(that.getLabelCategories()) : that.getLabelCategories() != null){
+            return false;}
         return timeCategories != null ? timeCategories.equals(that.getTimeCategories()) : that.getTimeCategories() == null;
 
     }

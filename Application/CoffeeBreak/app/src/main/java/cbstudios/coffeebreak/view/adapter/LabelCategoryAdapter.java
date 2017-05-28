@@ -66,7 +66,7 @@ public class LabelCategoryAdapter extends ArrayAdapter<ILabelCategory> {
             rowItem.getLayoutParams().height = px;
         }
         final ImageView ivCategory = (ImageView) rowItem.findViewById(R.id.imageViewCategoryColor);
-        TextView categorySize = (TextView) rowItem.findViewById(R.id.textViewNumber);
+        //TextView categorySize = (TextView) rowItem.findViewById(R.id.textViewNumber);
 
 
 

@@ -109,12 +109,12 @@ class MultipleDayTimeCategory implements ITimeCategory {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o){ return true;}
+        if (o == null || getClass() != o.getClass()){ return false;}
 
         MultipleDayTimeCategory that = (MultipleDayTimeCategory) o;
 
-        if (name != null ? !name.equals(that.getName()) : that.name != null) return false;
+        if (name != null ? !name.equals(that.getName()) : that.name != null){ return false;}
         return time != null ? time.equals(that.time) : that.time == null;
 
     }

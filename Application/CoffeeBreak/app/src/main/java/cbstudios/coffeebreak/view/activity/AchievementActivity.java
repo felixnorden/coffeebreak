@@ -129,7 +129,6 @@ public class AchievementActivity extends AppCompatActivity implements IAchieveme
         ICategory category = (ICategory) mDrawerList.getAdapter().getItem(position);
         setTitle(category.getName());
         currentCategory = category;
-        System.out.println(currentCategory.getName());
 
 
         // Close drawer

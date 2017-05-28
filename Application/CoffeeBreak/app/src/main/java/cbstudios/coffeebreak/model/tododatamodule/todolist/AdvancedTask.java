@@ -193,8 +193,9 @@ class AdvancedTask implements IAdvancedTask {
     @Override
     public boolean hasILabelCategory(String name) {
         for (ILabelCategory label : labels) {
-            if (label.getName().equals(name))
+            if (label.getName().equals(name)){
                 return true;
+            }
         }
         return false;
     }
@@ -208,14 +209,14 @@ class AdvancedTask implements IAdvancedTask {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o){ return true;}
+        if (o == null || getClass() != o.getClass()){ return false;}
 
         AdvancedTask that = (AdvancedTask) o;
 
 
-        if (!task.equals(that.task)) return false;
-        if (!labels.equals(that.labels)) return false;
+        if (!task.equals(that.task)){ return false;}
+        if (!labels.equals(that.labels)){ return false;}
         return date != null ? date.equals(that.date) : that.date == null && (note != null ? note.equals(that.note) : that.note == null && priority == that.priority);
     }
 

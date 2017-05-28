@@ -55,11 +55,10 @@ import cbstudios.coffeebreak.view.adapter.TaskEditCategoryAdapter;
  */
 public class TaskEditActivity extends AppCompatActivity implements ITaskEditView {
 
-    private Toolbar toolbar;
     private TaskEditCategoryAdapter adapter;
 
     //Taskname Area
-    private RelativeLayout nameLayout;
+
     private AppCompatEditText nameText;
     private String backupName;  //Used for when empty string is set as task name.
 
@@ -72,10 +71,8 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
     private ImageButton notificationRemoveButton;
 
     //Categories Area
-    private RelativeLayout categoriesLayout;
     private ListView categoriesListView;
     private ImageView categoriesIcon;
-    private ImageButton categoriesAddButton;
     private AppCompatAutoCompleteTextView categoriesAddText;
 
     //Priority Area
@@ -97,7 +94,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         setContentView(R.layout.activity_task_edit);
 
         //Get elements
-        nameLayout = (RelativeLayout) findViewById(R.id.task_edit_name_layout);
+        RelativeLayout nameLayout = (RelativeLayout) findViewById(R.id.task_edit_name_layout);
         nameText = (AppCompatEditText) findViewById(R.id.task_edit_name_text);
 
         notificationLayout = (RelativeLayout) findViewById(R.id.task_edit_notification_layout);
@@ -105,10 +102,10 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
         notificationText = (TextView) findViewById(R.id.task_edit_notification_text);
         notificationRemoveButton = (ImageButton) findViewById(R.id.task_edit_notification_remove_button);
 
-        categoriesLayout = (RelativeLayout) findViewById(R.id.task_edit_categories_layout);
+        RelativeLayout categoriesLayout = (RelativeLayout) findViewById(R.id.task_edit_categories_layout);
         categoriesListView = (ListView) findViewById(R.id.task_edit_categories_list);
         categoriesIcon = (ImageView) findViewById(R.id.task_edit_categories_icon);
-        categoriesAddButton = (ImageButton) findViewById(R.id.task_edit_categories_add_image_button);
+        ImageButton categoriesAddButton = (ImageButton) findViewById(R.id.task_edit_categories_add_image_button);
         categoriesAddText = (AppCompatAutoCompleteTextView) findViewById(R.id.task_edit_categories_add_text_view);
 
         priorityLayout = (RelativeLayout) findViewById(R.id.task_edit_priority_layout);
@@ -169,7 +166,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
      * Setups toolbar by setting it as SupportActionBar and adding a "backbutton" to it.
      */
     private void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.edit_task_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.edit_task_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

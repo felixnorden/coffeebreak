@@ -89,8 +89,9 @@ public class ToDoDataModule {
     public void removeChecked() {
         List<IAdvancedTask> toBeRemoved = new ArrayList<>();
         for (IAdvancedTask advancedTask : getTasks()) {
-            if (advancedTask.isChecked())
+            if (advancedTask.isChecked()) {
                 toBeRemoved.add(advancedTask);
+            }
         }
         getTasks().removeAll(toBeRemoved);
     }

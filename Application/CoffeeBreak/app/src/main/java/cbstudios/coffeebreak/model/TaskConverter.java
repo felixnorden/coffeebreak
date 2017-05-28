@@ -26,7 +26,7 @@ import cbstudios.coffeebreak.util.IListConverter;
  */
 public class TaskConverter implements IListConverter<IAdvancedTask> {
 
-    private static TaskConverter INSTANCE = new TaskConverter();
+    private final static TaskConverter INSTANCE = new TaskConverter();
     private ITaskFactory factory = TaskFactory.getInstance();
 
     /**

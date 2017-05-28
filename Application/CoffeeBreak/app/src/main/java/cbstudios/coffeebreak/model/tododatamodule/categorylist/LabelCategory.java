@@ -127,8 +127,8 @@ class LabelCategory implements ILabelCategory {
      */
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o){ return true;}
+        if (o == null || getClass() != o.getClass()){ return false;}
 
         LabelCategory that = (LabelCategory) o;
 
@@ -158,8 +158,7 @@ class LabelCategory implements ILabelCategory {
         int B = rand.nextInt(HEX_MAX);
 
         //Format to a RGB color string of hex values for parsing in application.
-        String rgb = String.format("#%02X%02X%02X", R, G, B);
-        return rgb;
+        return String.format("#%02X%02X%02X", R, G, B);
         //return (Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256)));
         //return Color.rgb(rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
     }

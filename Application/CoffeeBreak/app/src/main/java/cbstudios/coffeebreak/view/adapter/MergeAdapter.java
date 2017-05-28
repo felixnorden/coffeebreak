@@ -9,6 +9,7 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Elias, Felix
@@ -22,7 +23,7 @@ import java.util.ArrayList;
  */
 
 public class MergeAdapter extends BaseAdapter implements SectionIndexer {
-    protected ArrayList<ListAdapter> pieces = new ArrayList<ListAdapter>();
+    protected List<ListAdapter> pieces = new ArrayList<>();
     protected String noItemsText;
 
     public MergeAdapter() {
