@@ -169,16 +169,16 @@ public class Statistics implements IAchievementStatistics {
         //int[] array = new int[]{5,25,100,500};
         int[] array = new int[]{2,5,8,10};
 
-        addToList("Create", array, NumberAchievement.CREATE);
-        addToList("Check", array, NumberAchievement.CHECK);
-        addToList("TimesUpdated", array, NumberAchievement.TIMESUPDATED);
-        addToList("TimesAppStarted", array, NumberAchievement.TIMESAPPSTARTED);
-        addToList("TimesNavOpen", array, NumberAchievement.TIMESNAVOPEN);
-        addToList("TimesTaskDeleted", array, NumberAchievement.TIMESTASKDELETED);
-        addToList("TimesCategoryCreated", array, NumberAchievement.TIMESCATEGORYCREATED);
-        addToList("TimesSettingsChanged", array, NumberAchievement.TIMESSETTINGSCHANGED);
-        addToList("TasksAlive", array, NumberAchievement.TASKSALIVE);
-        addToList("DaysInARow", array, NumberAchievement.DAYSINAROW);
+        addToList("Create", array, NumberAchievement.TASK_CREATED);
+        addToList("Check", array, NumberAchievement.TASK_CHECKED);
+        addToList("TimesUpdated", array, NumberAchievement.TIMES_UPDATED);
+        addToList("TimesAppStarted", array, NumberAchievement.TIMES_APP_STARTED);
+        addToList("TimesNavOpen", array, NumberAchievement.TIMES_NAV_OPEN);
+        addToList("TimesTaskDeleted", array, NumberAchievement.TIMES_TASK_DELETED);
+        addToList("TimesCategoryCreated", array, NumberAchievement.TIMES_CATEGORY_CREATED);
+        addToList("TimesSettingsChanged", array, NumberAchievement.TIMES_CATEGORY_CREATED);
+        addToList("TasksAlive", array, NumberAchievement.TASKS_ALIVE);
+        addToList("DaysInARow", array, NumberAchievement.DAYS_IN_A_ROW);
     }
 
     public void addToList(String name, int[] arr, int type){

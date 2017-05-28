@@ -206,7 +206,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{getResources().getColor(R.color.colorAccent)});
+                    ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{R.color.colorAccent});
                     nameText.setBackgroundTintList(csl);
                 } else {
                     ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{Color.TRANSPARENT});
@@ -333,7 +333,7 @@ public class TaskEditActivity extends AppCompatActivity implements ITaskEditView
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) {
-                    ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{getResources().getColor(R.color.colorAccent)});
+                    ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{R.color.colorAccent});
                     noteText.setBackgroundTintList(csl);
                 } else {
                     ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{Color.TRANSPARENT});

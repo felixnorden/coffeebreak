@@ -65,7 +65,6 @@ public class SeparatorAdapter extends BaseAdapter{
         View separator = inflater.inflate(R.layout.separator_layout, parent, false);
 
         AppCompatImageView iwIcon = (AppCompatImageView) separator.findViewById(R.id.separator_image);
-        View vSeparator = (View) separator.findViewById(R.id.separator_view);
 
         switch (type){
             case TIME_CATEGORY:
@@ -75,8 +74,10 @@ public class SeparatorAdapter extends BaseAdapter{
                 iwIcon.setImageResource(R.drawable.ic_label_outline_black_24dp);
                 break;
     }
-        ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{parent.getResources().getColor(R.color.colorPrimaryDark)});
+        ColorStateList csl = new ColorStateList(new int[][]{new int[0]}, new int[]{R.color.colorPrimaryDark});
         iwIcon.setImageTintList(csl);
+        separator.setClickable(false);
+        separator.setFocusable(false);
 
         return separator;
     }
