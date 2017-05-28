@@ -66,7 +66,7 @@ import cbstudios.coffeebreak.view.adapter.TaskAdapter;
  *          </p>
  *
  */
-class MainPresenter extends BasePresenter implements IMainPresenter {
+class MainPresenter extends BasePresenter implements IPresenter {
     private IMainView mainView;
     private ITaskAdapter taskAdapter;
 
@@ -229,17 +229,15 @@ class MainPresenter extends BasePresenter implements IMainPresenter {
         }
     }
 
-    @Override
     public void createAdvancedTask() {
         model.getToDoDataModule().createAdvancedTask();
     }
 
-    @Override
+
     public void createListTask() {
         model.getToDoDataModule().createListTask();
     }
 
-    @Override
     public void createTask(IListTask listTask) {
         model.getToDoDataModule().createTask(listTask);
     }

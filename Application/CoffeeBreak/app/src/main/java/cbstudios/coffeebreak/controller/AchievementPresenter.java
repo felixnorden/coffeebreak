@@ -11,7 +11,6 @@ import cbstudios.coffeebreak.eventbus.OnResumeEvent;
 import cbstudios.coffeebreak.eventbus.OnStartEvent;
 import cbstudios.coffeebreak.eventbus.OnStopEvent;
 import cbstudios.coffeebreak.model.Model;
-import cbstudios.coffeebreak.model.tododatamodule.statistics.achievements.IAchievement;
 import cbstudios.coffeebreak.view.activity.IAchievementView;
 import cbstudios.coffeebreak.view.adapter.AchievementAdapter;
 import cbstudios.coffeebreak.view.adapter.IAchievementAdapter;
@@ -20,7 +19,7 @@ import cbstudios.coffeebreak.view.adapter.IAchievementAdapter;
  * Created by johan on 5/25/2017.
  */
 
-public class AchievementPresenter implements IAchievementPresenter {
+public class AchievementPresenter implements IPresenter {
     private IAchievementView achievementView;
     private Model model;
     private IAchievementAdapter achievementAdapter;

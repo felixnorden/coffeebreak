@@ -1,4 +1,4 @@
-package cbstudios.coffeebreak.view.activity;
+package cbstudios.coffeebreak.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

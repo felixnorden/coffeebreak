@@ -154,7 +154,7 @@
                 android:textAlignment="center"
                 android:textSize="56sp" />
 
-            <cbstudios.coffeebreak.view.activity.NonScrollListView
+            <cbstudios.coffeebreak.view.NonScrollListView
                 android:id="@+id/drawer_list"
                 android:layout_width="240dp"
                 android:layout_height="wrap_content"

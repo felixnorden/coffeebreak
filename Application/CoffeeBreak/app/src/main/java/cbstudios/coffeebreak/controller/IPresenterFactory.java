@@ -23,16 +23,17 @@ public interface IPresenterFactory {
      * Creates an instance of {@link MainPresenter}
      * @param mainView the view that the presenter will communicate with
      * @param model the model keeping all data
-     * @return  the new presenter through a {@link IMainPresenter} reference
+     * @return  the new presenter through a {@link MainPresenter} reference
      */
-    IMainPresenter createMainPresenter(IMainView mainView, Model model);
+    MainPresenter createMainPresenter(IMainView mainView, Model model);
 
     /**
      * Creates an instance of {@link TaskEditPresenter}
      * @param task the task that has been clicked on by the user.
-     * @return  the new presenter through a {@link ITaskEditPresenter} reference
+     * @param model The current model.
+     * @return  the new presenter through a {@link TaskEditPresenter} reference
      */
-    ITaskEditPresenter createTaskEditPresenter(IAdvancedTask task, Model model);
+    TaskEditPresenter createTaskEditPresenter(IAdvancedTask task, Model model);
 
     /**
      * Creates an instance of {@link DelegatingPresenter}
@@ -44,7 +45,7 @@ public interface IPresenterFactory {
     /**
      * Creates an instance of {@link AchievementPresenter}
      * @param model the model keeping all the data
-     * @return the new presenter through a {@link IAchievementPresenter} reference
+     * @return the new presenter through a {@link AchievementPresenter} reference
      */
-    IAchievementPresenter createAchievementPresenter(Model model);
+    AchievementPresenter createAchievementPresenter(Model model);
 }

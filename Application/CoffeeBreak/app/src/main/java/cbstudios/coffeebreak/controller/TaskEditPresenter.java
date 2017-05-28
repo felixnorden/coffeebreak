@@ -33,7 +33,7 @@ import cbstudios.coffeebreak.view.adapter.TaskEditCategoryAdapter;
  *          Uses: Eventbus, Model, ITaskEditView, IAdvancedTask, Color, Priority.
  *          Used by: IPresenterFactory, PresenterFactory.
  */
-class TaskEditPresenter extends BasePresenter implements ITaskEditPresenter {
+class TaskEditPresenter extends BasePresenter implements IPresenter {
 
     private ITaskEditView view;
     private IAdvancedTask task;

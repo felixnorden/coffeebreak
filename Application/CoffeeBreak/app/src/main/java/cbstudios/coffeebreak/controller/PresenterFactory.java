@@ -32,7 +32,7 @@ public class PresenterFactory implements IPresenterFactory{
      * {@inheritDoc}
      */
     @Override
-    public IMainPresenter createMainPresenter(IMainView mainView, Model model) {
+    public MainPresenter createMainPresenter(IMainView mainView, Model model) {
         return new MainPresenter(mainView, model);
     }
 
@@ -40,7 +40,7 @@ public class PresenterFactory implements IPresenterFactory{
      * {@inheritDoc}
      */
     @Override
-    public ITaskEditPresenter createTaskEditPresenter(IAdvancedTask task, Model model) {
+    public TaskEditPresenter createTaskEditPresenter(IAdvancedTask task, Model model) {
         return new TaskEditPresenter(task, model);
     }
 
@@ -52,7 +52,7 @@ public class PresenterFactory implements IPresenterFactory{
         return new DelegatingPresenter(context);
     }
 
-    public IAchievementPresenter createAchievementPresenter(Model model){
+    public AchievementPresenter createAchievementPresenter(Model model){
         return new AchievementPresenter(model);
     }
 
